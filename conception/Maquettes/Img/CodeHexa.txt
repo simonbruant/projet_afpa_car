@@ -1,0 +1,12 @@
+Vert AFPA :   RVB   136,186,20
+	      Hexa  #88BA14
+
+Vert sombre : RVB  68,163,61
+	      Hexa #44A33D
+
+Rose: 	      RVB 227, 0, 126
+	      Hexa #E3007E
+
+Fond gris :   Hexa #F1F1F1
+
+Bleu : 	      Hexa #00a0e0
