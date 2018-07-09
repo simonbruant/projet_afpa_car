@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+      <meta charset="utf-8">
+      <title></title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      {% load static %}
+
+      <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/bootstrap.min.css' %}" />
+
+
+      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+      <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    </head>
+    <body>
+
+      <div class="brand"><a href="/">AFPACAR</a></div>
+      <div class="address-bar">ALO</div>
+ 
+	  <nav class="navbar navbar-expand-md bg-success navbar-dark">
+		<a class="navbar-brand" href="#">Un titre</a>
+		<ul class="navbar-nav">          
+		  <li class="nav-item active">
+			<a class="nav-link" href="#">Lien actif</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" href="#">Lien normal</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" href="#">Un autre lien</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link disabled" href="#">Lien désactivé</a>
+		  </li>
+		</ul>
+	  </nav>
+
+
+      <div class="container">
+          <div class="row">
+            <div class="box">
+              {% block content %}{% endblock %}
+            </div>
+          </div>
+      </div>
+
+
+
+      <!-- jQuery -->
+      <script src="{% static 'covoiturage/js/jquery.js' %}"></script>
+
+      <!-- Bootstrap Core JavaScript -->
+      <script src="{% static 'covoiturage/js/bootstrap.min.js' %}"></script>
+
+    </body>
+</html>

@@ -1,11 +1,9 @@
 from django.urls import path
-from django.conf.urls import url
+from django.views.generic import TemplateView
 
-from covoiturage import views
 
 urlpatterns = [
     
-    path('', views.accueil),
-
+    path('', TemplateView.as_view(template_name="covoiturage/accueil.html")),
 
 ]
