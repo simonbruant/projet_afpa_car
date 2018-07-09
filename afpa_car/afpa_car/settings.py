@@ -25,7 +25,7 @@ SECRET_KEY = 'j@&a0cmkkh)_00n#(jze%=sbofi&u0*d1xh1&xb_v2+2#f0d26'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1',]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -76,10 +76,10 @@ WSGI_APPLICATION = 'afpa_car.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'afpa_car_temp',
+        'NAME': 'afpa_car',
         'USER': 'afpa_car',
-        'PASSWORD': '',
-        'HOST': '10.111.62.19',
+        'PASSWORD': 'afpa',
+        'HOST': '10.111.61.236',
         'PORT': '',
     }
 
