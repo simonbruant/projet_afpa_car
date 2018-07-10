@@ -77,9 +77,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'afpa_car',
-        'USER': 'afpa_car',
+        'USER': 'pc_Boris',
         'PASSWORD': 'afpa',
-        'HOST': '10.111.61.236',
+        'HOST': '10.111.61.235',
         'PORT': '',
     }
 
