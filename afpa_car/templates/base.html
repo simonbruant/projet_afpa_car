@@ -6,7 +6,10 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       {% load static %}
 
-      <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/bootstrap.min.css' %}" />
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+      <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
 
 
       <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -16,45 +19,94 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
       <![endif]-->
     </head>
-    <body>
+    <body class="container-fluid"> 
 
-      <div class="brand"><a href="/">AFPACAR</a></div>
-      <div class="address-bar">ALO</div>
- 
-	  <nav class="navbar navbar-expand-md bg-success navbar-dark">
-		<a class="navbar-brand" href="#">Un titre</a>
-		<ul class="navbar-nav">          
-		  <li class="nav-item active">
-			<a class="nav-link" href="#">Lien actif</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="#">Lien normal</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="#">Un autre lien</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link disabled" href="#">Lien désactivé</a>
-		  </li>
-		</ul>
-	  </nav>
+        <div class="row">
+            <div class="col-md-2">
+                <img id="logo_afpa" src="{% static 'img/logo_afpa.jpg' %}" alt="AFPA" >
+            </div>
+            <div class="col-md-8">
+                <div id="titre_base">AFPACAR - Le covoiturage de l'Afpa</div>
+            </div>
+        </div>
 
 
-      <div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <nav id="navbar_left" class="navbar navbar-expand-md navbar-dark">
+                <ul class="navbar-nav">          
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Profil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Semaine Type / Calendrier </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Un autre lien</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Lien désactivé</a>
+                </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-md-6">
+            <nav id="navbar_right" class="navbar navbar-expand-md navbar-dark">
+                <ul class="navbar-nav">          
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Messagerie</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Rechercher un trajet </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Afpa</a>
+                </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
+
+      <div id="box_container" class="container-fluid">
           <div class="row">
             <div class="box">
-              {% block content %}{% endblock %}
+                {% block content %}{% endblock %}
+                <br>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             </div>
           </div>
       </div>
 
+    <footer>
+
+        <div id="bandeau_footer"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <a id="icon_footer" href="#" class="fab fa-facebook-f"></a>
+                <a id="icon_footer" href="#" class="fab fa-twitter"></a>
+                <a id="icon_footer" href="#" class="fab fa-youtube"></a>
+                <a id="icon_footer" href="#" class="fab fa-linkedin-in"></a>
+                <a id="icon_footer" href="#" class="fab fa-viadeo"></a>
+            </div>
+        </div>
+        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+        
+        <div class="col-md-12">
+            <a>CGU</a>
+            <a id="border_test">Mentions Legales</a>
+            <a id="border_test">Plan du site</a>
+        </div>
+
+    </footer>
 
 
       <!-- jQuery -->
-      <script src="{% static 'covoiturage/js/jquery.js' %}"></script>
+      <script src="{% static 'js/jquery.js' %}"></script>
 
       <!-- Bootstrap Core JavaScript -->
-      <script src="{% static 'covoiturage/js/bootstrap.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
     </body>
 </html>

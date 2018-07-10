@@ -1,0 +1,64 @@
+[class*="col-"]
+{
+    line-height: 20px;
+    /* border: 1px solid indigo; */
+    text-align: center;
+    border-radius: 10px;
+}
+
+#navbar_right
+{
+    background-color: #44A33D;
+    margin-top : 20px;
+}
+
+#navbar_left
+{
+    background-color: #88BA14;
+    margin-top : 20px;
+
+}
+
+#logo_afpa
+{
+    width: 250px;
+}
+
+#titre_base
+{
+    font-size : 30px;
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+#box_container
+{
+    background-color: lightgray;
+}
+
+
+footer
+{
+    margin-bottom: 50px;
+}
+
+#bandeau_footer
+{
+    height: 30px;
+    background-color: #88BA14
+}
+
+#icon_footer
+{
+    color : #E3007E;
+    text-align: center;
+    margin-top: 20px;
+    font-size : 40px;
+    width: 50px;
+}
+
+#border_test
+{
+    border-left: solid 2px lightgray;
+    margin-right: 3px;
+}
