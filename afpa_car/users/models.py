@@ -19,7 +19,7 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
-    objects = UserManager
+    objects = UserManager()
 
     def get_full_name(self):
         full_name = '{} {}'.format(self.first_name, self.last_name)
@@ -35,7 +35,7 @@ class User(AbstractBaseUser):
         """ Does the user have a specific permission? """
         return True
 
-    def has_module_perm(self, app_label):
+    def has_module_perms(self, app_label):
         """ Does the user have permission to view the app 'app_label' """
         return True
 
