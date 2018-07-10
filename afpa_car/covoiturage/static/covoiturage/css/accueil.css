@@ -1,0 +1,65 @@
+[class*="col-"]
+{
+    line-height: 20px;
+    /* border: 1px solid indigo; */
+    text-align: center;
+}
+
+#background_accueil
+{
+    background-image: url(../img/carte_montpellier.png);
+    
+}
+
+/* ###### CARD 1 ###### */
+#card1
+{
+    margin-top: 150px;
+    margin-left : 25%;
+    border-color: lightgray;
+
+}
+
+#header_card1
+{
+    background-color: #E0F0D6;
+    color: #44A33D;
+    border-color: lightgray;
+    
+}
+
+#sous_titre_card1
+{
+    margin-bottom: 50px;
+}
+
+#btn_card1
+{
+    margin-bottom : 55px;
+}
+
+
+/* ###### CARD 2 ###### */
+
+#card2
+{
+    margin-top: 150px;
+    margin-left : 25%;
+    border-color: lightgray;
+
+}
+
+#header_card2
+{
+    background-color: #E0F0D6;
+    color: #44A33D;
+    border-color: #E0F0D6;  
+    border-color: lightgray;
+}
+
+/* ###### ESPACE VIDE ###### */
+
+#espace_vide_accueil
+{
+    height: 150px;
+}
