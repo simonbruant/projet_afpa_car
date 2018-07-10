@@ -84,6 +84,9 @@ DATABASES = {
         'PASSWORD': 'afpa',
         'HOST': '10.111.61.235',
         'PORT': '',
+        'OPTIONS': {
+        "init_command": "SET foreign_key_checks = 0;",
+        }
     }
 
 }
