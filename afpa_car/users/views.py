@@ -4,17 +4,17 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
 
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, SignupForm
 
 # Create your views here.
 class SignupView(CreateView):
-    form_class = RegisterForm
+    form_class = SignupForm
     template_name = 'users/signup.html'
-    success_url = '/users/reussi/'
+    success_url = '/reussi/'
 
 class LoginView(FormView):
     form_class  = LoginForm
-    success_url = '/users/reussi/'
+    success_url = '/reussi/'
     template_name = 'users/login.html'
 
     def form_valid(self, form):
@@ -35,4 +35,5 @@ class LoginView(FormView):
                 return redirect(redirect_path)
             else:
                 return redirect('users:reussi')
-        return super(LoginView, self).form_invalid
+        print("pas valide")
+        return super(LoginView, self).form_invalid(form)

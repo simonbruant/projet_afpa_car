@@ -3,13 +3,17 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from .models import User
 
-class RegisterForm(forms.ModelForm):
-    password1    = forms.CharField(widget=forms.PasswordInput) # ini == password
+class SignupForm(forms.ModelForm):
+    password1    = forms.CharField(label="Password", widget=forms.PasswordInput) # ini == password
     password2   = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
+    username = forms.RegexField(label='Username', 
+                                regex=r'[\w.@+-]+$',  
+                                error_messages = {'invalid': "This value may contain only" 
+                                "letters, numbers and @/./+/-/_ characters."} )
 
     class Meta:
         model = User
-        fields = ('email', 'username', 'first_name', 'last_name')
+        fields = ('email', 'first_name', 'last_name')
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -21,8 +25,10 @@ class RegisterForm(forms.ModelForm):
 
     def save(self, commit=True):
         # save the provided password in hashed format
-        user = super(RegisterForm, self).save(commit=False)
+        user = super(SignupForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
+        print(self.cleaned_data["username"])
+        user.username = self.cleaned_data["username"]
         # user.is_active = False # send confirmation email via signals
         if commit:
             user.save()
