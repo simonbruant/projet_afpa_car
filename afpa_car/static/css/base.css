@@ -1,27 +1,23 @@
 [class*="col-"]
 {
-    line-height: 20px;
     /* border: 1px solid indigo; */
     text-align: center;
-    border-radius: 10px;
 }
-
-#navbar_right
+#body_base
 {
-    background-color: #44A33D;
-    margin-top : 20px;
-}
-
-#navbar_left
-{
-    background-color: #88BA14;
-    margin-top : 20px;
+    margin-top: 30px;
+    width: calc(80%);
+    box-shadow:0 0 20px rgba(0,0,0,0.8);
 
 }
+
+
+/* ###### HEADER ###### */
 
 #logo_afpa
 {
     width: 250px;
+
 }
 
 #titre_base
@@ -31,11 +27,29 @@
     margin-top: 50px;
 }
 
-#box_container
+/* ###### NAVBAR ###### */
+
+#navbar
 {
-    background-color: lightgray;
+    background-color: #44A33D;
+    margin-top : 20px;
 }
 
+.site-header {
+    background-color: rgba(0, 0, 0, .85);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+  .site-header a {
+    color: lightgray;
+    transition: ease-in-out color .15s;
+  }
+  .site-header a:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+
+/* ###### FOOTER ###### */
 
 footer
 {
@@ -45,7 +59,7 @@ footer
 #bandeau_footer
 {
     height: 30px;
-    background-color: #88BA14
+    background-color: #44A33D
 }
 
 #icon_footer
@@ -61,4 +75,10 @@ footer
 {
     border-left: solid 2px lightgray;
     margin-right: 3px;
+
+}
+
+#liens_footer
+{
+    padding-bottom: 50px;
 }
