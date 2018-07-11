@@ -12,7 +12,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     active      = models.BooleanField(default=True)
     staff       = models.BooleanField(default=False)
     admin       = models.BooleanField(default=False)
-    joined_date = models.DateTimeField(editable=False, default=timezone.now)
+    conducteur  = models.BooleanField(default=False)
+    avatar      = models.ImageField(null=True, blank=True, upload_to='photos/')
+    date_joined = models.DateTimeField(editable=False, default=timezone.now)
+
     # confirm   = models.BooleanField(default=False)
     # confirmed_date = models.DateTimeField(default=False)
 
@@ -51,3 +54,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def is_admin(self):
         return self.admin
     
+    @property
+    def is_conducteur(self):
+        return self.conducteur
