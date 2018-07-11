@@ -79,11 +79,13 @@ WSGI_APPLICATION = 'afpa_car.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'afpa_car',
+        # 'NAME': 'afpa_car',
+        'NAME': 'afpa_car_temp', #thibaud
         'USER': 'afpa_car',
-        'PASSWORD': 'afpa',
-        # 'HOST': '10.111.62.19', ## thibaud
-        'HOST': '10.111.61.235', ## boris
+        # 'PASSWORD': 'afpa',
+        'PASSWORD': '', #thibaud
+        'HOST': '10.111.62.19', # thibaud
+        # 'HOST': '10.111.61.235', # boris
         'PORT': '',
     }
 
@@ -135,3 +137,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+LOGIN_REDIRECT_URL = 'users:reussi'
