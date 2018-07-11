@@ -1,12 +1,12 @@
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
 
 from .managers import UserManager
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     email       = models.EmailField(max_length=255, unique=True, verbose_name='email adress')
-    username    = models.CharField(max_length=15, unique=True, verbose_name = 'pseudo')
+    username    = models.CharField(max_length=15, unique=True, verbose_name = 'pseudo',)
     first_name  = models.CharField(max_length=30, verbose_name = 'prénom')
     last_name   = models.CharField(max_length=50, verbose_name = 'nom')
     active      = models.BooleanField(default=True)
@@ -38,6 +38,10 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         """ Does the user have permission to view the app 'app_label' """
         return True
+    
+    @property
+    def is_active(self):
+        return self.active
 
     @property
     def is_staff(self):
@@ -47,6 +51,3 @@ class User(AbstractBaseUser):
     def is_admin(self):
         return self.admin
     
-    @property
-    def is_active(self):
-        return self.active
