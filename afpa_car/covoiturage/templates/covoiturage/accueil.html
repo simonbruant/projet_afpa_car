@@ -1,0 +1,67 @@
+{% extends 'base.html' %} {% block content %}
+
+<head>
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/accueil.css' %}" />
+
+</head>
+
+<body class="container">
+    <div class="row">
+        <div class="col-md-12" id="background_accueil">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="card1" class="card text-center" style="max-width: 18rem;">
+                <div id="header_card1" class="card-header">Pas encore de compte ?</div>
+                <div class="card-body">
+                    <h5 id="sous_titre_card1" class="card-title">S'inscrire</h5>
+                    <button id="btn_card1" class="btn btn-success ">Créer un compte</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div id="card2" class="card text-center" style="max-width: 18rem;">
+                <div id="header_card2" class="card-header">Déjà un compte ? </div>
+                <div class="card-body">
+                    <h5 class="card-title">Se connecter</h5>
+                    <form>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend ">
+                                <span class="input-group-text ">
+                                    <div id="icones_card1" class="fas fa-at"></div>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text ">
+                                    <div id="icones_card1" class="fas fa-unlock-alt"></div>
+                                </span>
+                            </div>
+                            <input type="password" class="form-control" placeholder="Password">
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+                            <label class="custom-control-label " for="customCheck">Remember me</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" id="espace_vide_accueil"></div>
+    </div>  
+</div>
+</div>
+</div>
+</body>  
+
+
+
+{% endblock %}
