@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+from .databases_settings import DATABASES
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -76,23 +78,24 @@ WSGI_APPLICATION = 'afpa_car.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'afpa_car',
-        # 'NAME': 'afpa_car_temp', #thibaud
-        'USER': 'afpa_car',
-        'PASSWORD': 'afpa',
-        # 'PASSWORD': '', #thibaud
-        # 'HOST': '10.111.62.19', # thibaud
-        'HOST': '10.111.61.235', # boris
-        'PORT': '',
-        'OPTIONS': {
-        "init_command": "SET foreign_key_checks = 0;",
-        },
-    }
+DATABASES = DATABASES
 
-}
+# {    'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'afpa_car',
+#         # 'NAME': 'afpa_car_temp', #thibaud
+#         'USER': 'afpa_car',
+#         'PASSWORD': 'afpa',
+#         # 'PASSWORD': '', #thibaud
+#         # 'HOST': '10.111.62.19', # thibaud
+#         'HOST': '10.111.61.235', # boris
+#         'PORT': '',
+#         'OPTIONS': {
+#         "init_command": "SET foreign_key_checks = 0;",
+#         },
+#     }
+
+# }
 
 
 

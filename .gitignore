@@ -1,1 +1,4 @@
 *.pyc
+afpa_car/afpa_car/databases_settings.py 
+afpa_car/db.sqlite3
+.vscode
