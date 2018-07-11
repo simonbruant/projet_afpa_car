@@ -6,8 +6,9 @@ from .models import User
 class SignupForm(forms.ModelForm):
     password1    = forms.CharField(label="Password", widget=forms.PasswordInput) # ini == password
     password2   = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
-    username = forms.RegexField(label='Username', 
-                                regex=r'[\w.@+-]+$',  
+    username = forms.RegexField(label='Username',
+                                min_length=4,
+                                regex=r'[\w._-]+$',  
                                 error_messages = {'invalid': "This value may contain only" 
                                 "letters, numbers and @/./+/-/_ characters."} )
 
