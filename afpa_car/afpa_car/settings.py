@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -80,10 +79,11 @@ WSGI_APPLICATION = 'afpa_car.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'afpa_car_temp',
+        'NAME': 'afpa_car',
         'USER': 'afpa_car',
-        'PASSWORD': '',
-        'HOST': '10.111.62.19',
+        'PASSWORD': 'afpa',
+        # 'HOST': '10.111.62.19', ## thibaud
+        'HOST': '10.111.61.235', ## boris
         'PORT': '',
     }
 

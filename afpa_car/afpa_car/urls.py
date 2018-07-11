@@ -21,5 +21,5 @@ urlpatterns = [
     
     path('admin/', admin.site.urls),
     path('', include('covoiturage.urls')),
- 
+    path('users/', include('users.urls')),
 ]
