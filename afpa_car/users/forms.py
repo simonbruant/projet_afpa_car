@@ -4,13 +4,13 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import User
 
 class SignupForm(forms.ModelForm):
-    password1    = forms.CharField(label="Password", widget=forms.PasswordInput) # ini == password
+    password1   = forms.CharField(label="Password", widget=forms.PasswordInput) # ini == password
     password2   = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
-    username = forms.RegexField(label='Username',
-                                min_length=4,
-                                regex=r'[\w._-]+$',  
-                                error_messages = {'invalid': "This value may contain only" 
-                                "letters, numbers and @/./+/-/_ characters."} )
+    username    = forms.RegexField(label='Username',
+                                    min_length=3,
+                                    regex=r'^[\w._-]+$',  
+                                    error_messages = {'invalid': "This value may contain only" 
+                                    "letters, numbers and ./-/_ characters."} )
 
     class Meta:
         model = User
@@ -35,6 +35,10 @@ class SignupForm(forms.ModelForm):
             user.save()
         return user
 
+class LoginForm(forms.Form):
+    email = forms.EmailField(label='Email',)
+    password = forms.CharField(widget=forms.PasswordInput)
+    
 class UserAdminCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
@@ -43,7 +47,7 @@ class UserAdminCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'username', 'first_name', 'last_name', 'active', 'staff', 'admin' )
+        fields = ('first_name', 'last_name', 'email', 'username', 'active', 'staff', 'admin')
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -61,6 +65,7 @@ class UserAdminCreationForm(forms.ModelForm):
             user.save()
         return user
 
+
 class UserAdminChangeForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on
     the user, but replaces the password field with admin's
@@ -70,7 +75,7 @@ class UserAdminChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'username', 'first_name', 'last_name', 'active', 'admin')
+        fields = ('email', 'password', 'username', 'first_name', 'last_name', 'active','staff', 'admin')
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -78,6 +83,3 @@ class UserAdminChangeForm(forms.ModelForm):
         # field does not have access to the initial value
         return self.initial["password"]
 
-class LoginForm(forms.Form):
-    email = forms.EmailField(label='Email',)
-    password = forms.CharField(widget=forms.PasswordInput)

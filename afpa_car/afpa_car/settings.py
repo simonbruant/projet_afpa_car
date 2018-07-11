@@ -79,14 +79,17 @@ WSGI_APPLICATION = 'afpa_car.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': 'afpa_car',
-        'NAME': 'afpa_car_temp', #thibaud
+        'NAME': 'afpa_car',
+        # 'NAME': 'afpa_car_temp', #thibaud
         'USER': 'afpa_car',
-        # 'PASSWORD': 'afpa',
-        'PASSWORD': '', #thibaud
-        'HOST': '10.111.62.19', # thibaud
-        # 'HOST': '10.111.61.235', # boris
+        'PASSWORD': 'afpa',
+        # 'PASSWORD': '', #thibaud
+        # 'HOST': '10.111.62.19', # thibaud
+        'HOST': '10.111.61.235', # boris
         'PORT': '',
+        'OPTIONS': {
+        "init_command": "SET foreign_key_checks = 0;",
+        },
     }
 
 }
