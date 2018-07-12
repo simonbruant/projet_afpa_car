@@ -75,7 +75,7 @@ class UserAdminChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'username', 'first_name', 'last_name', 'active','staff', 'admin')
+        fields = ('email', 'password', 'username', 'first_name', 'last_name', 'avatar', 'active','staff', 'admin')
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.

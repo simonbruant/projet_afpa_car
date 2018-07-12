@@ -13,6 +13,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     staff       = models.BooleanField(default=False)
     admin       = models.BooleanField(default=False)
     conducteur  = models.BooleanField(default=False)
+    permis      = models.BooleanField(default=False)
     avatar      = models.ImageField(null=True, blank=True, upload_to='photos/')
     date_joined = models.DateTimeField(editable=False, default=timezone.now)
 
