@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>Login</h1>
+    <form method='POST' action="."> {% csrf_token %}
+        <table>
+            <tr>
+                <td>{{form.email.label_tag }}</td>
+                <td>{{ form.email }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.password.label_tag }}</td>
+                <td>{{ form.password }}</td>
+            </tr>
+            </table>
+            
+            {% if form.password.errors %}
+            <p>Votre nom d'utilisateur et mot de passe ne sont pas bons.</p>
+            {% endif %}
+      <button type='submit' class='btn btn-danger'>Submit</button>
+</form>
+{% endblock content %}

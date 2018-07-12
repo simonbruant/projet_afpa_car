@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+</head>
+
+<body id="body_base" class="container">
+    
+    <header class="row">
+        <div class="col-md-4">
+            <img id="logo_afpa" src="{% static 'img/logo_afpa.jpg' %}" alt="AFPA">
+        </div>
+        <div class="col-md-8">
+            <div id="titre_base">AFPACAR - Le covoiturage de l'Afpa</div>
+        </div>
+    </header>
+
+    <navbar class="row">
+            <nav id="navbar" class="site-header sticky-top py-1 col-md-12">
+                <div class="container d-flex flex-column flex-md-row justify-content-between">
+                    <a class="py-2 d-none d-md-inline-block" href="#">Tableau de bord</a>
+                    <a class="py-2 d-none d-md-inline-block" href="#">Profil</a>
+                    <a class="py-2 d-none d-md-inline-block" href="#">Semaine Type / Calendrier</a>
+                    <a class="py-2 d-none d-md-inline-block" href="#">Messagerie</a>
+                    <a class="py-2 d-none d-md-inline-block" href="#">Rechercher un trajet</a>
+                    <a class="py-2 d-none d-md-inline-block" href="#">Afpa</a>
+            </nav>
+        </div>
+    </navbar>
+
+    <section>
+
+        <div>
+            {% block content %}{% endblock %}
+        </div>
+
+    </section>  
+
+    <footer>
+        <div class="row">
+            <div class="col-md-12" id="bandeau_footer"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <a id="icon_footer" href="#" class="fab fa-facebook-f"></a>
+                <a id="icon_footer" href="#" class="fab fa-twitter"></a>
+                <a id="icon_footer" href="#" class="fab fa-youtube"></a>
+                <a id="icon_footer" href="#" class="fab fa-linkedin-in"></a>
+                <a id="icon_footer" href="#" class="fab fa-viadeo"></a>
+            </div>
+        </div>
+        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+
+        <div id="liens_footer" class="col-md-12">
+            <a>CGU</a>
+            <span id="border_test"></span>
+            <a>Mentions Legales</a>
+            <span id="border_test"></span>
+            <a>Plan du site</a>
+        </div>
+
+    </footer>
+
+
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+</body>
+
+</html>
