@@ -11,23 +11,29 @@ class ZipCode(models.Model):
                 rslt += " ; "
             rslt += str( c )
             nb += 1
-        return str( self.zip_code ) + " " + rslt
+        return str( self.zip_code )# + " " + rslt
     class Meta:
         verbose_name = "Code Postal"
         verbose_name_plural = "Codes Postaux"
 
+
 class City(models.Model):
     city_name   = models.CharField(max_length =25, verbose_name = "Ville",)
-    zipCode     = models.ManyToManyField(ZipCode, verbose_name="Code Postal")
+    zip_codes   = models.ManyToManyField(ZipCode, verbose_name="Code Postal", through= "City_ZipCode")
 
     def __str__(self):
         return  self.city_name
     class Meta:
         verbose_name = "Ville"
+        verbose_name_plural = "Villes"
 
 
-# class City_ZipCode(models.Model):
-    
+class City_ZipCode(models.Model):
+    city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name="Villes")
+    zip_code = models.ForeignKey(ZipCode, on_delete=models.CASCADE, verbose_name="Code Postal", )
+
+    def __str__(self):
+        return "Choix :"
 
 class Address(models.Model):
     adress_label        = models.CharField(max_length=50, verbose_name = "Libellé de l'adresse",)
@@ -45,29 +51,3 @@ class Address(models.Model):
     # ForeignKey == OneToMany
     class Meta:
         verbose_name = "Adresse"
-
-
-
-
-
-
-    # civility = models.CharField(_('Status'), max_length = 20, blank = True)
-    # firstname = models.CharField(_('Firstname'), max_length = 50, blank = True)
-    # lastname = models.CharField(_('Lastname'), max_length = 50, blank = True)
-    # departement = models.CharField(_('Departement'), max_length = 50, blank = True)
-    # corporation = models.CharField(_('Corporation'), max_length = 100, blank = True)
-    # building = models.CharField(_('Building'), max_length = 20, blank = True)
-    # floor = models.CharField(_('Floor'), max_length = 20, blank = True)
-    # door = models.CharField(_('Door'), max_length = 20, blank = True)
-    # number = models.CharField(_('Number'), max_length = 30, blank = True)
-    # street_line1 = models.CharField(_('Address 1'), max_length = 100, blank = True)
-    # street_line2 = models.CharField(_('Address 2'), max_length = 100, blank = True)
-    # zipcode = models.CharField(_('ZIP code'), max_length = 5, blank = True)
-    # city = models.CharField(_('City'), max_length = 100, blank = True)
-    # state = models.CharField(_('State'), max_length = 100, blank = True)
-
-    # # French specifics fields
-    # cedex = models.CharField(_('CEDEX'), max_length = 100, blank = True)
-    
-    # postal_box = models.CharField(_('Postal box'), max_length = 20, blank = True)
-    # country = models.CharField(_('Country'), max_length = 100, blank = True)
