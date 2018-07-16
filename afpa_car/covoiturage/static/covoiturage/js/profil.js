@@ -3,8 +3,8 @@
 $(document).ready(function() {
 
     var navItems = $('.side-menu a');
-    var allWells = $('.admin-contenu');
-    var allWellsExceptFirst = $('.admin-contenu:not(:first)');
+    var allWells = $('.menu-contenu');
+    var allWellsExceptFirst = $('.menu-contenu:not(:first)');
 
     allWellsExceptFirst.hide();
 
@@ -18,3 +18,6 @@ $(document).ready(function() {
     $('#' + target).show();
     });
 });
+
+// Fonction affichage vehicule si oui 
+

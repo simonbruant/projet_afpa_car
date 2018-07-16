@@ -1,9 +1,10 @@
+
+
 #body_base
 {
     margin-top: 30px;
     width: calc(80%);
     box-shadow:0 0 20px rgba(0,0,0,0.8);
-
 }
 
 
@@ -49,6 +50,7 @@
 footer
 {
     margin-bottom: 50px;
+    text-align: center
 }
 
 #bandeau_footer
