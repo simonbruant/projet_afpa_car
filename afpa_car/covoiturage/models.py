@@ -37,12 +37,12 @@ class City_ZipCode(models.Model):
 
 class Address(models.Model):
     adress_label        = models.CharField(max_length=50, verbose_name = "Libellé de l'adresse",)
-    street              = models.TextField(max_length=50, verbose_name = "Nom de la rue",)
-    street_number       = models.CharField(max_length = 30, null=True, blank = True, verbose_name = "Numéro de la rue",)
-    street_complement   = models.CharField(max_length =50, null=True, blank = True, verbose_name = "Complément d'adresse",)
+    street_number       = models.CharField(max_length=30, null=True, blank=True, verbose_name = "Numéro de la rue",)
+    street              = models.CharField(max_length=50, verbose_name = "Nom de la rue",)
+    street_complement   = models.CharField(max_length=50, null=True, blank=True, verbose_name = "Complément d'adresse",)
     # TODO : Verif Null et blank True or False
-    lattitude           = models.DecimalField(max_digits=25, decimal_places=25, null=False, verbose_name = 'lattitude',)
-    longitude           = models.DecimalField(max_digits=25, decimal_places=25, null=False, verbose_name = 'longitude',) # valeur imprécise -> seulement anti-abus
+    lattitude           = models.DecimalField(max_digits=25, decimal_places=25, null=True, blank=True, verbose_name = 'lattitude',)
+    longitude           = models.DecimalField(max_digits=25, decimal_places=25, null=True, blank=True, verbose_name = 'longitude',) # valeur imprécise -> seulement anti-abus
     # doc DecimalField : https://docs.djangoproject.com/en/1.9/ref/models/fields/#django.db.models.DecimalField.max_digits
 
     # clé étrangere tjr dans l'entité qui a x,1 en cardinalité
