@@ -19,7 +19,7 @@ class ZipCode(models.Model):
 
 class City(models.Model):
     city_name   = models.CharField(max_length =25, verbose_name = "Ville",)
-    zip_codes   = models.ManyToManyField(ZipCode, verbose_name="Code Postal", through= "City_ZipCode")
+    zip_codes   = models.ManyToManyField(ZipCode, verbose_name="Code Postal", through= "ZipCode_City")
 
     def __str__(self):
         return  self.city_name
@@ -28,7 +28,7 @@ class City(models.Model):
         verbose_name_plural = "Villes"
 
 
-class City_ZipCode(models.Model):
+class ZipCode_City(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name="Villes")
     zip_code = models.ForeignKey(ZipCode, on_delete=models.CASCADE, verbose_name="Code Postal", )
 
@@ -51,3 +51,5 @@ class Address(models.Model):
     # ForeignKey == OneToMany
     class Meta:
         verbose_name = "Adresse"
+    def __str__(self):
+        return  "{} -> adresse: {} {} {} {} ".format(self.adress_label, self.street_number, self.street,self.zipCode, self.city, )
