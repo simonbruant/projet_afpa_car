@@ -16,6 +16,8 @@ class ZipCodeAdmin(admin.ModelAdmin):
 class CityInline(admin.TabularInline):
     model = City.zip_codes.through
     verbose_name = "Ville"
+    verbose_name_plural = "Villes"
+    
     extra = 1
 
 class CityAdmin(admin.ModelAdmin):
