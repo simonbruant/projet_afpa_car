@@ -1,0 +1,22 @@
+#container_profil {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/* ###### SIDE MENU ###### */
+a {
+    color: black;
+}
+
+a:hover {
+    background-color: dimgray;
+    color: white;
+}
+
+#side-bar {
+    border: solid 2px black;
+}
+
+#contenu {
+    border: solid 2px black;
+}
