@@ -21,14 +21,31 @@ class CityAdmin(admin.ModelAdmin):
 
 # ------------------------------
 
-class UserInLine(admin.TabularInline): # autre variante : StackedInline
+class UserInLine(admin.TabularInline): # autre variante : admin.StackedInline
     model = Adress_User
     verbose_name = "Utilisateur"
+    verbose_name_plural = "Utilisateurs"
     fk_name = "address"
-    extra = 1
+    extra = 0
+
+
 
 class AdressAdmin(admin.ModelAdmin):
     inlines = (UserInLine,)
+    
+    # fieldsets = (
+    #     (Test, {'fields': ('username')
+    #     })
+
+
+
+    # fieldsets = (
+    #     (None, {'fields': ('email', 'username', 'password')}),
+    #     ('Personal infos', {'fields': ('first_name', 'last_name', 'avatar', 'conducteur', 'permis')}),
+    #     ('Permissions', {'fields': ('admin', 'staff', 'active')}),
+        
+    # )
+
 
 # Register your models here.
 admin.site.register(Address, AdressAdmin)
