@@ -64,7 +64,7 @@ class Address(models.Model):
 
 class Adress_User(models.Model):
     address = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Adresse")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Utilisateur", )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=" ", )
 
     def __str__(self):
         return ""
