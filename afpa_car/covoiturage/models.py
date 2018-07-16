@@ -49,6 +49,9 @@ class Address(models.Model):
     city    = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name = 'Ville')
     zipCode = models.ForeignKey(ZipCode, on_delete=models.CASCADE, verbose_name = 'Code Postal')
     # ForeignKey == OneToMany
+
+    # TODO : Liaison Adress to User
+    
     class Meta:
         verbose_name = "Adresse"
     def __str__(self):
