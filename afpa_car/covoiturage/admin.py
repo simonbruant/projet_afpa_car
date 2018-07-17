@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import * # TODO import seulement ce dont on a besoin -> ZipCode_City ++
 
 class ZipCodeInline(admin.TabularInline):        
-    model = City.zip_codes.through
+    model = ZipCode_City
     verbose_name = "Code Postal"
     verbose_name_plural = "Codes Postaux"
     extra= 1
@@ -32,11 +32,16 @@ class UserInLine(admin.TabularInline): # autre variante : admin.StackedInline
 class AdressAdmin(admin.ModelAdmin):
     inlines = (UserInLine,)
     
-    list_display = ('get_users', 'adress_label', 'street', 'city', )
+    list_display = ('city', 'street', 'adress_label', 'get_users' ) #, 'zipCode'
 
     def get_users(self, obj):
         return " ; ".join([u.get_full_name() for u in obj.users.all()])
     get_users.short_description = 'Utilisateurs' #Verbose get_users
+
+    search_fields = ('city__city_name', 'street', 'adress_label', 'users__first_name', 'users__last_name', )
+
+
+
 
 
 
