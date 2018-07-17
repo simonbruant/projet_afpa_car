@@ -32,7 +32,7 @@ class UserInLine(admin.TabularInline): # autre variante : admin.StackedInline
 class AdressAdmin(admin.ModelAdmin):
     inlines = (UserInLine,)
     
-    list_display = ('get_users', 'adress_label', 'street', 'city', ) #TODO : Ajout user name
+    list_display = ('get_users', 'adress_label', 'street', 'city', )
 
     def get_users(self, obj):
         return " ; ".join([u.get_full_name() for u in obj.users.all()])
