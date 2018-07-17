@@ -23,14 +23,21 @@ class CityAdmin(admin.ModelAdmin):
 
 class UserInLine(admin.TabularInline): # autre variante : admin.StackedInline
     model = Adress_User
-    verbose_name = "Utilisateur"
-    verbose_name_plural = "Utilisateurs"
+    verbose_name = "Utilisateur de cette adresse"
+    verbose_name_plural = "Utilisateurs de cette adresse"
     fk_name = "address"
     extra = 0
 
 
 class AdressAdmin(admin.ModelAdmin):
     inlines = (UserInLine,)
+    
+    list_display = ('get_users', 'adress_label', 'street', 'city', ) #TODO : Ajout user name
+
+    def get_users(self, obj):
+        return " ; ".join([u.get_full_name() for u in obj.users.all()])
+    get_users.short_description = 'Utilisateurs' #Verbose get_users
+
 
 
 # Register your models here.

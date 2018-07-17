@@ -47,7 +47,6 @@ class Address(models.Model):
     city    = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name = 'Ville')
     zipCode = models.ForeignKey(ZipCode, on_delete=models.CASCADE, verbose_name = 'Code Postal')
 
-    # TODO : Verif Null et blank True or False
     lattitude           = models.DecimalField(max_digits=25, decimal_places=25, null=True, blank=True, verbose_name = 'lattitude',)
     longitude           = models.DecimalField(max_digits=25, decimal_places=25, null=True, blank=True, verbose_name = 'longitude',) # valeur imprécise -> seulement anti-abus
     # doc DecimalField : https://docs.djangoproject.com/en/1.9/ref/models/fields/#django.db.models.DecimalField.max_digits
@@ -55,16 +54,20 @@ class Address(models.Model):
     # ForeignKey == OneToMany
     users   = models.ManyToManyField(User, verbose_name="Utilisateur", through= "Adress_User")
 
-    # TODO : Liaison Adress to User
+    # def get_user(self):
+    #     return " ; ".join([u.get_full_name() for u in self.users.all()])
+
     
+
+
     class Meta:
         verbose_name = "Adresse"
     def __str__(self):
-        return  "{} -> adresse: {} {} {} {} ".format(self.adress_label, self.street_number, self.street,self.zipCode, self.city, )
-
+        # return  "{} -> adresse: {} {} {} {} ".format(self.adress_label, self.street_number, self.street,self.zipCode, self.city, )
+        return 'test' #TODO : return string vide ? supprimer le def __str__ ?
 class Adress_User(models.Model):
     address = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Adresse")
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=" ", )
 
-    def __str__(self):
+    def __str__(self): # surcharge sur "Adress_User object (1)"
         return ""
