@@ -68,6 +68,11 @@ footer
     width: 50px;
 }
 
+#icone_avatar {
+    border-radius: 50%;
+    width: 8%;
+}
+
 #border_test
 {
     border-left: solid 2px lightgray;
@@ -79,3 +84,27 @@ footer
 {
     padding-bottom: 50px;
 }
+
+.hr_up { 
+    height: 30px; 
+    border-style: solid; 
+    border-color: #8c8b8b; 
+    border-width: 1px 0 0 0; 
+    border-radius: 20px; 
+    width: 500px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+  } 
+
+
+.hr_down {  
+    display: block; 
+    content: ""; 
+    height: 30px;  
+    border-style: solid; 
+    border-color: #8c8b8b; 
+    border-width: 0 0 1px 0; 
+    border-radius: 20px; 
+    width: 500px;
+    margin-bottom: 20px;
+  }
