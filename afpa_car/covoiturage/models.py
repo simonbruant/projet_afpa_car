@@ -3,16 +3,9 @@ from django.db import models
 from users.models import User
 
 class ZipCode(models.Model):
-    zip_code = models.CharField(max_length=10, verbose_name = 'Code Postal',)
+    zip_code = models.CharField(max_length=15, verbose_name = 'Code Postal',)
 
     def __str__(self):
-        rslt = ""
-        nb = 0
-        for c in self.city_set.all():
-            if nb != 0:
-                rslt += " ; "
-            rslt += str( c )
-            nb += 1
         return str( self.zip_code )
 
     class Meta:
@@ -21,7 +14,7 @@ class ZipCode(models.Model):
 
 
 class City(models.Model):
-    city_name   = models.CharField(max_length =25, verbose_name = "Ville",)
+    city_name   = models.CharField(max_length=60, verbose_name = "Ville",)
     zip_codes   = models.ManyToManyField(ZipCode, verbose_name="Code Postal", through= "ZipCode_City")
 
     def __str__(self):
@@ -41,9 +34,9 @@ class ZipCode_City(models.Model):
 
 class Address(models.Model):
     adress_label        = models.CharField(max_length=50, verbose_name = "Libellé de l'adresse",)
-    street_number       = models.CharField(max_length=30, null=True, blank=True, verbose_name = "Numéro de la rue",)
-    street              = models.CharField(max_length=50, verbose_name = "Nom de la rue",)
-    street_complement   = models.CharField(max_length=50, null=True, blank=True, verbose_name = "Complément d'adresse",)
+    street_number       = models.CharField(max_length=15, null=True, blank=True, verbose_name = "Numéro de la rue",)
+    street              = models.CharField(max_length=100, verbose_name = "Nom de la rue",)
+    street_complement   = models.CharField(max_length=100, null=True, blank=True, verbose_name = "Complément d'adresse",)
 
     # clé étrangere tjr dans l'entité qui a x,1 en cardinalité
     city        = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name = 'Ville')
@@ -55,7 +48,7 @@ class Address(models.Model):
     longitude   = models.DecimalField(max_digits=25, decimal_places=25, null=True, blank=True, verbose_name = 'longitude',) # valeur imprécise -> seulement anti-abus
     # doc DecimalField : https://docs.djangoproject.com/en/1.9/ref/models/fields/#django.db.models.DecimalField.max_digits
 
-    users   = models.ManyToManyField(User, verbose_name="Utilisateur", through= "Adress_User")
+    users       = models.ManyToManyField(User, verbose_name="Utilisateur", through= "Adress_User")
 
     class Meta:
         verbose_name = "Adresse"
