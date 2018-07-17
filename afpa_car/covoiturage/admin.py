@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import * # TODO import seulement ce dont on a besoin -> ZipCode_City ++
+from .models import ZipCode_City, Adress_User, Address, ZipCode, City
 
 class ZipCodeInline(admin.TabularInline):        
     model = ZipCode_City
@@ -36,10 +36,10 @@ class AdressAdmin(admin.ModelAdmin):
 
     def get_users(self, obj):
         return " ; ".join([u.get_full_name() for u in obj.users.all()])
-    get_users.short_description = 'Utilisateurs' #Verbose get_users
+    get_users.short_description = 'Utilisateurs'
 
     search_fields = ('city__city_name', 'zip_code__zip_code', 'street', 'adress_label', 'users__first_name', 'users__last_name', )
-
+                                        # Pourquoi zip_code__zip_code et non zipcode__zip_code ?
 
 
 
