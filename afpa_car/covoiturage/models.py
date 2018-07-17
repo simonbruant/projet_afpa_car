@@ -8,12 +8,12 @@ class ZipCode(models.Model):
     def __str__(self):
         rslt = ""
         nb = 0
-        for c in self.city_set.all(): # _set.all
+        for c in self.city_set.all():
             if nb != 0:
                 rslt += " ; "
             rslt += str( c )
             nb += 1
-        return str( self.zip_code )# + " " + rslt
+        return str( self.zip_code )
 
     class Meta:
         verbose_name = "Code Postal"
@@ -46,22 +46,23 @@ class Address(models.Model):
     street_complement   = models.CharField(max_length=50, null=True, blank=True, verbose_name = "Complément d'adresse",)
 
     # clé étrangere tjr dans l'entité qui a x,1 en cardinalité
-    city    = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name = 'Ville')
-    zip_code = models.ForeignKey(ZipCode, on_delete=models.CASCADE, verbose_name = 'Code Postal') #TODO changer nom variable
+    city        = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name = 'Ville')
+    zip_code    = models.ForeignKey(ZipCode, on_delete=models.CASCADE, verbose_name = 'Code Postal')
+                        # ForeignKey == OneToMany
+
 
     # TODO : Avec Leaflet -> remettre Lattitude / Longitude en obligatoire (?) (généré par l'adresse)
-    lattitude           = models.DecimalField(max_digits=25, decimal_places=25, null=True, blank=True, verbose_name = 'lattitude',)
-    longitude           = models.DecimalField(max_digits=25, decimal_places=25, null=True, blank=True, verbose_name = 'longitude',) # valeur imprécise -> seulement anti-abus
+    lattitude   = models.DecimalField(max_digits=25, decimal_places=25, null=True, blank=True, verbose_name = 'lattitude',)
+    longitude   = models.DecimalField(max_digits=25, decimal_places=25, null=True, blank=True, verbose_name = 'longitude',) # valeur imprécise -> seulement anti-abus
     # doc DecimalField : https://docs.djangoproject.com/en/1.9/ref/models/fields/#django.db.models.DecimalField.max_digits
 
-    # ForeignKey == OneToMany
     users   = models.ManyToManyField(User, verbose_name="Utilisateur", through= "Adress_User")
 
     class Meta:
         verbose_name = "Adresse"
     def __str__(self):
         # return  "{} -> adresse: {} {} {} {} ".format(self.adress_label, self.street_number, self.street,self.zipCode, self.city, )
-        return 'test' #TODO : return string vide ? supprimer le def __str__ ?
+        return 'test_ICITTE' #TODO : return string vide ? supprimer le def __str__ ?
 
 class Adress_User(models.Model):
     address = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Adresse")
