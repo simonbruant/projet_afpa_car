@@ -48,8 +48,7 @@ class Address(models.Model):
     # clé étrangere tjr dans l'entité qui a x,1 en cardinalité
     city        = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name = 'Ville')
     zip_code    = models.ForeignKey(ZipCode, on_delete=models.CASCADE, verbose_name = 'Code Postal')
-                        # ForeignKey == OneToMany
-
+                        #ForeignKey == OneToMany
 
     # TODO : Avec Leaflet -> remettre Lattitude / Longitude en obligatoire (?) (généré par l'adresse)
     lattitude   = models.DecimalField(max_digits=25, decimal_places=25, null=True, blank=True, verbose_name = 'lattitude',)
@@ -60,9 +59,6 @@ class Address(models.Model):
 
     class Meta:
         verbose_name = "Adresse"
-    def __str__(self):
-        # return  "{} -> adresse: {} {} {} {} ".format(self.adress_label, self.street_number, self.street,self.zipCode, self.city, )
-        return 'test_ICITTE' #TODO : return string vide ? supprimer le def __str__ ?
 
 class Adress_User(models.Model):
     address = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Adresse")

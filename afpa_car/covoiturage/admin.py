@@ -39,11 +39,7 @@ class AdressAdmin(admin.ModelAdmin):
     get_users.short_description = 'Utilisateurs'
 
     search_fields = ('city__city_name', 'zip_code__zip_code', 'street', 'adress_label', 'users__first_name', 'users__last_name', )
-                                        # Pourquoi zip_code__zip_code et non zipcode__zip_code ?
-
-
-
-
+                                        #Pourquoi zip_code__zip_code et non zipcode__zip_code ?
 
 # Register your models here.
 admin.site.register(Address, AdressAdmin)
