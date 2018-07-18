@@ -1,0 +1,95 @@
+<!-- ##### Preferences ##### -->
+
+<div class="row">
+    <div id="titre_profil" class="card-header bg-success col-md-12 mb-3">Préférence</div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4"></div>
+    <div class="col-md-3">
+        <input type="radio" id="oui_fumeur" name="fumeur_bool" >
+        <label for="oui_fumeur"><div id="icone_fumeur" class="icone_pref fas fa-smoking"></div></label>
+    </div>
+    <div class="col-md-3">
+        <input type="radio" id="non_fumeur" name="fumeur_bool" checked>
+        <label for="non_fumeur"><div id="icone_non_fumeur" class="icone_pref fas fa-smoking-ban"></div></label>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4"></div>
+    <div class="col-md-3">
+        <input type="radio" id="oui_parler" name="parler_bool" >
+        <label for="oui_parler"><div id="icone_parler" class="icone_pref far fa-comments"></div></label>
+    </div>
+    <div class="col-md-3">
+        <input type="radio" id="non_parler" name="parler_bool" checked>
+        <label for="non_parler"><div id="icone_non_parler" class="icone_pref far fa-comment"></div></label>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4"></div>
+    <div class="col-md-3">
+        <input type="radio" id="oui_musique" name="musique_bool" >
+        <label for="oui_musique"><div id="icone_volume" class="icone_pref fas fa-volume-up"></div></label>
+    </div>
+    <div class="col-md-3">
+        <input type="radio" id="non_musique" name="musique_bool" checked>
+        <label for="non_musique"><div id="icone_no_volume" class="icone_pref fas fa-volume-off"></div></label>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<div id="submit_profil">
+    <button type="submit" class="btn btn-success">Submit</button>
+</div>
+
+<script>
+        $(function($){
+            $('#oui_fumeur').click(function(e){
+                console.log('oui ok')
+                $('#icone_fumeur').css('color', '#E3007E');
+                $('#icone_non_fumeur').css('color', 'black');
+                
+            });
+            $('#non_fumeur').click(function(e){
+                console.log('non ok')
+                $('#icone_non_fumeur').css('color', '#E3007E');
+                $('#icone_fumeur').css('color', 'black');
+                
+            });
+        });
+
+        $(function($){
+            $('#oui_parler').click(function(e){
+                console.log('oui ok')
+                $('#icone_parler').css('color', '#E3007E');
+                $('#icone_non_parler').css('color', 'black');
+                
+            });
+            $('#non_parler').click(function(e){
+                console.log('non ok')
+                $('#icone_non_parler').css('color', '#E3007E');
+                $('#icone_parler').css('color', 'black');
+                
+            });
+        });
+
+        $(function($){
+            $('#oui_musique').click(function(e){
+                console.log('oui ok')
+                $('#icone_volume').css('color', '#E3007E');
+                $('#icone_no_volume').css('color', 'black');
+                
+            });
+            $('#non_musique').click(function(e){
+                console.log('non ok')
+                $('#icone_no_volume').css('color', '#E3007E');
+                $('#icone_volume').css('color', 'black');
+                
+            });
+        });
+</script>

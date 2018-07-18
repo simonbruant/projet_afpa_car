@@ -1,14 +1,10 @@
-[class*="col-"]
-{
-    /* border: 1px solid indigo; */
-    text-align: center;
-}
+
+
 #body_base
 {
     margin-top: 30px;
     width: calc(80%);
     box-shadow:0 0 20px rgba(0,0,0,0.8);
-
 }
 
 
@@ -54,6 +50,7 @@
 footer
 {
     margin-bottom: 50px;
+    text-align: center
 }
 
 #bandeau_footer
@@ -71,6 +68,11 @@ footer
     width: 50px;
 }
 
+#icone_avatar {
+    border-radius: 50%;
+    width: 8%;
+}
+
 #border_test
 {
     border-left: solid 2px lightgray;
@@ -82,3 +84,27 @@ footer
 {
     padding-bottom: 50px;
 }
+
+.hr_up { 
+    height: 30px; 
+    border-style: solid; 
+    border-color: #8c8b8b; 
+    border-width: 1px 0 0 0; 
+    border-radius: 20px; 
+    width: 500px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+  } 
+
+
+.hr_down {  
+    display: block; 
+    content: ""; 
+    height: 30px;  
+    border-style: solid; 
+    border-color: #8c8b8b; 
+    border-width: 0 0 1px 0; 
+    border-radius: 20px; 
+    width: 500px;
+    margin-bottom: 20px;
+  }

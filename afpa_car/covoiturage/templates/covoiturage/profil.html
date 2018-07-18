@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div id="profile_body">
+    <div id="container_profil" class="container">
+        <div class="row">
+            <div id="side-bar" class="col-md-4">
+                <div class="card-columns d-none d-inline">
+                    <div class="card">
+                        <div id="titre_profil" class="card-header bg-success">Profil</div>
+
+                        <div class="list-group side-menu">
+                        <a href="#" class="list-group-item active link_sidebar" data-target-id="informations_publiques">Informations Publiques</a>
+                        <a href="#" class="list-group-item link_sidebar" data-target-id="informations_privees">Informations Privées</a>
+                        <a href="#" class="list-group-item link_sidebar" data-target-id="photo">Photo</a>
+                        <a href="#" class="list-group-item link_sidebar" id="vehicule_link" data-target-id="vehicule">Vehicule</a>
+                        <a href="#" class="list-group-item link_sidebar" data-target-id="mot_de_passe">Mot de Passe</a>
+                        <a href="#" class="list-group-item link_sidebar" data-target-id="preferences">Préférences</a>
+                        <a href="#" class="list-group-item link_sidebar" data-target-id="adresse">Adresse</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="contenu" class="col-md-8">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div id="card_contenu" class="card col-md-12">
+                            
+                            <div class="menu-contenu" id="informations_publiques">
+                                {% include 'covoiturage/profil/infos_publiques.html' %}
+                            </div>
+                            <div class="menu-contenu" id="informations_privees">
+                                {% include 'covoiturage/profil/infos_privees.html' %}
+                            </div>
+                            <div class="menu-contenu" id="photo">
+                                {% include 'covoiturage/profil/photo.html' %}
+                            </div>
+                            <div class="menu-contenu" id="vehicule">
+                                {% include 'covoiturage/profil/vehicule.html' %}
+                            </div>
+                            <div class="menu-contenu" id="mot_de_passe">
+                                {% include 'covoiturage/profil/password.html' %}
+                            </div>
+                            <div class="menu-contenu" id="preferences">
+                                {% include 'covoiturage/profil/preferences.html' %}
+                            </div>
+                            <div class="menu-contenu" id="adresse">
+                                {% include 'covoiturage/profil/adresse.html' %}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% load static %}
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'covoiturage/js/profil.js' %}"></script>
+
+</div>
+
+{% endblock %}

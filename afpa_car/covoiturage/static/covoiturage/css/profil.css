@@ -1,0 +1,92 @@
+#container_profil {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/* ###### Gestion de la taille des pages ###### */
+#contenu {
+    height: 450px;
+}
+
+/* ###### La page véhicule à besoin d'une taille spécifique ###### */
+#vehicule {
+    height: 450px;
+}
+
+/* ###### SIDE MENU ###### */
+a {
+    color: black;
+}
+
+.link_sidebar:hover {
+    background-color: dimgray;
+    color: white;
+}
+
+.list-group-item.active {
+    background-color: #E3007E;
+    border-color: #E3007E;
+
+}
+
+/* ###### Titre des Card ###### */
+
+#titre_profil {
+    color: white;
+}
+
+/* ###### Gestion des Inputs ###### */
+
+#header_input_profil {
+    min-width: 200px;
+    text-align: center;
+}
+
+#choix_input_profil {
+    max-width: 450px;
+}
+
+.custom-radio .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #E3007E;
+}
+
+#checkbox_profil {
+    text-align: center;
+}
+
+#submit_profil, #submit_vehicule1, #submit_vehicule2 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* ###### Photo ###### */
+#rond {
+    border-radius: 50%;
+    width: 30%;
+    height: 30%;
+  }
+
+/* ###### Preferences ###### */
+.icone_pref {
+    font-size: 50px;
+}
+
+/* ###### Classe pour l'affichage des pages ###### */
+.hidden{
+    visibility: hidden;
+}
+
+/* ###### Bouton pour supprimer un véhicule ###### */
+#supprimer_vehicule, #supprimer_vehicule2 {
+    float: right;
+}
+
+/* ###### Masquage des boutons radios des préférences ###### */
+#oui_musique, #non_musique, #oui_fumeur, #non_fumeur, #oui_parler, #non_parler {
+    display: none;
+}
+
+.card {
+    border: none;
+}

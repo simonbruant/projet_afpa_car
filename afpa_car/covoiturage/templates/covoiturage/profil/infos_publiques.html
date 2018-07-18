@@ -1,0 +1,60 @@
+<!-- ##### Informations publiques ##### -->
+
+<div class="row">
+    <div id="titre_profil" class="card-header bg-success col-md-12">Informations Publiques</div>
+</div>
+
+    <div class="row">
+    <div class="col-md-2"></div>
+    <form class="col-md-8" action=".">
+
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">Pseudonyme</div>
+            </div>
+            <input id="body_input_profil" type="text" class="form-control">
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">Nom</div>
+            </div>
+            <input id="body_input_profil" type="text" class="form-control">
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">Prenom</div>
+            </div>
+            <input id="body_input_profil" type="text" class="form-control">
+        </div>
+    
+        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+
+        <div class="form-group">
+            <select id="choix_input_profil" class="form-control">
+                <option>Stagiaire</option>
+                <option>Employé</option>
+            </select>
+        </div>
+
+        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+
+        <div id="checkbox_profil">
+        <label>Êtes-vous titulaire du permis de conduire ?</label>
+        <div class="custom-control custom-radio">
+            <input type="radio" class="custom-control-input" id="oui_permis" name="permis_bool" checked>
+            <label class="custom-control-label" for="oui_permis">Oui</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" class="custom-control-input" id="non_permis" name="permis_bool">
+            <label class="custom-control-label" for="non_permis">Non</label>
+        </div>
+        </div>
+
+        <div id="submit_profil">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+        
+    </form>
+    </div>

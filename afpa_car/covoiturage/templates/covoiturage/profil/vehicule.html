@@ -1,0 +1,169 @@
+<!-- ##### Vehicule ##### -->
+
+                <div class="row">
+                    <div id="titre_profil" class="card-header bg-success col-md-12 mb-3">Vehicule</div>
+                </div>
+                    <div id="checkbox_profil">
+                        <label>Êtes-vous propriétaire d'un vehicule ?</label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input"  id="oui_vehicule" name="vehicule_bool" >
+                            <label class="custom-control-label" for="oui_vehicule">Oui</label>
+                        </div>
+                        <div class="custom-control custom-radio mb-3">
+                            <input type="radio" class="custom-control-input" id="non_vehicule" name="vehicule_bool" checked>
+                            <label class="custom-control-label" for="non_vehicule">Non</label>
+                        </div>
+                    </div>
+
+<!-- ##### PREMIER VEHICULE ##### -->
+
+        <div class="row ">
+            <div class="col-md-12 mt-3">
+                <div id="vehicule_info" class="card hidden">
+                    <div id="titre_profil" class="card-header bg-success">Premier véhicule<button id="supprimer_vehicule" class="btn btn-success far fa-trash-alt"> Supprimer</button></div>
+                        <form>
+                            <input class="form-control mb-2 mt-2" type="text" placeholder="Modèle">
+                            <input class="form-control mb-2" type="text" placeholder="Couleur">
+                            <input class="form-control mb-2" type="text" placeholder="Nombre de passager">
+                            <div class="input-group mb-2">
+                                <select class="form-control">
+                                    <option>SP-98</option>
+                                    <option>SP-95</option>
+                                    <option>SP-95 E10</option>
+                                    <option>DIESEL</option>
+                                    <option>GPL</option>
+                                    <option>ELECTRIQUE</option>
+                                </select>
+                                <input class="form-control" type="text" placeholder="Consommation moyenne">
+                            </div>
+                            <div id="checkbox_profil">
+                                <label>Véhicule fumeur</label>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input"  id="oui_fumeur" name="vehicule_fumeur_bool" >
+                                    <label class="custom-control-label" for="oui_fumeur">Oui</label>
+                                </div>
+                                <div class="custom-control custom-radio mb-3">
+                                    <input type="radio" class="custom-control-input" id="non_fumeur" name="vehicule_fumeur_bool" checked>
+                                    <label class="custom-control-label" for="non_fumeur">Non</label>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="submit_vehicule1">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                <div class="row mb-3">
+                        <div class="col-md-4"></div>
+                        <button id="add_vehicule" type="button" class="btn btn-success col-md-4 fas fa-plus"> Ajouter un véhicule</button>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+<!-- ##### DEUXIEME VEHICULE ##### -->
+
+            <div class="row ">
+                    <div class="col-md-12 mt-3">
+                        <div id="vehicule2_info" class="card hidden">
+                            <div id="titre_profil" class="card-header bg-success">Second véhicule<button id="supprimer_vehicule2" class="btn btn-success far fa-trash-alt"> Supprimer</button></div>
+                                <form>
+                                    <input class="form-control mb-2 mt-2" type="text" placeholder="Modèle">
+                                    <input class="form-control mb-2" type="text" placeholder="Couleur">
+                                    <input class="form-control mb-2" type="text" placeholder="Nombre de passager">
+                                    <div class="input-group mb-2">
+                                        <select class="form-control">
+                                            <option>SP-98</option>
+                                            <option>SP-95</option>
+                                            <option>SP-95 E10</option>
+                                            <option>DIESEL</option>
+                                            <option>GPL</option>
+                                            <option>ELECTRIQUE</option>
+                                        </select>
+                                        <input class="form-control" type="text" placeholder="Consommation moyenne">
+                                    </div>
+                                    <div id="checkbox_profil">
+                                        <label>Véhicule fumeur</label>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" class="custom-control-input"  id="oui_fumeur2" name="vehicule2_fumeur_bool" >
+                                            <label class="custom-control-label" for="oui_fumeur2">Oui</label>
+                                        </div>
+                                        <div class="custom-control custom-radio mb-3">
+                                            <input type="radio" class="custom-control-input" id="non_fumeur2" name="vehicule2_fumeur_bool" checked>
+                                            <label class="custom-control-label" for="non_fumeur2">Non</label>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div id="submit_vehicule1">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    {% load static %}
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script>
+    
+        /* ###### Fonctions pour ajouter les vehicules ###### */
+
+        $(function($){
+            $('#oui_vehicule').click(function(e){
+                console.log('oui ok')
+                $('#vehicule_info').removeClass('hidden');
+                $('#vehicule').css('height', '630px');
+                $('#contenu').css('height', '630px');
+            });
+            $('#non_vehicule').click(function(e){
+                console.log('non ok')
+                $('#vehicule_info').addClass('hidden');
+                
+            });
+        });
+
+        $(function($){
+            $('#add_vehicule').click(function(e){
+                console.log('add ok')
+                $('#vehicule2_info').removeClass('hidden');
+                $('#add_vehicule').addClass('hidden');
+                $('#submit_vehicule1').addClass('hidden');
+                $('#supprimer_vehicule').addClass('hidden');
+                $('#vehicule_info').css('height', '350px');
+                $('#contenu').css('height', '950px');
+                
+            });
+        });
+
+        /* ###### Fonctions pour supprimer les vehicules ###### */
+
+        $(function($){
+            $('#supprimer_vehicule').click(function(e){
+                console.log('suppr ok')
+                $('#vehicule_info').addClass('hidden');
+                $('#oui_vehicule').prop('checked', false);                
+                $('#non_vehicule').prop('checked', true);
+                $('#vehicule').css('height', '450px');
+                $('#contenu').css('height', '450px');                
+            });
+        });
+
+        $(function($){
+            $('#supprimer_vehicule2').click(function(e){
+                console.log('suppr2 ok')
+                $('#vehicule2_info').addClass('hidden');
+                $('#submit_vehicule1').removeClass('hidden');
+                $('#add_vehicule').removeClass('hidden');
+                $('#supprimer_vehicule').removeClass('hidden');
+                $('#vehicule_info').css('height', '470px');
+                $('#vehicule').css('height', '630px');
+                $('#contenu').css('height', '630px');  
+                
+            });
+        });
+
+</script>
+
+
+
+</body>
