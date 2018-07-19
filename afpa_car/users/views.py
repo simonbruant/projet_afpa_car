@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, FormView
 
 from .forms import LoginForm, SignupForm, LogoutForm
@@ -12,13 +12,13 @@ from .forms import LoginForm, SignupForm, LogoutForm
 class SignupView(CreateView):
     form_class = SignupForm
     template_name = 'covoiturage/signup.html'
-    success_url = '/reussi/'
+    success_url = reverse_lazy('covoiturage:index')
 
 
 class LoginView(FormView):
     form_class  = LoginForm
-    success_url = '/reussi/'
     template_name = 'covoiturage/index.html'
+    success_url = reverse_lazy('covoiturage:dashboard')
 
     def form_valid(self, form):
         request = self.request
@@ -37,7 +37,7 @@ class LoginView(FormView):
             if is_safe_url(redirect_path, request.get_host()):
                 return redirect(redirect_path)
             else:
-                return redirect('covoiturage:reussi')
+                return redirect('covoiturage:dashboard')
         print("pas valide")
         return super(LoginView, self).form_invalid(form)
 

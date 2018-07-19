@@ -35,7 +35,9 @@
             <div id="titre_base">AFPACAR - Le covoiturage de l'Afpa</div>
         </div>
         <div class="col-md-2">
+            {% if user.is_authenticated %}
             <a href="{% url 'covoiturage:logout' %}">Déconnexion</a>
+            {% endif %}
         </div>
     </header>
 
