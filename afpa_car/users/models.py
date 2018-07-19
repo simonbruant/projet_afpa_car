@@ -12,7 +12,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     active      = models.BooleanField(default=True)
     staff       = models.BooleanField(default=False)
     admin       = models.BooleanField(default=False)
-    license      = models.BooleanField(default=False)
+    license     = models.BooleanField(default=False)
     avatar      = models.ImageField(null=True, blank=True, upload_to='photos/')
     date_joined = models.DateTimeField(editable=False, default=timezone.now)
 
