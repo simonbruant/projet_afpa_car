@@ -8,11 +8,6 @@
     height: 450px;
 }
 
-/* ###### La page véhicule à besoin d'une taille spécifique ###### */
-#vehicule {
-    height: 450px;
-}
-
 /* ###### SIDE MENU ###### */
 a {
     color: black;
@@ -26,7 +21,6 @@ a {
 .list-group-item.active {
     background-color: #E3007E;
     border-color: #E3007E;
-
 }
 
 /* ###### Titre des Card ###### */
@@ -89,4 +83,9 @@ a {
 
 .card {
     border: none;
+}
+
+
+.test{
+    background-color: gold;
 }

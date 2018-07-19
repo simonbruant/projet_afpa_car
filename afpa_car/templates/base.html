@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/profil.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/accueil.css' %}" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
         crossorigin="anonymous">
 
@@ -34,42 +35,31 @@
         </div>
     </header>
 
-    <navbar class="row">
-            <nav id="navbar" class="site-header sticky-top py-1 col-md-12">
-                <div class="container d-flex flex-column flex-md-row justify-content-between">
-                    <a class="py-2 d-none d-md-inline-block" href="#">Tableau de bord</a>
-                    <a class="py-2 d-none d-md-inline-block" href="profil/">Profil</a>
-                    <a class="py-2 d-none d-md-inline-block" href="#">Semaine Type / Calendrier</a>
-                    <a class="py-2 d-none d-md-inline-block" href="#">Messagerie</a>
-                    <a class="py-2 d-none d-md-inline-block" href="#">Rechercher un trajet</a>
-                    <a class="py-2 d-none d-md-inline-block" href="#">Afpa</a>
-            </nav>
-        </div>
-    </navbar>
+    <div>
+        {% block navbar %}{% endblock navbar %}
+    </div>
 
-    <section>
-
-        <div>
-            {% block content %}{% endblock %}
-        </div>
-
-    </section>  
+    <div>
+        {% block section %}{% endblock %}
+    </div> 
 
     <footer>
         <div class="row">
             <div class="col-md-12" id="bandeau_footer"></div>
         </div>
+
         <div class="row">
             <div class="col-md-12">
                 <h5><br>Notre Equipe<br></h5>
                 <hr class="hr_up">
-                <img src="../static/img/borisv2.png" id="icone_avatar" title="Boris">
-                <img src="../static/img/simonB.png" id="icone_avatar" title="Simon B">
-                <img src="../static/img/kaklemakak.png" id="icone_avatar" title="Simon M">
-                <img src="../static/img/Damien.PNG" id="icone_avatar" title="Damien">
-                <img src="../static/img/Thibaud.PNG" id="icone_avatar" title="Thibaud">
+                <img src="{% static 'img/borisv2.png' %}" id="icone_avatar" title="Boris">
+                <img src="{% static 'img/simonB.png' %}" id="icone_avatar" title="Simon B">
+                <img src="{% static 'img/kaklemakak.png' %}" id="icone_avatar" title="Simon M">
+                <img src="{% static 'img/Damien.PNG' %}" id="icone_avatar" title="Damien">
+                <img src="{% static 'img/Thibaud.PNG' %}" id="icone_avatar" title="Thibaud">
             </div>
         </div>
+
         <hr class="hr_down">
 
         <div id="liens_footer" class="col-md-12">
@@ -79,7 +69,6 @@
             <span id="border_test"></span>
             <a>Plan du site</a>
         </div>
-
     </footer>
 
 

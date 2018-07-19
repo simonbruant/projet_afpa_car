@@ -1,12 +1,18 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} 
 
-<head>
-    {% load static %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/accueil.css' %}" />
 
-</head>
+{% block navbar %}
+<navbar class="row">
+        <nav id="navbar" class="site-header sticky-top py-1 col-md-12">
+            <div class="container d-flex flex-column flex-md-row justify-content-between">
+                <a class="py-2 d-none d-md-inline-block" href="#"> </a>
+        </nav>
+    </div>
+</navbar>
+{% endblock navbar %}
 
+{% block section %}
 <body class="container">
     <div class="row">
         <div class="col-md-12" id="background_accueil">

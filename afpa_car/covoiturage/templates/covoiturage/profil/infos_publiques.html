@@ -1,4 +1,6 @@
-<!-- ##### Informations publiques ##### -->
+{% extends 'covoiturage/profil.html' %}
+
+{% block contenuProfil %}
 
 <div class="row">
     <div id="titre_profil" class="card-header bg-success col-md-12">Informations Publiques</div>
@@ -39,6 +41,39 @@
         </div>
 
         <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+        
+        <div class="row">
+                <div id="checkbox_profil">
+                        <label>Status</label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input"  id="oui_fumeur2" name="vehicule2_fumeur_bool" >
+                            <label class="custom-control-label" for="oui_fumeur2">Stagiaire</label>
+                        </div>
+                        <div class="custom-control custom-radio mb-3">
+                            <input type="radio" class="custom-control-input" id="non_fumeur2" name="vehicule2_fumeur_bool" checked>
+                            <label class="custom-control-label" for="non_fumeur2">Formateur</label>
+                        </div>
+                    </div>
+            <div class="col-md-6">
+                <label for="debut_formation">Début de formation</label>
+                <input id="debut_formation" type="date" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="fin_formation">Fin de formation</label>
+                <input id="fin_formation" type="date" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="debut_stage">Début de stage</label>
+                <input id="debut_stage" type="date" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="fin_stage">Fin de stage</label>
+                <input id="fin_stage" type="date" class="form-control">
+            </div>
+
+        </div>
+
+        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
         <div id="checkbox_profil">
         <label>Êtes-vous titulaire du permis de conduire ?</label>
@@ -58,3 +93,6 @@
         
     </form>
     </div>
+
+{% endblock contenuProfil %}
+    
