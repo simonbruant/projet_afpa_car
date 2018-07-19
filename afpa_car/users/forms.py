@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from .models import User
@@ -15,6 +16,20 @@ class SignupForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name')
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+        r = User.objects.filter(email=email)
+        if r.count():
+            raise  ValidationError("Email already exists")
+        return email
+
+    def clean_username(self):
+        username = self.cleaned_data['username'].lower()
+        r = User.objects.filter(username=username)
+        if r.count():
+            raise  ValidationError("Username already exists")
+        return username
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -38,6 +53,11 @@ class SignupForm(forms.ModelForm):
 class LoginForm(forms.Form):
     email = forms.EmailField(label='Email',)
     password = forms.CharField(widget=forms.PasswordInput)
+
+class LogoutForm(forms.Form):
+    pass
+
+#################################################################
     
 class UserAdminCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required

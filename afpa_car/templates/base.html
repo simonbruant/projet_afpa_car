@@ -31,8 +31,11 @@
         <div class="col-md-4">
             <a href="{% url 'covoiturage:index' %}"><img id="logo_afpa" src="{% static 'img/logo_afpa.jpg' %}" alt="AFPA"></a>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div id="titre_base">AFPACAR - Le covoiturage de l'Afpa</div>
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'covoiturage:logout' %}">Déconnexion</a>
         </div>
     </header>
 
