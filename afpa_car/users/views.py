@@ -16,7 +16,7 @@ class SignupView(CreateView):
 class LoginView(FormView):
     form_class  = LoginForm
     success_url = '/reussi/'
-    template_name = 'users/login.html'
+    template_name = 'covoiturage/index.html'
 
     def form_valid(self, form):
         request = self.request

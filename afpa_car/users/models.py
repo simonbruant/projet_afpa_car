@@ -6,14 +6,13 @@ from .managers import UserManager
 
 class User(AbstractBaseUser, PermissionsMixin):
     email       = models.EmailField(max_length=255, unique=True, verbose_name='email adress')
-    username    = models.CharField(max_length=15, unique=True, verbose_name = 'pseudo',)
-    first_name  = models.CharField(max_length=30, verbose_name = 'prénom')
-    last_name   = models.CharField(max_length=50, verbose_name = 'nom')
+    username    = models.CharField(max_length=15, unique=True, verbose_name='pseudo',)
+    first_name  = models.CharField(max_length=30, verbose_name='prénom')
+    last_name   = models.CharField(max_length=50, verbose_name='nom')
     active      = models.BooleanField(default=True)
     staff       = models.BooleanField(default=False)
     admin       = models.BooleanField(default=False)
-    conducteur  = models.BooleanField(default=False)
-    permis      = models.BooleanField(default=False)
+    license      = models.BooleanField(default=False)
     avatar      = models.ImageField(null=True, blank=True, upload_to='photos/')
     date_joined = models.DateTimeField(editable=False, default=timezone.now)
 
@@ -54,7 +53,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_admin(self):
         return self.admin
-    
-    @property
-    def is_conducteur(self):
-        return self.conducteur

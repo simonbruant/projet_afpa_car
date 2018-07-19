@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% block content %}
+{% load static %}
+
+<head>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/accueil.css' %}" />
+
+</head>
+
+<body class="container">
+    <div class="row">
+        <div class="col-md-12" id="background_accueil">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="card1" class="card text-center" style="max-width: 18rem;">
+                <div id="header_card1" class="card-header">Pas encore de compte ?</div>
+                <div class="card-body">
+                    <h5 id="sous_titre_card1" class="card-title">S'inscrire</h5>
+                    <a href="{% url 'users:signup' %}"><button id="btn_card1" class="btn btn-success ">Créer un compte</button></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div id="card2" class="card text-center" style="max-width: 18rem;">
+                <div id="header_card2" class="card-header">Déjà un compte ? </div>
+                <div class="card-body">
+                    <h5 class="card-title">Se connecter</h5>
+                    <form action="." method="post">
+                        {% csrf_token %}
+                        {{ form.as_table }}
+                        <input type="submit" class="btn btn-success">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" id="espace_vide_accueil"></div>
+    </div>  
+</div>
+</div>
+</div>
+</body>  
+
+
+
+{% endblock %}
