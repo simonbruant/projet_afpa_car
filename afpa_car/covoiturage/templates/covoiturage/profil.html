@@ -1,24 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block navbar %}
-<navbar class="row">
-        <nav id="navbar" class="site-header sticky-top py-1 col-md-12">
-            <div class="container d-flex flex-column flex-md-row justify-content-between">
-                <a class="py-2 d-none d-md-inline-block" href="#">Tableau de bord</a>
-                <a class="py-2 d-none d-md-inline-block" href="{% url 'covoiturage:profil' %}">Profil</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Semaine Type / Calendrier</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Messagerie</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Rechercher un trajet</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Afpa</a>
-                {% if user.is_authenticated %}
-                <a href="{% url 'covoiturage:logout' %}" class="btn btn-success fas fa-sign-out-alt" id="logout" title="Déconnexion"></a>
-                {% endif %}
-        </nav>
-    </div>
-</navbar>
-{% endblock navbar %}
-
 {% block section %}
 
 <div id="profile_body">
