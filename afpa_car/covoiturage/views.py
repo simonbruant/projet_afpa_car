@@ -17,6 +17,6 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 class AddressView(CreateView):
     form_class = AddressForm
     template_name = 'covoiturage/test.html'
-    success_url = reverse_lazy('covoiturage:index')
+    success_url = reverse_lazy('covoiturage:profil')
 
 #     # AdressCreateForm / UpdateForm / DeleteForm
