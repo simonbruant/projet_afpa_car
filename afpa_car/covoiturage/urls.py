@@ -1,7 +1,7 @@
 from django.urls import path
 from django.views.generic import TemplateView
 
-from .views import DashboardView
+from .views import DashboardView, AddressView
 from users.views import LoginView, SignupView, LogoutView
 
 app_name = 'covoiturage'
@@ -13,4 +13,6 @@ urlpatterns = [
     path('signup/', SignupView.as_view(), name='signup'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    
+    path('test/', AddressView.as_view(), name='test')
 ]
