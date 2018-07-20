@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from .models import User
+from .models import User, PrivateData
 
 class SignupForm(forms.ModelForm):
     password1   = forms.CharField(label="Password", widget=forms.PasswordInput) # ini == password
@@ -56,6 +56,11 @@ class LoginForm(forms.Form):
 
 class LogoutForm(forms.Form):
     pass
+
+class PrivateDataCreateForm(forms.ModelForm):
+    class Meta:
+        model = PrivateData
+        fields = ('phone_number', 'afpa_number',)
 
 #################################################################
     

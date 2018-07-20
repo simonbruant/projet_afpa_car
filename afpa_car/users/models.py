@@ -53,3 +53,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_admin(self):
         return self.admin
+
+class PrivateData(models.Model):
+    user            = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone_number    = models.CharField(max_length=15, null=True)
+    afpa_number     = models.CharField(max_length=15, null=True)
