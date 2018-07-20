@@ -3,9 +3,13 @@
     margin-bottom: 30px;
 }
 
+.card {
+    border: none;
+}
+
 /* ###### Gestion de la taille des pages ###### */
 #contenu {
-    height: 450px;
+    height: 480px;
 }
 
 /* ###### SIDE MENU ###### */
@@ -79,13 +83,4 @@ a {
 /* ###### Masquage des boutons radios des préférences ###### */
 #oui_musique, #non_musique, #oui_fumeur, #non_fumeur, #oui_parler, #non_parler {
     display: none;
-}
-
-.card {
-    border: none;
-}
-
-
-.test{
-    background-color: gold;
 }

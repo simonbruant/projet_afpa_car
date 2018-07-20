@@ -5,7 +5,7 @@ app_name = 'covoiturage'
 urlpatterns = [
     
     path('', TemplateView.as_view(template_name="covoiturage/accueil.html")),
-    path('profil/', TemplateView.as_view(template_name="covoiturage/profil.html"), name='profil'),
+    path('profil/', TemplateView.as_view(template_name="covoiturage/profil/infos_publiques.html"), name='profil'),
     path('profil/infos_publiques/', TemplateView.as_view(template_name="covoiturage/profil/infos_publiques.html"), name='infos_publiques'),
     path('profil/infos_privees/', TemplateView.as_view(template_name="covoiturage/profil/infos_privees.html"), name='infos_privees'),
     path('profil/photo/', TemplateView.as_view(template_name="covoiturage/profil/photo.html"), name='photo'),
