@@ -1,4 +1,6 @@
-<!-- ##### Informations publiques ##### -->
+{% extends 'covoiturage/profil.html' %}
+
+{% block contenuProfil %}
 
 <div class="row">
     <div id="titre_profil" class="card-header bg-success col-md-12">Informations Publiques</div>
@@ -31,30 +33,90 @@
     
         <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
-        <div class="form-group">
-            <select id="choix_input_profil" class="form-control">
-                <option>Stagiaire</option>
-                <option>Employé</option>
-            </select>
+        <div id="checkbox_profil">
+            <label>Êtes-vous titulaire du permis de conduire ?</label>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="oui_permis" name="permis_bool" checked>
+                <label class="custom-control-label" for="oui_permis">Oui</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="non_permis" name="permis_bool">
+                <label class="custom-control-label" for="non_permis">Non</label>
+            </div>
         </div>
 
         <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
         <div id="checkbox_profil">
-        <label>Êtes-vous titulaire du permis de conduire ?</label>
-        <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input" id="oui_permis" name="permis_bool" checked>
-            <label class="custom-control-label" for="oui_permis">Oui</label>
-        </div>
-        <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input" id="non_permis" name="permis_bool">
-            <label class="custom-control-label" for="non_permis">Non</label>
-        </div>
+            <label>Quel est votre status ?</label>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input"  id="status_stagiaire" name="status_bool" >
+                <label class="custom-control-label" for="status_stagiaire">Stagiaire</label>
+            </div>
+            <div class="custom-control custom-radio mb-3">
+                <input type="radio" class="custom-control-input" id="status_formateur" name="status_bool" checked>
+                <label class="custom-control-label" for="status_formateur">Formateur</label>
+            </div>
         </div>
 
-        <div id="submit_profil">
-            <button type="submit" class="btn btn-success">Submit</button>
+        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+
+        <div id="submit_profil1">
+            <button type="submit" class="btn btn-success">Envoyer</button>
+        </div>
+        
+        <div class="row hidden" id="date_status">
+            
+            <div class="col-md-6">
+                <label for="debut_formation">Début de formation</label>
+                <input id="debut_formation" type="date" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="fin_formation">Fin de formation</label>
+                <input id="fin_formation" type="date" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="debut_stage">Début de stage</label>
+                <input id="debut_stage" type="date" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="fin_stage">Fin de stage</label>
+                <input id="fin_stage" type="date" class="form-control">
+            </div>
+
+        </div>
+
+        <br>
+        <div id="submit_profil2" class="hidden">
+            <button type="submit" class="btn btn-success">Envoyer</button>
         </div>
         
     </form>
     </div>
+
+    {% load static %}
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script>
+        $(function($){
+
+            $('#status_stagiaire').click(function(e){
+                console.log('stagiaire ok')
+                $('#date_status').removeClass('hidden');
+                $('#contenu').css('height', '680px');
+                $('#submit_profil1').addClass('hidden');
+                $('#submit_profil2').removeClass('hidden');
+
+            });
+            $('#status_formateur').click(function(e){
+                console.log('formateur ok')
+                $('#date_status').addClass('hidden');
+                $('#contenu').css('height', '480px');
+                $('#submit_profil1').removeClass('hidden');
+                $('#submit_profil2').addClass('hidden');
+                
+            });
+        });
+    </script>
+
+{% endblock contenuProfil %}
+    

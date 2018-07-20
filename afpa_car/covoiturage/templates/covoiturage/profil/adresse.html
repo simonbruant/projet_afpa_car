@@ -1,4 +1,6 @@
-<!-- ##### Adresse ##### -->
+{% extends 'covoiturage/profil.html' %}
+
+{% block contenuProfil %}
 
 <div class="row">
     <div id="titre_profil" class="card-header bg-success col-md-12 mb-3">Adresse</div>
@@ -23,7 +25,9 @@
                 </div>
                 
             <div id="submit_vehicule1">
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success">Envoyer</button>
             </div>
     </div>
 </div>
+
+{% endblock contenuProfil %}

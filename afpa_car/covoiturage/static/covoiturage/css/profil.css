@@ -3,14 +3,13 @@
     margin-bottom: 30px;
 }
 
-/* ###### Gestion de la taille des pages ###### */
-#contenu {
-    height: 450px;
+.card {
+    border: none;
 }
 
-/* ###### La page véhicule à besoin d'une taille spécifique ###### */
-#vehicule {
-    height: 450px;
+/* ###### Gestion de la taille des pages ###### */
+#contenu {
+    height: 480px;
 }
 
 /* ###### SIDE MENU ###### */
@@ -26,7 +25,6 @@ a {
 .list-group-item.active {
     background-color: #E3007E;
     border-color: #E3007E;
-
 }
 
 /* ###### Titre des Card ###### */
@@ -85,8 +83,4 @@ a {
 /* ###### Masquage des boutons radios des préférences ###### */
 #oui_musique, #non_musique, #oui_fumeur, #non_fumeur, #oui_parler, #non_parler {
     display: none;
-}
-
-.card {
-    border: none;
 }

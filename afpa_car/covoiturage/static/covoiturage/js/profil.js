@@ -2,22 +2,27 @@
 
 $(document).ready(function() {
 
-    var navItems = $('.side-menu a');
-    var allWells = $('.menu-contenu');
-    var allWellsExceptFirst = $('.menu-contenu:not(:first)');
+    // VERSION INITIAL
+    // var tableau =  $("#filtre_url_contenu a")
 
-    allWellsExceptFirst.hide();
+    // tableau.each(element => {
+    //      if (tableau[element].href == document.location.href)
+    //      {
+    //         tableau.eq(element).addClass('active');
+    //      }
+    //  });
 
-    navItems.click(function(e) {
-        e.preventDefault();
-        navItems.removeClass('active');
-        $(this).closest('a').addClass('active');
-    
-    allWells.hide();
-    var target = $(this).attr('data-target-id');
-    $('#' + target).show();
-    });
+
+     $("#filtre_url_contenu a").each(function( index ) {
+        if ( this.href == document.location.href)
+        {             
+            $(this).addClass('active');
+        }
+    })
 });
 
-// Fonction affichage vehicule si oui 
+
+
+ 
+
 

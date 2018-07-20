@@ -1,4 +1,6 @@
-<!-- ##### Informations privées ##### -->
+{% extends 'covoiturage/profil.html' %}
+
+{% block contenuProfil %}
 
 <div class="row">
     <div id="titre_profil" class="card-header bg-success col-md-12">Informations Privées</div>
@@ -30,8 +32,10 @@
         </div>
 
         <div id="submit_profil">
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="submit" class="btn btn-success">Envoyer</button>
         </div>
         
     </form>
     </div>
+    
+{% endblock contenuProfil %}
