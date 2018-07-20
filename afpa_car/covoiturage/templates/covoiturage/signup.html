@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block section %}
 <h1>Sign Up</h1>
     <form method='POST'> {% csrf_token %}
         <table>
@@ -34,4 +34,4 @@
             </table>
       <button type='submit' class='btn btn-default'>Submit</button>
 </form>
-{% endblock content %}
+{% endblock section %}

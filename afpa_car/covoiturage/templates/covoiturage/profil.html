@@ -11,6 +11,9 @@
                 <a class="py-2 d-none d-md-inline-block" href="#">Messagerie</a>
                 <a class="py-2 d-none d-md-inline-block" href="#">Rechercher un trajet</a>
                 <a class="py-2 d-none d-md-inline-block" href="#">Afpa</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'covoiturage:logout' %}" class="btn btn-success fas fa-sign-out-alt" id="logout" title="Déconnexion"></a>
+                {% endif %}
         </nav>
     </div>
 </navbar>
