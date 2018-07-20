@@ -29,9 +29,6 @@ class UserAdmin(BaseUserAdmin):
         ('Required Fields', {
             'classes': ('wide',),
             'fields': ('first_name', 'last_name', 'email', 'username',  
-<<<<<<< HEAD
-                        'password1', 'password2','avatar', 'driver_license','active', 'staff', 'admin')}
-=======
                         'password1', 'password2',)}
         ),
         ('Optional Fields', {
@@ -41,7 +38,6 @@ class UserAdmin(BaseUserAdmin):
         ('Permissions', {
             'classes': ('wide',),
             'fields': ('active', 'staff', 'admin',)}
->>>>>>> users
         ),
     )
     search_fields = ('email',)
