@@ -40,7 +40,7 @@ class Address(models.Model):
 
     # clé étrangere tjr dans l'entité qui a x,1 en cardinalité
     city        = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name = 'Ville')
-    zip_code    = models.ForeignKey(Zip Code, on_delete=models.CASCADE, verbose_name = 'Code Postal')
+    zip_code    = models.ForeignKey(ZipCode, on_delete=models.CASCADE, verbose_name = 'Code Postal')
                         #ForeignKey == OneToMany
 
     # TODO : Avec Leaflet -> remettre Lattitude / Longitude en obligatoire (?) (généré par l'adresse)
