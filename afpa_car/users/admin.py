@@ -20,7 +20,7 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('admin', 'active', 'staff')
     fieldsets = (
         (None, {'fields': ('email', 'username', 'password')}),
-        ('Personal infos', {'fields': ('first_name', 'last_name', 'avatar', 'conducteur', 'permis')}),
+        ('Personal infos', {'fields': ('first_name', 'last_name', 'avatar', 'driver_license')}),
         ('Permissions', {'fields': ('admin', 'staff', 'active')}),
         
     )
@@ -30,7 +30,7 @@ class UserAdmin(BaseUserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': ('first_name', 'last_name', 'email', 'username',  
-                        'password1', 'password2','avatar', 'conducteur', 'permis','active', 'staff', 'admin')}
+                        'password1', 'password2','avatar', 'driver_license','active', 'staff', 'admin')}
         ),
     )
     search_fields = ('email',)
