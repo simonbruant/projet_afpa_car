@@ -6,13 +6,31 @@ from django.utils.http import is_safe_url
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, FormView
 
-from .forms import LoginForm, SignupForm, LogoutForm
+from .forms import LoginForm, SignupForm, LogoutForm, PrivateDataCreateForm
 
 
 class SignupView(CreateView):
     form_class = SignupForm
     template_name = 'covoiturage/signup.html'
     success_url = reverse_lazy('covoiturage:index')
+
+def signup_view(request):
+    signup_form = SignupForm(request.POST or None)
+    private_data_form = PrivateDataCreateForm(request.POST or None)
+    if signup_form.is_valid() and private_data_form.is_valid():
+        user = signup_form.save()
+        private_data = private_data_form.save(commit=False)
+        private_data.user = user
+        private_data.save()
+
+        return redirect("covoiturage:index")
+
+    return render(
+        request, 
+        'covoiturage/signup.html', 
+        {   'signup_form': signup_form,
+            'private_data_form': private_data_form,}
+    )
 
 
 class LoginView(FormView):
@@ -40,6 +58,14 @@ class LoginView(FormView):
                 return redirect('covoiturage:dashboard')
         print("pas valide")
         return super(LoginView, self).form_invalid(form)
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('covoiturage:dashboard')
+        else:
+            # Omit the form if you are not using it.
+            form = self.form_class() 
+            return render(request, self.template_name, {'form': form})
 
 class LogoutView(LoginRequiredMixin, FormView):
     form_class = LogoutForm
