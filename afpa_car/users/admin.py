@@ -21,7 +21,7 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('admin', 'active', 'staff')
     fieldsets = (
         (None, {'fields': ('email', 'username', 'password')}),
-        ('Personal infos', {'fields': ('first_name', 'last_name', 'avatar', 'driver_license')}),
+        ('Personal infos', {'fields': ('first_name', 'last_name', 'avatar', 'trainee', 'driver_license', 'car_owner')}),
         ('Permissions', {'fields': ('admin', 'staff', 'active')}),
         
     )
@@ -33,7 +33,7 @@ class UserAdmin(BaseUserAdmin):
         ),
         ('Optional Fields', {
             'classes': ('wide',),
-            'fields': ('avatar', 'driver_license')}
+            'fields': ('avatar', 'driver_license', 'trainee', 'car_owner')}
         ),
         ('Permissions', {
             'classes': ('wide',),

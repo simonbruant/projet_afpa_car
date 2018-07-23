@@ -10,10 +10,14 @@
 
 {% block contenuProfil %}
 
-    <div class="row">
-    <div class="col-md-2"></div>
-    <form class="col-md-8" action=".">
 
+<div class="row">
+    <div class="col-md-2"></div>
+    <form class="col-md-8" action="{% url 'covoiturage:infos_privees' %}" method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        {% comment %}
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
                 <div id="header_input_profil" class="input-group-text">Numéro de téléphone</div>
@@ -34,12 +38,19 @@
             </div>
             <input id="body_input_profil" type="text" class="form-control">
         </div>
-
+        {% endcomment %}
         <div id="submit_profil">
             <button type="submit" class="btn btn-success">Envoyer</button>
         </div>
         
     </form>
-    </div>
+
+    {% if messages %}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+    {% endif %}
+    
+</div>
     
 {% endblock contenuProfil %}
