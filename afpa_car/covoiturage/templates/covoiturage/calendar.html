@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block section %}
+
+<div class="card mt-3 mb-3">
+    <div class="card-header bg-success">Votre semaine type<span class="fas fa-bars" id="burger"></span></div>
+    <div class="card-content" id="semaineType">
+        <table class="table-striped table-bordered">
+            <tr>
+                <td id="tableSemaineType" class="p-1"><b>Jour</b></td>
+                <td id="tableSemaineType" class="p-1"><b>Adresse de départ</b></td>
+                <td id="tableSemaineType" class="p-1"><b>Horaire de départ</b></td>
+                <td id="tableSemaineType" class="p-1"><b>Horaire d'arrivée</b></td>
+                <td id="tableSemaineType" class="p-1"><b>Adresse d'arrivée</b></td>
+                <td id="tableSemaineType" class="p-1"><b>Horaire de retour</b></td>
+                <td id="tableSemaineType" class="p-1"><b>Horaire d'arrivée retour</b></td>
+            </tr>
+            <tr>
+                <td>Lundi</td>
+                <td>Domicile</td>
+                <td>7:00</td>
+                <td>8:15</td>
+                <td>AFPA</td>
+                <td>18:00</td>
+                <td>19:00</td>
+            </tr>
+            <tr>
+                <td>Mardi</td>
+                <td>Domicile</td>
+                <td>6:50</td>
+                <td>8:15</td>
+                <td>AFPA</td>
+                <td>17:50</td>
+                <td>19:00</td>
+            </tr>
+            <tr>
+                <td>Mercredi</td>
+                <td>Domicile</td>
+                <td>7:00</td>
+                <td>8:15</td>
+                <td>AFPA</td>
+                <td>18:00</td>
+                <td>19:00</td>
+            </tr>
+            <tr>
+                <td>Jeudi</td>
+                <td>Domicile</td>
+                <td>6:50</td>
+                <td>8:15</td>
+                <td>AFPA</td>
+                <td>17:50</td>
+                <td>19:00</td>
+            </tr>
+            <tr>
+                <td>Vendredi</td>
+                <td>Domicile</td>
+                <td>7:00</td>
+                <td>8:15</td>
+                <td>AFPA</td>
+                <td>18:00</td>
+                <td>19:00</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-success">Votre calendrier</div>
+    <div class="card-content">
+        <div class="row">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">                     
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock section %}

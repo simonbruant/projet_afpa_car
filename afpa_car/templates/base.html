@@ -13,6 +13,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/signup.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/profil.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/dashboard.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/calendar.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/index.css' %}" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
         crossorigin="anonymous">
@@ -45,11 +47,11 @@
                     <div class="container d-flex flex-column flex-md-row justify-content-between">
                         <a class="py-2 d-none d-md-inline-block" href="{% url 'covoiturage:dashboard'%}">Tableau de bord</a>
                         <a class="py-2 d-none d-md-inline-block" href="{% url 'covoiturage:profil' %}">Profil</a>
-                        <a class="py-2 d-none d-md-inline-block" href="#">Semaine Type / Calendrier</a>
+                        <a class="py-2 d-none d-md-inline-block" href="{% url 'covoiturage:calendar' %}">Semaine Type / Calendrier</a>
                         <a class="py-2 d-none d-md-inline-block" href="#">Messagerie</a>
                         <a class="py-2 d-none d-md-inline-block" href="#">Rechercher un trajet</a>
                         <a class="py-2 d-none d-md-inline-block" href="#">Afpa</a>
-                        <a href="{% url 'covoiturage:logout' %}" class="btn btn-success fas fa-sign-out-alt" id="logout" title="Déconnexion"></a>
+                        <a href="{% url 'covoiturage:logout' %}" class="btn fas fa-sign-out-alt" id="logout" title="Déconnexion"></a>
                     </nav>
                 </div>
             </navbar>

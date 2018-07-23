@@ -1,0 +1,18 @@
+#burger {
+    float: right;
+    color: black;
+}
+
+.card-header {
+    text-align: center;
+}
+
+#semaineType {
+    align-self: center;
+    text-align: center;
+}
+
+#tableSemaineType {
+    width: 14%;
+}
+

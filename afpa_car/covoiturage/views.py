@@ -22,3 +22,8 @@ class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
     def get_object(self, queryset=None):
         user = PrivateData.objects.get(user=self.request.user)
         return user
+        
+class CalendarView(LoginRequiredMixin, TemplateView):
+    template_name = 'covoiturage/calendar.html'
+
+    
