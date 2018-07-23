@@ -5,17 +5,17 @@
 {% block section %}
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
-            <h3>You sure?</h3>
+        <div class="col-md-6 mt-5">
+            <h3 >Voulez vous partir ?</h3>
             <form method="POST">
                 {{ form.as_p }}
                 {% csrf_token %}
-                <input type="submit" value="Logout" class="btn btn-default">
+                <input type="submit" value="Se deconnecter" class="btn btn-success mb-5">
             </form>
         </div>
-        <div class="col-md-6">
-            <h3>Come back soon!</h3>
-            <p>This site works best if you use it often!</p>
+        <div class="col-md-6 mt-5" >
+            <h3> Revenez vite !</h3>
+            <p>Ce site fonctionne mieux si vous revenez souvent !</p>
         </div>
     </div>
 </div>

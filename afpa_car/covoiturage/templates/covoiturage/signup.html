@@ -1,47 +1,77 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block section %}
 
-{% block section %}
-<h1>Sign Up</h1>
-    <form method='POST'> {% csrf_token %}
-        <table>
-          <tr>
-              <td>{{ signup_form.first_name.label_tag }}</td>
-              <td>{{ signup_form.first_name }}</td>
-            </tr>
-                <tr>
-                    <td>{{ signup_form.last_name.label_tag }}</td>
-                    <td>{{ signup_form.last_name }}</td>
-                </tr>
-            <tr>
-                <td>{{ signup_form.email.label_tag }}</td>
-                <td>{{ signup_form.email }}</td>
-                <td>{{ signup_form.email.errors }}</td>
-            </tr>
-            <tr>
-                <td>{{ private_data_form.phone_number.label_tag }}</td>
-                <td>{{ private_data_form.phone_number }}</td>
-                <td>{{ private_data_form.phone_number.email.errors }}</td>
-            </tr>
-            <tr>
-                <td>{{ private_data_form.afpa_number.label_tag }}</td>
-                <td>{{ private_data_form.afpa_number }}</td>
-                <td>{{ private_data_form.afpa_number.errors }}</td>
-            </tr>
-            <tr>
-                <td>{{ signup_form.username.label_tag }}</td>
-                <td>{{ signup_form.username }}</td>
-                <td>{{ signup_form.username.errors }}</td>
-            </tr>
-            <tr>
-                <td>{{ signup_form.password1.label_tag }}</td>
-                <td>{{ signup_form.password1 }}</td>
-            </tr>
-            <tr>
-                <td>{{ signup_form.password2.label_tag }}</td>
-                <td>{{ signup_form.password2 }}</td>
-                <td>{{ signup_form.password2.errors }}</td>
-            </tr>
-            </table>
-      <button type='submit' class='btn btn-default'>Submit</button>
-</form>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="header_signup">
+                <div id="titre_signup" class="mb-3"> CREER UN COMPTE </div>
+                <div id="text_header_signup" class="mb-3"> Et commencer votre aventure de covoitureur Afpanien </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+                    
+        <div class="col-md-3 mt-4"></div>
+
+        <div id="from_signup" class="col-md-6">
+            <form method='POST'> {% csrf_token %}
+                <div class="input-group mt-3 mb-3">
+                    <input class="form-control" placeholder="Nom" type="text" name="last_name" maxlength="50" required id="id_last_name" />
+                </div>
+                <div class="input-group mb-3">
+                    <input class="form-control" placeholder="Prénom" type="text" name="first_name" maxlength="30" required id="id_first_name" />
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text fas fa-at"></span>
+                    </div>
+                    <input class="form-control" placeholder="Email" type="email" name="email" maxlength="255" required id="id_email" />
+                    <div> {{ signup_form.email.errors }} </div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text fas fa-mobile-alt"></span>
+                    </div>
+                    <input class="form-control" placeholder="Numéro de telephone" type="text" name="phone_number" maxlength="15" required id="id_phone_number" />
+                    <div> {{ private_data_form.phone_number.email.errors }} </div>
+                </div>
+
+                <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+
+          
+
+                <div class="input-group mb-3">
+                    <input class="form-control" placeholder="Identifiant Afpa" type="text" name="afpa_number" maxlength="15" required id="id_afpa_number" />
+                    <div> {{ private_data_form.afpa_number.errors }} </div>
+                </div>
+
+                <div class="input-group mb-3">
+                    <input class="form-control" placeholder="Pseudo" type="text" name="username" minlength="3" required id="id_username" />
+                    <div> {{ signup_form.username.errors }} </div>
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text fas fa-unlock-alt"></span>
+                    </div>
+                    <input class="form-control" placeholder="Mot de passe" type="password" name="password1" required id="id_password1" />
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text fas fa-unlock-alt"></span>
+                    </div>
+                    <input class="form-control" placeholder="Confimez votre mot de passe" type="password" name="password2" required id="id_password2" />
+                    <div> {{ signup_form.password2.errors }} </div>
+                </div>
+
+                <button type='submit' class='btn btn-success'>Envoyer</button>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+
 {% endblock section %}
