@@ -9,13 +9,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     username        = models.CharField(max_length=15, unique=True, verbose_name='pseudo',)
     first_name      = models.CharField(max_length=30, verbose_name='prénom')
     last_name       = models.CharField(max_length=50, verbose_name='nom')
+    driver_license  = models.BooleanField(default=False, verbose_name="permis")
+    trainee         = models.BooleanField(default=False, verbose_name="stagiaire")
+    car_owner       = models.BooleanField(default=False, verbose_name="propriétaire d'un véhicule")
+    avatar          = models.ImageField(null=True, blank=True, upload_to='photos/')
+
     active          = models.BooleanField(default=True)
     staff           = models.BooleanField(default=False)
     admin           = models.BooleanField(default=False)
-    driver_license  = models.BooleanField(default=False)
-    avatar          = models.ImageField(null=True, blank=True, upload_to='photos/')
     date_joined     = models.DateTimeField(editable=False, default=timezone.now)
-
     # confirm   = models.BooleanField(default=False)
     # confirmed_date = models.DateTimeField(default=False)
 
