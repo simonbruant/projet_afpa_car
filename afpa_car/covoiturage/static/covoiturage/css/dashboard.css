@@ -1,0 +1,21 @@
+.card-header {
+    color: white;
+}
+
+.card-content {
+    align-self: center;
+}
+
+#alertes_profil {
+    color: #E3007E;
+}
+
+#rond {
+    border-radius: 50%;
+    width: 10%;
+    height: 10%;
+}
+
+h4 {
+    float: left;
+}

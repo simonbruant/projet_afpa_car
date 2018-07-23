@@ -58,8 +58,8 @@
                 <label class="custom-control-label" for="status_stagiaire">Stagiaire</label>
             </div>
             <div class="custom-control custom-radio mb-3">
-                <input type="radio" class="custom-control-input" id="status_formateur" name="status_bool" checked>
-                <label class="custom-control-label" for="status_formateur">Formateur</label>
+                <input type="radio" class="custom-control-input" id="status_employe" name="status_bool" checked>
+                <label class="custom-control-label" for="status_employe">Employé</label>
             </div>
         </div>
 
@@ -106,15 +106,15 @@
             $('#status_stagiaire').click(function(e){
                 console.log('stagiaire ok')
                 $('#date_status').removeClass('hidden');
-                $('#contenu').css('height', '680px');
+                $('#contenu').css('height', '690px');
                 $('#submit_profil1').addClass('hidden');
                 $('#submit_profil2').removeClass('hidden');
 
             });
-            $('#status_formateur').click(function(e){
-                console.log('formateur ok')
+            $('#status_employe').click(function(e){
+                console.log('employe ok')
                 $('#date_status').addClass('hidden');
-                $('#contenu').css('height', '480px');
+                $('#contenu').css('height', '500px');
                 $('#submit_profil1').removeClass('hidden');
                 $('#submit_profil2').addClass('hidden');
                 
