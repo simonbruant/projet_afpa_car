@@ -11,7 +11,7 @@ from .forms import LoginForm, SignupForm, LogoutForm, PrivateDataCreateForm
 
 class SignupView(CreateView):
     form_class = SignupForm
-    template_name = 'covoiturage/signup.html'
+    template_name = 'users/signup.html'
     success_url = reverse_lazy('covoiturage:index')
 
 def signup_view(request):
