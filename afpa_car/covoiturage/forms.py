@@ -16,10 +16,11 @@ class PrivateDataUpdateForm(forms.ModelForm):
 class UserUpdateForm (forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email' )
+        fields = ('username', 'first_name', 'last_name', 'email','car_owner' )
         widgets = {
             'username': TextInput(attrs={'class': 'form-control'}),
             'first_name': TextInput(attrs={'class': 'form-control'}),
             'last_name': TextInput(attrs={'class': 'form-control'}),
             'email': TextInput(attrs={'class': 'form-control'}),
+            'car_owner': forms.RadioSelect
         }

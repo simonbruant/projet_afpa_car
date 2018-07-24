@@ -55,24 +55,26 @@
             </div>
             {{ form.email }} 
         </div>
-
-        <div id="submit_profil">
-                <button type="submit" class="btn btn-success">Envoyer</button>
-            </div>
     
-        {% comment %} <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+         <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
         <div id="checkbox_profil">
             <label>Êtes-vous titulaire du permis de conduire ?</label>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="oui_permis" name="permis_bool" checked>
+                <input type="radio" class="custom-control-input" id="oui_permis" name="car_owner" checked>
                 <label class="custom-control-label" for="oui_permis">Oui</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="non_permis" name="permis_bool">
+                <input type="radio" class="custom-control-input" id="non_permis" name="car_owner">
                 <label class="custom-control-label" for="non_permis">Non</label>
             </div>
         </div>
+
+        <div id="submit_profil">
+            <button type="submit" class="btn btn-success">Envoyer</button>
+        </div>
+
+        {% comment %}
 
         <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
