@@ -10,17 +10,30 @@
 
 {% block contenuProfil %}
 
+<div id="message_update" class="col-md-12 mb-3">
+        {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        {% endif %}
+    </div>
 
 <div class="row">
     <div class="col-md-2"></div>
+
     <form class="col-md-8" action="{% url 'covoiturage:infos_privees' %}" method='POST'>
         {% csrf_token %}
         <div class="input-group">
-            {{ form.phone_number.label_tag }}
-            <div> {{ form.phone_number }} </div>
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">Numéro de telephone</div>
+            </div>
+            {{ form.phone_number }} 
+        </div>
         <br>
         <div class="input-group">
-            {{ form.afpa_number.label_tag }}
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">Identifiant Afpa</div>
+            </div>
             {{ form.afpa_number }}
         </div>
 
@@ -30,12 +43,11 @@
 
     </form>
 
-    {% if messages %}
-    {% for message in messages %}
-        {{ message }}
-    {% endfor %}
-    {% endif %}
-    
+
+
+   
+          
+
 </div>
     
 {% endblock contenuProfil %}

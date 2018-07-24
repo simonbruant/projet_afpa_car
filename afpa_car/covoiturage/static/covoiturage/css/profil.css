@@ -7,6 +7,10 @@
     border: none;
 }
 
+#message_update {
+    color : #E3007E;
+}
+
 /* ###### Gestion de la taille des pages ###### */
 #contenu {
     height: 480px;

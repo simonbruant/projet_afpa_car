@@ -10,29 +10,42 @@
 
 {% block contenuProfil %}
 
+
+<div id="message_update" class="col-md-12">
+        {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        {% endif %}
+    </div>
+
     <div class="row">
     <div class="col-md-2"></div>
-    <form class="col-md-8" action=".">
+
+    
+    
+    <form class="col-md-8" action="{% url 'covoiturage:infos_publiques' %}" method='POST'>
+            {% csrf_token %}
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
                 <div id="header_input_profil" class="input-group-text">Pseudonyme</div>
             </div>
-            <input id="body_input_profil" type="text" class="form-control">
+            {{ form.username }} 
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <div id="header_input_profil" class="input-group-text">Nom</div>
             </div>
-            <input id="body_input_profil" type="text" class="form-control">
+            {{ form.last_name }} 
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <div id="header_input_profil" class="input-group-text">Prenom</div>
             </div>
-            <input id="body_input_profil" type="text" class="form-control">
+            {{ form.first_name }} 
         </div>
 
         
@@ -40,10 +53,14 @@
             <div class="input-group-prepend">
                 <div id="header_input_profil" class="input-group-text">Adresse Email</div>
             </div>
-            <input id="body_input_profil" type="text" class="form-control">
+            {{ form.email }} 
         </div>
+
+        <div id="submit_profil">
+                <button type="submit" class="btn btn-success">Envoyer</button>
+            </div>
     
-        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+        {% comment %} <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
         <div id="checkbox_profil">
             <label>Êtes-vous titulaire du permis de conduire ?</label>
@@ -96,12 +113,13 @@
                 <input id="fin_stage" type="date" class="form-control">
             </div>
 
-        </div>
+        </div> {% endcomment %}
 
         <br>
         <div id="submit_profil2" class="hidden">
             <button type="submit" class="btn btn-success">Envoyer</button>
         </div>
+
         
     </form>
     </div>
