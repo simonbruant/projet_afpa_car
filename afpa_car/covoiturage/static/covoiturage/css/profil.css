@@ -13,7 +13,7 @@
 
 /* ###### Gestion de la taille des pages ###### */
 #contenu {
-    height: 480px;
+    height: 600px;
 }
 
 /* ###### SIDE MENU ###### */
@@ -49,7 +49,8 @@ a {
 }
 
 .custom-radio .custom-control-input:checked ~ .custom-control-label::before {
-    background-color: #E3007E;
+    background-color: #E3007E;.
+    
 }
 
 #checkbox_profil {

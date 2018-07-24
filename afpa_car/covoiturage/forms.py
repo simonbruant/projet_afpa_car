@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import TextInput
+from django.forms import TextInput, RadioSelect
 
 from users.models import PrivateData, User
 
@@ -16,11 +16,14 @@ class PrivateDataUpdateForm(forms.ModelForm):
 class UserUpdateForm (forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email','car_owner' )
+        fields = ( 'username', 'first_name', 'last_name', 'email','car_owner', 'trainee' )
         widgets = {
             'username': TextInput(attrs={'class': 'form-control'}),
             'first_name': TextInput(attrs={'class': 'form-control'}),
             'last_name': TextInput(attrs={'class': 'form-control'}),
             'email': TextInput(attrs={'class': 'form-control'}),
-            'car_owner': forms.RadioSelect
+            'car_owner': RadioSelect(attrs={'class': 'custom-control-input'}),
+            'trainee': RadioSelect(attrs={'class': 'custom-control-input'}),
         }
+
+# (attrs={'class': 'custom-control-input'})

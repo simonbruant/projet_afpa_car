@@ -11,7 +11,7 @@ urlpatterns = [
     path('signup/', signup_view, name='signup'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('profil/', TemplateView.as_view(template_name="covoiturage/profil/infos_publiques.html"), name='profil'),
+    path('profil/', UserUpdateView.as_view(), name='profil'),
     path('profil/infos_publiques/', UserUpdateView.as_view(), name='infos_publiques'),
     path('profil/infos_privees/', PrivateDataUpdateView.as_view(), name='infos_privees'),
     path('profil/photo/', TemplateView.as_view(template_name="covoiturage/profil/photo.html"), name='photo'),
