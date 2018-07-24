@@ -26,4 +26,5 @@ class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
 class CalendarView(LoginRequiredMixin, TemplateView):
     template_name = 'covoiturage/calendar.html'
 
+
     

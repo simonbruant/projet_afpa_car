@@ -13,7 +13,8 @@
 #logo_afpa
 {
     width: 250px;
-
+    position: relative;
+    top: 10px;
 }
 
 #titre_base
