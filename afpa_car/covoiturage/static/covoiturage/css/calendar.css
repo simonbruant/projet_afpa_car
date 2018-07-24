@@ -16,3 +16,10 @@
     width: 14%;
 }
 
+#datepicker {
+    margin-left: 22%;
+}
+
+#conteneur_calendrier {
+    border-right: 2px solid lightgray;
+}
