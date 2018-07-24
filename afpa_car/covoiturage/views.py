@@ -11,12 +11,13 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 
 
-
-
 # Models adress
 class AddressView(CreateView):
-    form_class = AddressForm
+    form_class = AddressForm #, CityForm
     template_name = 'covoiturage/test.html'
-    success_url = reverse_lazy('covoiturage:profil')
+    success_url = reverse_lazy('covoiturage:index')
 
-#     # AdressCreateForm / UpdateForm / DeleteForm
+# class CityView(CreateView):
+#     form_class = 
+#     template_name = 'covoiturage/test.html'
+# #     # AdressCreateForm / UpdateForm / DeleteForm
