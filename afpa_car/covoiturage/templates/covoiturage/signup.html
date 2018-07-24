@@ -30,17 +30,16 @@
                     <input class="form-control" placeholder="Email" type="email" name="email" maxlength="255" required id="id_email" />
                     <div> {{ signup_form.email.errors }} </div>
                 </div>
+
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text fas fa-mobile-alt"></span>
                     </div>
                     <input class="form-control" placeholder="Numéro de telephone" type="text" name="phone_number" maxlength="15" required id="id_phone_number" />
                     <div> {{ private_data_form.phone_number.errors }} </div>
-                </div>
+                </div> 
 
                 <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
-
-          
 
                 <div class="input-group mb-3">
                     <input class="form-control" placeholder="Identifiant Afpa" type="text" name="afpa_number" maxlength="15" required id="id_afpa_number" />
@@ -65,7 +64,7 @@
                     </div>
                     <input class="form-control" placeholder="Confimez votre mot de passe" type="password" name="password2" required id="id_password2" />
                     <div> {{ signup_form.password2.errors }} </div>
-                </div>
+                </div> 
 
                 <button type='submit' class='btn btn-success'>Envoyer</button>
             </form>

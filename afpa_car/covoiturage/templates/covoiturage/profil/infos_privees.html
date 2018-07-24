@@ -13,36 +13,21 @@
 
 <div class="row">
     <div class="col-md-2"></div>
-    <form class="col-md-8" action="{% url 'covoiturage:infos_privees' %}" method='post'>
+    <form class="col-md-8" action="{% url 'covoiturage:infos_privees' %}" method='POST'>
         {% csrf_token %}
-        {{ form.as_p }}
-
-        {% comment %}
-        <div class="input-group mb-3 mt-3">
-            <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Numéro de téléphone</div>
-            </div>
-            <input id="body_input_profil" type="text" class="form-control">
+        <div class="input-group">
+            {{ form.phone_number.label_tag }}
+            <div> {{ form.phone_number }} </div>
+        <br>
+        <div class="input-group">
+            {{ form.afpa_number.label_tag }}
+            {{ form.afpa_number }}
         </div>
 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Adresse Email</div>
-            </div>
-            <input id="body_input_profil" type="text" class="form-control">
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Identifiant AFPA</div>
-            </div>
-            <input id="body_input_profil" type="text" class="form-control">
-        </div>
-        {% endcomment %}
         <div id="submit_profil">
             <button type="submit" class="btn btn-success">Envoyer</button>
         </div>
-        
+
     </form>
 
     {% if messages %}
