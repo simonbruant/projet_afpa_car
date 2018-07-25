@@ -10,6 +10,8 @@
 
 {% block contenuProfil %}
 
+                    {% comment %}
+                    
                     <div id="checkbox_profil">
                         <label>Êtes-vous propriétaire d'un vehicule ?</label>
                         <div class="custom-control custom-radio">
@@ -20,7 +22,14 @@
                             <input type="radio" class="custom-control-input" id="non_vehicule" name="vehicule_bool" checked>
                             <label class="custom-control-label" for="non_vehicule">Non</label>
                         </div>
-                    </div>
+                    </div>{% endcomment %}
+                    <form action="." method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Envoyer">
+                    </form>
+                    
+                    
 
 <!-- ##### PREMIER VEHICULE ##### -->
 

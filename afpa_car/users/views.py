@@ -1,4 +1,5 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -9,10 +10,10 @@ from django.views.generic import CreateView, FormView
 from .forms import LoginForm, SignupForm, LogoutForm, PrivateDataCreateForm
 
 
-class SignupView(CreateView):
-    form_class = SignupForm
-    template_name = 'covoiturage/signup.html'
-    success_url = reverse_lazy('covoiturage:index')
+# class SignupView(CreateView):
+#     form_class = SignupForm
+#     template_name = 'users/signup.html'
+#     success_url = reverse_lazy('covoiturage:index')
 
 def signup_view(request):
     signup_form = SignupForm(request.POST or None)
@@ -74,3 +75,19 @@ class LogoutView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         logout(self.request)
         return HttpResponseRedirect(reverse('covoiturage:index'))
+
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+        if form.is_valid():
+            print('form valide')
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('covoiturage:dashboard')
+
+    else: 
+        form = PasswordChangeForm(user=request.user)
+
+    context = {'form': form }
+    return render(request, 'covoiturage/profil/password.html', context)

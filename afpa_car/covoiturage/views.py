@@ -1,11 +1,12 @@
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, UpdateView
+from django.views.generic import TemplateView, UpdateView, FormView
 
-# from .forms import PrivateDataUpdateForm
-from users.models import PrivateData
+from .forms import CarOwnerForm
+from users.models import PrivateData, User
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
@@ -26,5 +27,11 @@ class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
 class CalendarView(LoginRequiredMixin, TemplateView):
     template_name = 'covoiturage/calendar.html'
 
+class CarOwnerView(UpdateView):
+    model = User
+    form_class = CarOwnerForm
+    template_name = 'covoiturage/profil/vehicule.html'
+    success_url = reverse_lazy('covoiturage:vehicule')
 
-    
+    def get_object(self, queryset=None):
+        return self.request.user

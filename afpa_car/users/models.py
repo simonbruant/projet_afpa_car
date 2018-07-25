@@ -11,7 +11,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name       = models.CharField(max_length=50, verbose_name='nom')
     driver_license  = models.BooleanField(default=False, verbose_name="permis")
     trainee         = models.BooleanField(default=False, verbose_name="stagiaire")
-    car_owner       = models.BooleanField(default=False, verbose_name="propriétaire d'un véhicule")
+    car_owner       = models.BooleanField(default=False, verbose_name="propriétaire d'un véhicule",
+                                            choices=( (True, "Oui"), (False, "Non") )
+                                            )
     avatar          = models.ImageField(null=True, blank=True, upload_to='photos/')
 
     active          = models.BooleanField(default=True)
