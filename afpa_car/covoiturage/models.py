@@ -35,7 +35,7 @@ class ZipCode_City(models.Model):
 class Address(models.Model):
     address_label       = models.CharField(max_length=50, verbose_name = "Libellé de l'adresse",)
     street_number       = models.CharField(max_length=15, null=True, blank=True, verbose_name = "Numéro de la rue",)
-    street              = models.CharField(max_length=100, verbose_name = "Nom de la rue",)
+    street_name         = models.CharField(max_length=100, verbose_name = "Nom de la rue",)
     street_complement   = models.CharField(max_length=100, null=True, blank=True, verbose_name = "Complément d'adresse",)
 
     # clé étrangere tjr dans l'entité qui a x,1 en cardinalité

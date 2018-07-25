@@ -32,13 +32,13 @@ class UserInLine(admin.TabularInline): # autre variante : admin.StackedInline
 
 class AddressAdmin(admin.ModelAdmin):
     inlines = (UserInLine,)
-    list_display = ('city', 'zip_code', 'street', 'address_label', 'get_users' )
+    list_display = ('city', 'zip_code', 'street_number', 'street_name', 'address_label', 'get_users' )
 
     def get_users(self, obj):
         return " ; ".join([u.get_full_name() for u in obj.users.all()])
     get_users.short_description = 'Utilisateurs'
 
-    search_fields = ('city__city_name', 'zip_code__zip_code', 'street', 'address_label', 'users__first_name', 'users__last_name', )
+    search_fields = ('city__city_name', 'zip_code__zip_code',  'street_name', 'address_label', 'users__first_name', 'users__last_name', )
 
 # Register your models here.
 admin.site.register(Address, AddressAdmin)
