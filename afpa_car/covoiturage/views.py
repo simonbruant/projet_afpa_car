@@ -7,7 +7,13 @@ from django.views.generic import TemplateView, UpdateView, FormView
 
 from .forms import CarOwnerForm
 from users.models import PrivateData, User
+from django.views.generic import TemplateView, CreateView
+from django.urls import reverse_lazy
 
+from .forms import * # TODO import selectif
+from .models import Address_User, Address
+
+# TODO toutes les view requieres LoginRequiredMixin 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'covoiturage/dashboard.html'
@@ -35,3 +41,32 @@ class CarOwnerView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+# Models adress
+class AddressView(CreateView):
+    form_class = AddressForm
+    # template_name = 'covoiturage/test.html'
+    template_name = 'covoiturage/profil/adresse.html'
+    success_url = reverse_lazy('covoiturage:index') #TODO : changer index par la bonne page
+
+
+
+
+
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     user = self.request.user
+    #     print ("# user ", user)
+    #     return context
+
+    def form_valid(self, form):
+        user = self.request.user
+
+        address = form.save()
+
+        address_user = Address_User()
+        address_user.address = address
+        address_user.user = user
+        address_user.save()
+
+        return super(AddressView, self).form_valid(form)

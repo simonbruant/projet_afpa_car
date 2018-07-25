@@ -33,9 +33,9 @@ class ZipCode_City(models.Model):
         return "Choix :"
 
 class Address(models.Model):
-    adress_label        = models.CharField(max_length=50, verbose_name = "Libellé de l'adresse",)
+    address_label       = models.CharField(max_length=50, verbose_name = "Libellé de l'adresse",)
     street_number       = models.CharField(max_length=15, null=True, blank=True, verbose_name = "Numéro de la rue",)
-    street              = models.CharField(max_length=100, verbose_name = "Nom de la rue",)
+    street_name         = models.CharField(max_length=100, verbose_name = "Nom de la rue",)
     street_complement   = models.CharField(max_length=100, null=True, blank=True, verbose_name = "Complément d'adresse",)
 
     # clé étrangere tjr dans l'entité qui a x,1 en cardinalité
@@ -48,12 +48,12 @@ class Address(models.Model):
     longitude   = models.DecimalField(max_digits=25, decimal_places=25, null=True, blank=True, verbose_name = 'longitude',) # valeur imprécise -> seulement anti-abus
     # doc DecimalField : https://docs.djangoproject.com/en/1.9/ref/models/fields/#django.db.models.DecimalField.max_digits
 
-    users       = models.ManyToManyField(User, verbose_name="Utilisateur", through= "Adress_User")
+    users       = models.ManyToManyField(User, verbose_name="Utilisateur", through= "Address_User")
 
     class Meta:
         verbose_name = "Adresse"
 
-class Adress_User(models.Model):
+class Address_User(models.Model):
     address = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Adresse")
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="", )
 

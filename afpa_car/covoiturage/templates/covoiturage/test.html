@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<br />
+
+<h1>Page 2 test</h1>
+    <form action="." method="post"> {% csrf_token %}
+    <br />
+
+    <table>
+        <tr>
+            <td>{{ form.address_label.label_tag }}</td>
+            <td>{{ form.address_label }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.street_number.label_tag }}</td>
+            <td>{{ form.street_number }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.street_name.label_tag }}</td>
+            <td>{{ form.street_name }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.street_complement.label_tag }}</td>
+            <td>{{ form.street_complement }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.zip_code.label_tag }}</td>
+            <td>{{ form.zip_code }}</td>
+        </tr>
+        <tr>
+                <td>{{ form.city.label_tag }}</td>
+                <td>{{ form.city }}</td>
+        </tr>
+
+
+    </table>
+    <br />
+    <button type='submit' class='btn-primary btn-md'>Créer l'adresse</button>
+    {% if form.errors %}
+    <p>oui</p>
+    {% else %}
+    <p>non</p>
+    {% endif %}
+    <br />
+    </form>
+
+
+<br />
+
+{% endblock %}

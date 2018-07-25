@@ -1,7 +1,7 @@
 from django.urls import path
 from django.views.generic import TemplateView
 
-from .views import DashboardView, PrivateDataUpdateView, CalendarView, CarOwnerView
+from .views import DashboardView, PrivateDataUpdateView, CalendarView, CarOwnerView, AddressView
 from users.views import LoginView, LogoutView, signup_view, change_password
 
 app_name = 'covoiturage'
@@ -22,4 +22,7 @@ urlpatterns = [
     path('profil/preferences/', TemplateView.as_view(template_name="covoiturage/profil/preferences.html"), name="preferences"),
     path('profil/adresse/', TemplateView.as_view(template_name="covoiturage/profil/adresse.html"), name="adresse"),
 
+    
+    path('test/', AddressView.as_view(), name='test'),
+    # path('profil/adresse/', AdresseCreateView.as_view(), name='adresse'),
 ]

@@ -35,3 +35,28 @@
 </div>
 
 {% endblock contenuProfil %}
+<p>Vos adresses s'afficheront ici <- </p>
+
+<hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+
+<!-- -------------------------------------------- -->
+
+<div class="row">
+    <div class="col-md-2"></div>
+    
+    <form class="col-md-8" action=".">
+
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">Libellé de l'adresse</div>
+            </div>
+            <!-- <input id="body_input_profil" type="text" class="form-control"> -->
+            {{ form.address_label }}
+        </div>
+
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">Numéro de la rue</div>
+            </div>
+            {{ form.street_number }} 
+        </div>
