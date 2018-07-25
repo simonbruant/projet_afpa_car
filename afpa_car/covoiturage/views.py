@@ -1,5 +1,4 @@
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
@@ -36,26 +35,3 @@ class CarOwnerView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
-
-
-# class PasswordChangeView(FormView):
-#     model = User
-#     template_name = 'covoiturage/profil/password.html'
-#     success_url = reverse_lazy('covoiturage:password')
-#     form_class = PasswordChangeForm
-
-#     def get_object(self, queryset=None):
-#         return self.request.user
-
-def change_password(request):
-    form = PasswordChangeForm(data=request.POST, user=request.user)
-    if form.is_valid():
-            print('form valide')
-            form.save()
-            update_session_auth_hash(request, form.user)
-            return redirect('covoiturage:dashboard')
-
-    print('form pas valide')
-    form = PasswordChangeForm(user=request.user)
-    context = {'form': form }
-    return render(request, 'covoiturage/profil/password.html', context)

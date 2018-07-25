@@ -1,4 +1,5 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -74,3 +75,19 @@ class LogoutView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         logout(self.request)
         return HttpResponseRedirect(reverse('covoiturage:index'))
+
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+        if form.is_valid():
+            print('form valide')
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('covoiturage:dashboard')
+
+    else: 
+        form = PasswordChangeForm(user=request.user)
+
+    context = {'form': form }
+    return render(request, 'covoiturage/profil/password.html', context)
