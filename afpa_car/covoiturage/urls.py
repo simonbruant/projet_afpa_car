@@ -2,7 +2,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 from .views import DashboardView, PrivateDataUpdateView, CalendarView, CarOwnerView
-from users.views import LoginView, LogoutView, signup_view, SignupView, change_password
+from users.views import LoginView, LogoutView, signup_view, change_password
 
 app_name = 'covoiturage'
 

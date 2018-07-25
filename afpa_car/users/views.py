@@ -10,10 +10,10 @@ from django.views.generic import CreateView, FormView
 from .forms import LoginForm, SignupForm, LogoutForm, PrivateDataCreateForm
 
 
-class SignupView(CreateView):
-    form_class = SignupForm
-    template_name = 'users/signup.html'
-    success_url = reverse_lazy('covoiturage:index')
+# class SignupView(CreateView):
+#     form_class = SignupForm
+#     template_name = 'users/signup.html'
+#     success_url = reverse_lazy('covoiturage:index')
 
 def signup_view(request):
     signup_form = SignupForm(request.POST or None)
