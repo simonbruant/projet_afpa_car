@@ -9,15 +9,8 @@ from .forms import * # TODO import selectif
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'covoiturage/dashboard.html'
 
-
-
 # Models adress
 class AddressView(CreateView):
-    form_class = AddressForm #, CityForm
+    form_class = AddressForm
     template_name = 'covoiturage/test.html'
-    success_url = reverse_lazy('covoiturage:index')
-
-# class CityView(CreateView):
-#     form_class = 
-#     template_name = 'covoiturage/test.html'
-# #     # AdressCreateForm / UpdateForm / DeleteForm
+    success_url = reverse_lazy('covoiturage:test')
