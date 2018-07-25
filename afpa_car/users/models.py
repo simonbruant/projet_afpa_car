@@ -9,11 +9,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     username        = models.CharField(max_length=15, unique=True, verbose_name='pseudo',)
     first_name      = models.CharField(max_length=30, verbose_name='prénom')
     last_name       = models.CharField(max_length=50, verbose_name='nom')
-    driver_license  = models.BooleanField(default=False, verbose_name="permis")
+    driver_license  = models.BooleanField(default=False, verbose_name="permis",
+                                        choices=( (True, "Oui"), (False, "Non")) )
     trainee         = models.BooleanField(default=False, verbose_name="stagiaire",
                                         choices=( (True, "Stagiare"),(False, "Employé") ))
     car_owner       = models.BooleanField(default=False, verbose_name="propriétaire d'un véhicule",
-                                          choices=( (True, "Oui"), (False, "Non")) )
+                                        choices=( (True, "Oui"), (False, "Non")) )
     avatar          = models.ImageField(null=True, blank=True, upload_to='photos/')
 
     active          = models.BooleanField(default=True)

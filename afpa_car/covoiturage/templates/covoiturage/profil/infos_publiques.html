@@ -59,7 +59,7 @@
 
         <label>Êtes-vous titulaire du permis de conduire ?</label>
 
-        {% for choice in form.car_owner %}
+        {% for choice in form.driver_license %}
             <div class="custom-control custom-radio">
                 {{ choice.tag }}
                 <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>

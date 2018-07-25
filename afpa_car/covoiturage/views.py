@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 
-from .forms import PrivateDataUpdateForm, UserUpdateForm
+from .forms import PrivateDataUpdateForm, UserUpdateForm, CarUpdateForm
 from users.models import PrivateData, User
 
 
@@ -38,4 +38,12 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.user #pour user
 
+class CarUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
+    template_name = 'covoiturage/profil/vehicule.html'
+    success_url = reverse_lazy('covoiturage:vehicule')
+    success_message = "Informations mises à jour"
+    form_class = CarUpdateForm
+
+
+    

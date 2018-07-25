@@ -2,6 +2,7 @@ from django import forms
 from django.forms import TextInput, RadioSelect
 
 from users.models import PrivateData, User
+from covoiturage.models import Car
 
 class PrivateDataUpdateForm(forms.ModelForm):
     class Meta:
@@ -16,14 +17,17 @@ class PrivateDataUpdateForm(forms.ModelForm):
 class UserUpdateForm (forms.ModelForm):
     class Meta:
         model = User
-        fields = ( 'username', 'first_name', 'last_name', 'email','car_owner', 'trainee' )
+        fields = ( 'username', 'first_name', 'last_name', 'email', 'trainee', 'driver_license' )
         widgets = {
             'username': TextInput(attrs={'class': 'form-control'}),
             'first_name': TextInput(attrs={'class': 'form-control'}),
             'last_name': TextInput(attrs={'class': 'form-control'}),
             'email': TextInput(attrs={'class': 'form-control'}),
-            'car_owner': RadioSelect(attrs={'class': 'custom-control-input'}),
             'trainee': RadioSelect(attrs={'class': 'custom-control-input'}),
+            'driver_license': RadioSelect(attrs={'class': 'custom-control-input'}),
         }
 
-# (attrs={'class': 'custom-control-input'})
+class CarUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Car
+        fields = ( 'color', 'model', 'amount_of_free_seats', 'consumption','fuel' )
