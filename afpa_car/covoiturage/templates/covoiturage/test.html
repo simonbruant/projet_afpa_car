@@ -40,6 +40,11 @@
     </table>
     <br />
     <button type='submit' class='btn-primary btn-md'>Créer l'adresse</button>
+    {% if form.errors %}
+    <p>oui</p>
+    {% else %}
+    <p>non</p>
+    {% endif %}
     <br />
     </form>
 

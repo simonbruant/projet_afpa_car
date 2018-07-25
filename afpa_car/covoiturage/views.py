@@ -18,16 +18,15 @@ class AddressView(CreateView):
 
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
-
     #     user = self.request.user
-                
     #     print ("# user ", user)
     #     return context
 
     def form_valid(self, form):
         user = self.request.user
+
         address = form.save()
-        
+
         address_user = Address_User()
         address_user.address = address
         address_user.user = user
