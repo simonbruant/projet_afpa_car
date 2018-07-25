@@ -6,9 +6,7 @@
 <h1>Page 2 test</h1>
     <form action="." method="post"> {% csrf_token %}
     <br />
-    <!-- {{ form.as_p }} -->
-    <table>
-        <tr>
+
     <table>
         <tr>
             <td>{{ form.address_label.label_tag }}</td>
@@ -30,7 +28,6 @@
             <td>{{ form.zip_code.label_tag }}</td>
             <td>{{ form.zip_code }}</td>
         </tr>
-
         <tr>
                 <td>{{ form.city.label_tag }}</td>
                 <td>{{ form.city }}</td>

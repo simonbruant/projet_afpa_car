@@ -13,8 +13,14 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 # Models adress
 class AddressView(CreateView):
     form_class = AddressForm
-    template_name = 'covoiturage/test.html'
-    success_url = reverse_lazy('covoiturage:test')
+    # template_name = 'covoiturage/test.html'
+    template_name = 'covoiturage/profil/adresse.html'
+    success_url = reverse_lazy('covoiturage:index') #TODO : changer index par la bonne page
+
+
+
+
+
 
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)

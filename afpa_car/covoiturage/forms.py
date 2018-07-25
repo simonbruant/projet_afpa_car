@@ -1,6 +1,7 @@
 from django import forms
 
 from .models import Address, City
+from django.forms import TextInput, RadioSelect
 
 class AddressForm(forms.ModelForm):
 
@@ -8,6 +9,10 @@ class AddressForm(forms.ModelForm):
         model = Address
         fields = ('address_label', 'street_number', 'street_name', 'street_complement', 'zip_code', 'city')
         exclude = ['lattitude', 'longitude', ]
+        widgets = {
+            'address_label': TextInput(attrs={'class': 'form-control'}),
+
+        }
     
     def clean(self):
         cleaned_data = super().clean()
@@ -19,7 +24,9 @@ class AddressForm(forms.ModelForm):
         zip_code = cleaned_data.get("zip_code") 
         city = cleaned_data.get("city") 
 
-        rslt = Address.objects.filter(address_label=address_label, street_number=street_number, street_name=street_name, street_complement=street_complement, zip_code=zip_code, city=city)
+        rslt = Address.objects.filter(address_label=address_label, street_number=street_number, 
+                                        street_name=street_name, street_complement=street_complement, 
+                                        zip_code=zip_code, city=city)
         if rslt.count() :
             print( "adresse exxite déjà")
             raise forms.ValidationError("Cette adresse existe déjà")
