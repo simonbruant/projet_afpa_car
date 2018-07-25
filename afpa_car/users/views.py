@@ -1,5 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import (PasswordResetView, PasswordResetDoneView, 
+                                        PasswordResetConfirmView, PasswordResetCompleteView )
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
@@ -74,3 +76,11 @@ class LogoutView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         logout(self.request)
         return HttpResponseRedirect(reverse('covoiturage:index'))
+
+class CustomPasswordResetView(PasswordResetView):
+    email_template_name = 'users/password_reset_email.html'
+    template_name = 'users/password_reset_form.html'
+    success_url = reverse_lazy('users:password_reset_done')
+
+
+

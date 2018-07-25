@@ -30,7 +30,7 @@ def email(request):
     send_mail('Hello', 
     'Hello',
     settings.EMAIL_HOST_USER,
-    ['sogehul@dumoac.net'],)
+    ['gaziya@loketa.com'],)
 
     return render(request, 'covoiturage/email.html')
 
