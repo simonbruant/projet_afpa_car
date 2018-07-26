@@ -28,6 +28,7 @@ class AddressForm(forms.ModelForm):
         exclude = ['lattitude', 'longitude', ]
         widgets = {
             'address_label': TextInput(attrs={'class': 'form-control'}),
+            'street_number': TextInput(attrs={'class': 'form-control'}),
 
         }
     
