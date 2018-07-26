@@ -78,6 +78,10 @@ class Car(models.Model):
 
     users       = models.ManyToManyField(User, verbose_name="Utilisateur", through= "Car_User")
 
+    def __str__(self):
+        return self.model
+
+
 class Car_User(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE, verbose_name="Vehicule")
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="", )

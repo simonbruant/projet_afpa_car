@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import TextInput, RadioSelect
+from django.forms import TextInput, RadioSelect, Select
 
 from users.models import PrivateData, User
 from covoiturage.models import Car
@@ -27,7 +27,22 @@ class UserUpdateForm (forms.ModelForm):
             'driver_license': RadioSelect(attrs={'class': 'custom-control-input'}),
         }
 
-class CarUpdateForm(forms.ModelForm):
+class CarForm(forms.ModelForm):
     class Meta:
         model = Car
         fields = ( 'color', 'model', 'amount_of_free_seats', 'consumption','fuel' )
+        widgets = {
+            'color': TextInput(attrs={'class': 'form-control'}),
+            'model': TextInput(attrs={'class': 'form-control'}),
+            'amount_of_free_seats': TextInput(attrs={'class': 'form-control'}),
+            'consumption': TextInput(attrs={'class': 'form-control'}),
+            'fuel': Select(attrs={'class': 'custom-select'}),
+        }
+
+    # car_owner = forms.BooleanField(...)
+
+    # def save(self, *args, **kwars):
+    #     car_owner = self.cleaned_date['car_owner']
+    #     if car_owner:
+    #         User.
+

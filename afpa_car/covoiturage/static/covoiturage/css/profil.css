@@ -16,6 +16,19 @@
     height: 600px;
 }
 
+#card_vehicule_contenu{
+    border : 1px solid;
+    border-color: lightgray; 
+    box-shadow:0 0 3px rgba(0,0,0,0.4);
+    font-size: 12px;
+}
+
+#btn_card_views_card {
+    width: 10%;
+    font-size: 12px;
+
+}
+
 /* ###### SIDE MENU ###### */
 a {
     color: black;
