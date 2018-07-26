@@ -1,16 +1,10 @@
 from django import forms
 from django.forms import TextInput, RadioSelect, Select
-from django.contrib.auth import password_validation
+
 
 from .models import Address, City
-from users.models import PrivateData, User
+from users.models import User
 
-# class PrivateDataUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = PrivateData
-#         fields = phone_number', 'afpa_number')
-
-    
 class CarOwnerForm(forms.ModelForm):
     class Meta :
         model = User
@@ -21,7 +15,6 @@ class CarOwnerForm(forms.ModelForm):
 
 
 class AddressForm(forms.ModelForm):
-
     class Meta: 
         model = Address
         fields = ('address_label', 'street_number', 'street_name', 'street_complement', 'zip_code', 'city')
