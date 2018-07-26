@@ -29,6 +29,10 @@ class AddressForm(forms.ModelForm):
         widgets = {
             'address_label': TextInput(attrs={'class': 'form-control'}),
             'street_number': TextInput(attrs={'class': 'form-control'}),
+            'street_name': TextInput(attrs={'class': 'form-control'}),
+            'street_complement': TextInput(attrs={'class': 'form-control'}),
+            'zip_code': TextInput(attrs={'class': 'form-control'}),
+            'city': TextInput(attrs={'class': 'form-control'}),
 
         }
     

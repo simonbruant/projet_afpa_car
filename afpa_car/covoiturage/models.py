@@ -39,8 +39,8 @@ class Address(models.Model):
     street_complement   = models.CharField(max_length=100, null=True, blank=True, verbose_name = "Complément d'adresse",)
 
     # clé étrangere tjr dans l'entité qui a x,1 en cardinalité
-    city        = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name = 'Ville')
     zip_code    = models.ForeignKey(ZipCode, on_delete=models.CASCADE, verbose_name = 'Code Postal')
+    city        = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name = 'Ville')
                         #ForeignKey == OneToMany
 
     # TODO : Avec Leaflet -> remettre Lattitude / Longitude en obligatoire (?) (généré par l'adresse)

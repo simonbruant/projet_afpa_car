@@ -38,7 +38,37 @@
             {{ form.street_number }} 
         </div>
 
- 
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">Nom de la rue</div>
+            </div>
+            {{ form.street_name }} 
+        </div>
+
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                    <div id="header_input_profil" class="input-group-text">Complément d'adresse</div>
+            </div>
+            {{ form.street_complement }} 
+        </div>
+
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">Code Postal</div>
+            </div>
+            {{ form.zip_code }} 
+        </div>
+
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">Ville</div>
+            </div>
+            {{ form.city }} 
+        </div>
+
+        <div id="submit_profil">
+                <button type="submit" class="btn btn-success">Envoyer</button>
+            </div>
 
 
 
