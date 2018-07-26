@@ -126,11 +126,10 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-LOGIN_URL = "/"
+LOGIN_URL = "/" 
 LOGIN_REDIRECT_URL = '{% url "covoiturage:dashboard" %}'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
 MEDIA_URL = '/media/'
 
 # EMAIL_USE_TLS = EMAIL_USE_TLS

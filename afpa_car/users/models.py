@@ -15,11 +15,11 @@ class User(AbstractBaseUser, PermissionsMixin):
                                         choices=( (True, "Stagiare"),(False, "Employé") ))
     car_owner       = models.BooleanField(default=False, verbose_name="propriétaire d'un véhicule",
                                         choices=( (True, "Oui"), (False, "Non")) )
-    avatar          = models.ImageField(null=True, blank=True, upload_to='photos/')
+    avatar          = models.ImageField(null=True, blank=True, upload_to='avatars/')
 
-    is_active          = models.BooleanField(default=True, verbose_name='Utilisateur actif')
-    is_staff           = models.BooleanField(default=False, verbose_name="Staff")
-    is_admin           = models.BooleanField(default=False, verbose_name='Admin')
+    is_active       = models.BooleanField(default=True, verbose_name='Utilisateur actif')
+    is_staff        = models.BooleanField(default=False, verbose_name="Staff")
+    is_admin        = models.BooleanField(default=False, verbose_name='Admin')
     date_joined     = models.DateTimeField(editable=False, default=timezone.now)
     # confirm   = models.BooleanField(default=False)
     # confirmed_date = models.DateTimeField(default=False)

@@ -6,7 +6,8 @@ from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView, RedirectView
-from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm
+
+from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, ProfilImageUpdateForm
 from .models import Car, Car_User
 from users.models import PrivateData, User
 
@@ -25,7 +26,6 @@ class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
     success_message = "Informations mises à jour"
     form_class = PrivateDataUpdateForm
     
-
     def get_object(self, queryset=None):
         user = PrivateData.objects.get(user=self.request.user)       
         return user
@@ -40,7 +40,6 @@ def email(request):
     ['gaziya@loketa.com'],)
 
     return render(request, 'covoiturage/email.html')
-
 
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
@@ -94,3 +93,11 @@ class CarDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = 'covoiturage/profil/car_delete.html'
     success_url = reverse_lazy('covoiturage:vehicule')
 
+class ProfilImageUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'covoiturage/profil/photo.html'
+    success_url = reverse_lazy('covoiturage:photo')
+    form_class = ProfilImageUpdateForm
+    context_object_name = 'user'
+
+    def get_object(self, queryset=None):
+        return self.request.user

@@ -40,5 +40,9 @@ class CarForm(forms.ModelForm):
             'fuel': Select(attrs={'class': 'custom-select'}),
         }
 
+class ProfilImageUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('avatar', )
 
 
