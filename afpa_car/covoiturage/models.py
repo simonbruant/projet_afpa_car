@@ -90,15 +90,15 @@ class Car_User(models.Model):
         return ""
 
 class AfpaCenter(models.Model):
-    center_name = models.Charfield(max_length=50)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Adresse")
 
+    center_name = models.CharField(max_length=50)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Adresse")
 
     def __str__(self):
         return self.center_name
 
 class Formation(models.Model):
-    formation_name = models.Charfield(max_length=50)
+    formation_name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.formation_name
@@ -108,7 +108,7 @@ class FormationSession(models.Model):
     formation_session_end_date = models.DateField()
     work_experience_start_date = models.DateField()
     work_experience_end_date = models.DateField()
-    center = models.ForeignKey(AfpaCenter, on_delete=models.CASCADE, verbose_name="Centre Afpa")
+    afpa_center = models.ForeignKey(AfpaCenter, on_delete=models.CASCADE, verbose_name="Centre Afpa")
     formation = models.ForeignKey(Formation, on_delete=models.CASCADE, verbose_name="Formation")
 
     def __str__(self):

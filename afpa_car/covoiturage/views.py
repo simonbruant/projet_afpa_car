@@ -1,14 +1,15 @@
 from django.conf import settings
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView, CreateView
 
-from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm
-from .models import Car, Car_User
+from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, FormationSessionForm, AfpaCenterForm
+from .models import Car, Car_User, FormationSession
 from users.models import PrivateData, User
 
 
@@ -52,7 +53,6 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return self.request.user 
 
 class CarCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
-
     template_name = 'covoiturage/profil/vehicule.html'
     success_url = reverse_lazy('covoiturage:vehicule')
     success_message = "Informations mises à jour"
@@ -85,6 +85,32 @@ class CarUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     #     context = super(CarCreateView, self).get_context_data(**kwargs)
     #     context['cars'] = Car.objects.filter(users=self.request.user)
     #     return context
+
+
+@login_required(login_url='covoiturage:index')
+def FormationSessionCreateView(request):
+    formationSession_form = FormationSessionForm(request.POST or None)
+    afpa_center_form = AfpaCenterForm(request.POST or None)
+
+    if formationSession_form.is_valid() and afpa_center_form.is_valid():
+        print('ok')
+        formationSession_form.save()
+        afpa_center_form.save()
+        return redirect("covoiturage:formation") 
+
+    return render(
+        request, 
+        'covoiturage/profil/formation.html', 
+        {   'formationSession_form': formationSession_form,
+            'afpa_center_form': afpa_center_form,}
+    )
+
+
+
+
+
+
+
     
 
 

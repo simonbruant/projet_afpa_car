@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import ZipCode_City, Adress_User, Address, ZipCode, City, Car, Car_User
+from .models import ZipCode_City, Adress_User, Address, ZipCode, City, Car, Car_User, Formation, FormationSession, AfpaCenter
 
 class ZipCodeInline(admin.TabularInline):        
     model = ZipCode_City
@@ -42,8 +42,8 @@ class AdressAdmin(admin.ModelAdmin):
 
 class CarUserInLine(admin.TabularInline): # autre variante : admin.StackedInline
     model = Car_User
-    verbose_name = "Utilisateur de cette adresse"
-    verbose_name_plural = "Utilisateurs de cette adresse"
+    verbose_name = "Utilisateur de ce véhicule"
+    verbose_name_plural = "Utilisateurs de ce véhicule"
     extra = 0
 
 class CarAdmin(admin.ModelAdmin):
@@ -54,9 +54,14 @@ class CarAdmin(admin.ModelAdmin):
         return " ; ".join([u.get_full_name() for u in obj.users.all()])
     get_users.short_description = 'Utilisateurs'
     
+# class AfpaCenter(admin.ModelAdmin):
+#     model = AfpaCenter
 
 # Register your models here.
 admin.site.register(Address, AdressAdmin)
 admin.site.register(ZipCode, ZipCodeAdmin)
 admin.site.register(City, CityAdmin)
 admin.site.register(Car, CarAdmin)
+admin.site.register(AfpaCenter)
+admin.site.register(Formation)
+admin.site.register(FormationSession)

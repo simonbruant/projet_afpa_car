@@ -80,48 +80,9 @@
 
         <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
-        
-            {% if user.trainee %}
-
-            <div class="row" id="date_status">
-            
-                    <div class="col-md-6">
-                        <label for="debut_formation">Début de formation</label>
-                        <input id="debut_formation" type="date" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="fin_formation">Fin de formation</label>
-                        <input id="fin_formation" type="date" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="debut_stage">Début de stage</label>
-                        <input id="debut_stage" type="date" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="fin_stage">Fin de stage</label>
-                        <input id="fin_stage" type="date" class="form-control">
-                    </div>
-        
-                </div> 
-        
-                <br>
-                <div id="submit_profil2">
-                    <button type="submit" class="btn btn-success">Envoyer</button>
-                </div>
-
-                <style>
-                        #contenu {
-                            height: 720px;
-                        }
-                </style>
-
-            {% else %}
-
             <div id="submit_profil1">
                     <button type="submit" class="btn btn-success">Envoyer</button>
                 </div>
-
-            {% endif %}
 
     </form>
     </div>
@@ -129,7 +90,7 @@
     {% load static %}
     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
     <script>
-       /*   $(function($){
+        /* $(function($){
 
             $('#status_stagiaire').click(function(e){
                 console.log('stagiaire ok')

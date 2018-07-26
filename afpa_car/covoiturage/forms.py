@@ -1,7 +1,7 @@
 from django import forms
-from django.forms import TextInput, RadioSelect, Select
+from django.forms import TextInput, RadioSelect, Select, DateInput
 
-from .models import Car
+from .models import Car, FormationSession, AfpaCenter
 from users.models import PrivateData, User
 
 class PrivateDataUpdateForm(forms.ModelForm):
@@ -37,6 +37,25 @@ class CarForm(forms.ModelForm):
             'amount_of_free_seats': TextInput(attrs={'class': 'form-control'}),
             'consumption': TextInput(attrs={'class': 'form-control'}),
             'fuel': Select(attrs={'class': 'custom-select'}),
+        }
+
+class FormationSessionForm(forms.ModelForm):
+    class Meta:
+        model = FormationSession
+        fields = ('formation_session_start_date', 'formation_session_end_date', 'work_experience_start_date', 'work_experience_end_date')
+        widgets = {
+            'formation_session_start_date': DateInput(attrs={'type': 'date','class': 'form-control'}),
+            'formation_session_end_date': DateInput(attrs={'type': 'date','class': 'form-control'}),
+            'work_experience_start_date': DateInput(attrs={'type': 'date','class': 'form-control'}),
+            'work_experience_end_date': DateInput(attrs={'type': 'date','class': 'form-control'}),
+        }
+
+class AfpaCenterForm(forms.ModelForm):
+    class Meta:
+        model = AfpaCenter
+        fields = ('center_name',)
+        widgets = {
+            'center_name': Select(attrs={'class': 'custom-select'}),
         }
 
 
