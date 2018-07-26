@@ -21,6 +21,7 @@ urlpatterns = [
     path('profil/password/', change_password, name='password'),
     path('profil/preferences/', TemplateView.as_view(template_name="covoiturage/profil/preferences.html"), name="preferences"),
     path('profil/adresse/', AddressView.as_view(), name="adresse"),
+    # path('profil/adresse/', AddressViewUpdateView.as_view(), name="adresse"),
 
     
     # path('test/', AddressView.as_view(), name='test'),
