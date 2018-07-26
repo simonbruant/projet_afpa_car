@@ -39,10 +39,5 @@ class CarForm(forms.ModelForm):
             'fuel': Select(attrs={'class': 'custom-select'}),
         }
 
-    # car_owner = forms.BooleanField(...)
 
-    # def save(self, *args, **kwars):
-    #     car_owner = self.cleaned_date['car_owner']
-    #     if car_owner:
-    #         User.
 

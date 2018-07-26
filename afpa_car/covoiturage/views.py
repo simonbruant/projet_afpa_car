@@ -33,7 +33,6 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy('covoiturage:infos_publiques')
     success_message = "Informations mises à jour"
     form_class = UserUpdateForm
-    print('okkkk')
     
     def get_object(self, queryset=None):
         return self.request.user 
@@ -44,7 +43,6 @@ class CarCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('covoiturage:vehicule')
     success_message = "Informations mises à jour"
     form_class = CarForm
-    print('jeazdjezd')
 
     def get_context_data(self, **kwargs):
         context = super(CarCreateView, self).get_context_data(**kwargs)
