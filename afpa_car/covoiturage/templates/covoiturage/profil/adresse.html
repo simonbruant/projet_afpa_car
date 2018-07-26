@@ -12,13 +12,13 @@
 
 <p>Vos adresses s'afficheront ici.</p>
 
+
 <div class="row">
     <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 </div>
 
 
-
-<div class="row">
+<div id="tet" class="row">
     <div class="col-md-2"></div>
     
     <form class="col-md-8" action="{% url 'covoiturage:adresse' %}" method="POST">
@@ -31,6 +31,7 @@
             {{ form.address_label }}
         </div>
 
+        
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
                 <div id="header_input_profil" class="input-group-text">Numéro de la rue</div>
@@ -67,25 +68,21 @@
         </div>
 
         <div id="submit_profil">
-            <button type="submit" class="btn btn-success">Envoyer</button>
+            <button type="submit" class="btn btn-success">Créer l'adresse</button>
         </div>
 
 
+
+
         {% if form.errors %}
-        <p>oui</p>
+        <p>Il y a eu une erreur lors de la création</p>
         {% else %}
-        <p>non</p>
+        <p>Aucune erreur</p>
         {% endif %}
         <br />
-        </form>
-
-
-
-
-
-
-
     </form>
+
+</div>
 
 
         

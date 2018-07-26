@@ -23,6 +23,6 @@ urlpatterns = [
     path('profil/adresse/', AddressView.as_view(), name="adresse"),
 
     
-    path('test/', AddressView.as_view(), name='test'),
+    # path('test/', AddressView.as_view(), name='test'),
     # path('profil/adresse/', AdresseCreateView.as_view(), name='adresse'),
 ]

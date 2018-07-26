@@ -42,21 +42,11 @@ class CarOwnerView(UpdateView):
 
 class AddressView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'covoiturage/profil/adresse.html'
-    success_url = reverse_lazy('covoiturage:index') #TODO : changer index par la bonne page
+    success_url = reverse_lazy('covoiturage:adresse') #TODO : changer index par la bonne page
     success_message = "Informations mises à jour"
     form_class = AddressForm
 
-
-
-
-
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     user = self.request.user
-    #     print ("# user ", user)
-    #     return context
-
+    # Lie l'user à l'adresse lors de la creation de celle-ci
     def form_valid(self, form):
         user = self.request.user
         address = form.save()
@@ -64,5 +54,15 @@ class AddressView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         address_user.address = address
         address_user.user = user
         address_user.save()
-
         return super(AddressView, self).form_valid(form)
+
+
+
+    # "Code a garder pour l'instant" - Amine
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     user = self.request.user
+    #     print ("# user ", user)
+    #     return context
+
+# TODO UPDATE VIEW
