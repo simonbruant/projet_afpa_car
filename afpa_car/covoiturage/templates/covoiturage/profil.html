@@ -16,7 +16,9 @@
                             <a href="{% url 'covoiturage:infos_publiques' %}" class="list-group-item link_sidebar">Informations Publiques</a>
                             <a href="{% url 'covoiturage:infos_privees' %}"   class="list-group-item link_sidebar" id="informations_privees">Informations Privees</a>
                             <a href="{% url 'covoiturage:photo' %}"           class="list-group-item link_sidebar" id="photo" >Photo</a>
+                            {% if user.car_owner and user.driver_license %}
                             <a href="{% url 'covoiturage:vehicule' %}"        class="list-group-item link_sidebar" data-target-id="vehicule">Vehicule</a>
+                            {% endif %}
                             <a href="{% url 'covoiturage:password' %}"        class="list-group-item link_sidebar">Mot de Passe</a>
                             <a href="{% url 'covoiturage:preferences' %}"     class="list-group-item link_sidebar">Préférences</a>
                             <a href="{% url 'covoiturage:adresse' %}"         class="list-group-item link_sidebar">Adresse</a>

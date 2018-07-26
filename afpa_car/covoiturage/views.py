@@ -5,7 +5,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView
+from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView, RedirectView
 from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm
 from .models import Car, Car_User
 from users.models import PrivateData, User
@@ -14,6 +14,8 @@ from users.models import PrivateData, User
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'covoiturage/dashboard.html'
 
+class ProfilRedirectview(LoginRequiredMixin, RedirectView):
+    url = reverse_lazy('covoiturage:infos_publiques')
 
 class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     # model = PrivateData
@@ -83,7 +85,7 @@ class CarUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return reverse('covoiturage:vehicule')
 
     # def get_context_data(self, **kwargs):
-    #     context = super(CarCreateView, self).get_context_data(**kwargs)
+    #     context = super(CarUpdateView, self).get_context_data(**kwargs)
     #     context['cars'] = Car.objects.filter(users=self.request.user)
     #     return context
     

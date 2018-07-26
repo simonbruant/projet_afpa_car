@@ -66,6 +66,20 @@
             </div> 
         {% endfor %} 
 
+        {% if user.driver_license %}
+            <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+
+            <label>Possedez-vous une voiture ?</label>
+
+            {% for choice in form.car_owner %}
+                <div class="custom-control custom-radio">
+                    {{ choice.tag }}
+                    <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>
+                </div> 
+            {% endfor %} 
+        {% endif %} 
+
+
         <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
         <label>Quel est votre status ?</label>
