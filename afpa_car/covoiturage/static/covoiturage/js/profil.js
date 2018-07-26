@@ -13,7 +13,7 @@ $(document).ready(function() {
     //  });
 
 
-     $("#filtre_url_contenu a").each(function( index ) {
+    $("#filtre_url_contenu a").each(function( index ) {
         if ( this.href == document.location.href)
         {             
             $(this).addClass('active');

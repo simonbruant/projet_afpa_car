@@ -3,14 +3,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, UpdateView, FormView
+from django.views.generic import TemplateView, UpdateView, FormView, CreateView
 
-from .forms import CarOwnerForm
+from .forms import CarOwnerForm, AddressForm # TODO import selectif
+# from .forms import * 
+
 from users.models import PrivateData, User
-from django.views.generic import TemplateView, CreateView
-from django.urls import reverse_lazy
-
-from .forms import * # TODO import selectif
 from .models import Address_User, Address
 
 # TODO toutes les view requieres LoginRequiredMixin 
@@ -41,7 +39,7 @@ class CarOwnerView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
-# Models adress
+
 class AddressView(CreateView):
     form_class = AddressForm
     # template_name = 'covoiturage/test.html'
