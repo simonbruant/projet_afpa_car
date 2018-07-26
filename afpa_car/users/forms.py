@@ -1,21 +1,34 @@
 from django import forms
+
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+
+from django.forms import TextInput, PasswordInput
 
 from .models import User, PrivateData
 
 class SignupForm(forms.ModelForm):
-    password1   = forms.CharField(label="Password", widget=forms.PasswordInput) # ini == password
-    password2   = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
+    password1   = forms.CharField(label="Password",  widget=PasswordInput(attrs={'class': 'form-control'})) # ini == password
+    password2   = forms.CharField(label='Confirm password', widget=PasswordInput(attrs={'class': 'form-control'}))
+
     username    = forms.RegexField(label='Username',
                                     min_length=3,
                                     regex=r'^[\w._-]+$',  
                                     error_messages = {'invalid': "This value may contain only" 
-                                    "letters, numbers and ./-/_ characters."} )
+                                    "letters, numbers and ./-/_ characters."},
+                                    widget=TextInput(attrs={'class': 'form-control'}) )
+
+ 
 
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name')
+        widgets = {
+            'email': TextInput(attrs={'class': 'form-control'}),
+            'first_name': TextInput(attrs={'class': 'form-control'}),
+            'last_name': TextInput(attrs={'class': 'form-control'}),
+        }
+
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
@@ -61,6 +74,10 @@ class PrivateDataCreateForm(forms.ModelForm):
     class Meta:
         model = PrivateData
         fields = ('phone_number', 'afpa_number',)
+        widgets = {
+            'phone_number': TextInput(attrs={'class': 'form-control'}),
+            'afpa_number': TextInput(attrs={'class': 'form-control'}),
+        }
 
 #################################################################
     

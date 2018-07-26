@@ -13,3 +13,9 @@
     margin-bottom : 2% ;
 }
 
+
+
+#header_input_signup {
+    min-width: 200px;
+    text-align: center;
+}

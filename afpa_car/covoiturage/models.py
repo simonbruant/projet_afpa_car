@@ -59,3 +59,32 @@ class Adress_User(models.Model):
 
     def __str__(self): # surcharge sur "Adress_User object (1)"
         return ""
+
+class Car(models.Model):
+    FUEL = (
+        ('SP-98', 'SP-98'),
+        ('SP-95', 'SP-95'),
+        ('SP-95 E10', 'SP-95 E10'),
+        ('DIESEL', 'DIESEL'),
+        ('GPL', 'GPL'),
+        ('ELECTRIQUE', 'ELECTRIQUE'),
+    )
+
+    color = models.CharField(max_length=50)
+    model = models.CharField(max_length=50)
+    amount_of_free_seats = models.IntegerField(default=1)
+    consumption = models.FloatField()
+    fuel = models.CharField(max_length=20, choices=FUEL)    
+
+    users       = models.ManyToManyField(User, verbose_name="Utilisateur", through= "Car_User")
+
+    def __str__(self):
+        return self.model
+
+
+class Car_User(models.Model):
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, verbose_name="Vehicule")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="", )
+
+    def __str__(self): 
+        return ""

@@ -10,47 +10,44 @@
 
 {% block contenuProfil %}
 
+<div id="message_update" class="col-md-12 mb-3">
+        {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        {% endif %}
+    </div>
 
 <div class="row">
     <div class="col-md-2"></div>
-    <form class="col-md-8" action="{% url 'covoiturage:infos_privees' %}" method='post'>
+
+    <form class="col-md-8" action="{% url 'covoiturage:infos_privees' %}" method='POST'>
         {% csrf_token %}
-        {{ form.as_p }}
-
-        {% comment %}
-        <div class="input-group mb-3 mt-3">
+        <div class="input-group">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Numéro de téléphone</div>
+                <div id="header_input_profil" class="input-group-text">Numéro de telephone</div>
             </div>
-            <input id="body_input_profil" type="text" class="form-control">
+            {{ form.phone_number }} 
+        </div>
+        <br>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">Identifiant Afpa</div>
+            </div>
+            {{ form.afpa_number }}
         </div>
 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Adresse Email</div>
-            </div>
-            <input id="body_input_profil" type="text" class="form-control">
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Identifiant AFPA</div>
-            </div>
-            <input id="body_input_profil" type="text" class="form-control">
-        </div>
-        {% endcomment %}
         <div id="submit_profil">
             <button type="submit" class="btn btn-success">Envoyer</button>
         </div>
-        
+
     </form>
 
-    {% if messages %}
-    {% for message in messages %}
-        {{ message }}
-    {% endfor %}
-    {% endif %}
-    
+
+
+   
+          
+
 </div>
     
 {% endblock contenuProfil %}

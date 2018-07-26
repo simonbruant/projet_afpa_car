@@ -10,98 +10,126 @@
 
 {% block contenuProfil %}
 
+
+<div id="message_update" class="col-md-12">
+        {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        {% endif %}
+    </div>
+
     <div class="row">
     <div class="col-md-2"></div>
-    <form class="col-md-8" action=".">
+
+    
+    
+    <form class="col-md-8" action="{% url 'covoiturage:infos_publiques' %}" method='POST'>
+            {% csrf_token %}
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
                 <div id="header_input_profil" class="input-group-text">Pseudonyme</div>
             </div>
-            <input id="body_input_profil" type="text" class="form-control">
+            {{ form.username }} 
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <div id="header_input_profil" class="input-group-text">Nom</div>
             </div>
-            <input id="body_input_profil" type="text" class="form-control">
+            {{ form.last_name }} 
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <div id="header_input_profil" class="input-group-text">Prenom</div>
             </div>
-            <input id="body_input_profil" type="text" class="form-control">
+            {{ form.first_name }} 
+        </div>
+    
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">Adresse Email</div>
+            </div>
+            {{ form.email }} 
         </div>
     
         <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
-        <div id="checkbox_profil">
-            <label>Êtes-vous titulaire du permis de conduire ?</label>
+        <label>Êtes-vous titulaire du permis de conduire ?</label>
+
+        {% for choice in form.driver_license %}
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="oui_permis" name="permis_bool" checked>
-                <label class="custom-control-label" for="oui_permis">Oui</label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="non_permis" name="permis_bool">
-                <label class="custom-control-label" for="non_permis">Non</label>
-            </div>
-        </div>
+                {{ choice.tag }}
+                <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>
+            </div> 
+        {% endfor %} 
 
         <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
-        <div id="checkbox_profil">
-            <label>Quel est votre status ?</label>
+        <label>Quel est votre status ?</label>
+
+
+        {% for choice in form.trainee %}
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input"  id="status_stagiaire" name="status_bool" >
-                <label class="custom-control-label" for="status_stagiaire">Stagiaire</label>
-            </div>
-            <div class="custom-control custom-radio mb-3">
-                <input type="radio" class="custom-control-input" id="status_employe" name="status_bool" checked>
-                <label class="custom-control-label" for="status_employe">Employé</label>
-            </div>
-        </div>
+                {{ choice.tag }}
+                <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>
+            </div> 
+        {% endfor %} 
 
         <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
-        <div id="submit_profil1">
-            <button type="submit" class="btn btn-success">Envoyer</button>
-        </div>
         
-        <div class="row hidden" id="date_status">
+            {% if user.trainee %}
+
+            <div class="row" id="date_status">
             
-            <div class="col-md-6">
-                <label for="debut_formation">Début de formation</label>
-                <input id="debut_formation" type="date" class="form-control">
-            </div>
-            <div class="col-md-6">
-                <label for="fin_formation">Fin de formation</label>
-                <input id="fin_formation" type="date" class="form-control">
-            </div>
-            <div class="col-md-6">
-                <label for="debut_stage">Début de stage</label>
-                <input id="debut_stage" type="date" class="form-control">
-            </div>
-            <div class="col-md-6">
-                <label for="fin_stage">Fin de stage</label>
-                <input id="fin_stage" type="date" class="form-control">
-            </div>
-
-        </div>
-
-        <br>
-        <div id="submit_profil2" class="hidden">
-            <button type="submit" class="btn btn-success">Envoyer</button>
-        </div>
+                    <div class="col-md-6">
+                        <label for="debut_formation">Début de formation</label>
+                        <input id="debut_formation" type="date" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fin_formation">Fin de formation</label>
+                        <input id="fin_formation" type="date" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="debut_stage">Début de stage</label>
+                        <input id="debut_stage" type="date" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fin_stage">Fin de stage</label>
+                        <input id="fin_stage" type="date" class="form-control">
+                    </div>
         
+                </div> 
+        
+                <br>
+                <div id="submit_profil2">
+                    <button type="submit" class="btn btn-success">Envoyer</button>
+                </div>
+
+                <style>
+                        #contenu {
+                            height: 720px;
+                        }
+                </style>
+
+            {% else %}
+
+            <div id="submit_profil1">
+                    <button type="submit" class="btn btn-success">Envoyer</button>
+                </div>
+
+            {% endif %}
+
     </form>
     </div>
 
     {% load static %}
     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
     <script>
-        $(function($){
+       /*   $(function($){
 
             $('#status_stagiaire').click(function(e){
                 console.log('stagiaire ok')
@@ -119,7 +147,7 @@
                 $('#submit_profil2').addClass('hidden');
                 
             });
-        });
+        }); */
     </script>
 
 {% endblock contenuProfil %}

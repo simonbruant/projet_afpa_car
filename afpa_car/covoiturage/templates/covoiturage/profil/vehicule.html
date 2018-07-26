@@ -10,113 +10,92 @@
 
 {% block contenuProfil %}
 
-                    {% comment %}
-                    
-                    <div id="checkbox_profil">
-                        <label>Êtes-vous propriétaire d'un vehicule ?</label>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input"  id="oui_vehicule" name="vehicule_bool" >
-                            <label class="custom-control-label" for="oui_vehicule">Oui</label>
-                        </div>
-                        <div class="custom-control custom-radio mb-3">
-                            <input type="radio" class="custom-control-input" id="non_vehicule" name="vehicule_bool" checked>
-                            <label class="custom-control-label" for="non_vehicule">Non</label>
-                        </div>
-                    </div>{% endcomment %}
-                    <form action="." method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="submit" value="Envoyer">
-                    </form>
-                    
-                    
-
-<!-- ##### PREMIER VEHICULE ##### -->
-
-        <div class="row ">
+{% for car in cars %}
+<div class="row">
+        <div id="card_vehicule_contenu" class="card col-md-4">
+        <div class="row">
+            <div class="card-header bg-default col-md-12">{{ car.model }}</div>
+        </div>
+        <div class="row">
             <div class="col-md-12 mt-3">
-                <div id="vehicule_info" class="card hidden">
-                    <div id="titre_profil" class="card-header bg-success">Premier véhicule<button id="supprimer_vehicule" class="btn btn-success far fa-trash-alt"> Supprimer</button></div>
-                        <form>
-                            <input class="form-control mb-2 mt-2" type="text" placeholder="Modèle">
-                            <input class="form-control mb-2" type="text" placeholder="Couleur">
-                            <input class="form-control mb-2" type="text" placeholder="Nombre de passager">
-                            <div class="input-group mb-2">
-                                <select class="form-control">
-                                    <option>SP-98</option>
-                                    <option>SP-95</option>
-                                    <option>SP-95 E10</option>
-                                    <option>DIESEL</option>
-                                    <option>GPL</option>
-                                    <option>ELECTRIQUE</option>
-                                </select>
-                                <input class="form-control" type="text" placeholder="Consommation moyenne">
-                            </div>
-                            <div id="checkbox_profil">
-                                <label>Véhicule fumeur</label>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input"  id="oui_fumeur" name="vehicule_fumeur_bool" >
-                                    <label class="custom-control-label" for="oui_fumeur">Oui</label>
-                                </div>
-                                <div class="custom-control custom-radio mb-3">
-                                    <input type="radio" class="custom-control-input" id="non_fumeur" name="vehicule_fumeur_bool" checked>
-                                    <label class="custom-control-label" for="non_fumeur">Non</label>
-                                </div>
-                            </div>
-                        </form>
-                        <div id="submit_vehicule1">
-                            <button type="submit" class="btn btn-success">Envoyer</button>
-                        </div>
-                <div class="row mb-3">
-                        <div class="col-md-4"></div>
-                        <button id="add_vehicule" type="button" class="btn btn-success col-md-4 fas fa-plus"> Ajouter un véhicule</button>
-                        <div class="col-md-4"></div>
-                    </div>
-                </div>
-                </div>
+                <div>{{ car.color }}</div>
+                <div>{{ car.fuel }}</div>
             </div>
 
-<!-- ##### DEUXIEME VEHICULE ##### -->
+            <div class="col-md-5 mt-3 mb-4">
+                <a href="#" id="btn_card_views_card">Update</a>
+            </div>
+            <div class="col-md-1 mt-3">
+                <div>|</div>
+            </div>
+            <div class="col-md-5 mt-3">
+                <a href="#" id="btn_card_views_card">Delete</a>
+            </div>
 
-            <div class="row ">
-                    <div class="col-md-12 mt-3">
-                        <div id="vehicule2_info" class="card hidden">
-                            <div id="titre_profil" class="card-header bg-success">Second véhicule<button id="supprimer_vehicule2" class="btn btn-success far fa-trash-alt"> Supprimer</button></div>
-                                <form>
-                                    <input class="form-control mb-2 mt-2" type="text" placeholder="Modèle">
-                                    <input class="form-control mb-2" type="text" placeholder="Couleur">
-                                    <input class="form-control mb-2" type="text" placeholder="Nombre de passager">
-                                    <div class="input-group mb-2">
-                                        <select class="form-control">
-                                            <option>SP-98</option>
-                                            <option>SP-95</option>
-                                            <option>SP-95 E10</option>
-                                            <option>DIESEL</option>
-                                            <option>GPL</option>
-                                            <option>ELECTRIQUE</option>
-                                        </select>
-                                        <input class="form-control" type="text" placeholder="Consommation moyenne">
-                                    </div>
-                                    <div id="checkbox_profil">
-                                        <label>Véhicule fumeur</label>
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input"  id="oui_fumeur2" name="vehicule2_fumeur_bool" >
-                                            <label class="custom-control-label" for="oui_fumeur2">Oui</label>
-                                        </div>
-                                        <div class="custom-control custom-radio mb-3">
-                                            <input type="radio" class="custom-control-input" id="non_fumeur2" name="vehicule2_fumeur_bool" checked>
-                                            <label class="custom-control-label" for="non_fumeur2">Non</label>
-                                        </div>
-                                    </div>
-                                </form>
-                                <div id="submit_vehicule1">
-                                    <button type="submit" class="btn btn-success">Envoyer</button>
-                                </div>
-                        </div>
-                    </div>
-                </div>
         </div>
     </div>
+</div>
+
+{% endfor %}
+
+
+<div class="row">
+    <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+</div>
+
+<div id="message_update" class="col-md-12">
+    {% if messages %}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+    {% endif %}
+</div>
+
+<div class="row">
+<div class="col-md-2"></div>
+
+
+<form class="col-md-8" action="{% url 'covoiturage:vehicule' %}" method='POST'>
+    {% csrf_token %}
+
+    <div class="input-group mb-3 mt-3">
+        <div class="input-group-prepend">
+            <div id="header_input_profil" class="input-group-text">Couleur</div>
+        </div>
+        {{ form.color }}
+    </div>
+    <div class="input-group mb-3 mt-3">
+        <div class="input-group-prepend">
+            <div id="header_input_profil" class="input-group-text">Modele</div>
+        </div>
+        {{ form.model }}
+    </div>
+    <div class="input-group mb-3 mt-3">
+        <div class="input-group-prepend">
+            <div id="header_input_profil" class="input-group-text">Nombre de place passager</div>
+        </div>
+        {{ form.amount_of_free_seats }}
+    </div>
+    <div class="input-group mb-3 mt-3">
+        <div class="input-group-prepend">
+            <div id="header_input_profil" class="input-group-text">Consommation (l/100km)</div>
+        </div>
+        {{ form.consumption }}
+    </div>
+    <div class="input-group mb-3 mt-3">
+        <div class="input-group-prepend">
+            <div id="header_input_profil" class="input-group-text">Carburant</div>
+        </div>
+        {{ form.fuel }}
+    </div>
+
+<div id="submit_vehicule1">
+    <button type="submit" class="btn btn-success">Envoyer</button>
+</div>
+
+    </form>
+
+
 
     {% load static %}
     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
