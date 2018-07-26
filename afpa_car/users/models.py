@@ -16,9 +16,9 @@ class User(AbstractBaseUser, PermissionsMixin):
                                             )
     avatar          = models.ImageField(null=True, blank=True, upload_to='photos/')
 
-    active          = models.BooleanField(default=True)
-    staff           = models.BooleanField(default=False)
-    admin           = models.BooleanField(default=False)
+    is_active          = models.BooleanField(default=True, verbose_name='Utilisateur actif')
+    is_staff           = models.BooleanField(default=False, verbose_name="Staff")
+    is_admin           = models.BooleanField(default=False, verbose_name='Admin')
     date_joined     = models.DateTimeField(editable=False, default=timezone.now)
     # confirm   = models.BooleanField(default=False)
     # confirmed_date = models.DateTimeField(default=False)
@@ -45,18 +45,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def has_module_perms(self, app_label):
         """ Does the user have permission to view the app 'app_label' """
         return True
-    
-    @property
-    def is_active(self):
-        return self.active
-
-    @property
-    def is_staff(self):
-        return self.staff
-    
-    @property
-    def is_admin(self):
-        return self.admin
 
 class PrivateData(models.Model):
     user            = models.OneToOneField(User, on_delete=models.CASCADE)

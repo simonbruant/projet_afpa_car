@@ -8,6 +8,9 @@ from django.views.generic import TemplateView, UpdateView, FormView
 from .forms import CarOwnerForm
 from users.models import PrivateData, User
 
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'covoiturage/dashboard.html'
@@ -35,3 +38,12 @@ class CarOwnerView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+def email(request):
+    send_mail('Hello', 
+    'Hello',
+    settings.EMAIL_HOST_USER,
+    ['gaziya@loketa.com'],)
+
+    return render(request, 'covoiturage/email.html')
+

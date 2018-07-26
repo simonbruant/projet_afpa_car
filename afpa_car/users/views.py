@@ -1,6 +1,8 @@
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import (PasswordResetView, PasswordResetDoneView, 
+                                        PasswordResetConfirmView, PasswordResetCompleteView )
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
@@ -91,3 +93,16 @@ def change_password(request):
 
     context = {'form': form }
     return render(request, 'covoiturage/profil/password.html', context)
+    
+class CustomPasswordResetView(PasswordResetView):
+    email_template_name = 'users/password_reset_email.html'
+    template_name = 'users/password_reset_form.html'
+    success_url = reverse_lazy('users:password_reset_done')
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    success_url = reverse_lazy('users:password_reset_complete')
+    template_name = 'users/password_reset_confirm.html'
+    
+
+
+

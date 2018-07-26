@@ -21,9 +21,9 @@ class UserManager(BaseUserManager):
         user_obj.username = username
         user_obj.first_name = first_name
         user_obj.last_name = last_name
-        user_obj.staff = is_staff
-        user_obj.admin = is_admin
-        user_obj.active = is_active
+        user_obj.is_staff = is_staff
+        user_obj.is_admin = is_admin
+        user_obj.is_active = is_active
         user_obj.save(using=self._db)
         return user_obj
 
