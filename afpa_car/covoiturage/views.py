@@ -40,7 +40,7 @@ class CarOwnerView(UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
-class AddressView(LoginRequiredMixin, SuccessMessageMixin ,CreateView):
+class AddressView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'covoiturage/profil/adresse.html'
     success_url = reverse_lazy('covoiturage:index') #TODO : changer index par la bonne page
     success_message = "Informations mises à jour"
@@ -59,9 +59,7 @@ class AddressView(LoginRequiredMixin, SuccessMessageMixin ,CreateView):
 
     def form_valid(self, form):
         user = self.request.user
-
         address = form.save()
-
         address_user = Address_User()
         address_user.address = address
         address_user.user = user

@@ -22,7 +22,7 @@ class CarOwnerForm(forms.ModelForm):
 
 class AddressForm(forms.ModelForm):
 
-    class Meta:
+    class Meta: 
         model = Address
         fields = ('address_label', 'street_number', 'street_name', 'street_complement', 'zip_code', 'city')
         exclude = ['lattitude', 'longitude', ]
@@ -33,24 +33,23 @@ class AddressForm(forms.ModelForm):
             'street_complement': TextInput(attrs={'class': 'form-control'}),
             'zip_code': TextInput(attrs={'class': 'form-control'}),
             'city': TextInput(attrs={'class': 'form-control'}),
-
         }
-    
-    def clean(self):
-        cleaned_data = super().clean()
 
-        address_label = cleaned_data.get("address_label") 
-        street_number = cleaned_data.get("street_number") 
-        street_name = cleaned_data.get("street_name") 
-        street_complement = cleaned_data.get("street_complement") 
-        zip_code = cleaned_data.get("zip_code") 
-        city = cleaned_data.get("city") 
+    ## VERIFICATION DE LA PRESENCE DE L'ADRESSE DANS LA BDD LORS DE LA CREATION    
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     address_label = cleaned_data.get("address_label") 
+    #     street_number = cleaned_data.get("street_number") 
+    #     street_name = cleaned_data.get("street_name") 
+    #     street_complement = cleaned_data.get("street_complement") 
+    #     zip_code = cleaned_data.get("zip_code") 
+    #     city = cleaned_data.get("city") 
 
-        rslt = Address.objects.filter(address_label=address_label, street_number=street_number, 
-                                        street_name=street_name, street_complement=street_complement, 
-                                        zip_code=zip_code, city=city)
-        if rslt.count() :
-            print( "adresse exxite déjà")
-            raise forms.ValidationError("Cette adresse existe déjà")
-        else :
-            print( "adresse créée")
+    #     rslt = Address.objects.filter(address_label=address_label, street_number=street_number, 
+    #                                     street_name=street_name, street_complement=street_complement, 
+    #                                     zip_code=zip_code, city=city)
+    #     if rslt.count() :
+    #         print( "adresse exxite déjà")
+    #         raise forms.ValidationError("Cette adresse existe déjà")
+    #     else :
+    #         print( "adresse créée")

@@ -10,7 +10,7 @@
 
 {% block contenuProfil %}
 
-<p>Vos adresses s'afficheront ici</p>
+<p>Vos adresses s'afficheront ici.</p>
 
 <div class="row">
     <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
@@ -21,7 +21,7 @@
 <div class="row">
     <div class="col-md-2"></div>
     
-    <form class="col-md-8" action="." method="POST">
+    <form class="col-md-8" action="{% url 'covoiturage:adresse' %}" method="POST">
         {% csrf_token %}
 
         <div class="input-group mb-3 mt-3">
@@ -67,8 +67,21 @@
         </div>
 
         <div id="submit_profil">
-                <button type="submit" class="btn btn-success">Envoyer</button>
-            </div>
+            <button type="submit" class="btn btn-success">Envoyer</button>
+        </div>
+
+
+        {% if form.errors %}
+        <p>oui</p>
+        {% else %}
+        <p>non</p>
+        {% endif %}
+        <br />
+        </form>
+
+
+
+
 
 
 
