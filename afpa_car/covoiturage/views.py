@@ -32,15 +32,6 @@ class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
 class CalendarView(LoginRequiredMixin, TemplateView):
     template_name = 'covoiturage/calendar.html'
 
-class CarOwnerView(UpdateView):
-    model = User
-    form_class = CarOwnerForm
-    template_name = 'covoiturage/profil/vehicule.html'
-    success_url = reverse_lazy('covoiturage:vehicule')
-
-    def get_object(self, queryset=None):
-        return self.request.user
-
 def email(request):
     send_mail('Hello', 
     'Hello',
