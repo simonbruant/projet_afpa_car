@@ -4,9 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, UpdateView, CreateView
-
+from django.urls import reverse_lazy, reverse
+from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView
 from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm
 from .models import Car, Car_User
 from users.models import PrivateData, User
@@ -77,14 +76,19 @@ class CarCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
 class CarUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Car
     template_name = 'covoiturage/profil/vehicule.html'
-    success_url = reverse_lazy('covoiturage:vehicule_update')
     success_message = "Informations mises à jour"
     form_class = CarForm
+
+    def get_success_url(self):
+        return reverse('covoiturage:vehicule')
 
     # def get_context_data(self, **kwargs):
     #     context = super(CarCreateView, self).get_context_data(**kwargs)
     #     context['cars'] = Car.objects.filter(users=self.request.user)
     #     return context
     
-
+class CarDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Car
+    template_name = 'covoiturage/profil/car_delete.html'
+    success_url = reverse_lazy('covoiturage:vehicule')
 

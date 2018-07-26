@@ -12,9 +12,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/signup.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/profil.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/dashboard.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/calendar.css' %}" />
+    <link rel="stylesheet" type="text/css" href= {% block css %} {% endblock css %} />
     <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/index.css' %}" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
         crossorigin="anonymous">
