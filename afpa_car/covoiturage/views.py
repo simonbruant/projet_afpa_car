@@ -56,30 +56,30 @@ class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return super(AddressCreateView, self).form_valid(form)
 
     # "Code a garder pour l'instant" - Amine
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     user = self.request.user
-    #     print ("# user ", user)
-    #     return context
+    # Déclare context address afin de faire une boucle for
+    def get_context_data(self, **kwargs):
+        context = super(AddressCreateView, self).get_context_data(**kwargs)
+        context['address_context'] = Address.objects.filter(users=self.request.user)
+        return context
+
 
 class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Address
-    fields = ('address_label', 'street_number', 'street_name', 'street_complement', 'zip_code', 'city')
     template_name = 'covoiturage/profil/adresse.html'
-    success_url = reverse_lazy('covoiturage:address')
     success_message = "Informations mises à jour"
     form_class = AddressForm
 
-    def get_object(self, queryset=None):
-        user = Address.objects.get(user=self.request.user)
-        return user
+    # def get_object(self, queryset=None):
+    #     user = Address.objects.get(user=self.request.user)
+    #     return user
 
     def get_success_url(self):
-        return reverse('covoiturage:address')
+        return reverse('covoiturage:address_update')
 
 
 class AddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView ):
     model = Address
+    template_name = 'covoiturage/profil/adresse.html'
     success_url = reverse_lazy('covoiturage:address')
 
 

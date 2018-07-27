@@ -10,22 +10,22 @@
 
 {% block contenuProfil %}
 
-<!-- TODO : Afficher le string si aucune adresse existante-->
-<!-- TODO : Else afficher les addresses 3 max-->
-<p>Vos adresses s'afficheront ici.</p>
+<!-- TODO : Afficher le string si aucune adresse existante -->
+<!-- TODO : Else afficher les addresses 3 max (?) -->
+<p>Vos adresses enregistrées s'afficheront ici.</p>
 
+{% for lieu in address_context %}
 <div class="row">
         <div id="card_address_content" class="card col-md-4">
         <div class="row">
-            <div id="address_label" class="card-header bg-default col-md-12">Maison</div>
+            <div id="address_label" class="card-header bg-default col-md-12">{{ lieu.address_label.capitalize() }}</div>
         </div>
         <div class="row">
             <div class="col-md-12 mt-3">
-                <div>136 rue cante cigale</div>
-                <div>30310, Vergèze</div>
+                <div>{{ lieu.street_number }}, {{ lieu.street_name }}</div>
+                <div>{{ lieu.zip_code }}, {{ lieu.city }}</div>
             </div>
             <div class="col-md-5 mt-3 mb-4">
-
                     <a href="#" id="btn_card_footer">Modifier</a>
             </div>
             <div class="col-md-1 mt-3">
@@ -37,6 +37,7 @@
         </div>
     </div>
 </div>
+{% endfor %}
 
 
 
@@ -55,7 +56,7 @@
 <div class="row">
     <div class="col-md-2"></div>
     
-    <form class="col-md-8" action="{% url 'covoiturage:address' %}" method="POST">
+    <form class="col-md-8" action="." method="POST">
         {% csrf_token %}
 
         <div class="input-group mb-3 mt-3">
@@ -102,7 +103,7 @@
         </div>
 
         <div id="submit_profil">
-            <button type="submit" class="btn btn-success">Créer l'adresse</button>
+            <button type="submit" class="btn btn-success">Valider l'adresse</button>
         </div>
 
 
