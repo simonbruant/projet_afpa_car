@@ -31,7 +31,7 @@ class AddressUserInLine(admin.TabularInline): # autre variante : admin.StackedIn
 
 class AdressAdmin(admin.ModelAdmin):
     inlines = (AddressUserInLine,)
-    list_display = ('city', 'zip_code', 'street', 'adress_label', 'get_users' )
+    list_display = ('adress_label', 'city', 'zip_code','street_number', 'street', 'get_users' )
 
     def get_users(self, obj):
         return " ; ".join([u.get_full_name() for u in obj.users.all()])
@@ -53,7 +53,11 @@ class CarAdmin(admin.ModelAdmin):
     def get_users(self, obj):
         return " ; ".join([u.get_full_name() for u in obj.users.all()])
     get_users.short_description = 'Utilisateurs'
-    
+
+class AfpaCenterAdmin(admin.ModelAdmin):
+    model = AfpaCenter
+    list_display = ('center_name','address')
+
 # class AfpaCenter(admin.ModelAdmin):
 #     model = AfpaCenter
 
@@ -62,6 +66,6 @@ admin.site.register(Address, AdressAdmin)
 admin.site.register(ZipCode, ZipCodeAdmin)
 admin.site.register(City, CityAdmin)
 admin.site.register(Car, CarAdmin)
-admin.site.register(AfpaCenter)
+admin.site.register(AfpaCenter, AfpaCenterAdmin)
 admin.site.register(Formation)
 admin.site.register(FormationSession)

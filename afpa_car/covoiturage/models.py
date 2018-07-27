@@ -53,6 +53,9 @@ class Address(models.Model):
     class Meta:
         verbose_name = "Adresse"
 
+    def __str__(self):
+        return self.adress_label
+
 class Adress_User(models.Model):
     address = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Adresse")
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="", )
@@ -78,6 +81,10 @@ class Car(models.Model):
 
     users       = models.ManyToManyField(User, verbose_name="Utilisateur", through= "Car_User")
 
+    class Meta:
+        verbose_name = "Voiture"
+        verbose_name_plural = "Voitures"
+
     def __str__(self):
         return self.model
 
@@ -94,11 +101,19 @@ class AfpaCenter(models.Model):
     center_name = models.CharField(max_length=50)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Adresse")
 
+    class Meta:
+        verbose_name = "Centre AFPA"
+        verbose_name_plural = "Centres AFPA"
+
     def __str__(self):
         return self.center_name
 
 class Formation(models.Model):
     formation_name = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name = "Formation"
+        verbose_name_plural = "Formations"
 
     def __str__(self):
         return self.formation_name
@@ -110,6 +125,10 @@ class FormationSession(models.Model):
     work_experience_end_date = models.DateField()
     afpa_center = models.ForeignKey(AfpaCenter, on_delete=models.CASCADE, verbose_name="Centre Afpa")
     formation = models.ForeignKey(Formation, on_delete=models.CASCADE, verbose_name="Formation")
+
+    class Meta:
+        verbose_name = "Session de formation"
+        verbose_name = "Sessions de formation"
 
     def __str__(self):
         return ""
