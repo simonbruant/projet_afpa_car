@@ -59,5 +59,15 @@ class AfpaCenterForm(forms.ModelForm):
             'center_name': Select(attrs={'class': 'custom-select'}),
         }
 
+class PreferencesForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('smoker', 'talker', 'music')
+        widgets = {
+            'smoker': RadioSelect(),
+            'talker': RadioSelect(),
+            'music': RadioSelect(),
+        }
+
 
 

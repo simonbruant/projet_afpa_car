@@ -62,7 +62,7 @@ a {
 }
 
 .custom-radio .custom-control-input:checked ~ .custom-control-label::before {
-    background-color: #E3007E;.
+    background-color: #E3007E;
     
 }
 
@@ -83,11 +83,6 @@ a {
     height: 30%;
 }
 
-/* ###### Preferences ###### */
-.icone_pref {
-    font-size: 50px;
-}
-
 /* ###### Classe pour l'affichage des pages ###### */
 .hidden{
     visibility: hidden;
@@ -99,6 +94,19 @@ a {
 }
 
 /* ###### Masquage des boutons radios des préférences ###### */
-#oui_musique, #non_musique, #oui_fumeur, #non_fumeur, #oui_parler, #non_parler {
+#id_smoker_0, #id_smoker_1, #id_talker_0, #id_talker_1, #id_music_0, #id_music_1 {
     display: none;
+}
+
+/* .highlight {
+    color: #E3007E;
+  } */
+
+#icon_smoker, #icon_talker, #icon_music {
+
+    font-size: 80px ;
+}
+
+:checked + label {
+    color: #E3007E;
 }

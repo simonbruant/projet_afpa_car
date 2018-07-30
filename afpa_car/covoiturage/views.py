@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView, CreateView
 
-from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, FormationSessionForm, AfpaCenterForm
+from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, FormationSessionForm, AfpaCenterForm, PreferencesForm
 from .models import Car, Car_User, FormationSession
 from users.models import PrivateData, User
 
@@ -105,6 +105,15 @@ def FormationSessionCreateView(request):
             'afpa_center_form': afpa_center_form,}
     )
 
+class PreferencesUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = User
+    template_name = 'covoiturage/profil/preferences.html'
+    success_url = reverse_lazy('covoiturage:preferences')
+    success_message = "Informations mises à jour"
+    form_class = PreferencesForm
+
+    def get_object(self, queryset=None):
+        return self.request.user 
 
 
 
