@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 
 from .managers import UserManager
+from covoiturage.models import AfpaCenter
 
 class User(AbstractBaseUser, PermissionsMixin):
     email           = models.EmailField(max_length=255, unique=True, verbose_name='email adress')
@@ -16,11 +17,19 @@ class User(AbstractBaseUser, PermissionsMixin):
     car_owner       = models.BooleanField(default=False, verbose_name="propriétaire d'un véhicule",
                                         choices=( (True, "Oui"), (False, "Non")) )
     avatar          = models.ImageField(null=True, blank=True, upload_to='photos/')
+    smoker          = models.BooleanField(default=False, verbose_name="Fumeur",
+                                        choices=( (True, "Fumeur"), (False, 'Non Fumeur')))
+    talker          = models.BooleanField(default=False, verbose_name="Bavard",
+                                        choices=( (True, "Tres Bavard"), (False, 'Peu Bavard')))
+    music          = models.BooleanField(default=False, verbose_name="Musique",
+                                        choices=( (True, "Oui"), (False, 'Non')))
 
-    is_active          = models.BooleanField(default=True, verbose_name='Utilisateur actif')
-    is_staff           = models.BooleanField(default=False, verbose_name="Staff")
-    is_admin           = models.BooleanField(default=False, verbose_name='Admin')
+    is_active       = models.BooleanField(default=True, verbose_name='Utilisateur actif')
+    is_staff        = models.BooleanField(default=False, verbose_name="Staff")
+    is_admin        = models.BooleanField(default=False, verbose_name='Admin')
     date_joined     = models.DateTimeField(editable=False, default=timezone.now)
+
+    afpa_center     = models.ForeignKey(AfpaCenter, null=True, blank=True, on_delete=models.SET_NULL)
     # confirm   = models.BooleanField(default=False)
     # confirmed_date = models.DateTimeField(default=False)
 

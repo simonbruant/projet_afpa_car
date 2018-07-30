@@ -1,6 +1,7 @@
 from django.db import models
 
-from users.models import User
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
 
 class ZipCode(models.Model):
     zip_code = models.CharField(max_length=15, verbose_name = 'Code Postal',)
@@ -97,7 +98,6 @@ class Car_User(models.Model):
         return ""
 
 class AfpaCenter(models.Model):
-
     center_name = models.CharField(max_length=50)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Adresse")
 
@@ -123,7 +123,6 @@ class FormationSession(models.Model):
     formation_session_end_date = models.DateField()
     work_experience_start_date = models.DateField()
     work_experience_end_date = models.DateField()
-    afpa_center = models.ForeignKey(AfpaCenter, on_delete=models.CASCADE, verbose_name="Centre Afpa")
     formation = models.ForeignKey(Formation, on_delete=models.CASCADE, verbose_name="Formation")
 
     class Meta:

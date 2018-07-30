@@ -18,9 +18,6 @@
                             <a href="{% url 'covoiturage:password' %}"          class="list-group-item link_sidebar">Mot de Passe</a>
                             <a href="{% url 'covoiturage:preferences' %}"       class="list-group-item link_sidebar">Préférences</a>
                             <a href="{% url 'covoiturage:adresse' %}"           class="list-group-item link_sidebar">Adresse</a>
-                            {% if user.trainee %}
-                            <a href="{% url 'covoiturage:formation' %}"         class="list-group-item link_sidebar">Formation</a>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -29,28 +26,6 @@
             <div id="card_contenu" class="card col-md-12">
                 {% block cardTitle %}{% endblock cardTitle %}
                 {% block contenuProfil %}{% endblock %}
-                     
-                            {% comment %} <div class="menu-contenu" id="informations_publiques">
-                                {% include 'covoiturage/profil/infos_publiques.html' %}
-                            </div>
-                            <div class="menu-contenu" id="informations_privees">
-                                {% include 'covoiturage/profil/infos_privees.html' %}
-                            </div>
-                            <div class="menu-contenu" id="photo">
-                                {% include 'covoiturage/profil/photo.html' %}
-                            </div>
-                            <div class="menu-contenu" id="vehicule">
-                                {% include 'covoiturage/profil/vehicule.html' %}
-                            </div>
-                            <div class="menu-contenu" id="mot_de_passe">
-                                {% include 'covoiturage/profil/password.html' %}
-                            </div>
-                            <div class="menu-contenu" id="preferences">
-                                {% include 'covoiturage/profil/preferences.html' %}
-                            </div>
-                            <div class="menu-contenu" id="adresse">
-                                {% include 'covoiturage/profil/adresse.html' %}
-                            </div> {% endcomment %}
 
                 </div>
             </div>

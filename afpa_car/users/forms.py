@@ -1,7 +1,7 @@
 from django import forms
 
 from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import ReadOnlyPasswordHashField, PasswordChangeForm
 
 from django.forms import TextInput, PasswordInput
 
@@ -79,6 +79,14 @@ class PrivateDataCreateForm(forms.ModelForm):
             'afpa_number': TextInput(attrs={'class': 'form-control'}),
         }
 
+class CustomPasswordChangeForm(PasswordChangeForm):
+    class Meta:
+        widgets = {
+            'old_password': PasswordInput(attrs={'class': 'form-control'}),
+            'new_password1': PasswordInput(attrs={'class': 'form-control'}),
+            'new_password2': PasswordInput(attrs={'class': 'form-control'}),
+            
+        }
 #################################################################
     
 class UserAdminCreationForm(forms.ModelForm):
@@ -124,4 +132,5 @@ class UserAdminChangeForm(forms.ModelForm):
         # This is done here, rather than on the field, because the
         # field does not have access to the initial value
         return self.initial["password"]
+
 
