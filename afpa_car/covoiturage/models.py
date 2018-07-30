@@ -33,7 +33,7 @@ class ZipCode_City(models.Model):
         return "Choix :"
 
 class Address(models.Model):
-    address_label       = models.CharField(max_length=50, verbose_name = "Libellé de l'adresse",)
+    address_label_public = models.CharField(max_length=50, verbose_name = "Libellé de l'adresse", null=True, blank=True)
     street_number       = models.CharField(max_length=15, null=True, blank=True, verbose_name = "Numéro de la rue",)
     street_name         = models.CharField(max_length=100, verbose_name = "Nom de la rue",)
     street_complement   = models.CharField(max_length=100, null=True, blank=True, verbose_name = "Complément d'adresse",)
@@ -54,6 +54,7 @@ class Address(models.Model):
         verbose_name = "Adresse"
 
 class Address_User(models.Model):
+    address_label_private = models.CharField(max_length=100, default="Adresse", null=True, blank=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Adresse")
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="", )
 

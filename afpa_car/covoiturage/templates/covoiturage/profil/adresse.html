@@ -1,75 +1,62 @@
+
+
 {% extends 'covoiturage/profil.html' %}
 
 {% block cardTitle %} 
-
-<div class="row">
+<div id="adresseContenu" class="row">
     <div id="titre_profil" class="card-header bg-success col-md-12 mb-3">Adresses</div>
 </div>
-
 {% endblock cardTitle %}
 
 {% block contenuProfil %}
 
 {% if address_context|length == 0 %}
-
 <p>Vos adresses enregistrées s'afficheront ici.</p>
-
+{% else %}
+<center>
 {% endif %}
-
-<!-- si 0 adresse -> <p>string</p> ++ Formulaire visible-->
-
-<!-- si 1 adresse -> <center> ++ Formulaire visible-->
-<!-- si 2 adresse -> []     [] ++ bouton ADD ADDRESS -->
-<!-- si 3 adresse -> [] [] [] ++ bouton ADD ADDRESS -->
-
-{% comment %}
-{% if address_context|length == 3 %}
-<br/>
-{% endif %}
-{{ address_context }}
-<br/>
-{{ address_context|length }}
-<br/>
-{{ lieu }}
-{% endcomment %}
-
-
 {% comment %} TODO : .capitalize() premiere lettre du LABEL dans la card {% endcomment %}
 
 <div class="row">
-    {% for lieu in address_context %}
+    {% for address_user in address_user_context %}
     <div class='col-md-4 mb-3'>
 
         <div id="card_address_content" class="card col-md-12">
 
             <div class=row>
                 <div id="address_label" class="card-header bg-default col-md-12">
-                    {{ lieu.address_label }}
+                    {{ address_user.address_label_private }} 
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 mt-3">
-                    <div>{{ lieu.street_number }}, {{ lieu.street_name }}</div>
-                    <div>{{ lieu.zip_code }}, {{ lieu.city }}</div>
+                    <div>{{ address_user.address.street_number }}, {{ address_user.address.street_name }}</div>
+                    <div>{{ address_user.address.zip_code }}, {{ address_user.address.city }}</div>
                 </div>
                 <div class="col-md-5 mt-3 mb-4">
-                    <a href="{% url 'covoiturage:address_update' lieu.id %}" id="btn_card_footer">Modifier</a>
+                    <a href="{% url 'covoiturage:address_update' address_user.address.id %}" id="btn_card_footer">Modifier</a>
                 </div>
                 <div class="col-md-1 mt-3">
                     <div>|</div>
                 </div>
                 <div class="col-md-5 mt-3">
-                    <a href="{% url 'covoiturage:address_delete' lieu.id %}" id="btn_card_footer">Supprimer</a>
+                    <a href="{% url 'covoiturage:address_delete' address_user.address.id %}" id="btn_card_footer">Supprimer</a>
                 </div>
             </div>
-            
+
         </div>
     </div>
     {% endfor %}
 </div>
 
+{% if address_context|length > 0 %}
+</center>
+{% endif %}
+
 <div class="row">
-    <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+
+<hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+
 </div>
 <div class="row">
     <div class="col-md-2"></div>
@@ -125,8 +112,6 @@
 
         {% if form.errors %}
         <p>Il y a eu une erreur lors de la création</p>
-        {% else %}
-        <p>Aucune erreur</p>
         {% endif %}
         <br />
     </form>

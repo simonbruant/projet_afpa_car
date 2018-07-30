@@ -10,6 +10,7 @@
 /* CARD @Address */
 
 
+
 #card_address{
     width: 30%;
     border-radius: 30px;
@@ -33,23 +34,8 @@
 #btn_card_footer {
     width: 10%;
     font-size: 12px;
-    color: #0645AD
+    color: #0645AD;
 }
-
-
-
-
-
-/* ###### Gestion de la taille des pages ###### */
-#contenu {
-    height: 680px;
-    
-}
-
-/* #tet{
-    height: 600px;
-    background-color: #E3007E
-} */
 
 /* ###### SIDE MENU ###### */
 a {

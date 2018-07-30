@@ -15,13 +15,14 @@ class CarOwnerForm(forms.ModelForm):
 
 
 class AddressForm(forms.ModelForm):
+    address_label = forms.CharField(widget=TextInput(attrs={'class': 'form-control'}))
+
     class Meta: 
         model = Address
-        fields = ('address_label', 'street_number', 'street_name', 'street_complement', 'zip_code', 'city')
+        fields = ('street_number', 'street_name', 'street_complement', 'zip_code', 'city')
         exclude = ['lattitude', 'longitude', ]
         ## DOC List Widget : https://docs.djangoproject.com/en/1.8/_modules/django/forms/widgets/
         widgets = {
-            'address_label': TextInput(attrs={'class': 'form-control'}),
             'street_number': TextInput(attrs={'class': 'form-control'}),
             'street_name': TextInput(attrs={'class': 'form-control'}),
             'street_complement': TextInput(attrs={'class': 'form-control'}),
@@ -29,6 +30,9 @@ class AddressForm(forms.ModelForm):
             'zip_code': Select(attrs={'class': 'form-control'}),
             'city': Select(attrs={'class': 'form-control'}),
         }
+
+    def clean_address_label(self):
+        return self.cleaned_data['address_label']
 
     # ## VERIFICATION DE LA PRESENCE DE L'ADRESSE DANS LA BDD LORS DE LA CREATION    
     # def clean(self):

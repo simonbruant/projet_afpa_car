@@ -6,8 +6,8 @@
     <hr/>
     
     <h4 class="mb-5">Êtes-vous sur de vouloir supprimer l'adresse "{{ object.address_label }}" ?</h4>
-  <div class='row'>
-      <div class='col-md-4'></div>
+<div class='row'>
+    <div class='col-md-4'></div>
         <div  class='col-md-4'>
             <div id="card_address_content" class="card col-md-12">
                 <div class=row>
@@ -24,13 +24,11 @@
             </div>
         </div>
     </div>
-
-    {% comment %} -------------------------------------------- {% endcomment %}
     <br/><br/>
     <div align="center"><input type="submit" class="btn btn-danger" value="Valider la suppression" /></div>
 </form>
 
 
-<div align="left" ><a  class="btn btn-success btn-sm" href="{% url 'covoiturage:address' %}"> Retour à la page Adresse </a></div>
+<div align="left"><a  class="btn btn-success btn-sm mt-4" href="{% url 'covoiturage:address' %}">Retour à la page Adresse </a></div>
 <hr/>
 {% endblock %}

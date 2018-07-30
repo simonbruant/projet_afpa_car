@@ -1,7 +1,6 @@
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-# from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, UpdateView, FormView, CreateView, DeleteView
 
@@ -42,8 +41,8 @@ class CarOwnerView(UpdateView):
 class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'covoiturage/profil/adresse.html'
     success_url = reverse_lazy('covoiturage:address') #TODO : changer index par la bonne page
-    form_class = AddressForm
     success_message = "Informations de création"
+    form_class = AddressForm
 
     # Lie User avec adresse lors de la creation de celle-ci
     def form_valid(self, form):
@@ -53,15 +52,15 @@ class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
         address_user.address = address
         address_user.user = user
+        address_user.address_label_private = form.clean_address_label()
         address_user.save()
 
-        print("mauvais comportement")
         return super(AddressCreateView, self).form_valid(form) #◘fonctionne avec super() vide
 
     # Déclare context de address afin de faire une boucle for pour en obtenir l'user lié
     def get_context_data(self, **kwargs):
         context = super(AddressCreateView, self).get_context_data(**kwargs)
-        context['address_context'] = Address.objects.filter(users=self.request.user)
+        context['address_user_context'] = Address_User.objects.filter(user=self.request.user)
         return context
 
 
@@ -72,11 +71,10 @@ class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = AddressForm
 
     def get_success_url(self):
-        print("bon comportement")
         return reverse('covoiturage:address')
 
     def get_queryset(self):
-        queryset = super(AddressUpdateView, self).get_queryset()
+        queryset = super().get_queryset()
         queryset = queryset.filter(users=self.request.user)
         return queryset
 
