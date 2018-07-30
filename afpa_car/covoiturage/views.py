@@ -75,6 +75,11 @@ class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         print("bon comportement")
         return reverse('covoiturage:address')
 
+    def get_queryset(self):
+        queryset = super(AddressUpdateView, self).get_queryset()
+        queryset = queryset.filter(users=self.request.user)
+        return queryset
+
 
 class AddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView ):
     model = Address
