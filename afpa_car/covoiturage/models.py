@@ -73,7 +73,7 @@ class Car(models.Model):
     color = models.CharField(max_length=50)
     model = models.CharField(max_length=50)
     amount_of_free_seats = models.IntegerField(default=1)
-    consumption = models.FloatField()
+    consumption = models.FloatField(verbose_name="consommation")
     fuel = models.CharField(max_length=20, choices=FUEL)    
 
     users       = models.ManyToManyField(User, verbose_name="Utilisateur", through= "Car_User")

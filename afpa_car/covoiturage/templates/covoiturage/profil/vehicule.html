@@ -10,162 +10,101 @@
 
 {% block contenuProfil %}
 
-{% for car in cars %}
-<div class="row">
-        <div id="card_vehicule_contenu" class="card col-md-4">
-        <div class="row">
-            <div class="card-header bg-default col-md-12">{{ car.model }}</div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 mt-3">
-                <div>{{ car.color }}</div>
-                <div>{{ car.fuel }}</div>
-            </div>
+<div class="row">   
+    {% for car in cars %}
+        <div class='col-md-4'>
+            <div id="card_vehicule_contenu" class="card col-md-12">
 
-            <div class="col-md-5 mt-3 mb-4">
-                <a href="{% url 'covoiturage:vehicule_update' car.id %}" id="btn_card_views_card">Update</a>
-            </div>
-            <div class="col-md-1 mt-3">
-                <div>|</div>
-            </div>
-            <div class="col-md-5 mt-3">
-                <a href="{% url 'covoiturage:vehicule_delete' car.id %}" id="btn_card_views_card">Delete</a>
-            </div>
+                <div class=row>
+                    <div class="card-header bg-default col-md-12">
+                        {{ car.model }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mt-3">
+                        <div>{{ car.color }}</div>
+                        <div>{{ car.amount_of_free_seats }}  places passager</div>
+                        <div>{{ car.fuel }}</div>
+                        <div>{{ car.consumption }} L/100km</div>
+                    </div>
+                    <div class="col-md-5 mt-3 mb-4">
+                        <a href="{% url 'covoiturage:vehicule_update' car.id %}" id="btn_card_views_card">Update</a>
+                    </div>
+                    <div class="col-md-1 mt-3">
+                        <div>|</div>
+                    </div>
+                    <div class="col-md-5 mt-3">
+                        <a href="{% url 'covoiturage:vehicule_delete' car.id %}" id="btn_card_views_card">Delete</a>
+                    </div>
+                </div>
 
+            </div>
         </div>
-    </div>
+    {% endfor %}
 </div>
-
-{% endfor %}
 
 
 <div class="row">
     <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 </div>
 
-<div id="message_update" class="col-md-12">
-    {% if messages %}
-    {% for message in messages %}
-        {{ message }}
-    {% endfor %}
-    {% endif %}
+<div class='row'>
+    <div id="message_update" class="col-md-12">
+        {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        {% endif %}
+    </div>
 </div>
 
 <div class="row">
-<div class="col-md-2"></div>
+    <div class="col-md-2"></div>
+    <form class="col-md-8" action="." method='POST'>
+        {% csrf_token %}
 
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">{{ form.color.label }}</div>
+            </div>
+            {{ form.color }}
+        </div>
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">{{ form.model.label }}</div>
+            </div>
+            {{ form.model }}
+        </div>
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">{{ form.amount_of_free_seats.label }}</div>
+            </div>
+            {{ form.amount_of_free_seats }}
+        </div>
+        {% if form.consumption.errors %}
+        <div id="message_errors" class="mb-3 mt-3">
+                {{ form.consumption.label }}
+                {{ form.consumption.errors }}
+        {% endif %}
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">{{ form.consumption.label }} (l/100km)</div>
+            </div>
+            {{ form.consumption }}
+        </div>
 
-<form class="col-md-8" action="." method='POST'>
-    {% csrf_token %}
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">{{ form.fuel.label }}</div>
+            </div>
+            {{ form.fuel }}
+        </div>
 
-    <div class="input-group mb-3 mt-3">
-        <div class="input-group-prepend">
-            <div id="header_input_profil" class="input-group-text">Couleur</div>
+        <div id="submit_vehicule1">
+            <button type="submit" class="btn btn-success">Envoyer</button>
         </div>
-        {{ form.color }}
-    </div>
-    <div class="input-group mb-3 mt-3">
-        <div class="input-group-prepend">
-            <div id="header_input_profil" class="input-group-text">Modele</div>
-        </div>
-        {{ form.model }}
-    </div>
-    <div class="input-group mb-3 mt-3">
-        <div class="input-group-prepend">
-            <div id="header_input_profil" class="input-group-text">Nombre de place passager</div>
-        </div>
-        {{ form.amount_of_free_seats }}
-    </div>
-    <div class="input-group mb-3 mt-3">
-        <div class="input-group-prepend">
-            <div id="header_input_profil" class="input-group-text">Consommation (l/100km)</div>
-        </div>
-        {{ form.consumption }}
-    </div>
-        </div>
-        {{ form.consumption.errors }}
-    </div>
-    <div class="input-group mb-3 mt-3">
-        <div class="input-group-prepend">
-            <div id="header_input_profil" class="input-group-text">Carburant</div>
-        </div>
-        {{ form.fuel }}
-    </div>
-
-<div id="submit_vehicule1">
-    <button type="submit" class="btn btn-success">Envoyer</button>
-</div>
 
     </form>
-
-
-
-    {% load static %}
-    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-<script>
-    
-        /* ###### Fonctions pour ajouter les vehicules ###### */
-
-        $(function($){
-
-            $('#oui_vehicule').click(function(e){
-                console.log('oui ok')
-                $('#vehicule_info').removeClass('hidden');
-                $('#vehicule').css('height', '630px');
-                $('#contenu').css('height', '630px');
-            });
-            $('#non_vehicule').click(function(e){
-                console.log('non ok')
-                /* $('#vehicule_info').addClass('hidden');
-                $('#contenu').css('height', '450px');
-                $('#vehicule2_info').addClass('hidden'); */
-                location.reload();
-                
-            });
-        
-           
-            $('#add_vehicule').click(function(e){
-                console.log('add ok')
-                $('#vehicule2_info').removeClass('hidden');
-                $('#add_vehicule').addClass('hidden');
-                $('#submit_vehicule1').addClass('hidden');
-                $('#supprimer_vehicule').addClass('hidden');
-                $('#vehicule_info').css('height', '350px');
-                $('#contenu').css('height', '950px');
-                
-            });
-
-
-        /* ###### Fonctions pour supprimer les vehicules ###### */
-
- 
-            $('#supprimer_vehicule').click(function(e){
-                console.log('suppr ok')
-                $('#vehicule_info').addClass('hidden');
-                $('#oui_vehicule').prop('checked', false);                
-                $('#non_vehicule').prop('checked', true);
-                $('#vehicule').css('height', '450px');
-                $('#contenu').css('height', '450px');                
-            });
-
-
-
-            $('#supprimer_vehicule2').click(function(e){
-                console.log('suppr2 ok')
-                $('#vehicule2_info').addClass('hidden');
-                $('#submit_vehicule1').removeClass('hidden');
-                $('#add_vehicule').removeClass('hidden');
-                $('#supprimer_vehicule').removeClass('hidden');
-                $('#vehicule_info').css('height', '470px');
-                $('#vehicule').css('height', '630px');
-                $('#contenu').css('height', '630px');  
-                
-            }); 
-        });
-
-        
-
-            
-</script>
-
+    <div class="col-md-2"></div>
+</div>
 {% endblock contenuProfil %}

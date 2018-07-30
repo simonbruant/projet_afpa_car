@@ -1,3 +1,9 @@
+/* [class*="col"] {
+    border: 1px solid blue;
+    border-radius: 4px;
+    text-align: center;
+  } */
+
 #container_profil {
     margin-top: 30px;
     margin-bottom: 30px;
@@ -11,10 +17,16 @@
     color : #E3007E;
 }
 
-/* ###### Gestion de la taille des pages ###### */
-#contenu {
-    height: 1000px;
+#message_errors {
+    color : red;
+    list-style-type: none;
 }
+
+/* ###### Gestion de la taille des pages ###### */
+
+/* #contenu {
+    height: 1000px;
+} */
 
 #card_vehicule_contenu{
     border : 1px solid;
