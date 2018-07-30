@@ -10,10 +10,11 @@
 
 {% block contenuProfil %}
 
-<!-- TODO : Afficher le string si aucune adresse existante -->
-<!-- TODO : Else afficher les addresses 3 max (?) -->
+{% if address_context|length == 0 %}
 <p>Vos adresses enregistrées s'afficheront ici.</p>
-
+{% else %}
+<br/>
+{% endif %}
 
 <!-- si 0 adresse -> <p>string</p> ++ Formulaire visible-->
 
@@ -21,9 +22,6 @@
 <!-- si 2 adresse -> []     [] ++ bouton ADD ADDRESS -->
 <!-- si 3 adresse -> [] [] [] ++ bouton ADD ADDRESS -->
 
-<div id="container_card_address">
-
-    {% for lieu in address_context %}
 {% comment %}
 {% if address_context|length == 3 %}
 <br/>
@@ -44,52 +42,50 @@
 {% url 'covoiturage:address_delete' address.id %}
 {% endcomment %}
 
-{% comment %} TODO : REMPLACER LES CARD PAR LE CODE BOOTSTRAP EN ADAPTANT DIMENSION !{% endcomment %}
-
 {% comment %} TODO : .capitalize() premiere lettre du LABEL dans la card {% endcomment %}
 
-<div id="litle_golum">  </div> 
-<div id="card_address">
-    <div id="card_address_content">
-        <div>
-            <div id="address_label">{{ lieu.address_label }}</div>
-        </div>
-        <div >
-            <div>
-                <div>{{ lieu.street_number }}, {{ lieu.street_name }}</div>
-                <div>{{ lieu.zip_code }}, {{ lieu.city }}</div>
-            </div>
-        <div><a href="{% url 'covoiturage:address_update' lieu.id %}" id="btn_card_footer">Modifier</a></div>
 
-        <div>|</div>
-        <div><a href="{% url 'covoiturage:address_delete' lieu.id %}" id="btn_card_footer">Supprimer</a></div>
+<div id="container_card_address">
+    {% for lieu in address_context %}
+    <br/><br/><br/>
+    <div id="card_address_content" class='col-md-4'>
+
+    <div id="card_vehicule_contenu" class="card col-md-12">
+        <div class=row>
+            <div id="address_label" class="card-header bg-default col-md-12">
+                        {{ lieu.address_label }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mt-3">
+                        <div>{{ lieu.street_number }}, {{ lieu.street_name }}</div>
+                        <div>{{ lieu.zip_code }}, {{ lieu.city }}</div>
+                    </div>
+                    <div class="col-md-5 mt-3 mb-4">
+                            <a href="{% url 'covoiturage:address_update' lieu.id %}" id="btn_card_footer">Modifier</a>
+                    </div>
+                    <div class="col-md-1 mt-3">
+                        <div>|</div>
+                    </div>
+                    <div class="col-md-5 mt-3">
+                            <a href="{% url 'covoiturage:address_delete' lieu.id %}" id="btn_card_footer">Supprimer</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-<br/>
 
 {% endfor %}
 
-
-
-
 </div>
-
-
-
-
-
-
+<br/>  
 
 <div class="row">
     <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 </div>
-
-
 <div class="row">
     <div class="col-md-2"></div>
-    
-    <form class="col-md-8" action="" method="POST">
+
+    <form class="col-md-8" action="." method="POST">
         {% csrf_token %}
 
         <div class="input-group mb-3 mt-3">
@@ -99,7 +95,6 @@
             {{ form.address_label }}
         </div>
 
-        
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
                 <div id="header_input_profil" class="input-group-text">Numéro de la rue</div>
@@ -139,9 +134,6 @@
             <button type="submit" class="btn btn-success">Valider l'adresse</button>
         </div>
 
-
-
-
         {% if form.errors %}
         <p>Il y a eu une erreur lors de la création</p>
         {% else %}
@@ -151,8 +143,5 @@
     </form>
 
 </div>
-
-
-        
 
 {% endblock contenuProfil %}
