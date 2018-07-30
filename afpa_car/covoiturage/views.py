@@ -1,7 +1,7 @@
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render, redirect
+# from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, UpdateView, FormView, CreateView, DeleteView
 
@@ -39,10 +39,9 @@ class CarOwnerView(UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
-class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class AddressCreateView(LoginRequiredMixin, CreateView):
     template_name = 'covoiturage/profil/adresse.html'
     success_url = reverse_lazy('covoiturage:address') #TODO : changer index par la bonne page
-    success_message = "Informations mises à jour"
     form_class = AddressForm
 
     # Lie User avec adresse lors de la creation de celle-ci
@@ -50,13 +49,15 @@ class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         user = self.request.user
         address = form.save()
         address_user = Address_User()
+
         address_user.address = address
         address_user.user = user
         address_user.save()
-        return super(AddressCreateView, self).form_valid(form)
 
-    # "Code a garder pour l'instant" - Amine
-    # Déclare context address afin de faire une boucle for
+        print("mauvais comportement")
+        return super(AddressCreateView, self).form_valid(form) #◘fonctionne avec super() vide
+
+    # Déclare context de address afin de faire une boucle for pour en obtenir l'user lié
     def get_context_data(self, **kwargs):
         context = super(AddressCreateView, self).get_context_data(**kwargs)
         context['address_context'] = Address.objects.filter(users=self.request.user)
@@ -69,28 +70,12 @@ class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_message = "Informations mises à jour"
     form_class = AddressForm
 
-    # def get_object(self, queryset=None):
-    #     user = Address.objects.get(user=self.request.user)
-    #     return user
-
     def get_success_url(self):
-        return reverse('covoiturage:address_update')
+        print("bon comportement")
+        return reverse('covoiturage:address') # ex : address_update
 
 
 class AddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView ):
     model = Address
-    template_name = 'covoiturage/profil/adresse.html'
+    template_name = 'covoiturage/profil/address_delete.html'
     success_url = reverse_lazy('covoiturage:address')
-
-
-# class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-#     model = PrivateData
-#     fields = ('phone_number', 'afpa_number')
-#     template_name = 'covoiturage/profil/infos_privees.html'
-#     success_url = reverse_lazy('covoiturage:infos_privees')
-#     success_message = "Informations mises à jour"
-
-        
-#     def get_object(self, queryset=None):
-#         user = PrivateData.objects.get(user=self.request.user)
-#         return user

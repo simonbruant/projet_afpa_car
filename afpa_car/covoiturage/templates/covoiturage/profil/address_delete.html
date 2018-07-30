@@ -1,0 +1,33 @@
+{% extends "covoiturage/profil.html" %}
+
+{% block contenuProfil %}
+
+<br /><br /><br /><br />
+<form action="" method="post">{% csrf_token %}
+    <h4>Êtes-vous sur de vouloir supprimer l'adresse "{{ object.address_label }}"?</h4>
+    <br /><br />
+    <center>
+        
+        <div id="litle_golum">  </div> 
+        <div id="card_address">
+            <div id="card_address_content">
+                <div>
+                    <div id="address_label">{{ object.address_label }}</div>
+                </div>
+                <div >
+                    <div>
+                        <div>{{ object.street_number }}, {{ object.street_name }}</div>
+                        <div>{{ object.zip_code }}, {{ object.city }}</div>
+                    </div>
+                </div>
+            </div>
+        </div
+    </center>
+    <br /><br />
+    <input type="submit" class="btn btn-danger" value="Valider la suppression" />
+</form>
+<button class="btn btn-success" value="Retour à la page Adresse" > </button>
+<br/>
+
+<hr/>
+{% endblock %}
