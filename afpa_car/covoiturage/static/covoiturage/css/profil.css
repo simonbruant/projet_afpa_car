@@ -9,9 +9,6 @@
 
 /* CARD @Address */
 
-#container_card_address{
-    display: flex;
-}
 
 #card_address{
     width: 30%;
@@ -23,7 +20,6 @@
     border-color: lightgray; 
     box-shadow:0 0 3px rgba(0,0,0,0.4);
     font-size: 12px;
-    border-radius: 5px;
 }
 
 #address_label{

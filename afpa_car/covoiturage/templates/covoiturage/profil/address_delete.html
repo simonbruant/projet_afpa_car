@@ -5,51 +5,32 @@
 <form action="" method="post">{% csrf_token %}
     <hr/>
     
-    <h4>Êtes-vous sur de vouloir supprimer l'adresse "{{ object.address_label }}"?</h4>
-    <br /><br />
-    <center>
-        
-        <div id="card_address">
-            <div id="card_address_content">
-                <div>
-                    <div id="address_label">{{ object.address_label }}</div>
-                </div>
-                <div >
-                    <div>
-                        <div>{{ object.street_number }}, {{ object.street_name }}</div>
-                        <div>{{ object.zip_code }}, {{ object.city }}</div>
-                    </div>
-                </div>
-            </div>
-        </div
-    </center>
-
-    {% comment %} -------------------------------------------- {% endcomment %}
-    <br/><br/><br/>
-    <div id="card_address_content" class='col-md-4'>
-            <div id="card_vehicule_contenu" class="card col-md-12">
+    <h4 class="mb-5">Êtes-vous sur de vouloir supprimer l'adresse "{{ object.address_label }}" ?</h4>
+  <div class='row'>
+      <div class='col-md-4'></div>
+        <div  class='col-md-4'>
+            <div id="card_address_content" class="card col-md-12">
                 <div class=row>
                     <div id="address_label" class="card-header bg-default col-md-12">
                         {{ object.address_label }}
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-4">
                     <div class="col-md-12 mt-3">
                         <div>{{ object.street_number }}, {{ object.street_name }}</div>
                         <div>{{ object.zip_code }}, {{ object.city }}</div>
                     </div>
-                    <br/><br/><br/><br/>
                 </div>
             </div>
         </div>
+    </div>
 
     {% comment %} -------------------------------------------- {% endcomment %}
     <br/><br/>
     <div align="center"><input type="submit" class="btn btn-danger" value="Valider la suppression" /></div>
 </form>
-<br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
-<div align="left"><button class="btn btn-success btn-sm" href="{% url 'covoiturage:address' %}"> <<< Retour à la page Adresse</button></div>
-<div align="left"><a  class="btn btn-success btn-sm" href="{% url 'covoiturage:address' %}"> <<< Retour à la page Adresse </a></div>
+
+<div align="left" ><a  class="btn btn-success btn-sm" href="{% url 'covoiturage:address' %}"> Retour à la page Adresse </a></div>
 <hr/>
 {% endblock %}
