@@ -17,11 +17,7 @@ class PrivateDataUpdateForm(forms.ModelForm):
 class UserUpdateForm (forms.ModelForm):
     class Meta:
         model = User
-<<<<<<< HEAD
-        fields = ( 'username', 'first_name', 'last_name', 'email', 'trainee', 'driver_license', 'afpa_center' )
-=======
-        fields = ( 'username', 'first_name', 'last_name', 'email', 'trainee', 'driver_license', 'car_owner' )
->>>>>>> profil
+        fields = ( 'username', 'first_name', 'last_name', 'email', 'trainee', 'driver_license', 'car_owner', 'afpa_center' )
         widgets = {
             'username': TextInput(attrs={'class': 'form-control'}),
             'first_name': TextInput(attrs={'class': 'form-control'}),
