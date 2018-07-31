@@ -15,7 +15,7 @@ class CarOwnerForm(forms.ModelForm):
 
 
 class AddressForm(forms.ModelForm):
-    address_label = forms.CharField(widget=TextInput(attrs={'class': 'form-control'}))
+    address_label = forms.CharField(required=False, widget=TextInput(attrs={'class': 'form-control'}))
 
     class Meta: 
         model = Address
@@ -31,8 +31,7 @@ class AddressForm(forms.ModelForm):
             'city': Select(attrs={'class': 'form-control'}),
         }
 
-    def clean_address_label(self):
-        return self.cleaned_data['address_label']
+
 
     # ## VERIFICATION DE LA PRESENCE DE L'ADRESSE DANS LA BDD LORS DE LA CREATION    
     # def clean(self):

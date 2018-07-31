@@ -1,19 +1,14 @@
-from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy, reverse
-from django.views.generic import TemplateView, UpdateView, FormView, CreateView, DeleteView
+from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView
 
 from .forms import CarOwnerForm, AddressForm
-
-from users.models import PrivateData, User
 from .models import Address_User, Address
-
-# TODO toutes les view requieres LoginRequiredMixin 
+from users.models import PrivateData, User
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'covoiturage/dashboard.html'
-
 
 class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = PrivateData
@@ -40,24 +35,24 @@ class CarOwnerView(UpdateView):
 
 class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'covoiturage/profil/adresse.html'
-    success_url = reverse_lazy('covoiturage:address') #TODO : changer index par la bonne page
+    success_url = reverse_lazy('covoiturage:address')
     success_message = "Informations de création"
     form_class = AddressForm
 
-    # Lie User avec adresse lors de la creation de celle-ci
     def form_valid(self, form):
         user = self.request.user
         address = form.save()
         address_user = Address_User()
+        street_number = form.cleaned_data['street_number']
+        address.street_number = "" if not street_number else street_number
 
         address_user.address = address
         address_user.user = user
-        address_user.address_label_private = form.clean_address_label()
+        address_label = form.cleaned_data['address_label']
+        address_user.address_label_private = "Adresse" if not address_label else address_label
         address_user.save()
+        return super().form_valid(form)
 
-        return super(AddressCreateView, self).form_valid(form) #◘fonctionne avec super() vide
-
-    # Déclare context de address afin de faire une boucle for pour en obtenir l'user lié
     def get_context_data(self, **kwargs):
         context = super(AddressCreateView, self).get_context_data(**kwargs)
         context['address_user_context'] = Address_User.objects.filter(user=self.request.user)
@@ -78,8 +73,37 @@ class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         queryset = queryset.filter(users=self.request.user)
         return queryset
 
+    def get_initial(self):
+        address = Address.objects.get(pk=self.kwargs['pk'])
+        address_user = Address_User.objects.get(user=self.request.user, address=address,)
+        return {'address_label': address_user.address_label_private }
+    
+    def form_valid(self, form):
+        address = form.save()
+        street_number = form.cleaned_data['street_number']
+        address.street_number = " " if not street_number else street_number
+        address_label = form.cleaned_data['address_label']
+
+        address_user = Address_User.objects.get(user=self.request.user, address=address,)
+        address_user.address_label_private = address_user.address_label_private = "Adresse" if not address_label else address_label
+        address_user.save()
+        return super().form_valid(form)
+
+
 
 class AddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView ):
     model = Address
     template_name = 'covoiturage/profil/address_delete.html'
     success_url = reverse_lazy('covoiturage:address')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(users=self.request.user)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        address = Address.objects.get(pk=self.kwargs['pk'])
+        context['address_context'] = address
+        context['address_user_context'] = Address_User.objects.get(user=self.request.user, address=address,)
+        return context
