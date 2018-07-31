@@ -92,7 +92,7 @@ class ChangePassword(TemplateView):
         context = {'form': form }
         return render(request, self.template_name, context)
 
-    
+
 class CustomPasswordResetView(PasswordResetView):
     email_template_name = 'users/password_reset_email.html'
     template_name = 'users/password_reset_form.html'

@@ -31,7 +31,6 @@ class CalendarView(LoginRequiredMixin, TemplateView):
     template_name = 'carpooling/calendar.html'
 
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-
     template_name = 'carpooling/profil/general_infos.html'
     success_url = reverse_lazy('carpooling:general_infos')
     success_message = "Informations mises à jour"
@@ -40,7 +39,7 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.user 
 
-class CarCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
+class CarCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'carpooling/profil/car.html'
     success_url = reverse_lazy('carpooling:car')
     success_message = "Informations mises à jour"
@@ -117,14 +116,11 @@ class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = AddressForm
 
     def form_valid(self, form):
-        user = self.request.user
         address = form.save()
         address_user = Address_User()
-        street_number = form.cleaned_data['street_number']
-        address.street_number = "" if not street_number else street_number
 
         address_user.address = address
-        address_user.user = user
+        address_user.user = self.request.user
         address_label = form.cleaned_data['address_label']
         address_user.address_label_private = "Adresse" if not address_label else address_label
         address_user.save()
@@ -157,15 +153,12 @@ class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     
     def form_valid(self, form):
         address = form.save()
-        street_number = form.cleaned_data['street_number']
-        address.street_number = " " if not street_number else street_number
         address_label = form.cleaned_data['address_label']
 
         address_user = Address_User.objects.get(user=self.request.user, address=address,)
         address_user.address_label_private = address_user.address_label_private = "Adresse" if not address_label else address_label
         address_user.save()
         return super().form_valid(form)
-
 
 class AddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView ):
     model = Address
