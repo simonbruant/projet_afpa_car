@@ -55,6 +55,18 @@ class ProfilImageUpdateForm(forms.ModelForm):
                                     widget=forms.FileInput)    
     remove_avatar = forms.BooleanField(required=False)
 
+    def save(self, commit=False, *args, **kwargs):
+        obj = super(ProfilImageUpdateForm, self).save(commit=False, *args, **kwargs)
+        if self.cleaned_data.get('remove_avatar'):
+            print('ok')
+            obj.avatar = None
+            obj.save()
+        else:
+            obj.avatar = self.cleaned_data['avatar']
+            obj.save()
+
+        return obj
+
 class FormationSessionForm(forms.ModelForm):
     class Meta:
         model = FormationSession
@@ -85,15 +97,3 @@ class PreferencesForm(forms.ModelForm):
         }
 
 
-
-    def save(self, commit=False, *args, **kwargs):
-        obj = super(ProfilImageUpdateForm, self).save(commit=False, *args, **kwargs)
-        if self.cleaned_data.get('remove_avatar'):
-            print('ok')
-            obj.avatar = None
-            obj.save()
-        else:
-            obj.avatar = self.cleaned_data['avatar']
-            obj.save()
-
-        return obj
