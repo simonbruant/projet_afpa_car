@@ -15,9 +15,9 @@ class UserManager(BaseUserManager):
             raise ValueError("Les utilisateurs doivent avoir un nom.")
 
         user_obj = self.model(
-            email = self.normalize_email(email) # lower le nom de domaine
+            email = self.normalize_email(email)
         )
-        user_obj.set_password(password) #change user password
+        user_obj.set_password(password)
         user_obj.username = username
         user_obj.first_name = first_name
         user_obj.last_name = last_name

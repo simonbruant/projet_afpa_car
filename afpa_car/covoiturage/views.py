@@ -15,11 +15,11 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'covoiturage/dashboard.html'
 
 class ProfilRedirectview(LoginRequiredMixin, RedirectView):
-    url = reverse_lazy('covoiturage:infos_publiques')
+    url = reverse_lazy('covoiturage:general_infos')
 
 class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    template_name = 'covoiturage/profil/infos_privees.html'
-    success_url = reverse_lazy('covoiturage:infos_privees')
+    template_name = 'covoiturage/profil/private_infos.html'
+    success_url = reverse_lazy('covoiturage:private_infos')
     success_message = "Informations mises à jour"
     form_class = PrivateDataUpdateForm
     
@@ -32,8 +32,8 @@ class CalendarView(LoginRequiredMixin, TemplateView):
 
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
-    template_name = 'covoiturage/profil/infos_publiques.html'
-    success_url = reverse_lazy('covoiturage:infos_publiques')
+    template_name = 'covoiturage/profil/general_infos.html'
+    success_url = reverse_lazy('covoiturage:general_infos')
     success_message = "Informations mises à jour"
     form_class = UserUpdateForm
     
@@ -41,8 +41,8 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return self.request.user 
 
 class CarCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
-    template_name = 'covoiturage/profil/vehicule.html'
-    success_url = reverse_lazy('covoiturage:vehicule')
+    template_name = 'covoiturage/profil/car.html'
+    success_url = reverse_lazy('covoiturage:car')
     success_message = "Informations mises à jour"
     form_class = CarForm
 
@@ -63,12 +63,12 @@ class CarCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
 
 class CarUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Car
-    template_name = 'covoiturage/profil/vehicule.html'
+    template_name = 'covoiturage/profil/car.html'
     success_message = "Informations mises à jour"
     form_class = CarForm
 
     def get_success_url(self):
-        return reverse('covoiturage:vehicule')
+        return reverse('covoiturage:car')
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -78,12 +78,18 @@ class CarUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 class CarDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Car
     template_name = 'covoiturage/profil/car_delete.html'
-    success_url = reverse_lazy('covoiturage:vehicule')
+    success_url = reverse_lazy('covoiturage:car')
 
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(users=self.request.user)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        car = Car.objects.get(pk=self.kwargs['pk'])
+        context['car'] = car
+        return context
 
 class ProfilImageUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'covoiturage/profil/photo.html'
@@ -105,7 +111,7 @@ class PreferencesUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
         return self.request.user
 
 class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    template_name = 'covoiturage/profil/adresse.html'
+    template_name = 'covoiturage/profil/address.html'
     success_url = reverse_lazy('covoiturage:address')
     success_message = "Informations de création"
     form_class = AddressForm
@@ -132,7 +138,7 @@ class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
 class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Address
-    template_name = 'covoiturage/profil/adresse.html'
+    template_name = 'covoiturage/profil/address.html'
     success_message = "Informations mises à jour"
     form_class = AddressForm
 

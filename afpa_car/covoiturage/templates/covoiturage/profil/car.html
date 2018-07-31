@@ -15,7 +15,7 @@
 <div class="row">   
     {% for car in cars %}
         <div class='col-md-4'>
-            <div id="card_vehicule_contenu" class="card col-md-12">
+            <div id="card_car_content" class="card col-md-12">
 
                 <div class=row>
                     <div class="card-header bg-default col-md-12">
@@ -27,16 +27,16 @@
                         <div>{{ car.color }}</div>
                         <div>{{ car.amount_of_free_seats }}  places passager</div>
                         <div>{{ car.fuel }}</div>
-                        <div>{{ car.consumption }} L/100km</div>
+                        <div>{{ car.consumption }}</div>
                     </div>
                     <div class="col-md-5 mt-3 mb-4">
-                        <a href="{% url 'covoiturage:vehicule_update' car.id %}" id="btn_card_views_card">Modifier</a>
+                        <a href="{% url 'covoiturage:car_update' car.id %}" id="btn_card_views_card">Modifier</a>
                     </div>
                     <div class="col-md-1 mt-3">
                         <div>|</div>
                     </div>
                     <div class="col-md-5 mt-3">
-                        <a href="{% url 'covoiturage:vehicule_delete' car.id %}" id="btn_card_views_card">Supprimer</a>
+                        <a href="{% url 'covoiturage:car_delete' car.id %}" id="btn_card_views_card">Supprimer</a>
                     </div>
                 </div>
 
@@ -106,7 +106,7 @@
             {{ form.fuel }}
         </div>
 
-        <div id="submit_vehicule1">
+        <div id="submit_car">
             <button type="submit" class="btn btn-success">Envoyer</button>
         </div>
 

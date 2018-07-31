@@ -13,11 +13,11 @@
                     <div class="card nav" active-text-color="#F1F1F1">
                         <div id="titre_profil" class="card-header bg-success">Profil</div>
                         <div class="list-group side-menu" id="filtre_url_contenu">
-                            <a href="{% url 'covoiturage:infos_publiques' %}" class="list-group-item link_sidebar">Informations Publiques</a>
-                            <a href="{% url 'covoiturage:infos_privees' %}"   class="list-group-item link_sidebar" id="informations_privees">Informations Privees</a>
+                            <a href="{% url 'covoiturage:general_infos' %}" class="list-group-item link_sidebar">Informations Publiques</a>
+                            <a href="{% url 'covoiturage:private_infos' %}"   class="list-group-item link_sidebar" id="informations_privees">Informations Privees</a>
                             <a href="{% url 'covoiturage:photo' %}"           class="list-group-item link_sidebar" id="photo" >Photo</a>
                             {% if user.car_owner and user.driver_license %}
-                            <a href="{% url 'covoiturage:vehicule' %}"        class="list-group-item link_sidebar" data-target-id="vehicule">Vehicule</a>
+                            <a href="{% url 'covoiturage:car' %}"        class="list-group-item link_sidebar" id='car'>Vehicule</a>
                             {% endif %}
                             <a href="{% url 'covoiturage:password' %}"        class="list-group-item link_sidebar">Mot de Passe</a>
                             <a href="{% url 'covoiturage:preferences' %}"     class="list-group-item link_sidebar">Préférences</a>

@@ -51,7 +51,7 @@ class Address(models.Model):
         verbose_name = "Adresse"
 
     def __str__(self):
-        return self.adress_label
+        return self.street_name
 
 class Address_User(models.Model):
     address_label_private   = models.CharField(max_length=100, default="Adresse", null=True, blank=True, verbose_name="Libellé privé")

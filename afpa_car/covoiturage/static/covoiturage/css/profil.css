@@ -24,7 +24,7 @@
 }
 
 /*  card @address */
-#card_address_content, #card_vehicule_contenu {
+#card_address_content, #card_car_content {
     border : 1px solid;
     border-color: lightgray; 
     box-shadow:0 0 3px rgba(0,0,0,0.4);
@@ -91,7 +91,7 @@ a {
     text-align: center;
 }
 
-#submit_profil, #submit_vehicule1, #submit_vehicule2 {
+#submit_profil, #submit_car {
     text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -106,11 +106,6 @@ a {
 /* ###### Classe pour l'affichage des pages ###### */
 .hidden{
     visibility: hidden;
-}
-
-/* ###### Bouton pour supprimer un véhicule ###### */
-#supprimer_vehicule, #supprimer_vehicule2 {
-    float: right;
 }
 
 /* ###### Masquage des boutons radios des préférences ###### */

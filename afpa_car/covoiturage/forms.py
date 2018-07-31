@@ -104,12 +104,10 @@ class AddressForm(forms.ModelForm):
         model = Address
         fields = ('street_number', 'street_name', 'street_complement', 'zip_code', 'city')
         exclude = ['lattitude', 'longitude', ]
-        ## DOC List Widget : https://docs.djangoproject.com/en/1.8/_modules/django/forms/widgets/
         widgets = {
             'street_number': TextInput(attrs={'class': 'form-control'}),
             'street_name': TextInput(attrs={'class': 'form-control'}),
             'street_complement': TextInput(attrs={'class': 'form-control'}),
-            # TODO : Trouver équivalent du widget pour menu déroulant (FK) ou auto-completion de la ville/zipcode
             'zip_code': Select(attrs={'class': 'form-control'}),
             'city': Select(attrs={'class': 'form-control'}),
         }

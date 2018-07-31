@@ -44,8 +44,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_full_name(self):
         full_name = '{} {}'.format(self.first_name, self.last_name)
-        return full_name.strip() # verif utilité de strip, enleve quels espaces ?
-
+        return full_name.strip()
+        
     def get_short_name(self):
         return self.first_name
     

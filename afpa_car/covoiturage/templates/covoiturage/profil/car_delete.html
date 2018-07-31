@@ -2,46 +2,36 @@
 
 {% block contenuProfil %}
 
-<p>Etes vous sur de vouloir supprimer votre vehicule ?</p>
-
-<div class="row">   
-    <div class="col-md-4"></div>
-    <div class='col-md-4'>
-        <div id="card_vehicule_contenu" class="card col-md-12">
-
-            <div class=row>
-                <div class="card-header bg-default col-md-12">
-                    {{ car.model }}
+<form action="" method="post">{% csrf_token %}
+    <hr/>
+    
+    <h4 class="mb-5">Êtes-vous sur de vouloir supprimer le véhicule &laquo; {{ car.model }} &raquo; ?</h4>
+<div class='row'>
+    <div class='col-md-4'></div>
+        <div  class='col-md-4'>
+            <div id="card_address_content" class="card col-md-12">
+                <div class=row>
+                    <div id="address_label" class="card-header bg-default col-md-12">
+                        {{ car.model }}
+                    </div>
                 </div>
-            </div>
-            <div class="row">
+            <div class="row mb-4">
                 <div class="col-md-12 mt-3">
                     <div>{{ car.color }}</div>
                     <div>{{ car.amount_of_free_seats }}  places passager</div>
                     <div>{{ car.fuel }}</div>
-                    <div>{{ car.consumption }} L/100km</div>
+                    <div>{{ car.consumption }}</div>
                 </div>
             </div>
-
+            </div>
         </div>
     </div>
-    <div class="col-md-4"></div>
-</div>
-
-<form action="" method="post">{% csrf_token %}
-
-    <div class="row">
-        <div class='col-md-4'></div>
-
-        <div id="submit_vehicule1 col-md-2">
-            <button type="submit" value="Confirm" class="btn btn-danger">Envoyer</button>
-        </div> 
-        <div id="submit_vehicule1 col-md-2">
-            <button type="submit" value="Confirm" class="btn btn-danger">Annuler</button>
-        </div>
-
-    </div>
+    <br/><br/>
+    <div align="center"><input type="submit" class="btn btn-danger" value="Valider la suppression" /></div>
 </form>
 
 
+<div align="left"><a  class="btn btn-success btn-sm mt-4" href="{% url 'covoiturage:car' %}">Retour à la page Vehicule </a></div>
+<hr/>
 {% endblock %}
+

@@ -9,13 +9,7 @@ from django.utils.http import is_safe_url
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, FormView
 
-from .forms import LoginForm, SignupForm, LogoutForm, PrivateDataCreateForm
-
-
-# class SignupView(CreateView):
-#     form_class = SignupForm
-#     template_name = 'users/signup.html'
-#     success_url = reverse_lazy('covoiturage:index')
+from .forms import LoginForm, SignupForm, LogoutForm, PrivateDataCreateForm, CustomPasswordChangeForm
 
 def signup_view(request):
     signup_form = SignupForm(request.POST or None)
@@ -66,7 +60,6 @@ class LoginView(FormView):
         if self.request.user.is_authenticated:
             return redirect('covoiturage:dashboard')
         else:
-            # Omit the form if you are not using it.
             form = self.form_class() 
             return render(request, self.template_name, {'form': form})
 
@@ -78,10 +71,9 @@ class LogoutView(LoginRequiredMixin, FormView):
         logout(self.request)
         return HttpResponseRedirect(reverse('covoiturage:index'))
 
-
 def change_password(request):
     if request.method == 'POST':
-        form = PasswordChangeForm(data=request.POST, user=request.user)
+        form = CustomPasswordChangeForm(data=request.POST, user=request.user)
         if form.is_valid():
             print('form valide')
             form.save()
@@ -89,7 +81,7 @@ def change_password(request):
             return redirect('covoiturage:dashboard')
 
     else: 
-        form = PasswordChangeForm(user=request.user)
+        form = CustomPasswordChangeForm(user=request.user)
 
     context = {'form': form }
     return render(request, 'covoiturage/profil/password.html', context)

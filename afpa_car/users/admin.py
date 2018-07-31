@@ -23,8 +23,7 @@ class UserAdmin(BaseUserAdmin):
         (None, {'fields': ('email', 'username', 'password')}),
         ('Personal infos', {'fields': ('first_name', 'last_name', 'avatar', 'trainee', 'driver_license', 'car_owner')}),
         ('Preferences', {'fields': ('smoker', 'talker', 'music')}),
-        ('Permissions', {'fields': ('is_admin', 'is_staff', 'is_active')}),
-        
+        ('Permissions', {'fields': ('is_admin', 'is_staff', 'is_active')}),   
     )
     add_fieldsets = (
         ('Required Fields', {
@@ -51,7 +50,6 @@ class UserAdmin(BaseUserAdmin):
         return super(UserAdmin, self).get_inline_instances(request, obj)
 
 admin.site.register(User, UserAdmin)
-
 
 # Remove Group Model from admin. We're not using it.
 # admin.site.unregister(Group)
