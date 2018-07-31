@@ -5,10 +5,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, UpdateView, CreateView
+from django.urls import reverse_lazy, reverse
+from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView, RedirectView
 
-from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, FormationSessionForm, AfpaCenterForm, PreferencesForm
+from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, FormationSessionForm, AfpaCenterForm, PreferencesForm, ProfilImageUpdateForm
 from .models import Car, Car_User, FormationSession
 from users.models import PrivateData, User
 
@@ -16,16 +16,15 @@ from users.models import PrivateData, User
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'covoiturage/dashboard.html'
 
+class ProfilRedirectview(LoginRequiredMixin, RedirectView):
+    url = reverse_lazy('covoiturage:infos_publiques')
 
 class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    # model = PrivateData
-    # fields = ('phone_number', 'afpa_number')
     template_name = 'covoiturage/profil/infos_privees.html'
     success_url = reverse_lazy('covoiturage:infos_privees')
     success_message = "Informations mises à jour"
     form_class = PrivateDataUpdateForm
     
-
     def get_object(self, queryset=None):
         user = PrivateData.objects.get(user=self.request.user)       
         return user
@@ -40,7 +39,6 @@ def email(request):
     ['gaziya@loketa.com'],)
 
     return render(request, 'covoiturage/email.html')
-
 
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
@@ -77,15 +75,35 @@ class CarCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
 class CarUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Car
     template_name = 'covoiturage/profil/vehicule.html'
-    success_url = reverse_lazy('covoiturage:vehicule_update')
     success_message = "Informations mises à jour"
     form_class = CarForm
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(CarCreateView, self).get_context_data(**kwargs)
-    #     context['cars'] = Car.objects.filter(users=self.request.user)
-    #     return context
+    def get_success_url(self):
+        return reverse('covoiturage:vehicule')
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(users=self.request.user)
+        return queryset
+
+class CarDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Car
+    template_name = 'covoiturage/profil/car_delete.html'
+    success_url = reverse_lazy('covoiturage:vehicule')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(users=self.request.user)
+        return queryset
+
+class ProfilImageUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'covoiturage/profil/photo.html'
+    success_url = reverse_lazy('covoiturage:photo')
+    form_class = ProfilImageUpdateForm
+    context_object_name = 'user'
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 @login_required(login_url='covoiturage:index')
 def FormationSessionCreateView(request):
@@ -114,12 +132,3 @@ class PreferencesUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
 
     def get_object(self, queryset=None):
         return self.request.user 
-
-
-
-
-
-
-    
-
-

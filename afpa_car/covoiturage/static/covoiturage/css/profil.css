@@ -1,3 +1,10 @@
+[class*="col-"]
+{
+    /* border: 1px solid indigo; */
+    text-align: center;
+}
+
+
 #container_profil {
     margin-top: 30px;
     margin-bottom: 30px;
@@ -11,10 +18,16 @@
     color : #E3007E;
 }
 
-/* ###### Gestion de la taille des pages ###### */
-#contenu {
-    height: 600px;
+#message_errors {
+    color : red;
+    list-style-type: none;
 }
+
+/* ###### Gestion de la taille des pages ###### */
+
+/* #contenu {
+    height: 1000px;
+} */
 
 #card_vehicule_contenu{
     border : 1px solid;
@@ -79,8 +92,7 @@ a {
 /* ###### Photo ###### */
 #rond {
     border-radius: 50%;
-    width: 30%;
-    height: 30%;
+    height: 180px;
 }
 
 /* ###### Classe pour l'affichage des pages ###### */

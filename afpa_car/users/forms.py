@@ -29,7 +29,6 @@ class SignupForm(forms.ModelForm):
             'last_name': TextInput(attrs={'class': 'form-control'}),
         }
 
-
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
         r = User.objects.filter(email=email)

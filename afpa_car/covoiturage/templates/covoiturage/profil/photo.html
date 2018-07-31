@@ -12,12 +12,23 @@
 
     <div class="row mb-3">
         <div class="col-md-4"></div>
+        {% if user.avatar %}
+        <img class="col-md-4" id="rond" src="{{ user.avatar.url }}">
+        {% else %}
         <img class="col-md-4" id="rond" src="../../../../static/img/avatar_generique.png">
+        {% endif %}
         <div class="col-md-4"></div>
     </div>
     <div class="row mb-3">
         <div class="col-md-4"></div>
-        <button class="btn btn-success col-md-4">Ajouter une Photo</button>
+        <form action="" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            <p>{{ form.avatar }} </p>
+            <p>effacer{{ form.remove_avatar }}</p>
+        <button type="submit">submit</button>
+    </form>
+
+        
         <div class="col-md-4"></div>
     </div>
     <div class="row mb-3 ">

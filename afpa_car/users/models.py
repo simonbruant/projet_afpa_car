@@ -16,7 +16,7 @@ class User(AbstractBaseUser, PermissionsMixin):
                                         choices=( (True, "Stagiare"),(False, "Employé") ))
     car_owner       = models.BooleanField(default=False, verbose_name="propriétaire d'un véhicule",
                                         choices=( (True, "Oui"), (False, "Non")) )
-    avatar          = models.ImageField(null=True, blank=True, upload_to='photos/')
+    avatar          = models.ImageField(null=True, blank=True, upload_to='avatars/')
     smoker          = models.BooleanField(default=False, verbose_name="Fumeur",
                                         choices=( (True, "Fumeur"), (False, 'Non Fumeur')))
     talker          = models.BooleanField(default=False, verbose_name="Bavard",
