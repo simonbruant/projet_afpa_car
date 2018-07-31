@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import TextInput, RadioSelect, Select, DateInput
 
-from .models import Car, FormationSession, AfpaCenter
+from .models import Car, FormationSession, AfpaCenter, Address
 from users.models import PrivateData, User
 
 class PrivateDataUpdateForm(forms.ModelForm):

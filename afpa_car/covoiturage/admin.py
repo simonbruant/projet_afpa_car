@@ -1,10 +1,6 @@
 from django.contrib import admin
 
-<<<<<<< HEAD
-from .models import ZipCode_City, Adress_User, Address, ZipCode, City, Car, Car_User, Formation, FormationSession, AfpaCenter
-=======
-from .models import ZipCode_City, Address_User, Address, ZipCode, City
->>>>>>> adress_beta
+from .models import ZipCode_City, Address_User, Address, ZipCode, City, Car, Car_User, Formation, FormationSession, AfpaCenter
 
 class ZipCodeInline(admin.TabularInline):        
     model = ZipCode_City
