@@ -62,5 +62,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class PrivateData(models.Model):
     user            = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number    = models.CharField(max_length=15, null=True, default="0")
-    afpa_number     = models.CharField(max_length=15, null=True, default="0")
+    phone_number    = models.CharField(max_length=15, null=True,)
+    afpa_number     = models.CharField(max_length=15, null=True,)
