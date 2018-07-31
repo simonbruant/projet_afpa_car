@@ -7,4 +7,4 @@ _notre projet covoit_
 
 Date | Version | Features
 ----| ----| ----
-2018/07/31 | Version 0.1 | Users, Dashboard
+2018/07/31 | Version 0.1 | Users, Profil
