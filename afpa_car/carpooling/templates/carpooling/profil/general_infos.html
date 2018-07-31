@@ -3,7 +3,7 @@
 {% block cardTitle %} 
 
 <div class="row">
-    <div id="titre_profil" class="card-header bg-success col-md-12 mb-3">Informations Publiques</div>
+    <div id="titre_profil" class="card-header bg-success col-md-12 mb-3">Informations Générales</div>
 </div>
 
 {% endblock cardTitle %}
@@ -12,11 +12,10 @@
 
 
 <div id="message_update" class="col-md-12">
-        {% if messages %}
         {% for message in messages %}
             {{ message }}
         {% endfor %}
-        {% endif %}
+
     </div>
 
     <div class="row">

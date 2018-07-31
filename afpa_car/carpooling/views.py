@@ -180,6 +180,5 @@ class AddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView ):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         address = Address.objects.get(pk=self.kwargs['pk'])
-        context['address_context'] = address
         context['address_user_context'] = Address_User.objects.get(user=self.request.user, address=address,)
         return context
