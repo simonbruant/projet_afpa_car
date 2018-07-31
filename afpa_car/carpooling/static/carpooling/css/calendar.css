@@ -1,0 +1,25 @@
+#burger {
+    float: right;
+    color: black;
+}
+
+.card-header {
+    text-align: center;
+}
+
+#semaineType {
+    align-self: center;
+    text-align: center;
+}
+
+#tableSemaineType {
+    width: 14%;
+}
+
+#datepicker {
+    margin-left: 22%;
+}
+
+#conteneur_calendrier {
+    border-right: 2px solid lightgray;
+}

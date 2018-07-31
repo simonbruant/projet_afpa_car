@@ -1,0 +1,53 @@
+{% extends 'carpooling/profil.html' %}
+
+{% block cardTitle %} 
+
+<div class="row">
+    <div id="titre_profil" class="card-header bg-success col-md-12 mb-3">Informations Privées</div>
+</div>
+
+{% endblock cardTitle %}
+
+{% block contenuProfil %}
+
+<div id="message_update" class="col-md-12 mb-3">
+        {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        {% endif %}
+    </div>
+
+<div class="row">
+    <div class="col-md-2"></div>
+
+    <form class="col-md-8" action="{% url 'carpooling:private_infos' %}" method='POST'>
+        {% csrf_token %}
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">Numéro de telephone</div>
+            </div>
+            {{ form.phone_number }} 
+        </div>
+        <br>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">Identifiant Afpa</div>
+            </div>
+            {{ form.afpa_number }}
+        </div>
+
+        <div id="submit_profil">
+            <button type="submit" class="btn btn-success">Envoyer</button>
+        </div>
+
+    </form>
+
+
+
+   
+          
+
+</div>
+    
+{% endblock contenuProfil %}

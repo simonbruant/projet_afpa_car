@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %} "{% static 'carpooling/css/profil.css' %}" {% endblock css %}
+
+{% block section %}
+
+<div id="profile_body">
+    <div id="container_profil" class="container">
+        <div class="row">
+            <div id="side-bar" class="wrapper col-md-4">
+                <div class="sidebar-wrapper d-none d-inline">
+                    <div class="card nav" active-text-color="#F1F1F1">
+                        <div id="titre_profil" class="card-header bg-success">Profil</div>
+                        <div class="list-group side-menu" id="filtre_url_contenu">
+                            <a href="{% url 'carpooling:general_infos' %}" class="list-group-item link_sidebar">Informations Publiques</a>
+                            <a href="{% url 'carpooling:private_infos' %}"   class="list-group-item link_sidebar" id="informations_privees">Informations Privees</a>
+                            <a href="{% url 'carpooling:photo' %}"           class="list-group-item link_sidebar" id="photo" >Photo</a>
+                            {% if user.car_owner and user.driver_license %}
+                            <a href="{% url 'carpooling:car' %}"        class="list-group-item link_sidebar" id='car'>Vehicule</a>
+                            {% endif %}
+                            <a href="{% url 'carpooling:password' %}"        class="list-group-item link_sidebar">Mot de Passe</a>
+                            <a href="{% url 'carpooling:preferences' %}"     class="list-group-item link_sidebar">Préférences</a>
+                            <a href="{% url 'carpooling:address' %}"         class="list-group-item link_sidebar">Adresse</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div id="contenu" class="col-md-8">
+            <div id="card_contenu" class="card col-md-12">
+                {% block cardTitle %}{% endblock cardTitle %}
+                {% block contenuProfil %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'carpooling/js/profil.js' %}"></script>
+
+{% endblock %}

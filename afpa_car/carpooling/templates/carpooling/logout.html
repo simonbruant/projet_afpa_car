@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Logout | {{ block.super }}{% endblock %}
+
+{% block section %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mt-5">
+            <h3>Vous nous quittez déjà ?</h3>
+            <form method="POST">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <input type="submit" value="Se deconnecter" class="btn btn-success mb-5 mt-3">
+            </form>
+        </div>
+        <div class="col-md-12" >
+            <h5> Revenez vite !</h5>
+            <p>Ce site fonctionne mieux si vous revenez souvent !</p>
+        </div>
+    </div>
+</div>
+{% endblock section %}

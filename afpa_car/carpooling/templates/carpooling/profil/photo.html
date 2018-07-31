@@ -1,0 +1,43 @@
+{% extends 'carpooling/profil.html' %}
+
+{% block cardTitle %} 
+
+<div class="row">
+    <div id="titre_profil" class="card-header bg-success col-md-12 mb-3">Photo</div>
+</div>
+
+{% endblock cardTitle %}
+
+{% block contenuProfil %}
+
+    <div class="row mb-3">
+        <div class="col-md-4"></div>
+        {% if user.avatar %}
+        <img class="col-md-4" id="rond" src="{{ user.avatar.url }}">
+        {% else %}
+        <img class="col-md-4" id="rond" src="../../../../static/img/avatar_generique.png">
+        {% endif %}
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-4"></div>
+        <form action="" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            <p>{{ form.avatar }} </p>
+            <p>Effacer{{ form.remove_avatar }}</p>
+        <button type="submit">submit</button>
+    </form>
+
+        
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row mb-3 ">
+        <div class="col-md-3"></div>
+        <div class="card text-center col-md-6">
+            <div class="card-body ">PNG, JPG, de 4 Mo maximum</div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+{% endblock contenuProfil %}
+        

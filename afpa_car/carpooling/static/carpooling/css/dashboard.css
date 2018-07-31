@@ -1,0 +1,17 @@
+.card-header {
+    color: white;
+}
+
+#alertes_profil {
+    color: #E3007E;
+}
+
+#rond {
+    border-radius: 50%;
+    width: 10%;
+    height: 10%;
+}
+
+.sousParties {
+    float: left;
+}

@@ -1,0 +1,103 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}AFPA-CAR{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'carpooling/css/signup.css' %}" />
+    <link rel="stylesheet" type="text/css" href= {% block css %} {% endblock css %} />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+</head>
+
+<body id="body_base" class="container">
+    
+    <header class="row">
+        <div class="col-md-4">
+            <a href="{% url 'carpooling:index' %}"><img id="logo_afpa" src="{% static 'img/logo_afpa.jpg' %}" alt="AFPA"></a>
+        </div>
+        <div class="col-md-6">
+            <div id="titre_base">AFPACAR - Le carpooling de l'Afpa</div>
+        </div>
+    </header>
+
+    <div>
+        {% if user.is_authenticated %}
+        <navbar class="row">
+            <nav id="navbar" class="site-header sticky-top py-1 col-md-12">
+                    <div class="container d-flex flex-column flex-md-row justify-content-between">
+                        <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:dashboard'%}">Tableau de bord</a>
+                        <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:profil' %}">Profil</a>
+                        <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:calendar' %}">Semaine Type / Calendrier</a>
+                        <a class="py-2 d-none d-md-inline-block" href="#">Messagerie</a>
+                        <a class="py-2 d-none d-md-inline-block" href="#">Rechercher un trajet</a>
+                        <a class="py-2 d-none d-md-inline-block" href="#">Afpa</a>
+                        <a href="{% url 'carpooling:logout' %}" class="btn fas fa-sign-out-alt" id="logout" title="Déconnexion"></a>
+                    </nav>
+                </div>
+            </navbar>
+        {% else %}
+        <div class="row">
+                <div class="col-md-12" id="bandeau_footer"></div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div>
+        {% block section %}{% endblock %}
+    </div> 
+
+    <footer>
+        <div class="row">
+            <div class="col-md-12" id="bandeau_footer"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h5><br>Notre Equipe<br></h5>
+                <hr class="hr_up">
+                <img src="{% static 'img/borisv2.png' %}" id="icone_avatar" title="Boris">
+                <img src="{% static 'img/simonB.png' %}" id="icone_avatar" title="Simon B">
+                <img src="{% static 'img/kaklemakak.png' %}" id="icone_avatar" title="Simon M">
+                <img src="{% static 'img/Damien.PNG' %}" id="icone_avatar" title="Damien">
+                <img src="{% static 'img/Thibaud.PNG' %}" id="icone_avatar" title="Thibaud">
+            </div>
+        </div>
+
+        <hr class="hr_down">
+
+        <div id="liens_footer" class="col-md-12">
+            <a>CGU</a>
+            <span id="border_test"></span>
+            <a>Mentions Legales</a>
+            <span id="border_test"></span>
+            <a>Plan du site</a>
+        </div>
+    </footer>
+
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+</body>
+
+</html>
