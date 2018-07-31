@@ -21,11 +21,14 @@
     </div>
     <div class="row mb-3">
         <div class="col-md-4"></div>
-        <form action="." method="post">
+        <form action="" enctype="multipart/form-data" method="post">
             {% csrf_token %}
-            {{ form.avatar }}
+            <p>{{ form.avatar }} </p>
+            <p>effacer{{ form.remove_avatar }}</p>
         <button type="submit">submit</button>
     </form>
+
+        
         <div class="col-md-4"></div>
     </div>
     <div class="row mb-3 ">

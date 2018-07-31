@@ -1,8 +1,9 @@
-/* [class*="col"] {
-    border: 1px solid blue;
-    border-radius: 4px;
+[class*="col-"]
+{
+    /* border: 1px solid indigo; */
     text-align: center;
-  } */
+}
+
 
 #container_profil {
     margin-top: 30px;
@@ -91,8 +92,7 @@ a {
 /* ###### Photo ###### */
 #rond {
     border-radius: 50%;
-    width: 30%;
-    height: 30%;
+    height: 180px;
 }
 
 /* ###### Preferences ###### */

@@ -19,8 +19,6 @@ class ProfilRedirectview(LoginRequiredMixin, RedirectView):
     url = reverse_lazy('covoiturage:infos_publiques')
 
 class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    # model = PrivateData
-    # fields = ('phone_number', 'afpa_number')
     template_name = 'covoiturage/profil/infos_privees.html'
     success_url = reverse_lazy('covoiturage:infos_privees')
     success_message = "Informations mises à jour"
@@ -51,7 +49,7 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.user 
 
-class CarCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
+class CarCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
     template_name = 'covoiturage/profil/vehicule.html'
     success_url = reverse_lazy('covoiturage:vehicule')
@@ -83,15 +81,20 @@ class CarUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse('covoiturage:vehicule')
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(CarUpdateView, self).get_context_data(**kwargs)
-    #     context['cars'] = Car.objects.filter(users=self.request.user)
-    #     return context
-    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(users=self.request.user)
+        return queryset
+
 class CarDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Car
     template_name = 'covoiturage/profil/car_delete.html'
     success_url = reverse_lazy('covoiturage:vehicule')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(users=self.request.user)
+        return queryset
 
 class ProfilImageUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'covoiturage/profil/photo.html'

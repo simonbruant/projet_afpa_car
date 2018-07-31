@@ -39,10 +39,30 @@ class CarForm(forms.ModelForm):
             'consumption': TextInput(attrs={'class': 'form-control'}),
             'fuel': Select(attrs={'class': 'custom-select'}),
         }
+        error_messages = {
+            'consumption': {
+                'invalid': ("Saisir un nombre"),
+            },
+        }
 
 class ProfilImageUpdateForm(forms.ModelForm):
+    avatar = forms.ImageField(label='Company Logo', required=False,
+                                    error_messages ={'invalid': "Image files only"},
+                                    widget=forms.FileInput)    
+    remove_avatar = forms.BooleanField(required=False)
+
     class Meta:
         model = User
         fields = ('avatar', )
 
+    def save(self, commit=False, *args, **kwargs):
+        obj = super(ProfilImageUpdateForm, self).save(commit=False, *args, **kwargs)
+        if self.cleaned_data.get('remove_avatar'):
+            print('ok')
+            obj.avatar = None
+            obj.save()
+        else:
+            obj.avatar = self.cleaned_data['avatar']
+            obj.save()
 
+        return obj
