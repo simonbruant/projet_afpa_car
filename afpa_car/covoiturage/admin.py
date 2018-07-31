@@ -58,8 +58,11 @@ class AfpaCenterAdmin(admin.ModelAdmin):
     model = AfpaCenter
     list_display = ('center_name','address')
 
-# class AfpaCenter(admin.ModelAdmin):
-#     model = AfpaCenter
+class FormationSessionAdmin(admin.ModelAdmin):
+    model = FormationSession
+    list_display = ('formation','formation_session_start_date', 'formation_session_end_date', 'work_experience_start_date', 'work_experience_end_date')
+
+
 
 # Register your models here.
 admin.site.register(Address, AdressAdmin)
@@ -68,4 +71,4 @@ admin.site.register(City, CityAdmin)
 admin.site.register(Car, CarAdmin)
 admin.site.register(AfpaCenter, AfpaCenterAdmin)
 admin.site.register(Formation)
-admin.site.register(FormationSession)
+admin.site.register(FormationSession, FormationSessionAdmin)

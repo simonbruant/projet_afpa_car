@@ -74,11 +74,11 @@ class Car(models.Model):
         ('ELECTRIQUE', 'ELECTRIQUE'),
     )
 
-    color = models.CharField(max_length=50)
-    model = models.CharField(max_length=50)
-    amount_of_free_seats = models.IntegerField(default=1)
-    consumption = models.FloatField()
-    fuel = models.CharField(max_length=20, choices=FUEL)    
+    color = models.CharField(max_length=50, verbose_name="Couleur")
+    model = models.CharField(max_length=50, verbose_name="Modèle")
+    amount_of_free_seats = models.IntegerField(default=1, verbose_name="Nombre de places libres")
+    consumption = models.FloatField(verbose_name="Consommation (en l/100km)")
+    fuel = models.CharField(max_length=20, choices=FUEL, verbose_name="Type de carburant")    
 
     users       = models.ManyToManyField(User, verbose_name="Utilisateur", through= "Car_User")
 
@@ -98,7 +98,7 @@ class Car_User(models.Model):
         return ""
 
 class AfpaCenter(models.Model):
-    center_name = models.CharField(max_length=50)
+    center_name = models.CharField(max_length=50, verbose_name="Nom du centre")
     address = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Adresse")
 
     class Meta:
@@ -109,7 +109,7 @@ class AfpaCenter(models.Model):
         return self.center_name
 
 class Formation(models.Model):
-    formation_name = models.CharField(max_length=50)
+    formation_name = models.CharField(max_length=50, verbose_name="Libellé de la Formation")
 
     class Meta:
         verbose_name = "Formation"
@@ -119,15 +119,15 @@ class Formation(models.Model):
         return self.formation_name
 
 class FormationSession(models.Model):
-    formation_session_start_date = models.DateField()
-    formation_session_end_date = models.DateField()
-    work_experience_start_date = models.DateField()
-    work_experience_end_date = models.DateField()
+    formation_session_start_date = models.DateField(verbose_name="Date de début de formation")
+    formation_session_end_date = models.DateField(verbose_name="Date de fin de formation")
+    work_experience_start_date = models.DateField(verbose_name="Date de début de stage")
+    work_experience_end_date = models.DateField(verbose_name="Date de fin de stage")
     formation = models.ForeignKey(Formation, on_delete=models.CASCADE, verbose_name="Formation")
 
     class Meta:
         verbose_name = "Session de formation"
-        verbose_name = "Sessions de formation"
+        verbose_name_plural = "Sessions de formations"
 
     def __str__(self):
         return ""

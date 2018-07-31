@@ -33,6 +33,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     # confirm   = models.BooleanField(default=False)
     # confirmed_date = models.DateTimeField(default=False)
 
+    class Meta:
+        verbose_name = "Utilisateur"
+        verbose_name_plural = "Utilisateurs"
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
