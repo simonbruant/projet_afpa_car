@@ -3,7 +3,7 @@ from django.db import models
 from django.utils import timezone
 
 from .managers import UserManager
-from covoiturage.models import AfpaCenter
+from carpooling.models import AfpaCenter
 
 class User(AbstractBaseUser, PermissionsMixin):
     email           = models.EmailField(max_length=255, unique=True, verbose_name='email adress')

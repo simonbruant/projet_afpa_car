@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'covoiturage/css/signup.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'carpooling/css/signup.css' %}" />
     <link rel="stylesheet" type="text/css" href= {% block css %} {% endblock css %} />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
         crossorigin="anonymous">
@@ -30,10 +30,10 @@
     
     <header class="row">
         <div class="col-md-4">
-            <a href="{% url 'covoiturage:index' %}"><img id="logo_afpa" src="{% static 'img/logo_afpa.jpg' %}" alt="AFPA"></a>
+            <a href="{% url 'carpooling:index' %}"><img id="logo_afpa" src="{% static 'img/logo_afpa.jpg' %}" alt="AFPA"></a>
         </div>
         <div class="col-md-6">
-            <div id="titre_base">AFPACAR - Le covoiturage de l'Afpa</div>
+            <div id="titre_base">AFPACAR - Le carpooling de l'Afpa</div>
         </div>
     </header>
 
@@ -42,13 +42,13 @@
         <navbar class="row">
             <nav id="navbar" class="site-header sticky-top py-1 col-md-12">
                     <div class="container d-flex flex-column flex-md-row justify-content-between">
-                        <a class="py-2 d-none d-md-inline-block" href="{% url 'covoiturage:dashboard'%}">Tableau de bord</a>
-                        <a class="py-2 d-none d-md-inline-block" href="{% url 'covoiturage:profil' %}">Profil</a>
-                        <a class="py-2 d-none d-md-inline-block" href="{% url 'covoiturage:calendar' %}">Semaine Type / Calendrier</a>
+                        <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:dashboard'%}">Tableau de bord</a>
+                        <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:profil' %}">Profil</a>
+                        <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:calendar' %}">Semaine Type / Calendrier</a>
                         <a class="py-2 d-none d-md-inline-block" href="#">Messagerie</a>
                         <a class="py-2 d-none d-md-inline-block" href="#">Rechercher un trajet</a>
                         <a class="py-2 d-none d-md-inline-block" href="#">Afpa</a>
-                        <a href="{% url 'covoiturage:logout' %}" class="btn fas fa-sign-out-alt" id="logout" title="Déconnexion"></a>
+                        <a href="{% url 'carpooling:logout' %}" class="btn fas fa-sign-out-alt" id="logout" title="Déconnexion"></a>
                     </nav>
                 </div>
             </navbar>

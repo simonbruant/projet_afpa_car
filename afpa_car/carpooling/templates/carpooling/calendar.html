@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %} "{% static 'carpooling/css/calendar.css' %}" {% endblock css %}
+
+{% block section %}
+
+<div class="card mt-3 mb-3">
+    <div class="card-header bg-success">Votre semaine type<span class="fas fa-bars" id="burger"></span></div>
+    <div class="card-content" id="semaineType">
+        <table class="table-striped table-bordered">
+            <tr>
+                <td id="tableSemaineType" class="p-1"><b>Jour</b></td>
+                <td id="tableSemaineType" class="p-1"><b>Adresse de départ</b></td>
+                <td id="tableSemaineType" class="p-1"><b>Horaire de départ</b></td>
+                <td id="tableSemaineType" class="p-1"><b>Horaire d'arrivée</b></td>
+                <td id="tableSemaineType" class="p-1"><b>Adresse d'arrivée</b></td>
+                <td id="tableSemaineType" class="p-1"><b>Horaire de retour</b></td>
+                <td id="tableSemaineType" class="p-1"><b>Horaire d'arrivée retour</b></td>
+            </tr>
+            <tr>
+                <td>Lundi</td>
+                <td>Domicile</td>
+                <td>7:00</td>
+                <td>8:15</td>
+                <td>AFPA</td>
+                <td>18:00</td>
+                <td>19:00</td>
+            </tr>
+            <tr>
+                <td>Mardi</td>
+                <td>Domicile</td>
+                <td>6:50</td>
+                <td>8:15</td>
+                <td>AFPA</td>
+                <td>17:50</td>
+                <td>19:00</td>
+            </tr>
+            <tr>
+                <td>Mercredi</td>
+                <td>Domicile</td>
+                <td>7:00</td>
+                <td>8:15</td>
+                <td>AFPA</td>
+                <td>18:00</td>
+                <td>19:00</td>
+            </tr>
+            <tr>
+                <td>Jeudi</td>
+                <td>Domicile</td>
+                <td>6:50</td>
+                <td>8:15</td>
+                <td>AFPA</td>
+                <td>17:50</td>
+                <td>19:00</td>
+            </tr>
+            <tr>
+                <td>Vendredi</td>
+                <td>Domicile</td>
+                <td>7:00</td>
+                <td>8:15</td>
+                <td>AFPA</td>
+                <td>18:00</td>
+                <td>19:00</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-success">Votre calendrier</div>
+    <div class="card-content">
+        <div class="row">
+            <div class="col-md-6" id="conteneur_calendrier">
+                <div id="datepicker" class="mt-3 mb-3">
+                    <vuejs-datepicker 
+                        :inline="true" 
+                        :monday-first="true" 
+                        :full-month-name="true" 
+                        :language="fr" 
+                        calendar-class="datepicker_calendar"></vuejs-datepicker>
+                </div>
+            </div>
+            <div class="col-md-6">                     
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/vuejs-datepicker"></script>
+
+<script>
+    const app = new Vue({
+        el: '#datepicker',
+        components: {
+            vuejsDatepicker
+        },
+        data: { fr: { 
+            language: 'Français',
+            months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'], 
+            monthsAbbr: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'], 
+            days: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+            yearSuffix: '' } }
+        })
+</script>
+
+<style>
+    .datepicker_calendar {
+        border: none;
+        color: white;
+        background-color: #28A745;
+        border-radius: 5%;
+    }
+    .vdp-datepicker__calendar .cell.selected {
+        background: #E3007E;
+        border-radius: 20%;
+    }
+    .vdp-datepicker__calendar .cell.selected:hover {
+        background: #E3007E;
+        border-radius: 20%;
+    }
+    .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover, .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover, .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
+        border: 1px solid #E3007E;
+        border-radius: 20%;
+    }
+    .vdp-datepicker__calendar header .prev:not(.disabled):hover, .vdp-datepicker__calendar header .next:not(.disabled):hover, .vdp-datepicker__calendar header .up:not(.disabled):hover {
+        background: transparent;
+    }
+    
+</style>
+{% endblock section %}

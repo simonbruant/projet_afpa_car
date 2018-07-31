@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
-    'covoiturage',
+    'carpooling',
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -127,7 +127,7 @@ STATICFILES_DIRS = (
 )
 
 LOGIN_URL = "/" 
-LOGIN_REDIRECT_URL = '{% url "covoiturage:dashboard" %}'
+LOGIN_REDIRECT_URL = '{% url "carpooling:dashboard" %}'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'

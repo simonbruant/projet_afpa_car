@@ -20,11 +20,11 @@ def signup_view(request):
         private_data.user = user
         private_data.save()
 
-        return redirect("covoiturage:index")
+        return redirect("carpooling:index")
 
     return render(
         request, 
-        'covoiturage/signup.html', 
+        'carpooling/signup.html', 
         {   'signup_form': signup_form,
             'private_data_form': private_data_form,}
     )
@@ -32,8 +32,8 @@ def signup_view(request):
 
 class LoginView(FormView):
     form_class  = LoginForm
-    template_name = 'covoiturage/index.html'
-    success_url = reverse_lazy('covoiturage:dashboard')
+    template_name = 'carpooling/index.html'
+    success_url = reverse_lazy('carpooling:dashboard')
 
     def form_valid(self, form):
         request = self.request
@@ -52,24 +52,24 @@ class LoginView(FormView):
             if is_safe_url(redirect_path, request.get_host()):
                 return redirect(redirect_path)
             else:
-                return redirect('covoiturage:dashboard')
+                return redirect('carpooling:dashboard')
         print("pas valide")
         return super(LoginView, self).form_invalid(form)
 
     def get(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return redirect('covoiturage:dashboard')
+            return redirect('carpooling:dashboard')
         else:
             form = self.form_class() 
             return render(request, self.template_name, {'form': form})
 
 class LogoutView(LoginRequiredMixin, FormView):
     form_class = LogoutForm
-    template_name = 'covoiturage/logout.html'
+    template_name = 'carpooling/logout.html'
 
     def form_valid(self, form):
         logout(self.request)
-        return HttpResponseRedirect(reverse('covoiturage:index'))
+        return HttpResponseRedirect(reverse('carpooling:index'))
 
 def change_password(request):
     if request.method == 'POST':
@@ -78,13 +78,13 @@ def change_password(request):
             print('form valide')
             form.save()
             update_session_auth_hash(request, form.user)
-            return redirect('covoiturage:dashboard')
+            return redirect('carpooling:dashboard')
 
     else: 
         form = CustomPasswordChangeForm(user=request.user)
 
     context = {'form': form }
-    return render(request, 'covoiturage/profil/password.html', context)
+    return render(request, 'carpooling/profil/password.html', context)
     
 class CustomPasswordResetView(PasswordResetView):
     email_template_name = 'users/password_reset_email.html'

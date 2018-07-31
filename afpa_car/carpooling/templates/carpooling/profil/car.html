@@ -1,0 +1,119 @@
+{% extends 'carpooling/profil.html' %}
+
+{% block title %}VEHICULE{% endblock title %}
+
+{% block cardTitle %} 
+
+<div class="row">
+    <div id="titre_profil" class="card-header bg-success col-md-12 mb-3">Vehicule</div>
+</div>
+
+{% endblock cardTitle %}
+
+{% block contenuProfil %}
+
+<div class="row">   
+    {% for car in cars %}
+        <div class='col-md-4'>
+            <div id="card_car_content" class="card col-md-12">
+
+                <div class=row>
+                    <div class="card-header bg-default col-md-12">
+                        {{ car.model }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mt-3">
+                        <div>{{ car.color }}</div>
+                        <div>{{ car.amount_of_free_seats }}  places passager</div>
+                        <div>{{ car.fuel }}</div>
+                        <div>{{ car.consumption }}</div>
+                    </div>
+                    <div class="col-md-5 mt-3 mb-4">
+                        <a href="{% url 'carpooling:car_update' car.id %}" id="btn_card_views_card">Modifier</a>
+                    </div>
+                    <div class="col-md-1 mt-3">
+                        <div>|</div>
+                    </div>
+                    <div class="col-md-5 mt-3">
+                        <a href="{% url 'carpooling:car_delete' car.id %}" id="btn_card_views_card">Supprimer</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+<div class="row">
+    <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+</div>
+
+<div class='row'></div>
+    <div id="message_update" class="col-md-12">
+        {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<div class='row'>
+    <div id="message_errors" class="col-md-12">
+        {% if form.errors %}
+            {% for key,value in form.errors.items %} 
+                {{ form.consumption.label }} : {{ value|escape }}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <form class="col-md-8" action="." method='POST'>
+        {% csrf_token %}
+
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">{{ form.color.label }}</div>
+            </div>
+            {{ form.color }}
+        </div>
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">{{ form.model.label }}</div>
+            </div>
+            {{ form.model }}
+        </div>
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">{{ form.amount_of_free_seats.label }}</div>
+            </div>
+            {{ form.amount_of_free_seats }}
+        </div>    
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">{{ form.consumption.label }} (l/100km)</div>
+            </div>
+            {{ form.consumption }}
+        </div>
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">{{ form.fuel.label }}</div>
+            </div>
+            {{ form.fuel }}
+        </div>
+
+        <div id="submit_car">
+            <button type="submit" class="btn btn-success">Envoyer</button>
+        </div>
+
+    </form>
+
+
+
+    <div class="col-md-2"></div>
+</div>
+{% endblock contenuProfil %}
