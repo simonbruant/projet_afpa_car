@@ -3,3 +3,4 @@ afpa_car/afpa_car/databases_settings.py
 afpa_car/afpa_car/email_settings.py 
 afpa_car/db.sqlite3
 .vscode
+afpa_car/media/avatars/
