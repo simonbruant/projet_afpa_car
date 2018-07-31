@@ -23,13 +23,8 @@
     list-style-type: none;
 }
 
-/* ###### Gestion de la taille des pages ###### */
-
-/* #contenu {
-    height: 1000px;
-} */
-
-#card_vehicule_contenu{
+/*  card @address */
+#card_address_content, #card_vehicule_contenu {
     border : 1px solid;
     border-color: lightgray; 
     box-shadow:0 0 3px rgba(0,0,0,0.4);
@@ -39,7 +34,20 @@
 #btn_card_views_card {
     width: 10%;
     font-size: 12px;
+}
 
+#address_label{
+    color : black;
+    font-size: 13px;
+    font-weight: bold;
+    text-shadow: 0.1px 0.1px #2F4F4F;
+    text-align: center;
+}
+
+#btn_card_footer {
+    width: 10%;
+    font-size: 12px;
+    color: #0645AD;
 }
 
 /* ###### SIDE MENU ###### */

@@ -21,7 +21,7 @@
                             {% endif %}
                             <a href="{% url 'covoiturage:password' %}"        class="list-group-item link_sidebar">Mot de Passe</a>
                             <a href="{% url 'covoiturage:preferences' %}"     class="list-group-item link_sidebar">Préférences</a>
-                            <a href="{% url 'covoiturage:adresse' %}"         class="list-group-item link_sidebar">Adresse</a>
+                            <a href="{% url 'covoiturage:address' %}"         class="list-group-item link_sidebar">Adresse</a>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,6 @@
             <div id="card_contenu" class="card col-md-12">
                 {% block cardTitle %}{% endblock cardTitle %}
                 {% block contenuProfil %}{% endblock %}
-
                 </div>
             </div>
         </div>

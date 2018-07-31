@@ -3,15 +3,13 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView, RedirectView
 
-from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, FormationSessionForm, AfpaCenterForm, PreferencesForm, ProfilImageUpdateForm
-from .models import Car, Car_User, FormationSession
+from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, FormationSessionForm, AfpaCenterForm, PreferencesForm, ProfilImageUpdateForm, AddressForm
+from .models import Car, Car_User, Address_User, Address, FormationSession
 from users.models import PrivateData, User
-
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'covoiturage/dashboard.html'
@@ -32,14 +30,6 @@ class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
 class CalendarView(LoginRequiredMixin, TemplateView):
     template_name = 'covoiturage/calendar.html'
 
-def email(request):
-    send_mail('Hello', 
-    'Hello',
-    settings.EMAIL_HOST_USER,
-    ['gaziya@loketa.com'],)
-
-    return render(request, 'covoiturage/email.html')
-
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     template_name = 'covoiturage/profil/infos_publiques.html'
@@ -59,7 +49,6 @@ class CarCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(CarCreateView, self).get_context_data(**kwargs)
         context['cars'] = Car.objects.filter(users=self.request.user)
-        # context['car_owner'] = 
         return context
 
     def form_valid(self, form):
@@ -105,24 +94,6 @@ class ProfilImageUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
-@login_required(login_url='covoiturage:index')
-def FormationSessionCreateView(request):
-    formationSession_form = FormationSessionForm(request.POST or None)
-    afpa_center_form = AfpaCenterForm(request.POST or None)
-
-    if formationSession_form.is_valid() and afpa_center_form.is_valid():
-        print('ok')
-        formationSession_form.save()
-        afpa_center_form.save()
-        return redirect("covoiturage:formation") 
-
-    return render(
-        request, 
-        'covoiturage/profil/formation.html', 
-        {   'formationSession_form': formationSession_form,
-            'afpa_center_form': afpa_center_form,}
-    )
-
 class PreferencesUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = User
     template_name = 'covoiturage/profil/preferences.html'
@@ -131,4 +102,78 @@ class PreferencesUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
     form_class = PreferencesForm
 
     def get_object(self, queryset=None):
-        return self.request.user 
+        return self.request.user
+
+class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    template_name = 'covoiturage/profil/adresse.html'
+    success_url = reverse_lazy('covoiturage:address')
+    success_message = "Informations de création"
+    form_class = AddressForm
+
+    def form_valid(self, form):
+        user = self.request.user
+        address = form.save()
+        address_user = Address_User()
+        street_number = form.cleaned_data['street_number']
+        address.street_number = "" if not street_number else street_number
+
+        address_user.address = address
+        address_user.user = user
+        address_label = form.cleaned_data['address_label']
+        address_user.address_label_private = "Adresse" if not address_label else address_label
+        address_user.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(AddressCreateView, self).get_context_data(**kwargs)
+        context['address_user_context'] = Address_User.objects.filter(user=self.request.user)
+        return context
+
+
+class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Address
+    template_name = 'covoiturage/profil/adresse.html'
+    success_message = "Informations mises à jour"
+    form_class = AddressForm
+
+    def get_success_url(self):
+        return reverse('covoiturage:address')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(users=self.request.user)
+        return queryset
+
+    def get_initial(self):
+        address = Address.objects.get(pk=self.kwargs['pk'])
+        address_user = Address_User.objects.get(user=self.request.user, address=address,)
+        return {'address_label': address_user.address_label_private }
+    
+    def form_valid(self, form):
+        address = form.save()
+        street_number = form.cleaned_data['street_number']
+        address.street_number = " " if not street_number else street_number
+        address_label = form.cleaned_data['address_label']
+
+        address_user = Address_User.objects.get(user=self.request.user, address=address,)
+        address_user.address_label_private = address_user.address_label_private = "Adresse" if not address_label else address_label
+        address_user.save()
+        return super().form_valid(form)
+
+
+class AddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView ):
+    model = Address
+    template_name = 'covoiturage/profil/address_delete.html'
+    success_url = reverse_lazy('covoiturage:address')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(users=self.request.user)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        address = Address.objects.get(pk=self.kwargs['pk'])
+        context['address_context'] = address
+        context['address_user_context'] = Address_User.objects.get(user=self.request.user, address=address,)
+        return context

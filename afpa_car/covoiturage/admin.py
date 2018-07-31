@@ -1,6 +1,10 @@
 from django.contrib import admin
 
+<<<<<<< HEAD
 from .models import ZipCode_City, Adress_User, Address, ZipCode, City, Car, Car_User, Formation, FormationSession, AfpaCenter
+=======
+from .models import ZipCode_City, Address_User, Address, ZipCode, City
+>>>>>>> adress_beta
 
 class ZipCodeInline(admin.TabularInline):        
     model = ZipCode_City
@@ -22,22 +26,22 @@ class CityAdmin(admin.ModelAdmin):
 
 # ------------------------------
 
-class AddressUserInLine(admin.TabularInline): # autre variante : admin.StackedInline
-    model = Adress_User
+class UserInLine(admin.TabularInline): # autre variante : admin.StackedInline
+    model = Address_User
     verbose_name = "Utilisateur de cette adresse"
     verbose_name_plural = "Utilisateurs de cette adresse"
     extra = 0
 
 
-class AdressAdmin(admin.ModelAdmin):
-    inlines = (AddressUserInLine,)
-    list_display = ('adress_label', 'city', 'zip_code','street_number', 'street', 'get_users' )
+class AddressAdmin(admin.ModelAdmin):
+    inlines = (UserInLine,)
+    list_display = ('city', 'zip_code', 'street_name', 'street_number', 'get_users' )
 
     def get_users(self, obj):
         return " ; ".join([u.get_full_name() for u in obj.users.all()])
     get_users.short_description = 'Utilisateurs'
 
-    search_fields = ('city__city_name', 'zip_code__zip_code', 'street', 'adress_label', 'users__first_name', 'users__last_name', )
+    search_fields = ('city__city_name', 'zip_code__zip_code',  'street_name', 'users__first_name', 'users__last_name', )
 
 
 class CarUserInLine(admin.TabularInline): # autre variante : admin.StackedInline
@@ -65,7 +69,7 @@ class FormationSessionAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(Address, AdressAdmin)
+admin.site.register(Address, AddressAdmin)
 admin.site.register(ZipCode, ZipCodeAdmin)
 admin.site.register(City, CityAdmin)
 admin.site.register(Car, CarAdmin)
