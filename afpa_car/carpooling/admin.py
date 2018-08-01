@@ -40,7 +40,7 @@ class AddressAdmin(admin.ModelAdmin):
         else:
             address_user = Address_User.objects.filter(address=obj)
             return " ; ".join([addr.address_label_private for addr in address_user])
-    address_label.short_description = "Libellés(s) de l'adresse"
+    address_label.short_description = "Libellé(s) de l'adresse"
 
     def get_users(self, obj):
         return " ; ".join([u.get_full_name() for u in obj.users.all()])
@@ -49,7 +49,7 @@ class AddressAdmin(admin.ModelAdmin):
     search_fields = ('city__city_name', 'zip_code__zip_code',  'street_name', 'users__first_name', 'users__last_name', )
 
 
-class CarUserInLine(admin.TabularInline): # autre variante : admin.StackedInline
+class CarUserInLine(admin.TabularInline):
     model = Car_User
     verbose_name = "Utilisateur de ce véhicule"
     verbose_name_plural = "Utilisateurs de ce véhicule"

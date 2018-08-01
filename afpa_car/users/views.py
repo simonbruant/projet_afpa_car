@@ -37,13 +37,11 @@ class SignUpView(TemplateView):
 class LoginView(FormView):
     form_class  = LoginForm
     template_name = 'carpooling/index.html'
-    success_url = reverse_lazy('carpooling:dashboard')
 
     def form_valid(self, form):
         request = self.request
         next_ = request.GET.get('next')
-        next_post = request.GET.get('next')
-        redirect_path = next_ or next_post or None
+        redirect_path = next_ or None
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
         user = authenticate(request, username=email, password=password)
@@ -57,7 +55,6 @@ class LoginView(FormView):
                 return redirect(redirect_path)
             else:
                 return redirect('carpooling:dashboard')
-        print("pas valide")
         return super(LoginView, self).form_invalid(form)
 
     def get(self, request, *args, **kwargs):

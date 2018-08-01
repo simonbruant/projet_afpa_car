@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView, RedirectView
+from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView, RedirectView, FormView
 
 from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, FormationSessionForm, AfpaCenterForm, PreferencesForm, ProfilImageUpdateForm, AddressForm
 from .models import Car, Car_User, Address_User, Address, FormationSession
@@ -16,6 +16,33 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 class ProfilRedirectview(LoginRequiredMixin, RedirectView):
     url = reverse_lazy('carpooling:general_infos')
+
+# class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, FormView):
+#     template_name = 'carpooling/profil/private_infos.html'
+#     success_url = reverse_lazy('carpooling:private_infos')
+#     success_message = "Informations mises à jour"
+#     form_class = PrivateDataUpdateForm
+
+#     def get_object(self, queryset=None):
+#         user = PrivateData.objects.get(user=self.request.user)       
+#         return user
+
+#     def get_initial(self):
+#         user = self.get_object()
+#         return {"phone_number": user.phone_number, "afpa_number": user.afpa_number}
+
+#     def form_valid(self, form):
+#         user = self.get_object()
+#         phone_number = form.cleaned_data['phone_number']
+#         afpa_number = form.cleaned_data['afpa_number']
+
+#         user.phone_number = phone_number
+#         user.afpa_number = afpa_number
+#         user.save()
+#         return super().form_valid(form)
+
+
+
 
 class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'carpooling/profil/private_infos.html'
@@ -160,7 +187,7 @@ class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         address_user.save()
         return super().form_valid(form)
 
-class AddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView ):
+class AddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Address
     template_name = 'carpooling/profil/address_delete.html'
     success_url = reverse_lazy('carpooling:address')

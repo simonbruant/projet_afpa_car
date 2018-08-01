@@ -4,16 +4,23 @@ from django.forms import TextInput, RadioSelect, Select, DateInput
 from .models import Car, FormationSession, AfpaCenter, Address
 from users.models import PrivateData, User
 
+
 class PrivateDataUpdateForm(forms.ModelForm):
     class Meta:
         model = PrivateData
-        fields = ('phone_number', 'afpa_number')
-        widgets = {
-            'phone_number': TextInput(attrs={'class': 'form-control'}),
-            'afpa_number': TextInput(attrs={'class': 'form-control'})
-        }
+        fields = ('afpa_number', 'phone_number')
 
-    
+    phone_number = forms.RegexField(regex=r'^[0+][\d]+$', label="Numéro de Téléphone",
+                                    min_length=10, max_length=13, 
+                                    error_messages={'invalid': 'Numéro de téléphone invalide'}, 
+                                    widget=TextInput(attrs={'class': 'form-control'}))
+
+    afpa_number = forms.RegexField( regex=r'^\d+$', label="Identifiant AFPA",
+                                    min_length=8, max_length=8,
+                                    error_messages={'invalid': 'Le numéro AFPA est composé de nombres'}, 
+                                    widget=TextInput(attrs={'class': 'form-control'}))
+
+        
 class UserUpdateForm (forms.ModelForm):
     class Meta:
         model = User
@@ -56,16 +63,14 @@ class ProfilImageUpdateForm(forms.ModelForm):
     remove_avatar = forms.BooleanField(required=False)
 
     def save(self, commit=False, *args, **kwargs):
-        obj = super(ProfilImageUpdateForm, self).save(commit=False, *args, **kwargs)
+        user = super(ProfilImageUpdateForm, self).save(commit=False, *args, **kwargs)
         if self.cleaned_data.get('remove_avatar'):
-            print('ok')
-            obj.avatar = None
-            obj.save()
+            user.avatar = None
+            user.save()
         else:
-            obj.avatar = self.cleaned_data['avatar']
-            obj.save()
-
-        return obj
+            user.avatar = self.cleaned_data['avatar']
+            user.save()
+        return user
 
 class FormationSessionForm(forms.ModelForm):
     class Meta:
@@ -95,7 +100,6 @@ class PreferencesForm(forms.ModelForm):
             'talker': RadioSelect(),
             'music': RadioSelect(),
         }
-
 
 class AddressForm(forms.ModelForm):
     address_label = forms.CharField(required=False, widget=TextInput(attrs={'class': 'form-control'}))

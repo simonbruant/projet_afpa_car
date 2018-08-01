@@ -8,23 +8,30 @@ from django.forms import TextInput, PasswordInput
 from .models import User, PrivateData
 
 class SignupForm(forms.ModelForm):
-    password1   = forms.CharField(label="Password",  widget=PasswordInput(attrs={'class': 'form-control'})) # ini == password
-    password2   = forms.CharField(label='Confirm password', widget=PasswordInput(attrs={'class': 'form-control'}))
+    class Meta:
+        model = User
+        fields = ('email', 'username', 'first_name', 'last_name')
+        widgets = {
+            'email': TextInput(attrs={'class': 'form-control'}),
+            'first_name': TextInput(attrs={'class': 'form-control'}),
+            'last_name': TextInput(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'email': "Adresse Email",
+            'last_name': "Prénom",
+            'first_name': "Nom",
 
+        }
+
+    password1   = forms.CharField(label="Mot de Passe",  widget=PasswordInput(attrs={'class': 'form-control'}))
+    password2   = forms.CharField(label='Confirmation Mot de Passe', widget=PasswordInput(attrs={'class': 'form-control'}))
     username    = forms.RegexField(label='Username',
                                     min_length=3,
                                     regex=r'^[\w._-]+$',  
                                     error_messages = {'invalid': "This value may contain only" 
                                     "letters, numbers and ./-/_ characters."},
                                     widget=TextInput(attrs={'class': 'form-control'}) )
-    class Meta:
-        model = User
-        fields = ('email', 'first_name', 'last_name')
-        widgets = {
-            'email': TextInput(attrs={'class': 'form-control'}),
-            'first_name': TextInput(attrs={'class': 'form-control'}),
-            'last_name': TextInput(attrs={'class': 'form-control'}),
-        }
+
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
@@ -50,28 +57,31 @@ class SignupForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(SignupForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
-        print(self.cleaned_data["username"])
-        user.username = self.cleaned_data["username"]
         # user.is_active = False # send confirmation email via signals
         if commit:
             user.save()
         return user
 
-class LoginForm(forms.Form):
-    email = forms.EmailField(label='Email',)
-    password = forms.CharField(widget=forms.PasswordInput)
-
-class LogoutForm(forms.Form):
-    pass
-
 class PrivateDataCreateForm(forms.ModelForm):
     class Meta:
         model = PrivateData
-        fields = ('phone_number', 'afpa_number',)
-        widgets = {
-            'phone_number': TextInput(attrs={'class': 'form-control'}),
-            'afpa_number': TextInput(attrs={'class': 'form-control'}),
-        }
+        fields = ('phone_number', 'afpa_number')
+    
+    phone_number = forms.RegexField(regex=r'^[0+][\d]+$',label="Numéro de téléphone",
+                                    min_length=10, max_length=13, 
+                                    error_messages={'invalid': 'Numéro de téléphone invalide'}, 
+                                    widget=TextInput(attrs={'class': 'form-control'}))
+    afpa_number = forms.RegexField(regex=r'^\d+$', label="Identifiant Afpa",
+                                    min_length=8, max_length=8,
+                                    error_messages={'invalid': 'Le numéro AFPA est composé uniquement de nombres'}, 
+                                    widget=TextInput(attrs={'class': 'form-control'}))
+
+class LoginForm(forms.Form):
+    email = forms.EmailField(label='Adresse Email',)
+    password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
+
+class LogoutForm(forms.Form):
+    pass
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     class Meta:
@@ -79,7 +89,6 @@ class CustomPasswordChangeForm(PasswordChangeForm):
             'old_password': PasswordInput(attrs={'class': 'form-control'}),
             'new_password1': PasswordInput(attrs={'class': 'form-control'}),
             'new_password2': PasswordInput(attrs={'class': 'form-control'}),
-            
         }
 #################################################################
     
