@@ -7,42 +7,27 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView, RedirectView, FormView
 
-from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, FormationSessionForm, AfpaCenterForm, PreferencesForm, ProfilImageUpdateForm, AddressForm
+from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, FormationSessionForm, PreferencesForm, ProfilImageUpdateForm, AddressForm
 from .models import Car, Car_User, Address_User, Address, FormationSession
 from users.models import PrivateData, User
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'carpooling/dashboard.html'
 
+class CalendarView(LoginRequiredMixin, TemplateView):
+    template_name = 'carpooling/calendar.html'
+
 class ProfilRedirectview(LoginRequiredMixin, RedirectView):
     url = reverse_lazy('carpooling:general_infos')
 
-# class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, FormView):
-#     template_name = 'carpooling/profil/private_infos.html'
-#     success_url = reverse_lazy('carpooling:private_infos')
-#     success_message = "Informations mises à jour"
-#     form_class = PrivateDataUpdateForm
-
-#     def get_object(self, queryset=None):
-#         user = PrivateData.objects.get(user=self.request.user)       
-#         return user
-
-#     def get_initial(self):
-#         user = self.get_object()
-#         return {"phone_number": user.phone_number, "afpa_number": user.afpa_number}
-
-#     def form_valid(self, form):
-#         user = self.get_object()
-#         phone_number = form.cleaned_data['phone_number']
-#         afpa_number = form.cleaned_data['afpa_number']
-
-#         user.phone_number = phone_number
-#         user.afpa_number = afpa_number
-#         user.save()
-#         return super().form_valid(form)
-
-
-
+class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    template_name = 'carpooling/profil/general_infos.html'
+    success_url = reverse_lazy('carpooling:general_infos')
+    success_message = "Informations mises à jour"
+    form_class = UserUpdateForm
+    
+    def get_object(self, queryset=None):
+        return self.request.user 
 
 class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'carpooling/profil/private_infos.html'
@@ -54,18 +39,27 @@ class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
         user = PrivateData.objects.get(user=self.request.user)       
         return user
         
-class CalendarView(LoginRequiredMixin, TemplateView):
-    template_name = 'carpooling/calendar.html'
 
-class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    template_name = 'carpooling/profil/general_infos.html'
-    success_url = reverse_lazy('carpooling:general_infos')
-    success_message = "Informations mises à jour"
-    form_class = UserUpdateForm
-    
+
+class ProfilImageUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'carpooling/profil/photo.html'
+    success_url = reverse_lazy('carpooling:photo')
+    form_class = ProfilImageUpdateForm
+    context_object_name = 'user'
+
     def get_object(self, queryset=None):
-        return self.request.user 
+        return self.request.user
 
+class PreferencesUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = User
+    template_name = 'carpooling/profil/preferences.html'
+    success_url = reverse_lazy('carpooling:preferences')
+    success_message = "Informations mises à jour"
+    form_class = PreferencesForm
+
+    def get_object(self, queryset=None):
+        return self.request.user
+        
 class CarCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'carpooling/profil/car.html'
     success_url = reverse_lazy('carpooling:car')
@@ -117,24 +111,6 @@ class CarDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         context['car'] = car
         return context
 
-class ProfilImageUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = 'carpooling/profil/photo.html'
-    success_url = reverse_lazy('carpooling:photo')
-    form_class = ProfilImageUpdateForm
-    context_object_name = 'user'
-
-    def get_object(self, queryset=None):
-        return self.request.user
-
-class PreferencesUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    model = User
-    template_name = 'carpooling/profil/preferences.html'
-    success_url = reverse_lazy('carpooling:preferences')
-    success_message = "Informations mises à jour"
-    form_class = PreferencesForm
-
-    def get_object(self, queryset=None):
-        return self.request.user
 
 class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'carpooling/profil/address.html'

@@ -30,7 +30,7 @@
         {% csrf_token %}
         <div class="input-group mb-8">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Numéro de telephone</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.phone_number.label }}</div>
             </div>
             {{ form.phone_number }} 
         </div>
@@ -42,7 +42,7 @@
         </div>
         <div class="input-group">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Identifiant Afpa</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.afpa_number.label }}</div>
             </div>
             {{ form.afpa_number }}
         </div>

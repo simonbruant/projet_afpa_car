@@ -22,41 +22,40 @@
     <div class="col-md-2"></div>
 
     
-    
     <form class="col-md-8" action="{% url 'carpooling:general_infos' %}" method='POST'>
             {% csrf_token %}
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Pseudonyme</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.username.label }} </div>
             </div>
             {{ form.username }} 
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Nom</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.last_name.label }}</div>
             </div>
             {{ form.last_name }} 
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Prenom</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.first_name.label }}</div>
             </div>
             {{ form.first_name }} 
         </div>
     
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Adresse Email</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.email.label }}</div>
             </div>
             {{ form.email }} 
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Centre AFPA</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.afpa_center.label }}</div>
             </div>
             {{ form.afpa_center }} 
         </div>

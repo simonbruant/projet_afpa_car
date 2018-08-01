@@ -1,7 +1,7 @@
 from django import forms
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, password_validation
 from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import ReadOnlyPasswordHashField, PasswordChangeForm
+from django.contrib.auth.forms import ReadOnlyPasswordHashField, PasswordChangeForm as BasePasswordChangeForm
 from django.forms import TextInput, PasswordInput
 
 from .models import User, PrivateData
@@ -17,18 +17,17 @@ class SignupForm(forms.ModelForm):
         }
         labels = {
             'email': "Adresse Email",
-            'last_name': "Prénom",
-            'first_name': "Nom",
-
+            'first_name': "Prénom",
+            'last_name': "Nom de famille",
         }
 
     password1   = forms.CharField(label="Mot de Passe",  widget=PasswordInput(attrs={'class': 'form-control'}))
     password2   = forms.CharField(label='Confirmation Mot de Passe', widget=PasswordInput(attrs={'class': 'form-control'}))
-    username    = forms.RegexField(label='Username',
+    username    = forms.RegexField(label='Pseudonyme',
                                     min_length=3,
                                     regex=r'^[\w._-]+$',  
-                                    error_messages = {'invalid': "This value may contain only" 
-                                    "letters, numbers and ./-/_ characters."},
+                                    error_messages = {'invalid': "Votre ne pseudonyme ne peut contenir que des lettres,"
+                                    "nombres ou caractères suivants : ./_/-"},
                                     widget=TextInput(attrs={'class': 'form-control'}) )
 
     def clean_email(self):
@@ -89,13 +88,28 @@ class LoginForm(forms.Form):
 class LogoutForm(forms.Form):
     pass
 
-class CustomPasswordChangeForm(PasswordChangeForm):
-    class Meta:
-        widgets = {
-            'old_password': PasswordInput(attrs={'class': 'form-control'}),
-            'new_password1': PasswordInput(attrs={'class': 'form-control'}),
-            'new_password2': PasswordInput(attrs={'class': 'form-control'}),
+class PasswordChangeForm(BasePasswordChangeForm):
+    error_messages = {
+            'password_mismatch': 'Les deux mots de passes ne sont pas identiques',
+            'password_incorrect': 'Ancien Mot de Passe incorrect',
         }
+
+    new_password1 = forms.CharField(
+        label="Nouveau Mot de Passe",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label="Confirmation",
+        strip=False,
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+    )
+    old_password = forms.CharField(
+        label="Ancien Mot de Passe",
+        strip=False,
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'autofocus': True}),
+    )
 #################################################################
     
 class UserAdminCreationForm(forms.ModelForm):

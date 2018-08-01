@@ -9,10 +9,10 @@ from django.utils.http import is_safe_url
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, FormView, TemplateView
 
-from .forms import LoginForm, SignupForm, LogoutForm, PrivateDataCreateForm, CustomPasswordChangeForm
+from .forms import LoginForm, SignupForm, LogoutForm, PrivateDataCreateForm, PasswordChangeForm
 
 class SignUpView(TemplateView):
-    template_name = 'carpooling/signup.html'
+    template_name = 'users/signup.html'
 
     def get(self, request):
         signup_form = SignupForm()
@@ -66,7 +66,7 @@ class LoginView(FormView):
 
 class LogoutView(LoginRequiredMixin, FormView):
     form_class = LogoutForm
-    template_name = 'carpooling/logout.html'
+    template_name = 'users/logout.html'
 
     def form_valid(self, form):
         logout(self.request)
@@ -76,12 +76,12 @@ class ChangePassword(TemplateView):
     template_name = 'carpooling/profil/password.html'
 
     def get(self, request):
-        form = CustomPasswordChangeForm(user=request.user)
+        form = PasswordChangeForm(user=request.user)
         context = {'form': form }
         return render(request, self.template_name, context)
 
     def post(self, request):
-        form = CustomPasswordChangeForm(data=request.POST, user=request.user)
+        form = PasswordChangeForm(data=request.POST, user=request.user)
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)

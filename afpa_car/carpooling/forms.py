@@ -30,10 +30,17 @@ class UserUpdateForm (forms.ModelForm):
             'first_name': TextInput(attrs={'class': 'form-control'}),
             'last_name': TextInput(attrs={'class': 'form-control'}),
             'email': TextInput(attrs={'class': 'form-control'}),
+            'afpa_center': Select(attrs={'class': 'custom-select'}),
             'trainee': RadioSelect(attrs={'class': 'custom-control-input'}),
             'driver_license': RadioSelect(attrs={'class': 'custom-control-input'}),
-            'afpa_center': Select(attrs={'class': 'custom-select'}),
             'car_owner': RadioSelect(attrs={'class': 'custom-control-input'}),
+        }
+        labels = {
+            'username': 'Pseudonyme',
+            'first_name': 'Prénom',
+            'last_name': 'Nom de famille',
+            'email': 'Adresse Email',
+            'afpa_center': 'Centre AFPA',
         }
 
 class CarForm(forms.ModelForm):
@@ -52,15 +59,22 @@ class CarForm(forms.ModelForm):
                 'invalid': ("Saisir un nombre"),
             },
         }
+        labels = {
+            'color': 'Couleur',
+            'model': 'Modèle de ma voiture',
+            'amount_of_free_seats': 'Nombre de places disponibles',
+            'consumption': 'Consommation (L/100km)',
+            'fuel': 'Carburant',
+        }
 
 class ProfilImageUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('avatar', )
-    avatar = forms.ImageField(label='Company Logo', required=False,
-                                    error_messages ={'invalid': "Image files only"},
+    avatar = forms.ImageField(label='Image de Profil', required=False,
+                                    error_messages ={'invalid': "Importer uniquement un fichier .png ou .jpg"},
                                     widget=forms.FileInput)    
-    remove_avatar = forms.BooleanField(required=False)
+    remove_avatar = forms.BooleanField(label="Supprimer l'avatar", required=False,)
 
     def save(self, commit=False, *args, **kwargs):
         user = super(ProfilImageUpdateForm, self).save(commit=False, *args, **kwargs)
@@ -83,14 +97,6 @@ class FormationSessionForm(forms.ModelForm):
             'work_experience_end_date': DateInput(attrs={'type': 'date','class': 'form-control'}),
         }
 
-class AfpaCenterForm(forms.ModelForm):
-    class Meta:
-        model = AfpaCenter
-        fields = ('center_name',)
-        widgets = {
-            'center_name': Select(attrs={'class': 'custom-select'}),
-        }
-
 class PreferencesForm(forms.ModelForm):
     class Meta:
         model = User
@@ -102,7 +108,7 @@ class PreferencesForm(forms.ModelForm):
         }
 
 class AddressForm(forms.ModelForm):
-    address_label = forms.CharField(required=False, widget=TextInput(attrs={'class': 'form-control'}))
+    address_label = forms.CharField(label="Libellé de l'adresse", required=False, widget=TextInput(attrs={'class': 'form-control'}))
 
     class Meta: 
         model = Address
@@ -114,6 +120,13 @@ class AddressForm(forms.ModelForm):
             'street_complement': TextInput(attrs={'class': 'form-control'}),
             'zip_code': Select(attrs={'class': 'form-control'}),
             'city': Select(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'street_number': 'Numéro de la Rue' ,
+            'street_name': 'Nom de la Rue',
+            'street_complement': "Complément de l'Adresse",
+            'zip_code': 'Code Postal',
+            'city': 'Ville',
         }
 
 
