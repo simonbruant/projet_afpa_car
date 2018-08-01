@@ -1,8 +1,7 @@
 from django import forms
-
+from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import ReadOnlyPasswordHashField, PasswordChangeForm
-
 from django.forms import TextInput, PasswordInput
 
 from .models import User, PrivateData
@@ -31,7 +30,6 @@ class SignupForm(forms.ModelForm):
                                     error_messages = {'invalid': "This value may contain only" 
                                     "letters, numbers and ./-/_ characters."},
                                     widget=TextInput(attrs={'class': 'form-control'}) )
-
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
@@ -77,8 +75,16 @@ class PrivateDataCreateForm(forms.ModelForm):
                                     widget=TextInput(attrs={'class': 'form-control'}))
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(label='Adresse Email',)
-    password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
+    email = forms.EmailField(widget=TextInput(attrs={'class':'form-control mb-3','placeholder': 'Adresse Email'}))
+    password = forms.CharField(widget=PasswordInput(attrs={'class':'form-control mb-3','placeholder': 'Mot de Passe'}))
+
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=email, password=password)
+        if not user or not user.is_active:
+            raise forms.ValidationError("Vos identifiants ne correspondent pas")
+        return self.cleaned_data
 
 class LogoutForm(forms.Form):
     pass
