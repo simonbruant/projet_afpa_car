@@ -29,7 +29,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 mt-3">
-                    <div>{{ address_user.address.street_number }} {{ address_user.address.street_name }}</div>
+                    <div>{% if address_user.address.street_number %}{{ address_user.address.street_number }},{% endif %} {{ address_user.address.street_name }}</div>
                     <div>{{ address_user.address.zip_code }}, {{ address_user.address.city }}</div>
                 </div>
                 <div class="col-md-5 mt-3 mb-4">
@@ -53,6 +53,13 @@
 
 <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
+<div id="message_update" class="col-md-12">
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+
+</div>
+
 </div>
 <div class="row">
     <div class="col-md-2"></div>
@@ -62,42 +69,42 @@
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Libellé de l'adresse</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.address_label.label }}</div>
             </div>
             {{ form.address_label }}
         </div>
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Numéro de la rue</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.street_number.label }}</div>
             </div>
             {{ form.street_number }} 
         </div>
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Nom de la rue</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.street_name.label }}</div>
             </div>
             {{ form.street_name }} 
         </div>
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                    <div id="header_input_profil" class="input-group-text">Complément d'adresse</div>
+                    <div id="header_input_profil" class="input-group-text">{{ form.street_complement.label }}</div>
             </div>
             {{ form.street_complement }} 
         </div>
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Code Postal</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.zip_code.label }}</div>
             </div>
             {{ form.zip_code }} 
         </div>
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Ville</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.city.label }}</div>
             </div>
             {{ form.city }} 
         </div>

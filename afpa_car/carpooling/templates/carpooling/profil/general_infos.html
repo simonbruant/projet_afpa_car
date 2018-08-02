@@ -3,7 +3,7 @@
 {% block cardTitle %} 
 
 <div class="row">
-    <div id="titre_profil" class="card-header bg-success col-md-12 mb-3">Informations Publiques</div>
+    <div id="titre_profil" class="card-header bg-success col-md-12 mb-3">Informations Générales</div>
 </div>
 
 {% endblock cardTitle %}
@@ -12,52 +12,50 @@
 
 
 <div id="message_update" class="col-md-12">
-        {% if messages %}
         {% for message in messages %}
             {{ message }}
         {% endfor %}
-        {% endif %}
+
     </div>
 
     <div class="row">
     <div class="col-md-2"></div>
 
     
-    
     <form class="col-md-8" action="{% url 'carpooling:general_infos' %}" method='POST'>
             {% csrf_token %}
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Pseudonyme</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.username.label }} </div>
             </div>
             {{ form.username }} 
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Nom</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.last_name.label }}</div>
             </div>
             {{ form.last_name }} 
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Prenom</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.first_name.label }}</div>
             </div>
             {{ form.first_name }} 
         </div>
     
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Adresse Email</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.email.label }}</div>
             </div>
             {{ form.email }} 
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Centre AFPA</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.afpa_center.label }}</div>
             </div>
             {{ form.afpa_center }} 
         </div>

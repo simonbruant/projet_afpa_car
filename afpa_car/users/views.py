@@ -7,39 +7,41 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, FormView
+from django.views.generic import CreateView, FormView, TemplateView
 
-from .forms import LoginForm, SignupForm, LogoutForm, PrivateDataCreateForm, CustomPasswordChangeForm
+from .forms import LoginForm, SignupForm, LogoutForm, PrivateDataCreateForm, PasswordChangeForm
 
-def signup_view(request):
-    signup_form = SignupForm(request.POST or None)
-    private_data_form = PrivateDataCreateForm(request.POST or None)
-    if signup_form.is_valid() and private_data_form.is_valid():
-        user = signup_form.save()
-        private_data = private_data_form.save(commit=False)
-        private_data.user = user
-        private_data.save()
+class SignUpView(TemplateView):
+    template_name = 'users/signup.html'
 
-        return redirect("carpooling:index")
+    def get(self, request):
+        signup_form = SignupForm()
+        private_data_form = PrivateDataCreateForm()
 
-    return render(
-        request, 
-        'carpooling/signup.html', 
-        {   'signup_form': signup_form,
-            'private_data_form': private_data_form,}
-    )
+        args = {'signup_form': signup_form, 'private_data_form': private_data_form,}
+        return render(request, self.template_name, args)
 
+    def post(self, request):
+        signup_form = SignupForm(request.POST)
+        private_data_form = PrivateDataCreateForm(request.POST)
+        if signup_form.is_valid() and private_data_form.is_valid():
+            user = signup_form.save()
+            private_data = private_data_form.save(commit=False)
+            private_data.user = user
+            private_data.save()
+            return redirect("carpooling:index")
+
+        context = {'signup_form': signup_form, 'private_data_form': private_data_form,}
+        return render(request, self.template_name, context)
 
 class LoginView(FormView):
     form_class  = LoginForm
     template_name = 'carpooling/index.html'
-    success_url = reverse_lazy('carpooling:dashboard')
 
     def form_valid(self, form):
         request = self.request
         next_ = request.GET.get('next')
-        next_post = request.GET.get('next')
-        redirect_path = next_ or next_post or None
+        redirect_path = next_ or None
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
         user = authenticate(request, username=email, password=password)
@@ -53,7 +55,6 @@ class LoginView(FormView):
                 return redirect(redirect_path)
             else:
                 return redirect('carpooling:dashboard')
-        print("pas valide")
         return super(LoginView, self).form_invalid(form)
 
     def get(self, request, *args, **kwargs):
@@ -65,36 +66,35 @@ class LoginView(FormView):
 
 class LogoutView(LoginRequiredMixin, FormView):
     form_class = LogoutForm
-    template_name = 'carpooling/logout.html'
+    template_name = 'users/logout.html'
 
     def form_valid(self, form):
         logout(self.request)
         return HttpResponseRedirect(reverse('carpooling:index'))
 
-def change_password(request):
-    if request.method == 'POST':
-        form = CustomPasswordChangeForm(data=request.POST, user=request.user)
+class ChangePassword(TemplateView):
+    template_name = 'carpooling/profil/password.html'
+
+    def get(self, request):
+        form = PasswordChangeForm(user=request.user)
+        context = {'form': form }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = PasswordChangeForm(data=request.POST, user=request.user)
         if form.is_valid():
-            print('form valide')
             form.save()
             update_session_auth_hash(request, form.user)
             return redirect('carpooling:dashboard')
+        context = {'form': form }
+        return render(request, self.template_name, context)
 
-    else: 
-        form = CustomPasswordChangeForm(user=request.user)
 
-    context = {'form': form }
-    return render(request, 'carpooling/profil/password.html', context)
-    
 class CustomPasswordResetView(PasswordResetView):
     email_template_name = 'users/password_reset_email.html'
     template_name = 'users/password_reset_form.html'
     success_url = reverse_lazy('users:password_reset_done')
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
-    success_url = reverse_lazy('users:password_reset_complete')
     template_name = 'users/password_reset_confirm.html'
-    
-
-
-
+    success_url = reverse_lazy('users:password_reset_complete')

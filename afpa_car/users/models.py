@@ -5,7 +5,7 @@ from django.utils import timezone
 from .managers import UserManager
 from carpooling.models import AfpaCenter
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser):
     email           = models.EmailField(max_length=255, unique=True, verbose_name='email adress')
     username        = models.CharField(max_length=15, unique=True, verbose_name='pseudo',)
     first_name      = models.CharField(max_length=30, verbose_name='prénom')
@@ -62,5 +62,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class PrivateData(models.Model):
     user            = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number    = models.CharField(max_length=15, null=True, default="0")
-    afpa_number     = models.CharField(max_length=15, null=True, default="0")
+    phone_number    = models.CharField(max_length=15, null=True)
+    afpa_number     = models.CharField(max_length=15, null=True)

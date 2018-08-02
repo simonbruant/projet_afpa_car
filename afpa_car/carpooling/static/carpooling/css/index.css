@@ -67,4 +67,11 @@
 
 #reset-password {
     font-size: 0.8em;
+
 }
+
+#error_login {
+    font-size: 0.8em;
+    color : red;
+}
+
