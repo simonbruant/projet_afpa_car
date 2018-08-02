@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 
 from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, CalendarView, 
                     CarCreateView, CarUpdateView, CarDeleteView,
-                    ProfilImageUpdateView,) #PreferencesUpdateView, 
+                    ProfilImageUpdateView, PreferencesUpdateView,) 
                     # AddressCreateView, AddressUpdateView, AddressDeleteView )
 from users.views import LoginView, ChangePassword
 
@@ -21,7 +21,7 @@ urlpatterns = [
     path('profil/infos-privees/', PrivateDataUpdateView.as_view(), name='private_infos'),
     path('profil/photo/', ProfilImageUpdateView.as_view(), name='photo'),
     path('profil/password/', ChangePassword.as_view(), name='password'),
-    # path('profil/preferences/', PreferencesUpdateView.as_view(), name="preferences"),
+    path('profil/preferences/', PreferencesUpdateView.as_view(), name="preferences"),
     
     path('profil/vehicule/', CarCreateView.as_view(), name='car'),
     path('profil/vehicule/<int:pk>/', CarUpdateView.as_view(), name='car_update'),

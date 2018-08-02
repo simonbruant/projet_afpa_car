@@ -29,37 +29,37 @@
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.username.label }} </div>
+                <div id="header_input_profil" class="input-group-text">{{ user_form.username.label }} </div>
             </div>
-            {{ form.username }} 
+            {{ user_form.username }} 
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.last_name.label }}</div>
+                <div id="header_input_profil" class="input-group-text">{{ user_form.last_name.label }}</div>
             </div>
-            {{ form.last_name }} 
+            {{ user_form.last_name }} 
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.first_name.label }}</div>
+                <div id="header_input_profil" class="input-group-text">{{ user_form.first_name.label }}</div>
             </div>
-            {{ form.first_name }} 
+            {{ user_form.first_name }} 
         </div>
     
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.email.label }}</div>
+                <div id="header_input_profil" class="input-group-text">{{ user_form.email.label }}</div>
             </div>
-            {{ form.email }} 
+            {{ user_form.email }} 
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.afpa_center.label }}</div>
+                <div id="header_input_profil" class="input-group-text">{{ user_profile_form.afpa_center.label }}</div>
             </div>
-            {{ form.afpa_center }} 
+            {{ user_profile_form.afpa_center }} 
         </div>
     
         <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
@@ -68,7 +68,7 @@
 
         <label>Êtes-vous titulaire du permis de conduire ?</label>
 
-        {% for choice in form.driver_license %}
+        {% for choice in user_profile_form.driver_license %}
             <div class="custom-control custom-radio">
                 {{ choice.tag }}
                 {% if forloop.counter0 == 0 %}
@@ -88,7 +88,7 @@
 
             <label>Possedez-vous une voiture ?</label>
 
-            {% for choice in form.car_owner %}
+            {% for choice in user_profile_form.car_owner %}
                 <div class="custom-control custom-radio">
                     {{ choice.tag }}
                     <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>
@@ -103,7 +103,7 @@
         <label>Quel est votre status ?</label>
 
 
-        {% for choice in form.trainee %}
+        {% for choice in user_profile_form.trainee %}
             <div class="custom-control custom-radio">
                 {{ choice.tag }}
                 <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>

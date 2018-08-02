@@ -30,18 +30,27 @@ class UserUpdateForm (forms.ModelForm):
             'first_name': TextInput(attrs={'class': 'form-control require-input'}),
             'last_name': TextInput(attrs={'class': 'form-control require-input'}),
             'email': TextInput(attrs={'class': 'form-control require-input'}),
-        #     'afpa_center': Select(attrs={'class': 'custom-select'}),
-        #     'trainee': RadioSelect(attrs={'class': 'custom-control-input'}),
-        #     'driver_license': RadioSelect(attrs={'class': 'custom-control-input'}),
-        #     'car_owner': RadioSelect(attrs={'class': 'custom-control-input'}),
         }
         labels = {
             'username': 'Pseudonyme',
             'first_name': 'Prénom',
             'last_name': 'Nom de famille',
             'email': 'Adresse Email',
-            # 'afpa_center': 'Centre AFPA',
+            
         }
+class UserProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('trainee', 'driver_license', 'car_owner', 'afpa_center')
+        widgets = {
+                'afpa_center': Select(attrs={'class': 'custom-select'}),
+                'trainee': RadioSelect(attrs={'class': 'custom-control-input'}),
+                'driver_license': RadioSelect(attrs={'class': 'custom-control-input'}),
+                'car_owner': RadioSelect(attrs={'class': 'custom-control-input'}),
+        }
+        labels = { 'afpa_center': 'Centre AFPA',}
+
+
 class CarForm(forms.ModelForm):
     class Meta:
         model = Car
@@ -90,15 +99,15 @@ class ProfilImageUpdateForm(forms.ModelForm):
 
 
 
-# class PreferencesForm(forms.ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ('smoker', 'talker', 'music')
-#         widgets = {
-#             'smoker': RadioSelect(),
-#             'talker': RadioSelect(),
-#             'music': RadioSelect(),
-#         }
+class PreferencesForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('smoker', 'talker', 'music')
+        widgets = {
+            'smoker': RadioSelect(),
+            'talker': RadioSelect(),
+            'music': RadioSelect(),
+        }
 
 # class AddressForm(forms.ModelForm):
 #     address_label = forms.CharField(label="Libellé de l'adresse", required=False, widget=TextInput(attrs={'class': 'form-control'}))

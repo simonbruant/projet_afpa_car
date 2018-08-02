@@ -18,8 +18,8 @@ class SignUpView(TemplateView):
         signup_form = SignupForm()
         private_data_form = PrivateDataCreateForm()
 
-        args = {'signup_form': signup_form, 'private_data_form': private_data_form,}
-        return render(request, self.template_name, args)
+        context = {'signup_form': signup_form, 'private_data_form': private_data_form,}
+        return render(request, self.template_name, context)
 
     def post(self, request):
         signup_form = SignupForm(request.POST)
