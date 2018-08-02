@@ -2,7 +2,15 @@
 $(document).ready(function () {
     $("#filtre_url_contenu a").each(function (index) {
         if (this.href == document.location.href) {
-            $(this).addClass('active');
+            $(this).addClass('active')
+        }
+        /* adresses */
+        else if (this.href == document.location.href.substr(0, 40)) {
+            $(this).addClass('active')
+        }
+        /* vehicule */
+        else if (this.href == document.location.href.substr(0, 41)) {
+            $(this).addClass('active')
         }
     })
 });

@@ -117,7 +117,7 @@ class AddressForm(forms.ModelForm):
         fields = ('street_number', 'street_name', 'street_complement', 'zip_code', 'city')
         exclude = ['lattitude', 'longitude', ]
         widgets = {
-            'street_number': TextInput(attrs={'class': 'form-control require-input'}),
+            'street_number': TextInput(attrs={'class': 'form-control'}),
             'street_name': TextInput(attrs={'class': 'form-control require-input'}),
             'street_complement': TextInput(attrs={'class': 'form-control'}),
             'zip_code': Select(attrs={'class': 'custom-select'}),

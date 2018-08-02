@@ -11,14 +11,12 @@
 {% endblock cardTitle %}
 
 {% block contenuProfil %}
-
 <div id="message_update" class="col-md-12 mb-3">
-    {% if messages %}
     {% for message in messages %}
         {{ message }}
     {% endfor %}
-    {% endif %}
 </div>
+
 
 
 <div id="preview_avatar">
@@ -39,7 +37,7 @@
 
         <form class="col-md-8" action="." enctype="multipart/form-data" method="post">
             {% csrf_token %}
-            
+
             <div class='custom-file'>
                 {{ form.avatar }}
                 <label class="custom-file-label" for="{{ form.avatar.id_for_label }}">{{ form.avatar.label }}</label>

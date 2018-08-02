@@ -12,6 +12,12 @@
 
 {% block contenuProfil %}
 
+<div id="message_update" class="col-md-12 mb-3">
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+</div>
+
 <div class="row">
     <div class="col-md-2"></div>
 

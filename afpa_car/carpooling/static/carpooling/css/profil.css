@@ -78,6 +78,11 @@ a {
     text-align: center;
 }
 
+#header_input_profil_general_infos{
+    min-width: 150px;
+    text-align: center;
+}
+
 #header_input_vehicule {
     min-width: 230px;
     text-align: center;
@@ -128,9 +133,7 @@ a {
     color: #E3007E;
 }
 
-.password_error {
-    font-size: 0.6em
-}
+
 
 #text_legend{
     margin-top: 5px ;
