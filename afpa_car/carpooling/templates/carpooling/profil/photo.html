@@ -39,10 +39,10 @@
 
         <form class="col-md-8" action="." enctype="multipart/form-data" method="post">
             {% csrf_token %}
-
+            
             <div class='custom-file'>
                 {{ form.avatar }}
-                <label class="custom-file-label" for="{{ form.avatar.id_for_label }}">{{ form.avatar.value }}</label>
+                <label class="custom-file-label" for="{{ form.avatar.id_for_label }}">{{ form.avatar.label }}</label>
             </div>
                 <p class="mt-1">PNG, JPG, de 4 Mo maximum<p>
             
