@@ -16,24 +16,6 @@ class User(AbstractBaseUser):
     is_admin        = models.BooleanField(default=False, verbose_name='Admin')
     date_joined     = models.DateTimeField(editable=False, default=timezone.now)
 
-    driver_license  = models.BooleanField(default=False, verbose_name="permis",
-                                        choices=( (True, "Oui"), (False, "Non")) )
-    trainee         = models.BooleanField(default=False, verbose_name="statut",
-                                        choices=( (True, "Stagiare"),(False, "Employé") ))
-    car_owner       = models.BooleanField(default=False, verbose_name="propriétaire d'un véhicule",
-                                        choices=( (True, "Oui"), (False, "Non")) )
-    avatar          = models.ImageField(null=True, blank=True, upload_to='avatars/')
-    smoker          = models.BooleanField(default=False, verbose_name="Fumeur",
-                                        choices=( (True, "Fumeur"), (False, 'Non Fumeur')))
-    talker          = models.BooleanField(default=False, verbose_name="Bavard",
-                                        choices=( (True, "Tres Bavard"), (False, 'Peu Bavard')))
-    music           = models.BooleanField(default=False, verbose_name="Musique",
-                                        choices=( (True, "Oui"), (False, 'Non')))
-    gender          = models.CharField(max_length=50, null=True, blank=True, choices=(
-                                        ('Man', "Homme"),
-                                        ('Woman', "Femme"),
-                                        ('Other gender', "Autre"),))
-    afpa_center     = models.ForeignKey(AfpaCenter, null=True, blank=True, on_delete=models.SET_NULL)
     # confirm   = models.BooleanField(default=False) #==>email confirmation
     # confirmed_date = models.DateTimeField(default=False)
 
@@ -65,6 +47,27 @@ class User(AbstractBaseUser):
         return True
 
 class PrivateData(models.Model):
-    user            = models.OneToOneField(User, on_delete=models.CASCADE, related_name=private_data)
+    user            = models.OneToOneField(User, on_delete=models.CASCADE, related_name='private_data')
     phone_number    = models.CharField(max_length=20)
     afpa_number     = models.CharField(max_length=20)
+
+class UserProfile(models.Model):
+    user            = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
+    driver_license  = models.BooleanField(default=False, verbose_name="permis",
+                                        choices=( (True, "Oui"), (False, "Non")) )
+    trainee         = models.BooleanField(default=False, verbose_name="statut",
+                                        choices=( (True, "Stagiare"),(False, "Employé") ))
+    car_owner       = models.BooleanField(default=False, verbose_name="propriétaire d'un véhicule",
+                                        choices=( (True, "Oui"), (False, "Non")) )
+    avatar          = models.ImageField(null=True, blank=True, upload_to='avatars/')
+    smoker          = models.BooleanField(default=False, verbose_name="Fumeur",
+                                        choices=( (True, "Fumeur"), (False, 'Non Fumeur')))
+    talker          = models.BooleanField(default=False, verbose_name="Bavard",
+                                        choices=( (True, "Tres Bavard"), (False, 'Peu Bavard')))
+    music           = models.BooleanField(default=False, verbose_name="Musique",
+                                        choices=( (True, "Oui"), (False, 'Non')))
+    gender          = models.CharField(max_length=50, null=True, blank=True, choices=(
+                                        ('Man', "Homme"),
+                                        ('Woman', "Femme"),
+                                        ('Other gender', "Autre"),))
+    afpa_center     = models.ForeignKey(AfpaCenter, null=True, blank=True, on_delete=models.SET_NULL)

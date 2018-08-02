@@ -16,7 +16,6 @@ class Address(models.Model):
     address_label      = models.CharField(max_length=100, null=True, blank=True)
     user               = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
 
-
 class Car(models.Model):
     FUEL = (
         ('SP-98', 'SP-98'),
@@ -42,10 +41,9 @@ class Car(models.Model):
     def __str__(self):
         return self.model
 
-
 class Car_User(models.Model):
     car     = models.ForeignKey(Car, on_delete=models.CASCADE, verbose_name="Vehicule")
-    user    = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="", )
+    user    = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="", )
 
     def __str__(self): 
         return ""
