@@ -6,4 +6,4 @@ afpa_car/db.sqlite3
 afpa_car/media/avatars/
 ancien_models.py
 anciens_forms.py
-anciens_views.py
+anciennes_views.py
