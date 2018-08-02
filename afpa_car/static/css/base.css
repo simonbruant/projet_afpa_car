@@ -1,9 +1,44 @@
+/* ###### MODIFICATION GENERAL DE BOOTSTRAP POUR TOUT LE SITE ###### */
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #E3007E;
+  }
+
+.custom-select {
+    background: #fff url("../img/icon-controler.svg") no-repeat right 0.75rem center;
+    background-size: 12px 12px;
+}
+
+.require-input {
+    padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+    line-height: 1.5;
+    color: #495057;
+    vertical-align: middle;
+    background: #fff url("../img/warning-input.svg") no-repeat right 0.75rem center;
+    background-size: 12px 12px;
+}
+
+.require-input-legend {
+    vertical-align: middle;
+    background: #fff url("../img/warning-input.svg") no-repeat left 0.75rem ;
+    background-size: 12px 12px;
+}
+
+.custom-file {
+text-align: left;
+}
+
+.custom-file-label::after {
+    content: "Parcourir";
+}
 
 [class*="col-"]
 {
     /* border: 1px solid indigo; */
     text-align: center;
 }
+
+
 #body_base
 {
     margin-top: 30px;
@@ -116,3 +151,4 @@ footer
     width: 500px;
     margin-bottom: 20px;
   }
+

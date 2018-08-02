@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import TextInput, RadioSelect, Select, DateInput
+from django.forms import TextInput, RadioSelect, Select, DateInput, FileInput, CheckboxInput
 
 from .models import Car, FormationSession, AfpaCenter, Address
 from users.models import PrivateData, User
@@ -9,8 +9,8 @@ class PrivateDataUpdateForm(forms.ModelForm):
         model = PrivateData
         fields = ('phone_number', 'afpa_number')
         widgets = {
-            'phone_number': TextInput(attrs={'class': 'form-control'}),
-            'afpa_number': TextInput(attrs={'class': 'form-control'})
+            'phone_number': TextInput(attrs={'class': 'form-control require-input'}),
+            'afpa_number': TextInput(attrs={'class': 'form-control require-input' })
         }
 
     
@@ -19,12 +19,13 @@ class UserUpdateForm (forms.ModelForm):
         model = User
         fields = ( 'username', 'first_name', 'last_name', 'email', 'trainee', 'driver_license', 'car_owner', 'afpa_center' )
         widgets = {
-            'username': TextInput(attrs={'class': 'form-control'}),
-            'first_name': TextInput(attrs={'class': 'form-control'}),
-            'last_name': TextInput(attrs={'class': 'form-control'}),
-            'email': TextInput(attrs={'class': 'form-control'}),
+            'username': TextInput(attrs={'class': 'form-control require-input'}),
+            'first_name': TextInput(attrs={'class': 'form-control require-input'}),
+            'last_name': TextInput(attrs={'class': 'form-control require-input'}),
+            'email': TextInput(attrs={'class': 'form-control require-input'}),
             'trainee': RadioSelect(attrs={'class': 'custom-control-input'}),
-            'driver_license': RadioSelect(attrs={'class': 'custom-control-input'}),
+            'driver_license': RadioSelect(attrs={'class': 'custom-control-input',
+                                                }),
             'afpa_center': Select(attrs={'class': 'custom-select'}),
             'car_owner': RadioSelect(attrs={'class': 'custom-control-input'}),
         }
@@ -34,10 +35,10 @@ class CarForm(forms.ModelForm):
         model = Car
         fields = ( 'color', 'model', 'amount_of_free_seats', 'consumption','fuel' )
         widgets = {
-            'color': TextInput(attrs={'class': 'form-control'}),
-            'model': TextInput(attrs={'class': 'form-control'}),
-            'amount_of_free_seats': TextInput(attrs={'class': 'form-control'}),
-            'consumption': TextInput(attrs={'class': 'form-control'}),
+            'color': TextInput(attrs={'class': 'form-control require-input'}),
+            'model': TextInput(attrs={'class': 'form-control require-input'}),
+            'amount_of_free_seats': TextInput(attrs={'class': 'form-control require-input'}),
+            'consumption': TextInput(attrs={'class': 'form-control require-input'}),
             'fuel': Select(attrs={'class': 'custom-select'}),
         }
         error_messages = {
@@ -51,9 +52,11 @@ class ProfilImageUpdateForm(forms.ModelForm):
         model = User
         fields = ('avatar', )
     avatar = forms.ImageField(label='Company Logo', required=False,
-                                    error_messages ={'invalid': "Image files only"},
-                                    widget=forms.FileInput)    
-    remove_avatar = forms.BooleanField(required=False)
+                                error_messages ={'Erreur': "Seulement des fichiers images"},
+                                widget=FileInput(attrs={'class': 'custom-file-input',
+                                                        '@change': 'previewImage'}) )                               
+    remove_avatar = forms.BooleanField(required=False,
+                                        widget=CheckboxInput(attrs={'class': 'custom-control-input'}) )
 
     def save(self, commit=False, *args, **kwargs):
         obj = super(ProfilImageUpdateForm, self).save(commit=False, *args, **kwargs)
@@ -98,18 +101,18 @@ class PreferencesForm(forms.ModelForm):
 
 
 class AddressForm(forms.ModelForm):
-    address_label = forms.CharField(required=False, widget=TextInput(attrs={'class': 'form-control'}))
+    address_label = forms.CharField(required=False, widget=TextInput(attrs={'class': 'form-control require-input'}))
 
     class Meta: 
         model = Address
         fields = ('street_number', 'street_name', 'street_complement', 'zip_code', 'city')
         exclude = ['lattitude', 'longitude', ]
         widgets = {
-            'street_number': TextInput(attrs={'class': 'form-control'}),
-            'street_name': TextInput(attrs={'class': 'form-control'}),
+            'street_number': TextInput(attrs={'class': 'form-control require-input'}),
+            'street_name': TextInput(attrs={'class': 'form-control require-input'}),
             'street_complement': TextInput(attrs={'class': 'form-control'}),
-            'zip_code': Select(attrs={'class': 'form-control'}),
-            'city': Select(attrs={'class': 'form-control'}),
+            'zip_code': Select(attrs={'class': 'custom-select'}),
+            'city': Select(attrs={'class': 'custom-select'}),
         }
 
 

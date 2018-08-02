@@ -4,7 +4,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, CalendarView, 
-                    CarCreateView, CarUpdateView, CarDeleteView, ProfilRedirectview, 
+                    CarCreateView, CarUpdateView, CarDeleteView,
                     ProfilImageUpdateView, PreferencesUpdateView, 
                     AddressCreateView, AddressUpdateView, AddressDeleteView )
 from users.views import LoginView, LogoutView, signup_view, change_password
@@ -19,7 +19,6 @@ urlpatterns = [
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('calendar/', CalendarView.as_view(), name='calendar'),
 
-    path('profil/', ProfilRedirectview.as_view(), name='profil'),
     path('profil/infos-generales/', UserUpdateView.as_view(), name='general_infos'),
     path('profil/infos-privees/', PrivateDataUpdateView.as_view(), name='private_infos'),
     path('profil/photo/', ProfilImageUpdateView.as_view(), name='photo'),

@@ -1,9 +1,11 @@
 {% extends 'carpooling/profil.html' %}
 
+{% load static %}
+
 {% block cardTitle %} 
 
 <div class="row">
-    <div id="titre_profil" class="card-header bg-success col-md-12 mb-3">Informations Publiques</div>
+    <div id="titre_profil" class="card-header bg-success col-md-12 mb-3">Informations Generales</div>
 </div>
 
 {% endblock cardTitle %}
@@ -64,17 +66,27 @@
     
         <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
+<div id="view_car_owner">
+
         <label>Êtes-vous titulaire du permis de conduire ?</label>
 
         {% for choice in form.driver_license %}
             <div class="custom-control custom-radio">
                 {{ choice.tag }}
-                <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>
+                {% if forloop.counter0 == 0 %}
+                <label @click="show" class="custom-control-label" for="{{ choice.id_for_label }}">Oui</label>
+                {% else %}
+                <label @click="hide" class="custom-control-label" for="{{ choice.id_for_label }}">Non</label>
+                {% endif %}
             </div> 
         {% endfor %} 
 
-        {% if user.driver_license %}
-            <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+
+        <div v-if="isVisible">
+
+            <div class="row">
+                <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+            </div>
 
             <label>Possedez-vous une voiture ?</label>
 
@@ -84,8 +96,9 @@
                     <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>
                 </div> 
             {% endfor %} 
-        {% endif %} 
+        </div>
 
+</div>
 
         <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
@@ -99,18 +112,24 @@
             </div> 
         {% endfor %} 
 
-        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+            <div class="row">
+                <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+            </div>
 
             <div id="submit_profil1">
                 <button type="submit" class="btn btn-success">Envoyer</button>
             </div>
 
     </form>
-    
+</div>
+    <div class='row'>
+        <div class='col-md-3 require-input-legend mt-1'><p id='text_legend'>Champ obligatoire</p> </div>
     </div>
 
-    {% load static %}
+
+    <script type="text/javascript" src="{% static 'js/vue.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    
     <script>
         /* $(function($){
 

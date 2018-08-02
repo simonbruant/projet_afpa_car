@@ -13,9 +13,9 @@
                     <div class="card nav" active-text-color="#F1F1F1">
                         <div id="titre_profil" class="card-header bg-success">Profil</div>
                         <div class="list-group side-menu" id="filtre_url_contenu">
-                            <a href="{% url 'carpooling:general_infos' %}" class="list-group-item link_sidebar">Informations Publiques</a>
+                            <a href="{% url 'carpooling:general_infos' %}" class="list-group-item link_sidebar">Informations Generales</a>
                             <a href="{% url 'carpooling:private_infos' %}"   class="list-group-item link_sidebar" id="informations_privees">Informations Privees</a>
-                            <a href="{% url 'carpooling:photo' %}"           class="list-group-item link_sidebar" id="photo" >Photo</a>
+                            <a href="{% url 'carpooling:photo' %}"           class="list-group-item link_sidebar" id="photo" >Avatar</a>
                             {% if user.car_owner and user.driver_license %}
                             <a href="{% url 'carpooling:car' %}"        class="list-group-item link_sidebar" id='car'>Vehicule</a>
                             {% endif %}

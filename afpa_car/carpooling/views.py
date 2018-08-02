@@ -14,9 +14,6 @@ from users.models import PrivateData, User
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'carpooling/dashboard.html'
 
-class ProfilRedirectview(LoginRequiredMixin, RedirectView):
-    url = reverse_lazy('carpooling:general_infos')
-
 class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'carpooling/profil/private_infos.html'
     success_url = reverse_lazy('carpooling:private_infos')

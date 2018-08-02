@@ -77,31 +77,31 @@
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.color.label }}</div>
+                <div id="header_input_vehicule" class="input-group-text">{{ form.color.label }}</div>
             </div>
             {{ form.color }}
         </div>
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.model.label }}</div>
+                <div id="header_input_vehicule" class="input-group-text">{{ form.model.label }}</div>
             </div>
             {{ form.model }}
         </div>
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.amount_of_free_seats.label }}</div>
+                <div id="header_input_vehicule" class="input-group-text">{{ form.amount_of_free_seats.label }}</div>
             </div>
             {{ form.amount_of_free_seats }}
         </div>    
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.consumption.label }} (l/100km)</div>
+                <div id="header_input_vehicule" class="input-group-text">{{ form.consumption.label }}</div>
             </div>
             {{ form.consumption }}
         </div>
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.fuel.label }}</div>
+                <div id="header_input_vehicule" class="input-group-text">{{ form.fuel.label }}</div>
             </div>
             {{ form.fuel }}
         </div>
@@ -113,7 +113,9 @@
     </form>
 
 
+</div>
 
-    <div class="col-md-2"></div>
+<div class='row'>
+    <div class='col-md-3 require-input-legend mt-2'><p id='text_legend'>Champ obligatoire</p> </div>
 </div>
 {% endblock contenuProfil %}
