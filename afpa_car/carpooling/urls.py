@@ -16,6 +16,7 @@ urlpatterns = [
     path('', LoginView.as_view(), name="index"),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('calendar/', CalendarView.as_view(), name='calendar'),
+    path('cgu/', TemplateView.as_view(template_name='carpooling/cgu.html'), name='cgu'),
 
     path('profil/', ProfilRedirectview.as_view(), name='profil'),
     path('profil/infos-generales/', UserUpdateView.as_view(), name='general_infos'),
