@@ -16,10 +16,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 class CalendarView(LoginRequiredMixin, TemplateView):
     template_name = 'carpooling/calendar.html'
-
-class ProfilRedirectview(LoginRequiredMixin, RedirectView):
-    url = reverse_lazy('carpooling:general_infos')
-
+    
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'carpooling/profil/general_infos.html'
     success_url = reverse_lazy('carpooling:general_infos')
