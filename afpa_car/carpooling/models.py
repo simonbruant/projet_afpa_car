@@ -16,6 +16,13 @@ class Address(models.Model):
     address_label      = models.CharField(max_length=100, null=True, blank=True)
     user               = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
 
+    class Meta:
+        verbose_name = 'Adresse'
+        verbose_name_plural = 'Adresses'
+    
+    def __str__(self):
+        return self.address_label if self.address_label else self.street_name
+
 class Car(models.Model):
     FUEL = (
         ('SP-98', 'SP-98'),

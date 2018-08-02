@@ -5,3 +5,5 @@ afpa_car/db.sqlite3
 .vscode
 afpa_car/media/avatars/
 ancien_models.py
+anciens_forms.py
+anciens_views.py
