@@ -21,10 +21,10 @@ class PrivateDataUpdateForm(forms.ModelForm):
                                     widget=TextInput(attrs={'class': 'form-control require-input'}))
 
         
-class UserUpdateForm (forms.ModelForm):
+class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ( 'username', 'first_name', 'last_name', 'email',) #'trainee', 'driver_license', 'car_owner', 'afpa_center' )
+        fields = ( 'username', 'first_name', 'last_name', 'email',)
         widgets = {
             'username': TextInput(attrs={'class': 'form-control require-input'}),
             'first_name': TextInput(attrs={'class': 'form-control require-input'}),
@@ -35,20 +35,27 @@ class UserUpdateForm (forms.ModelForm):
             'username': 'Pseudonyme',
             'first_name': 'Prénom',
             'last_name': 'Nom de famille',
-            'email': 'Adresse Email',
-            
+            'email': 'Adresse Email',   
         }
-class UserProfileUpdateForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ('trainee', 'driver_license', 'car_owner', 'afpa_center')
-        widgets = {
-                'afpa_center': Select(attrs={'class': 'custom-select'}),
-                'trainee': RadioSelect(attrs={'class': 'custom-control-input'}),
-                'driver_license': RadioSelect(attrs={'class': 'custom-control-input'}),
-                'car_owner': RadioSelect(attrs={'class': 'custom-control-input'}),
-        }
-        labels = { 'afpa_center': 'Centre AFPA',}
+    afpa_center = forms.ModelChoiceField(queryset=AfpaCenter.objects.all(), label='Centre AFPA', required=False,
+                                        widget=Select(attrs={'class': 'custom-select'}))
+    trainee = forms.ChoiceField(choices= ((True, "Stagiaire"), (False, "Employé" )), widget=RadioSelect(attrs={'class': 'custom-control-input'}))
+    car_owner = forms.ChoiceField(choices= ((True, "Oui"), (False, "Non" )), widget=RadioSelect(attrs={'class': 'custom-control-input'}))
+    driver_license = forms.ChoiceField(choices= ((True, "Oui"), (False, "Non" )), widget=RadioSelect(attrs={'class': 'custom-control-input'}))
+
+
+
+# class UserProfileUpdateForm(forms.ModelForm):
+#     class Meta:
+#         model = UserProfile
+#         fields = ('trainee', 'driver_license', 'car_owner', 'afpa_center')
+#         widgets = {
+#                 'afpa_center': Select(attrs={'class': 'custom-select'}),
+#                 'trainee': RadioSelect(attrs={'class': 'custom-control-input'}),
+#                 'driver_license': RadioSelect(attrs={'class': 'custom-control-input'}),
+#                 'car_owner': RadioSelect(attrs={'class': 'custom-control-input'}),
+#         }
+#         labels = { 'afpa_center': 'Centre AFPA',}
 
 
 class CarForm(forms.ModelForm):
