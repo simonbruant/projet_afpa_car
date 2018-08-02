@@ -12,12 +12,13 @@
 }
 
 
-#rond {
+#rond_dashboard {
     border-radius: 50%;
-    width: 10%;
-    height: 10%;
+    height: 180px;
+
 }
 
 .sousParties {
     float: left;
 }
+

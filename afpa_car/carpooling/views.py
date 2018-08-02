@@ -39,6 +39,11 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.user 
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cars'] = Car.objects.filter(users=self.request.user)
+        return context
+        
 class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'carpooling/profil/private_infos.html'
     success_url = reverse_lazy('carpooling:private_infos')

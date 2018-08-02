@@ -61,7 +61,8 @@ new Vue({
 new Vue({
     el: '#view_car_owner',
     data: {
-        isVisible: false
+        isVisible: false,
+        testVisible : false
     },
     mounted: function() { 
         if ( id_driver_license_0.checked ){
@@ -74,12 +75,10 @@ new Vue({
         },
         hide: function () {
             this.isVisible = false
+        },
+        show_error_message: function() {
+            this.testVisible = true
         }
     }
-    
-
 });
-
-
-
 
