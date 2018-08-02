@@ -62,10 +62,5 @@ class User(AbstractBaseUser):
 
 class PrivateData(models.Model):
     user            = models.OneToOneField(User, on_delete=models.CASCADE)
-<<<<<<< HEAD
-    phone_number    = models.CharField(max_length=15, null=True,)
-    afpa_number     = models.CharField(max_length=15, null=True,)
-=======
     phone_number    = models.CharField(max_length=15, null=True)
     afpa_number     = models.CharField(max_length=15, null=True)
->>>>>>> 8678bc4b3f5c44e0b5190e7aaa25416664691c93

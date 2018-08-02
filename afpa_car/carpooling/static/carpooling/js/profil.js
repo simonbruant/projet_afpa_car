@@ -58,8 +58,6 @@ new Vue({
 
 /* ###### Vue.Js pour l'affichage du radio "Posedez-vous une voiture" dans infos generales ###### */
 
-
-
 new Vue({
     el: '#view_car_owner',
     data: {

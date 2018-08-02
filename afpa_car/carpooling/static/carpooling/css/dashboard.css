@@ -2,9 +2,15 @@
     color: white;
 }
 
-#alertes_profil {
+/* couleur des '!' et des liens d'avertissement */
+#alertes_profil, #alert_dashboard {
     color: #E3007E;
 }
+
+#alert_dashboard:hover {
+    color: rgb(247, 91, 176);
+}
+
 
 #rond {
     border-radius: 50%;
