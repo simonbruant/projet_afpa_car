@@ -21,7 +21,7 @@
     </div>
     <div class="row mb-3">
         <div class="col-md-4"></div>
-        <form action="" enctype="multipart/form-data" method="post">
+        <form  enctype="multipart/form-data" method="post">
             {% csrf_token %}
             <p>{{ form.avatar }} </p>
             <p>Effacer{{ form.remove_avatar }}</p>

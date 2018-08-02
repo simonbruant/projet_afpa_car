@@ -2,7 +2,7 @@
 
 {% block contenuProfil %}
 
-<form action="" method="post">{% csrf_token %}
+<form method="post">{% csrf_token %}
     <hr/>
     
     <h4 class="mb-5">Êtes-vous sur de vouloir supprimer l'adresse &laquo; {{ address_user_context.address_label_private }} &raquo; ?</h4>

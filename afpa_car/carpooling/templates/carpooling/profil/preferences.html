@@ -12,7 +12,7 @@
 
 {% block contenuProfil %}
 
-<form class="col-md-8" action="{% url 'carpooling:preferences' %}" method='POST'>
+<form class="col-md-8" method='POST'>
     {% csrf_token %}
 
     <div id="choice_smoker">
