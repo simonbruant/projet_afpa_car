@@ -17,8 +17,8 @@
                 </div>
                 <div class="row mb-4">
                     <div class="col-md-12 mt-3">
-                        <div>{{ address_context.street_number }}, {{ address_context.street_name }}</div>
-                        <div>{{ address_context.zip_code }}, {{ address_context.city }}</div>
+                        <div>{% if address_user_context.address.street_number %}{{ address_user_context.address.street_number }},{% endif %} {{ address_user_context.address.street_name }}</div>
+                        <div>{{ address_user_context.address.zip_code }}, {{ address_user_context.address.city }}</div>
                     </div>
                 </div>
             </div>

@@ -53,6 +53,13 @@
 
 <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
+<div id="message_update" class="col-md-12">
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+
+</div>
+
 </div>
 <div class="row">
     <div class="col-md-2"></div>

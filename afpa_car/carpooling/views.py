@@ -115,7 +115,7 @@ class CarDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'carpooling/profil/address.html'
     success_url = reverse_lazy('carpooling:address')
-    success_message = "Informations de création"
+    success_message = "Adresse créee"
     form_class = AddressForm
 
     def form_valid(self, form):
