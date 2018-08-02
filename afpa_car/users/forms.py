@@ -1,30 +1,34 @@
 from django import forms
-
+from django.contrib.auth import authenticate, password_validation
 from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import ReadOnlyPasswordHashField, PasswordChangeForm
-
+from django.contrib.auth.forms import ReadOnlyPasswordHashField, PasswordChangeForm as BasePasswordChangeForm
 from django.forms import TextInput, PasswordInput
 
 from .models import User, PrivateData
 
 class SignupForm(forms.ModelForm):
-    password1   = forms.CharField(label="Password",  widget=PasswordInput(attrs={'class': 'form-control'})) # ini == password
-    password2   = forms.CharField(label='Confirm password', widget=PasswordInput(attrs={'class': 'form-control'}))
-
-    username    = forms.RegexField(label='Username',
-                                    min_length=3,
-                                    regex=r'^[\w._-]+$',  
-                                    error_messages = {'invalid': "This value may contain only" 
-                                    "letters, numbers and ./-/_ characters."},
-                                    widget=TextInput(attrs={'class': 'form-control'}) )
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name')
+        fields = ('email', 'username', 'first_name', 'last_name')
         widgets = {
             'email': TextInput(attrs={'class': 'form-control'}),
             'first_name': TextInput(attrs={'class': 'form-control'}),
             'last_name': TextInput(attrs={'class': 'form-control'}),
         }
+        labels = {
+            'email': "Adresse Email",
+            'first_name': "Prénom",
+            'last_name': "Nom de famille",
+        }
+
+    password1   = forms.CharField(label="Mot de Passe",  widget=PasswordInput(attrs={'class': 'form-control'}))
+    password2   = forms.CharField(label='Confirmation Mot de Passe', widget=PasswordInput(attrs={'class': 'form-control'}))
+    username    = forms.RegexField(label='Pseudonyme',
+                                    min_length=3,
+                                    regex=r'^[\w._-]+$',  
+                                    error_messages = {'invalid': "Votre ne pseudonyme ne peut contenir que des lettres,"
+                                    "nombres ou caractères suivants : ./_/-"},
+                                    widget=TextInput(attrs={'class': 'form-control'}) )
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
@@ -50,37 +54,62 @@ class SignupForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(SignupForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
-        print(self.cleaned_data["username"])
-        user.username = self.cleaned_data["username"]
         # user.is_active = False # send confirmation email via signals
         if commit:
             user.save()
         return user
 
+class PrivateDataCreateForm(forms.ModelForm):
+    class Meta:
+        model = PrivateData
+        fields = ('phone_number', 'afpa_number')
+    
+    phone_number = forms.RegexField(regex=r'^[0+][\d]+$',label="Numéro de téléphone",
+                                    min_length=10, max_length=13, 
+                                    error_messages={'invalid': 'Numéro de téléphone invalide'}, 
+                                    widget=TextInput(attrs={'class': 'form-control'}))
+    afpa_number = forms.RegexField(regex=r'^\d+$', label="Identifiant Afpa",
+                                    min_length=8, max_length=8,
+                                    error_messages={'invalid': 'Le numéro AFPA est composé uniquement de nombres'}, 
+                                    widget=TextInput(attrs={'class': 'form-control'}))
+
 class LoginForm(forms.Form):
-    email = forms.EmailField(label='Email',)
-    password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.EmailField(widget=TextInput(attrs={'class':'form-control mb-3','placeholder': 'Adresse Email'}))
+    password = forms.CharField(widget=PasswordInput(attrs={'class':'form-control mb-3','placeholder': 'Mot de Passe'}))
+
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=email, password=password)
+        if not user or not user.is_active:
+            raise forms.ValidationError("Vos identifiants ne correspondent pas")
+        return self.cleaned_data
 
 class LogoutForm(forms.Form):
     pass
 
-class PrivateDataCreateForm(forms.ModelForm):
-    class Meta:
-        model = PrivateData
-        fields = ('phone_number', 'afpa_number',)
-        widgets = {
-            'phone_number': TextInput(attrs={'class': 'form-control'}),
-            'afpa_number': TextInput(attrs={'class': 'form-control'}),
+class PasswordChangeForm(BasePasswordChangeForm):
+    error_messages = {
+            'password_mismatch': 'Les deux mots de passes ne sont pas identiques',
+            'password_incorrect': 'Ancien Mot de Passe incorrect',
         }
 
-class CustomPasswordChangeForm(PasswordChangeForm):
-    class Meta:
-        widgets = {
-            'old_password': PasswordInput(attrs={'class': 'form-control'}),
-            'new_password1': PasswordInput(attrs={'class': 'form-control'}),
-            'new_password2': PasswordInput(attrs={'class': 'form-control'}),
-            
-        }
+    new_password1 = forms.CharField(
+        label="Nouveau Mot de Passe",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label="Confirmation",
+        strip=False,
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+    )
+    old_password = forms.CharField(
+        label="Ancien Mot de Passe",
+        strip=False,
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'autofocus': True}),
+    )
 #################################################################
     
 class UserAdminCreationForm(forms.ModelForm):

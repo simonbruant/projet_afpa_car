@@ -78,6 +78,11 @@ a {
     text-align: center;
 }
 
+#header_input_vehicule {
+    min-width: 230px;
+    text-align: center;
+}
+
 #choix_input_profil {
     max-width: 450px;
 }
@@ -116,9 +121,21 @@ a {
 /* ###### Redimensionnement des boutons radios des préférences ###### */
 #icon_smoker, #icon_talker, #icon_music {
 
-    font-size: 80px ;
+    font-size: 70px ;
 }
 /* ###### Coloration des boutons radios des préférences ###### */
 :checked + label {
     color: #E3007E;
+}
+
+.password_error {
+    font-size: 0.6em
+}
+
+#text_legend{
+    margin-top: 5px ;
+}
+
+.empty_space {
+    height: 50px;
 }

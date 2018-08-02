@@ -11,43 +11,52 @@
 {% block contenuProfil %}
 
 <div id="message_update" class="col-md-12 mb-3">
-        {% if messages %}
         {% for message in messages %}
             {{ message }}
         {% endfor %}
-        {% endif %}
     </div>
+
+    <div>
+        {% for error in form.phone_number.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+
 
 <div class="row">
     <div class="col-md-2"></div>
 
     <form class="col-md-8" action="{% url 'carpooling:private_infos' %}" method='POST'>
         {% csrf_token %}
-        <div class="input-group">
+        <div class="input-group mb-8">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Numéro de telephone</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.phone_number.label }}</div>
             </div>
             {{ form.phone_number }} 
         </div>
         <br>
+        <div>
+            {% for error in form.afpa_number.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
         <div class="input-group">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Identifiant Afpa</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.afpa_number.label }}</div>
             </div>
             {{ form.afpa_number }}
         </div>
-
         <div id="submit_profil">
             <button type="submit" class="btn btn-success">Envoyer</button>
         </div>
-
     </form>
 
-
-
-   
-          
-
 </div>
+
+<div class='empty_space' class='col-md-12'></div>
+<div class='row'>
+    <div class='col-md-3 require-input-legend mt-5'><p id='text_legend'>Champ obligatoire</p> </div>
+</div>
+
     
 {% endblock contenuProfil %}

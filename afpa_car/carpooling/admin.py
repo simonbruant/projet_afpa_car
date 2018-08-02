@@ -31,7 +31,16 @@ class UserInLine(admin.TabularInline): # autre variante : admin.StackedInline
 
 class AddressAdmin(admin.ModelAdmin):
     inlines = (UserInLine,)
-    list_display = ('city', 'zip_code', 'street_name', 'street_number', 'get_users' )
+    list_display = ('address_label', 'city', 'zip_code', 'street_name', 'street_number', 'get_users' )
+
+    def address_label(self, obj):
+        address_label_public = obj.address_label_public
+        if address_label_public:
+            return address_label_public
+        else:
+            address_user = Address_User.objects.filter(address=obj)
+            return " ; ".join([addr.address_label_private for addr in address_user])
+    address_label.short_description = "Libellé(s) de l'adresse"
 
     def get_users(self, obj):
         return " ; ".join([u.get_full_name() for u in obj.users.all()])
@@ -40,7 +49,7 @@ class AddressAdmin(admin.ModelAdmin):
     search_fields = ('city__city_name', 'zip_code__zip_code',  'street_name', 'users__first_name', 'users__last_name', )
 
 
-class CarUserInLine(admin.TabularInline): # autre variante : admin.StackedInline
+class CarUserInLine(admin.TabularInline):
     model = Car_User
     verbose_name = "Utilisateur de ce véhicule"
     verbose_name_plural = "Utilisateurs de ce véhicule"
