@@ -1,2 +1,2 @@
-afpa_car/static/* linguist-vendored=false
-afpa_car/carpooling/static/* linguist-vendored=false
+afpa_car/static/* linguist-documentation=false
+afpa_car/carpooling/static/* linguist-documentation=false
