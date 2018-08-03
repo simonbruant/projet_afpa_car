@@ -1,6 +1,5 @@
-from django.db import models
-
 from django.conf import settings
+from django.db import models
 
 
 class Address(models.Model):
@@ -12,16 +11,16 @@ class Address(models.Model):
     latitude           = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     longitude          = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 
-    address_complement = models.CharField(max_length=100, null=True, blank=True)
     address_label      = models.CharField(max_length=100, null=True, blank=True)
-    user               = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    user               = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, 
+                                            null=True, blank=True, related_name='adresses')
 
     class Meta:
         verbose_name = 'Adresse'
         verbose_name_plural = 'Adresses'
     
     def __str__(self):
-        return self.address_label if self.address_label else self.street_name
+        return self.address_label
 
 class Car(models.Model):
     FUEL = (
@@ -39,7 +38,7 @@ class Car(models.Model):
     fuel        = models.CharField(max_length=20, choices=FUEL, verbose_name="Type de carburant")    
     amount_of_free_seats = models.IntegerField(default=1, verbose_name="Nombre de places libres")
 
-    users       = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name="Utilisateur", through= "Car_User")
+    users       = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='cars', verbose_name="Utilisateur", through= "Car_User")
 
     class Meta:
         verbose_name = "Voiture"

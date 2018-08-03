@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import Address, Car, Car_User, AfpaCenter
-# ------------------------------
+
 class AddressAdmin(admin.ModelAdmin):
     list_display = ('city', 'zip_code', 'street_name', 'street_number' )
 

@@ -1,13 +1,8 @@
-from django.conf import settings
-from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView, RedirectView, FormView
-from django.views.generic.edit import FormMixin
+from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView
 
 from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, ProfilImageUpdateForm, PreferencesForm, UserProfileUpdateForm, AddressForm
 from .models import Car, Car_User, Address
@@ -18,38 +13,6 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 class CalendarView(LoginRequiredMixin, TemplateView):
     template_name = 'carpooling/calendar.html'
-    
-# class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-#     template_name = 'carpooling/profil/general_infos.html'
-#     success_url = reverse_lazy('carpooling:general_infos')
-#     success_message = "Informations mises à jour"
-#     form_class = UserUpdateForm
-    
-#     def get_object(self, queryset=None):
-#         return self.request.user 
-
-#     def get_initial(self):
-#         initials = {}
-#         user_profile = self.request.user.user_profile
-#         initials['afpa_center'] = user_profile.afpa_center.pk if user_profile.afpa_center else None
-#         initials['driver_license'] = user_profile.driver_license
-#         initials['car_owner'] = user_profile.car_owner
-#         initials['trainee'] = user_profile.trainee
-#         return initials
-
-#     def form_valid(self, form):
-#         user_profile = self.request.user.user_profile
-#         user_profile.afpa_center = form.cleaned_data['afpa_center']
-#         user_profile.driver_license = form.cleaned_data['driver_license']
-#         user_profile.car_owner = form.cleaned_data['car_owner']
-#         user_profile.save()
-#         return super().form_valid(form)
-    
-#     def form_invalid(self, form):
-#         print('invalid')
-#         return super().form_invalid(form)
-
-
 
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
     template_name = 'carpooling/profil/general_infos.html'

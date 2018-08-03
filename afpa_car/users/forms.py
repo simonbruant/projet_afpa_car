@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth import authenticate, password_validation
 from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import ReadOnlyPasswordHashField, PasswordChangeForm as BasePasswordChangeForm
+from django.contrib.auth.forms import (ReadOnlyPasswordHashField, PasswordChangeForm as BasePasswordChangeForm, 
+                                        PasswordResetForm as BasePasswordResetForm, 
+                                        SetPasswordForm as BaseSetPasswordForm)
 from django.forms import TextInput, PasswordInput
 
 from .models import User, PrivateData
@@ -110,6 +112,23 @@ class PasswordChangeForm(BasePasswordChangeForm):
         strip=False,
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'autofocus': True}),
     )
+
+class PasswordResetForm(BasePasswordResetForm):
+    email = forms.EmailField(label="Email", max_length=254, widget=TextInput(attrs={'class': 'form-control'}))
+
+class SetPasswordForm(BaseSetPasswordForm):
+    new_password1 = forms.CharField(
+        label="Nouveau Mot de Passe",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label="Confirmation",
+        strip=False,
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+    )
+
 #################################################################
     
 class UserAdminCreationForm(forms.ModelForm):

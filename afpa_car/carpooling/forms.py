@@ -113,15 +113,20 @@ class PreferencesForm(forms.ModelForm):
         }
 
 class AddressForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(AddressForm, self).__init__(*args, **kwargs)
+        self.fields['zip_code'].required = True
+        self.fields['city'].required = True
+        self.fields['street_name'].required = True
+
     class Meta: 
         model = Address
-        fields = ('zip_code', 'city', 'street_number', 'street_name', 'address_complement', 'address_label')
+        fields = ('zip_code', 'city', 'street_number', 'street_name', 'address_label')
         widgets = {
             'zip_code': TextInput(attrs={'class': 'form-control require-input'}),
             'city': TextInput(attrs={'class': 'form-control require-input'}),
             'street_number': TextInput(attrs={'class': 'form-control'}),
             'street_name': TextInput(attrs={'class': 'form-control require-input'}),
-            'address_complement': TextInput(attrs={'class': 'form-control'}),
             'address_label': TextInput(attrs={'class': 'form-control'}),
         }
         labels = {
@@ -129,6 +134,5 @@ class AddressForm(forms.ModelForm):
             'city': 'Ville',
             'street_number': 'Numéro de la Rue' ,
             'street_name': 'Nom de la Rue',
-            'address_complement': "Complément Adresse",
             'address_label': "Libellé de l'Adresse",
         }
