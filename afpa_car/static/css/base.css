@@ -1,4 +1,4 @@
-/* ###### MODIFICATION GENERAL DE BOOTSTRAP POUR TOUT LE SITE ###### */
+/* ###### MODIFICATION GENERAL POUR TOUT LE SITE ###### */
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
     background-color: #E3007E;
@@ -36,6 +36,11 @@ text-align: left;
 {
     /* border: 1px solid indigo; */
     text-align: center;
+}
+
+.password_error {
+    font-size: 0.75em;
+    color : red;
 }
 
 
@@ -152,3 +157,15 @@ footer
     margin-bottom: 20px;
   }
 
+/* TEAM ROCKET */
+
+
+#icone_avatar {
+    border-radius: 50%;
+    -webkit-transition: -webkit-transform .8s ease-in-out;
+            transition:         transform .8s ease-in-out;
+}
+#icone_avatar:hover {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+}

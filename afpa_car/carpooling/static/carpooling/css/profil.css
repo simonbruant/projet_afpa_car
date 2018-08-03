@@ -20,7 +20,6 @@
 
 #message_errors {
     color : red;
-    list-style-type: none;
 }
 
 /*  card @address */
@@ -44,7 +43,7 @@
     text-align: center;
 }
 
-#btn_card_footer {
+#btn_card_footer  {
     width: 10%;
     font-size: 12px;
     color: #0645AD;
@@ -75,6 +74,11 @@ a {
 
 #header_input_profil {
     min-width: 200px;
+    text-align: center;
+}
+
+#header_input_profil_general_infos{
+    min-width: 150px;
     text-align: center;
 }
 
@@ -128,9 +132,7 @@ a {
     color: #E3007E;
 }
 
-.password_error {
-    font-size: 0.6em
-}
+
 
 #text_legend{
     margin-top: 5px ;

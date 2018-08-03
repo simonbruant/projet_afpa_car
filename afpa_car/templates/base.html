@@ -47,7 +47,7 @@
                     <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:calendar' %}">Semaine Type / Calendrier</a>
                     <a class="py-2 d-none d-md-inline-block" href="#">Messagerie</a>
                     <a class="py-2 d-none d-md-inline-block" href="#">Rechercher un trajet</a>
-                    <a class="py-2 d-none d-md-inline-block" href="#">Afpa</a>
+                    <a class="py-2 d-none d-md-inline-block" href="https://www.afpa.fr">Afpa</a>
                     <a href="{% url 'users:logout' %}" class="btn fas fa-sign-out-alt" id="logout" title="Déconnexion"></a>
                 </div>
             </nav>
@@ -83,9 +83,9 @@
         <hr class="hr_down">
 
         <div id="liens_footer" class="col-md-12">
-            <a>CGU</a>
+            <a href="{% url 'carpooling:cgu' %}">CGU</a>
             <span id="border_test"></span>
-            <a>Mentions Legales</a>
+            <a href="{% url 'carpooling:cgu' %}#mentionsLegales">Mentions Legales</a>
             <span id="border_test"></span>
             <a>Plan du site</a>
         </div>

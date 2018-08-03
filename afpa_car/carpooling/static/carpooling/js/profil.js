@@ -2,7 +2,15 @@
 $(document).ready(function () {
     $("#filtre_url_contenu a").each(function (index) {
         if (this.href == document.location.href) {
-            $(this).addClass('active');
+            $(this).addClass('active')
+        }
+        /* adresses */
+        else if (this.href == document.location.href.substr(0, 40)) {
+            $(this).addClass('active')
+        }
+        /* vehicule */
+        else if (this.href == document.location.href.substr(0, 41)) {
+            $(this).addClass('active')
         }
     })
 });
@@ -58,12 +66,12 @@ new Vue({
 
 /* ###### Vue.Js pour l'affichage du radio "Posedez-vous une voiture" dans infos generales ###### */
 
-
-
 new Vue({
     el: '#view_car_owner',
     data: {
-        isVisible: false
+        isVisible: false,
+        isVisibleCar : false,
+        isVisibleLicense : false
     },
     mounted: function() { 
         if ( id_driver_license_0.checked ){
@@ -76,12 +84,15 @@ new Vue({
         },
         hide: function () {
             this.isVisible = false
+        },
+        show_error_message_car: function() {
+            this.isVisibleCar = true
+        },
+        show_error_message_license: function() {
+            this.isVisibleLicense = true
         }
     }
-    
-
 });
-
 
 
 
