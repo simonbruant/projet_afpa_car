@@ -139,7 +139,7 @@ class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
         address_user.address = address
         address_user.user = self.request.user
-        address_label = form.cleaned_data['address_label']
+        address_label = form.cleaned_data['address_label'].capitalize()
         address_user.address_label_private = "Adresse" if not address_label else address_label
         address_user.save()
         return super().form_valid(form)
