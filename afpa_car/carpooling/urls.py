@@ -5,8 +5,8 @@ from django.views.generic import TemplateView
 
 from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, CalendarView, 
                     CarCreateView, CarUpdateView, CarDeleteView,
-                    ProfilImageUpdateView, PreferencesUpdateView,) 
-                    # AddressCreateView, AddressUpdateView, AddressDeleteView )
+                    ProfilImageUpdateView, PreferencesUpdateView,
+                    AddressCreateView, AddressUpdateView, AddressDeleteView )
 from users.views import LoginView, ChangePassword
 
 app_name = 'carpooling'
@@ -27,8 +27,8 @@ urlpatterns = [
     path('profil/vehicule/<int:pk>/', CarUpdateView.as_view(), name='car_update'),
     path('profil/vehicule/<int:pk>/delete', CarDeleteView.as_view(), name='car_delete'),
     
-    # path('profil/adresse/', AddressCreateView.as_view(), name="address"),
-    # path('profil/adresse/<int:pk>', AddressUpdateView.as_view(), name='address_update'),
-    # path('profil/adresse/<int:pk>/delete', AddressDeleteView.as_view(), name='address_delete'),
+    path('profil/adresse/', AddressCreateView.as_view(), name="address"),
+    path('profil/adresse/<int:pk>', AddressUpdateView.as_view(), name='address_update'),
+    path('profil/adresse/<int:pk>/delete', AddressDeleteView.as_view(), name='address_delete'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -20,7 +20,6 @@ class PrivateDataUpdateForm(forms.ModelForm):
                                     error_messages={'invalid': 'Le numéro AFPA est composé de chiffres'}, 
                                     widget=TextInput(attrs={'class': 'form-control require-input'}))
 
-        
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
@@ -37,36 +36,33 @@ class UserUpdateForm(forms.ModelForm):
             'last_name': 'Nom de famille',
             'email': 'Adresse Email',   
         }
-    afpa_center = forms.ModelChoiceField(queryset=AfpaCenter.objects.all(), label='Centre AFPA', required=False,
-                                        widget=Select(attrs={'class': 'custom-select'}))
-    trainee = forms.ChoiceField(choices= ((True, "Stagiaire"), (False, "Employé" )), widget=RadioSelect(attrs={'class': 'custom-control-input'}))
-    car_owner = forms.ChoiceField(choices= ((True, "Oui"), (False, "Non" )), widget=RadioSelect(attrs={'class': 'custom-control-input'}))
-    driver_license = forms.ChoiceField(choices= ((True, "Oui"), (False, "Non" )), widget=RadioSelect(attrs={'class': 'custom-control-input'}))
 
-
-
-# class UserProfileUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = UserProfile
-#         fields = ('trainee', 'driver_license', 'car_owner', 'afpa_center')
-#         widgets = {
-#                 'afpa_center': Select(attrs={'class': 'custom-select'}),
-#                 'trainee': RadioSelect(attrs={'class': 'custom-control-input'}),
-#                 'driver_license': RadioSelect(attrs={'class': 'custom-control-input'}),
-#                 'car_owner': RadioSelect(attrs={'class': 'custom-control-input'}),
-#         }
-#         labels = { 'afpa_center': 'Centre AFPA',}
+class UserProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('trainee', 'driver_license', 'car_owner', 'afpa_center', 'gender',)
+        widgets = {
+                'trainee': RadioSelect(attrs={'class': 'custom-control-input'}),
+                'driver_license': RadioSelect(attrs={'class': 'custom-control-input'}),
+                'car_owner': RadioSelect(attrs={'class': 'custom-control-input'}),
+                'afpa_center': Select(attrs={'class': 'custom-select'}),
+                'gender': Select(attrs={'class': 'custom-select'})
+        }
+        labels = { 
+            'afpa_center': 'Centre AFPA',
+            'gender': 'Genre',
+        }
 
 
 class CarForm(forms.ModelForm):
     class Meta:
         model = Car
-        fields = ( 'color', 'model', 'amount_of_free_seats', 'consumption','fuel' )
+        fields = ( 'color', 'model', 'amount_of_free_seats', 'consumption', 'fuel')
         widgets = {
             'color': TextInput(attrs={'class': 'form-control require-input'}),
             'model': TextInput(attrs={'class': 'form-control require-input'}),
             'amount_of_free_seats': TextInput(attrs={'class': 'form-control require-input'}),
-            'consumption': TextInput(attrs={'class': 'form-control require-input'}),
+            'consumption': TextInput(attrs={'class': 'form-control'}),
             'fuel': Select(attrs={'class': 'custom-select'}),
         }
         error_messages = {
@@ -116,44 +112,23 @@ class PreferencesForm(forms.ModelForm):
             'music': RadioSelect(),
         }
 
-# class AddressForm(forms.ModelForm):
-#     address_label = forms.CharField(label="Libellé de l'adresse", required=False, widget=TextInput(attrs={'class': 'form-control'}))
-
-#     class Meta: 
-#         model = Address
-#         fields = ('street_number', 'street_name', 'street_complement', 'zip_code', 'city')
-#         exclude = ['lattitude', 'longitude', ]
-#         widgets = {
-#             'street_number': TextInput(attrs={'class': 'form-control require-input'}),
-#             'street_name': TextInput(attrs={'class': 'form-control require-input'}),
-#             'street_complement': TextInput(attrs={'class': 'form-control'}),
-#             'zip_code': Select(attrs={'class': 'custom-select'}),
-#             'city': Select(attrs={'class': 'custom-select'}),
-#         }
-#         labels = {
-#             'street_number': 'Numéro de la Rue' ,
-#             'street_name': 'Nom de la Rue',
-#             'street_complement': "Complément de l'Adresse",
-#             'zip_code': 'Code Postal',
-#             'city': 'Ville',
-#         }
-
-
-
-    # ## VERIFICATION DE LA PRESENCE DE L'ADRESSE DANS LA BDD LORS DE LA CREATION    
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     address_label = cleaned_data.get("address_label") 
-    #     street_number = cleaned_data.get("street_number") 
-    #     street_name = cleaned_data.get("street_name") 
-    #     street_complement = cleaned_data.get("street_complement") 
-    #     zip_code = cleaned_data.get("zip_code") 
-    #     city = cleaned_data.get("city") 
-    #     rslt = Address.objects.filter(address_label=address_label, street_number=street_number, 
-    #                                     street_name=street_name, street_complement=street_complement, 
-    #                                     zip_code=zip_code, city=city)
-    #     if rslt.count() :
-    #         print( "adresse exxite déjà")
-    #         raise forms.ValidationError("Cette adresse existe déjà")
-    #     else :
-    #         print( "adresse créée")
+class AddressForm(forms.ModelForm):
+    class Meta: 
+        model = Address
+        fields = ('zip_code', 'city', 'street_number', 'street_name', 'address_complement', 'address_label')
+        widgets = {
+            'zip_code': TextInput(attrs={'class': 'form-control require-input'}),
+            'city': TextInput(attrs={'class': 'form-control require-input'}),
+            'street_number': TextInput(attrs={'class': 'form-control'}),
+            'street_name': TextInput(attrs={'class': 'form-control require-input'}),
+            'address_complement': TextInput(attrs={'class': 'form-control'}),
+            'address_label': TextInput(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'zip_code': 'Code Postal',
+            'city': 'Ville',
+            'street_number': 'Numéro de la Rue' ,
+            'street_name': 'Nom de la Rue',
+            'address_complement': "Complément Adresse",
+            'address_label': "Libellé de l'Adresse",
+        }

@@ -35,7 +35,7 @@ class Car(models.Model):
 
     color       = models.CharField(max_length=50, verbose_name="Couleur")
     model       = models.CharField(max_length=50, verbose_name="Modèle")
-    consumption = models.FloatField(verbose_name="Consommation (en l/100km)")
+    consumption = models.FloatField(verbose_name="Consommation (en l/100km)", null=True, blank=True)
     fuel        = models.CharField(max_length=20, choices=FUEL, verbose_name="Type de carburant")    
     amount_of_free_seats = models.IntegerField(default=1, verbose_name="Nombre de places libres")
 

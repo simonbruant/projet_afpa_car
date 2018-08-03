@@ -57,13 +57,13 @@ class UserProfile(models.Model):
                                         choices=( (True, "Oui"), (False, "Non")) )
     trainee         = models.BooleanField(default=False, verbose_name="statut",
                                         choices=( (True, "Stagiare"),(False, "Employé") ))
-    car_owner       = models.BooleanField(default=False, verbose_name="propriétaire d'un véhicule",
+    car_owner       = models.BooleanField(default=False, verbose_name="Propriétaire d'un Véhicule",
                                         choices=( (True, "Oui"), (False, "Non")) )
     profile_image   = models.ImageField(null=True, blank=True, upload_to='avatars/')
     smoker          = models.BooleanField(default=False, verbose_name="Fumeur",
                                         choices=( (True, "Fumeur"), (False, 'Non Fumeur')))
     talker          = models.BooleanField(default=False, verbose_name="Bavard",
-                                        choices=( (True, "Tres Bavard"), (False, 'Peu Bavard')))
+                                        choices=( (True, "Bavard"), (False, 'Peu Bavard')))
     music           = models.BooleanField(default=False, verbose_name="Musique",
                                         choices=( (True, "Oui"), (False, 'Non')))
     gender          = models.CharField(max_length=50, null=True, blank=True, choices=(
