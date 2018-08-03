@@ -89,10 +89,12 @@ class CarCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         user = self.request.user
         car = form.save()
-
+        
+        car.model = form.cleaned_data['model'].capitalize()
         car_user = Car_User()
         car_user.car = car
         car_user.user = user
+        car.save()
         car_user.save()
         return super(CarCreateView, self).form_valid(form)
 
