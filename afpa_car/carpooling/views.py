@@ -1,15 +1,12 @@
-from django.conf import settings
-from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView, RedirectView, FormView
+from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView
 
-from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, FormationSessionForm, PreferencesForm, ProfilImageUpdateForm, AddressForm
-from .models import Car, Car_User, Address_User, Address, FormationSession
-from users.models import PrivateData, User
+from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, ProfilImageUpdateForm, PreferencesForm, UserProfileUpdateForm, AddressForm
+from .models import Car, Car_User, Address
+from users.models import PrivateData, User, UserProfile
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'carpooling/dashboard.html'
@@ -29,15 +26,33 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 class CalendarView(LoginRequiredMixin, TemplateView):
     template_name = 'carpooling/calendar.html'
-    
-class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+
+class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
     template_name = 'carpooling/profil/general_infos.html'
-    success_url = reverse_lazy('carpooling:general_infos')
     success_message = "Informations mises à jour"
-    form_class = UserUpdateForm
-    
-    def get_object(self, queryset=None):
-        return self.request.user 
+
+    def get(self, request):
+        user = self.request.user
+        user_form = UserUpdateForm(instance=user)
+        user_profile_form = UserProfileUpdateForm(instance=user.user_profile)
+
+        context = {'user_form': user_form, 'user_profile_form': user_profile_form,}
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        user = request.user
+        user_form = UserUpdateForm(request.POST, instance=user)
+        user_profile_form = UserProfileUpdateForm(request.POST, instance=user.user_profile)
+        if user_form.is_valid() and user_profile_form.is_valid():
+            user = user_form.save()
+            user_profile = user_profile_form.save(commit=False)
+            user_profile.user = user
+            user_profile.save()
+            return redirect('carpooling:general_infos')
+
+        context = {'user_form': user_form, 'user_profile_form': user_profile_form,}
+        return render(request, self.template_name, context)
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -55,26 +70,26 @@ class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
         return user
         
 
-
-class ProfilImageUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class ProfilImageUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'carpooling/profil/photo.html'
     success_url = reverse_lazy('carpooling:photo')
     form_class = ProfilImageUpdateForm
-    success_message = "Photo mise à jour"
-    context_object_name = 'user'
+    context_object_name = 'user_profile'
 
     def get_object(self, queryset=None):
-        return self.request.user
-
+        user = UserProfile.objects.get(user=self.request.user)       
+        return user
+        
 class PreferencesUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    model = User
+    model = UserProfile
     template_name = 'carpooling/profil/preferences.html'
     success_url = reverse_lazy('carpooling:preferences')
     success_message = "Préférences mises à jour"
     form_class = PreferencesForm
 
     def get_object(self, queryset=None):
-        return self.request.user
+        user_profile = UserProfile.objects.get(user=self.request.user)       
+        return user_profile
         
 class CarCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'carpooling/profil/car.html'
@@ -139,18 +154,15 @@ class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         address = form.save()
-        address_user = Address_User()
-
-        address_user.address = address
-        address_user.user = self.request.user
+        address.user = self.request.user
         address_label = form.cleaned_data['address_label'].capitalize()
-        address_user.address_label_private = "Adresse" if not address_label else address_label
-        address_user.save()
+        address.address_label = "Adresse" if not address_label else address_label
+        address.save()
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super(AddressCreateView, self).get_context_data(**kwargs)
-        context['address_user_context'] = Address_User.objects.filter(user=self.request.user)
+        context['addresses'] = Address.objects.filter(user=self.request.user)
         return context
 
 
@@ -165,21 +177,14 @@ class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(users=self.request.user)
+        queryset = queryset.filter(user=self.request.user)
         return queryset
 
-    def get_initial(self):
-        address = Address.objects.get(pk=self.kwargs['pk'])
-        address_user = Address_User.objects.get(user=self.request.user, address=address,)
-        return {'address_label': address_user.address_label_private }
-    
     def form_valid(self, form):
         address = form.save()
         address_label = form.cleaned_data['address_label']
-
-        address_user = Address_User.objects.get(user=self.request.user, address=address,)
-        address_user.address_label_private = address_user.address_label_private = "Adresse" if not address_label else address_label
-        address_user.save()
+        address.address_label = "Adresse" if not address_label else address_label
+        address.save()
         return super().form_valid(form)
 
 class AddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
@@ -189,11 +194,10 @@ class AddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(users=self.request.user)
+        queryset = queryset.filter(user=self.request.user)
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        address = Address.objects.get(pk=self.kwargs['pk'])
-        context['address_user_context'] = Address_User.objects.get(user=self.request.user, address=address,)
+        context['address'] = address = Address.objects.get(pk=self.kwargs['pk'])
         return context

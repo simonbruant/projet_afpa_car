@@ -27,7 +27,7 @@
                         <div>{{ car.color }}</div>
                         <div>{{ car.amount_of_free_seats }}  places passager</div>
                         <div>{{ car.fuel }}</div>
-                        <div>{{ car.consumption }}</div>
+                        <div>{% if car.consumption %}{{ car.consumption }}{% else %}&nbsp;{% endif %}</div>
                     </div>
                     <div class="col-md-5 mt-3 mb-4">
                         <a href="{% url 'carpooling:car_update' car.id %}" id="btn_card_footer">Modifier</a>

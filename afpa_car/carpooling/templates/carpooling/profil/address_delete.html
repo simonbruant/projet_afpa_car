@@ -5,20 +5,20 @@
 <form method="post">{% csrf_token %}
     <hr/>
     
-    <h4 class="mb-5">Êtes-vous sur de vouloir supprimer l'adresse &laquo; {{ address_user_context.address_label_private }} &raquo; ?</h4>
+    <h4 class="mb-5">Êtes-vous sur de vouloir supprimer l'adresse &laquo; {{ address.address_label }} &raquo; ?</h4>
 <div class='row'>
     <div class='col-md-4'></div>
         <div  class='col-md-4'>
             <div id="card_address_content" class="card col-md-12">
                 <div class=row>
                     <div id="address_label" class="card-header bg-default col-md-12">
-                        {{ address_user_context.address_label_private }}
+                        {{ address.address_label }}
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-md-12 mt-3">
-                        <div>{% if address_user_context.address.street_number %}{{ address_user_context.address.street_number }},{% endif %} {{ address_user_context.address.street_name }}</div>
-                        <div>{{ address_user_context.address.zip_code }}, {{ address_user_context.address.city }}</div>
+                        <div>{% if address.street_number %}{{ address.street_number }},{% endif %} {{ address.street_name }}</div>
+                        <div>{{ address.zip_code }}, {{ address.city }}</div>
                     </div>
                 </div>
             </div>

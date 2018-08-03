@@ -20,7 +20,7 @@
                     <div>{{ car.color }}</div>
                     <div>{{ car.amount_of_free_seats }}  places passager</div>
                     <div>{{ car.fuel }}</div>
-                    <div>{{ car.consumption }}</div>
+                    <div>{% if car.consumption %}{{ car.consumption }}{% else %}&nbsp;{% endif %}</div>
                 </div>
             </div>
             </div>
