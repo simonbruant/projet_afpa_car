@@ -12,103 +12,124 @@
 
 {% block contenuProfil %}
 
-
-<div id="message_update" class="col-md-12">
-        {% for message in messages %}
-            {{ message }}
-        {% endfor %}
-
-    </div>
-
-    <div class="row">
+<div class="row">
     <div class="col-md-2"></div>
 
     
-    <form class="col-md-8" action="{% url 'carpooling:general_infos' %}" method='POST'>
+    <form class="col-md-10" action="{% url 'carpooling:general_infos' %}" method='POST'>
             {% csrf_token %}
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.username.label }} </div>
+                <div id="header_input_profil_general_infos" class="input-group-text">{{ form.username.label }} </div>
             </div>
-            {{ form.username }} 
+            {{ form.username }}
+            <div class='col-md-4 password_error' >
+                {% for error in form.username.errors %}
+                {{ error }}
+                {% endfor %}
+            </div> 
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.last_name.label }}</div>
+                <div id="header_input_profil_general_infos" class="input-group-text">{{ form.last_name.label }}</div>
             </div>
             {{ form.last_name }} 
+            <div class='col-md-4 password_error' >
+                {% for error in form.last_name.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.first_name.label }}</div>
+                <div id="header_input_profil_general_infos" class="input-group-text">{{ form.first_name.label }}</div>
             </div>
             {{ form.first_name }} 
+            <div class='col-md-4 password_error' >
+                {% for error in form.first_name.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
         </div>
     
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.email.label }}</div>
+                <div id="header_input_profil_general_infos" class="input-group-text">{{ form.email.label }}</div>
             </div>
             {{ form.email }} 
+            <div class='col-md-4 password_error' >
+                {% for error in form.email.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.afpa_center.label }}</div>
+                <div id="header_input_profil_general_infos" class="input-group-text">{{ form.afpa_center.label }}</div>
             </div>
             {{ form.afpa_center }} 
+            <div class='col-md-4 password_error' >
+                {% for error in form.afpa_center.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
         </div>
     
-        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
-<div id="view_car_owner">
-
-        <label>Êtes-vous titulaire du permis de conduire ?</label>
-
-        {% for choice in form.driver_license %}
-            <div class="custom-control custom-radio">
-                {{ choice.tag }}
-                {% if forloop.counter0 == 0 %}
-                <label @click="show" class="custom-control-label" for="{{ choice.id_for_label }}">Oui</label>
-                {% else %}
-                <label @click="hide" class="custom-control-label" for="{{ choice.id_for_label }}">Non</label>
-                {% endif %}
-            </div> 
-        {% endfor %} 
+        <div class='col-md-8'>
+            <div id="view_car_owner">
+        
+                <div class="row">
+                    <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+                </div>  
 
 
-        <div v-if="isVisible">
+                <label>Êtes-vous titulaire du permis de conduire ?</label>
+
+                {% for choice in form.driver_license %}
+                    <div class="custom-control custom-radio">
+                        {{ choice.tag }}
+                        {% if forloop.counter0 == 0 %}
+                        <label @click="show" class="custom-control-label" for="{{ choice.id_for_label }}">Oui</label>
+                        {% else %}
+                        <label @click="hide" class="custom-control-label" for="{{ choice.id_for_label }}">Non</label>
+                        {% endif %}
+                    </div> 
+                    {% endfor %} 
+                
+                <div v-if="isVisible">
+
+                    <div class="row">
+                        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+                    </div>
+
+                    <label>Possedez-vous une voiture ?</label>
+
+                    {% for choice in form.car_owner %}
+                        <div class="custom-control custom-radio">
+                            {{ choice.tag }}
+                            <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>
+                        </div> 
+                        
+                    {% endfor %} 
+                </div>
+            </div>
 
             <div class="row">
                 <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
             </div>
+            <label>Quel est votre status ?</label>
 
-            <label>Possedez-vous une voiture ?</label>
-
-            {% for choice in form.car_owner %}
+            {% for choice in form.trainee %}
                 <div class="custom-control custom-radio">
                     {{ choice.tag }}
                     <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>
                 </div> 
             {% endfor %} 
-        </div>
-
-</div>
-
-        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
-
-        <label>Quel est votre status ?</label>
-
-
-        {% for choice in form.trainee %}
-            <div class="custom-control custom-radio">
-                {{ choice.tag }}
-                <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>
-            </div> 
-        {% endfor %} 
 
             <div class="row">
                 <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
@@ -117,13 +138,15 @@
             <div id="submit_profil1">
                 <button type="submit" class="btn btn-success">Envoyer</button>
             </div>
+        </div>
 
     </form>
+
 </div>
+
     <div class='row'>
         <div class='col-md-3 require-input-legend mt-1'><p id='text_legend'>Champ obligatoire</p> </div>
     </div>
-
 
     <script type="text/javascript" src="{% static 'js/vue.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>

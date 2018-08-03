@@ -96,19 +96,19 @@ class PasswordChangeForm(BasePasswordChangeForm):
 
     new_password1 = forms.CharField(
         label="Nouveau Mot de Passe",
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        widget=forms.PasswordInput(attrs={'class': 'form-control require-input'}),
         strip=False,
         help_text=password_validation.password_validators_help_text_html(),
     )
     new_password2 = forms.CharField(
         label="Confirmation",
         strip=False,
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        widget=forms.PasswordInput(attrs={'class': 'form-control require-input'}),
     )
     old_password = forms.CharField(
         label="Ancien Mot de Passe",
         strip=False,
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'autofocus': True}),
+        widget=forms.PasswordInput(attrs={'class': 'form-control require-input', 'autofocus': True}),
     )
 #################################################################
     
