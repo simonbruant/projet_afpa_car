@@ -15,51 +15,60 @@
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil_general_infos" class="input-group-text">{{ form.username.label }} </div>
+                <div id="header_input_profil_general_infos" class="input-group-text">{{ user_form.username.label }} </div>
             </div>
-            {{ form.username }}
+            {{ user_form.username }}
             <div class='col-md-4 password_error'>
-                {% for error in form.username.errors %} {{ error }} {% endfor %}
+                {% for error in user_form.username.errors %} {{ error }} {% endfor %}
             </div>
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil_general_infos" class="input-group-text">{{ form.last_name.label }}</div>
+                <div id="header_input_profil_general_infos" class="input-group-text">{{ user_form.last_name.label }}</div>
             </div>
-            {{ form.last_name }}
+            {{ user_form.last_name }}
             <div class='col-md-4 password_error'>
-                {% for error in form.last_name.errors %} {{ error }} {% endfor %}
+                {% for error in user_form.last_name.errors %} {{ error }} {% endfor %}
             </div>
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil_general_infos" class="input-group-text">{{ form.first_name.label }}</div>
+                <div id="header_input_profil_general_infos" class="input-group-text">{{ user_form.first_name.label }}</div>
             </div>
-            {{ form.first_name }}
+            {{ user_form.first_name }}
             <div class='col-md-4 password_error'>
-                {% for error in form.first_name.errors %} {{ error }} {% endfor %}
+                {% for error in user_form.first_name.errors %} {{ error }} {% endfor %}
             </div>
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil_general_infos" class="input-group-text">{{ form.email.label }}</div>
+                <div id="header_input_profil_general_infos" class="input-group-text">{{ user_form.email.label }}</div>
             </div>
-            {{ form.email }}
+            {{ user_form.email }}
             <div class='col-md-4 password_error'>
-                {% for error in form.email.errors %} {{ error }} {% endfor %}
+                {% for error in user_form.email.errors %} {{ error }} {% endfor %}
             </div>
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil_general_infos" class="input-group-text">{{ form.afpa_center.label }}</div>
+                <div id="header_input_profil_general_infos" class="input-group-text">{{ user_profile_form.gender.label }}</div>
             </div>
-            {{ form.afpa_center }}
+            {{ user_profile_form.gender }}
             <div class='col-md-4 password_error'>
-                {% for error in form.afpa_center.errors %} {{ error }} {% endfor %}
+                {% for error in user_profile_form.gender.errors %} {{ error }} {% endfor %}
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil_general_infos" class="input-group-text">{{ user_profile_form.afpa_center.label }}</div>
+            </div>
+            {{ user_profile_form.afpa_center }}
+            <div class='col-md-4 password_error'>
+                {% for error in user_profile_form.afpa_center.errors %} {{ error }} {% endfor %}
             </div>
         </div>
 
@@ -107,7 +116,7 @@
 
                     <label>Possedez-vous une voiture ?</label>
 
-                    {% if cars|length == 0 %} {% for choice in user_profile.form.car_owner %}
+                    {% if cars|length == 0 %} {% for choice in user_profile_form.car_owner %}
                     <div class="custom-control custom-radio">
                         {{ choice.tag }}
                         <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>
@@ -145,7 +154,7 @@
 
                     <label>Quel est votre status ?</label>
 
-                    {% for choice in user_profile.form.trainee %}
+                    {% for choice in user_profile_form.trainee %}
                     <div class="custom-control custom-radio">
                         {{ choice.tag }}
                         <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>

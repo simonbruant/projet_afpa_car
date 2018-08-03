@@ -155,8 +155,8 @@ class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         address = form.save()
         address.user = self.request.user
-        address_label = form.cleaned_data['address_label'].capitalize()
-        address.address_label = "Adresse" if not address_label else address_label
+        address_label = form.cleaned_data['address_label']
+        address.address_label = "Adresse" if not address_label else address_label.capitalize()
         address.save()
         return super().form_valid(form)
 
