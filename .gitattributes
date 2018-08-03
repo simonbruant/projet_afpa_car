@@ -1,1 +1,2 @@
+$ cat .gitattributes
 static/* linguist-vendored=false
