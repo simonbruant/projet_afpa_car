@@ -68,6 +68,8 @@
 
         <label>Êtes-vous titulaire du permis de conduire ?</label>
 
+        {% if cars|length == 0 %}
+
         {% for choice in form.driver_license %}
             <div class="custom-control custom-radio">
                 {{ choice.tag }}
@@ -79,14 +81,33 @@
             </div> 
         {% endfor %} 
 
+        {% else %}
+        
+        <div class="custom-control custom-radio">
+            <input type="radio" name="driver_license" value="True" class="custom-control-input" id="id_driver_license_0" checked />
+            <label @click='show_error_message_license' class="custom-control-label" for="id_driver_license_0">Oui</label>
+        </div> 
+        
+        <div class="custom-control custom-radio">
+            <input type="radio" name="driver_license" value="False" class="custom-control-input" id="id_driver_license_1" disabled/>
+            <label @click='show_error_message_license'  class="custom-control-label" for="id_driver_license_1">Non</label>
+        </div> 
+        
+        <div v-if="isVisibleLicense">
+            <a href="{% url 'carpooling:car' %}" id='message_errors' class='mb-1'> Vous ne pouvez pas modifier votre choix si vous possédez déjà des véhicules. </a>
+        </div>
+        
+        {% endif %}
+
         <div class="row">
                 <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
             </div>
         <div v-if="isVisible">
 
-            {% if cars|length == 0  %}
-
+            
             <label>Possedez-vous une voiture ?</label>
+            
+            {% if cars|length == 0  %}
 
             {% for choice in form.car_owner %}
                 <div class="custom-control custom-radio">
@@ -98,36 +119,30 @@
             <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
             
-            {% else %}
-            
-            <label>Possedez-vous une voiture ?</label>
-            
+            {% else %}                      
             
             <div class="custom-control custom-radio">
-                <input  type="radio" name="car_owner11" value="True" class="custom-control-input" id="id_car_owner_0" checked />
-                <label @click='show_error_message' for="id_car_owner_02" class="custom-control-label"> Oui </label>
+                <input  type="radio" name="car_owner1" value="True" class="custom-control-input" id="id_car_owner_0" checked />
+                <label @click='show_error_message_car' for="id_car_owner_0" class="custom-control-label"> Oui </label>
             </div> 
             
             <div class="custom-control custom-radio">
-                <input  type="radio" name="car_owner11" value="False" class="custom-control-input" id="id_car_owner_1" disabled />
-                <label @click='show_error_message' for="id_car_owner_12" class="custom-control-label"> Non </label>
+                <input  type="radio" name="car_owner1" value="False" class="custom-control-input" id="id_car_owner_1" disabled />
+                <label @click='show_error_message_car' for="id_car_owner_1" class="custom-control-label"> Non </label>
             </div> 
-            
-                <div v-if="testVisible">
+
+                <div v-if="isVisibleCar">
                     <a href="{% url 'carpooling:car' %}" id='message_errors' class='mb-1'> Vous ne pouvez pas modifier votre choix si vous possédez déjà des véhicules. </a>
                 </div>
-                        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
-                {% endif %}
+
+            <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+            {% endif %}
 
             </div>
         </div>
 
 </div>
-
-
-
         <label>Quel est votre status ?</label>
-
 
         {% for choice in form.trainee %}
             <div class="custom-control custom-radio">
