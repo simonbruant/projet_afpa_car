@@ -17,8 +17,8 @@
         <div class='col-md-4'>
             <div id="card_car_content" class="card col-md-12">
 
-                <div class=row>
-                    <div class="card-header bg-default col-md-12">
+                <div class='row'>
+                    <div id="address_label" class="card-header bg-default col-md-12">
                         {{ car.model }}
                     </div>
                 </div>
@@ -30,13 +30,13 @@
                         <div>{{ car.consumption }}</div>
                     </div>
                     <div class="col-md-5 mt-3 mb-4">
-                        <a href="{% url 'carpooling:car_update' car.id %}" id="btn_card_views_card">Modifier</a>
+                        <a href="{% url 'carpooling:car_update' car.id %}" id="btn_card_footer">Modifier</a>
                     </div>
                     <div class="col-md-1 mt-3">
                         <div>|</div>
                     </div>
                     <div class="col-md-5 mt-3">
-                        <a href="{% url 'carpooling:car_delete' car.id %}" id="btn_card_views_card">Supprimer</a>
+                        <a href="{% url 'carpooling:car_delete' car.id %}" id="btn_card_footer">Supprimer</a>
                     </div>
                 </div>
 

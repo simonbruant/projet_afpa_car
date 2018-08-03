@@ -10,11 +10,9 @@
 
 {% block contenuProfil %}
 
-{% comment %} {% if address_user_context|length == 0 %}
+{% if address_user_context|length == 0 %}
 <p>Vos adresses enregistrées s'afficheront ici.</p>
 {% endif %}
-{% endcomment %}
-{% comment %} TODO : .capitalize() premiere lettre du LABEL dans la card {% endcomment %}
 
 <div class="row">
     {% for address_user in address_user_context %}

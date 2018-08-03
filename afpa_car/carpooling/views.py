@@ -14,6 +14,19 @@ from users.models import PrivateData, User
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'carpooling/dashboard.html'
 
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['address_user_context'] = Address_User.objects.filter(user=self.request.user)
+    #     return context
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cars'] = Car.objects.filter(users=self.request.user)
+        context['address_user_context'] = Address_User.objects.filter(user=self.request.user)
+        
+        return context
+
+
 class CalendarView(LoginRequiredMixin, TemplateView):
     template_name = 'carpooling/calendar.html'
     
@@ -26,6 +39,11 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.user 
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cars'] = Car.objects.filter(users=self.request.user)
+        return context
+        
 class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'carpooling/profil/private_infos.html'
     success_url = reverse_lazy('carpooling:private_infos')
@@ -65,17 +83,19 @@ class CarCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = CarForm
 
     def get_context_data(self, **kwargs):
-        context = super(CarCreateView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['cars'] = Car.objects.filter(users=self.request.user)
         return context
 
     def form_valid(self, form):
         user = self.request.user
         car = form.save()
-
+        
+        car.model = form.cleaned_data['model'].capitalize()
         car_user = Car_User()
         car_user.car = car
         car_user.user = user
+        car.save()
         car_user.save()
         return super(CarCreateView, self).form_valid(form)
 
@@ -123,7 +143,7 @@ class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
         address_user.address = address
         address_user.user = self.request.user
-        address_label = form.cleaned_data['address_label']
+        address_label = form.cleaned_data['address_label'].capitalize()
         address_user.address_label_private = "Adresse" if not address_label else address_label
         address_user.save()
         return super().form_valid(form)
