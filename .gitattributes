@@ -1,2 +1,4 @@
-afpa_car/static/* linguist-documentation=false
-afpa_car/carpooling/static/* linguist-documentation=false
+$ cat .gitattributes
+static/* linguist-documentation=true
+afpa_car/static/* linguist-documentation=true
+afpa_car/carpooling/static/* linguist-documentation=true
