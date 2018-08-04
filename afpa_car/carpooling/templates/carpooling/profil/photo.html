@@ -23,9 +23,9 @@
 
     <div class="row mb-3">
         <div class="col-md-4"></div>
-        {% if user.avatar %}
+        {% if user_profile.profile_image %}
         <img v-if="imageData.length > 0" :src="imageData" class="col-md-4" id="rond">
-        <img v-else class="col-md-4" id="rond" src="{{ user.avatar.url }}">
+        <img v-else class="col-md-4" id="rond" src="{{ user_profile.profile_image.url }}">
         {% else %}
         <img v-if="imageData.length > 0" :src="imageData" class="col-md-4" id="rond">
         <img v-else class="col-md-4" id="rond" src="../../../../static/img/avatar_generique.png">
@@ -35,19 +35,19 @@
     <div class="row mb-3">
         <div class="col-md-2"></div>
 
-        <form class="col-md-8" action="." enctype="multipart/form-data" method="post">
+        <form class="col-md-8" enctype="multipart/form-data" method="post">
             {% csrf_token %}
 
             <div class='custom-file'>
-                {{ form.avatar }}
-                <label class="custom-file-label" for="{{ form.avatar.id_for_label }}">{{ form.avatar.label }}</label>
+                {{ form.profile_image }}
+                <label class="custom-file-label" for="{{ form.profile_image.id_for_label }}">{{ form.profile_image.label }}</label>
             </div>
                 <p class="mt-1">PNG, JPG, de 4 Mo maximum<p>
             
 
             <div class="custom-control custom-checkbox">
-                {{ form.remove_avatar }}
-                <label class="custom-control-label" for="{{ form.remove_avatar.id_for_label }}">Supprimer l'avatar</label>
+                {{ form.remove_profile_image }}
+                <label class="custom-control-label" for="{{ form.remove_profile_image.id_for_label }}">Supprimer l'avatar</label>
             </div>
 
             <div class='mt-3' id="submit_profil1">

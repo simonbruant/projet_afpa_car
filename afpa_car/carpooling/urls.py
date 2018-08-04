@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 
 from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, CalendarView, 
                     CarCreateView, CarUpdateView, CarDeleteView,
-                    ProfilImageUpdateView, PreferencesUpdateView, 
+                    ProfilImageUpdateView, PreferencesUpdateView,
                     AddressCreateView, AddressUpdateView, AddressDeleteView )
 from users.views import LoginView, ChangePassword
 

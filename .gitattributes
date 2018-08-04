@@ -1,0 +1,4 @@
+$ cat .gitattributes
+static/* linguist-documentation=true
+afpa_car/static/* linguist-documentation=true
+afpa_car/carpooling/templates/carpooling/* linguist-documentation=true
