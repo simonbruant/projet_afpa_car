@@ -19,7 +19,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['cars'] = Car.objects.filter(users=self.request.user)
-        context['address_user_context'] = Address_User.objects.filter(user=self.request.user)
+        context['addresses'] = Address.objects.filter(user=self.request.user)
         
         return context
 

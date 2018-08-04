@@ -10,17 +10,17 @@
     <div class="col-md-4">
 
 
-        {% if address_user_context|length == 0 or user.car_owner and cars|length == 0 %}
+        {% if addresses|length == 0 or user.car_owner and cars|length == 0 %}
 
         <div class="card mt-3 mb-3">
             <div class="card-header bg-success mb-2">Completez votre profil</div>
             <div class="card-content" id="alertes_profil">
 
-                {% if address_user_context|length == 0 %}
+                {% if addresses|length == 0 %}
                     <p class="mt-2"><span class="fas fa-exclamation"><a id="alert_dashboard" href="{% url 'carpooling:address' %}"> Vous n'avez aucune adresse enregistrée.</span></a></p>
                 {% endif %}
 
-                {% if address_user_context|length == 0  and cars|length == 0 and user.car_owner %}
+                {% if addresses|length == 0  and cars|length == 0 and user.car_owner %}
                     <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 250px; border: none;">
                 {% endif %}
 
