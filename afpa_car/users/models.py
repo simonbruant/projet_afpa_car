@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
+from django.db.models.signals import post_save
 from django.utils import timezone
 
 from .managers import UserManager
@@ -71,3 +72,11 @@ class UserProfile(models.Model):
                                         ('Woman', "Femme"),
                                         ('Man', "Homme"),))
     afpa_center     = models.ForeignKey(AfpaCenter, null=True, blank=True, on_delete=models.SET_NULL)
+
+
+def create_user_data(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+        PrivateData.objects.create(user=instance)
+
+post_save.connect(create_user_data, sender=User)

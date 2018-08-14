@@ -25,12 +25,20 @@ class SignupForm(forms.ModelForm):
 
     password1   = forms.CharField(label="Mot de Passe",  widget=PasswordInput(attrs={'class': 'form-control'}))
     password2   = forms.CharField(label='Confirmation Mot de Passe', widget=PasswordInput(attrs={'class': 'form-control'}))
-    username    = forms.RegexField(label='Pseudonyme',
+    username    = forms.RegexField(regex=r'^[\w._-]+$', label='Pseudonyme',
                                     min_length=3,
-                                    regex=r'^[\w._-]+$',  
                                     error_messages = {'invalid': "Votre ne pseudonyme ne peut contenir que des lettres,"
                                     "nombres ou caractères suivants : ./_/-"},
                                     widget=TextInput(attrs={'class': 'form-control'}) )
+
+    phone_number = forms.RegexField(regex=r'^[0+][\d]+$',label="Numéro de téléphone",
+                                    min_length=10, max_length=13, 
+                                    error_messages={'invalid': 'Numéro de téléphone invalide'}, 
+                                    widget=TextInput(attrs={'class': 'form-control'}))
+    afpa_number = forms.RegexField(regex=r'^\d+$', label="Identifiant Afpa",
+                                    min_length=8, max_length=8,
+                                    error_messages={'invalid': 'Le numéro AFPA est composé uniquement de nombres'}, 
+                                    widget=TextInput(attrs={'class': 'form-control'}))
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
@@ -60,20 +68,6 @@ class SignupForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-
-class PrivateDataCreateForm(forms.ModelForm):
-    class Meta:
-        model = PrivateData
-        fields = ('phone_number', 'afpa_number')
-    
-    phone_number = forms.RegexField(regex=r'^[0+][\d]+$',label="Numéro de téléphone",
-                                    min_length=10, max_length=13, 
-                                    error_messages={'invalid': 'Numéro de téléphone invalide'}, 
-                                    widget=TextInput(attrs={'class': 'form-control'}))
-    afpa_number = forms.RegexField(regex=r'^\d+$', label="Identifiant Afpa",
-                                    min_length=8, max_length=8,
-                                    error_messages={'invalid': 'Le numéro AFPA est composé uniquement de nombres'}, 
-                                    widget=TextInput(attrs={'class': 'form-control'}))
 
 class LoginForm(forms.Form):
     email = forms.EmailField(widget=TextInput(attrs={'class':'form-control mb-3','placeholder': 'Adresse Email'}))

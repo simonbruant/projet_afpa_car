@@ -9,30 +9,19 @@ from django.utils.http import is_safe_url
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, FormView, TemplateView
 
-from .forms import LoginForm, SignupForm, LogoutForm, PrivateDataCreateForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
+from .forms import LoginForm, SignupForm, LogoutForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 
-class SignUpView(TemplateView):
-    template_name = 'users/signup.html'
+class SignUpView(CreateView):
+    template_name = "users/signup.html"
+    success_url = reverse_lazy("carpooling:index")
+    form_class = SignupForm
 
-    def get(self, request):
-        signup_form = SignupForm()
-        private_data_form = PrivateDataCreateForm()
-
-        context = {'signup_form': signup_form, 'private_data_form': private_data_form,}
-        return render(request, self.template_name, context)
-
-    def post(self, request):
-        signup_form = SignupForm(request.POST)
-        private_data_form = PrivateDataCreateForm(request.POST)
-        if signup_form.is_valid() and private_data_form.is_valid():
-            user = signup_form.save()
-            private_data = private_data_form.save(commit=False)
-            private_data.user = user
-            private_data.save()
-            return redirect("carpooling:index")
-
-        context = {'signup_form': signup_form, 'private_data_form': private_data_form,}
-        return render(request, self.template_name, context)
+    def form_valid(self, form):
+        user = form.save()
+        user.private_data.afpa_number = form.cleaned_data["afpa_number"]
+        user.private_data.phone_number = form.cleaned_data["phone_number"]
+        user.private_data.save()
+        return super().form_valid(form)
 
 class LoginView(FormView):
     form_class  = LoginForm
@@ -72,7 +61,7 @@ class LogoutView(LoginRequiredMixin, FormView):
         logout(self.request)
         return HttpResponseRedirect(reverse('carpooling:index'))
 
-class ChangePassword(TemplateView):
+class ChangePassword(LoginRequiredMixin, TemplateView):
     template_name = 'carpooling/profil/password.html'
 
     def get(self, request):

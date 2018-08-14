@@ -50,6 +50,8 @@ class UserAdmin(BaseUserAdmin):
         return super(UserAdmin, self).get_inline_instances(request, obj)
 
 admin.site.register(User, UserAdmin)
+admin.site.register(PrivateData)
+admin.site.register(UserProfile)
 
 # Remove Group Model from admin. We're not using it.
 admin.site.unregister(Group)
