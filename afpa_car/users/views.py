@@ -1,27 +1,83 @@
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash, get_user_model
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.views import (PasswordResetView as BasePasswordResetView, PasswordResetDoneView, 
                                         PasswordResetConfirmView as BasePasswordResetConfirmView, PasswordResetCompleteView )
-from django.http import HttpResponseRedirect
+from django.core.mail import EmailMessage                                        
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
-from django.utils.http import is_safe_url
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import is_safe_url, urlsafe_base64_encode, urlsafe_base64_decode
 from django.urls import reverse, reverse_lazy
+from django.views import View
 from django.views.generic import CreateView, FormView, TemplateView
 
 from .forms import LoginForm, SignupForm, LogoutForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
+from .tokens import account_activation_token
 
-class SignUpView(CreateView):
-    template_name = "users/signup.html"
-    success_url = reverse_lazy("carpooling:index")
-    form_class = SignupForm
+User = get_user_model()
 
-    def form_valid(self, form):
-        user = form.save()
-        user.private_data.afpa_number = form.cleaned_data["afpa_number"]
-        user.private_data.phone_number = form.cleaned_data["phone_number"]
-        user.private_data.save()
-        return super().form_valid(form)
+class SignUpView(TemplateView):
+    template_name = 'users/signup.html'
+
+    def get(self, request):
+        form = SignupForm()
+        return render(request, self.template_name, {'form': form,})
+
+    def post(self, request):
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            user.private_data.afpa_number = form.cleaned_data["afpa_number"]
+            user.private_data.phone_number = form.cleaned_data["phone_number"]
+            user.private_data.save()
+
+            mail_subject = 'Activate your account.'
+            current_site = get_current_site(request)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            token = account_activation_token.make_token(user)
+            activation_link = "{0}/?uid={1}&token{2}".format(current_site, uid, token)
+            message = "Hello {0},\n {1}".format(user.username, activation_link)
+            to_email =  form.cleaned_data["email"]
+            email = EmailMessage(mail_subject, message, to=[to_email])
+            email.send()
+            return render(request, 'users/activation_link_send.html')
+
+        return render(request, self.template_name, {'form': form,})
+
+class Activate(View):
+    def get(self, request, uidb64, token):
+        try:
+            uid = force_text(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+        if user is not None and account_activation_token.check_token(user, token):
+            # activate user and login:
+            user.is_active = True
+            user.save()
+            login(request, user)
+
+            return render(request, 'users/activation.html')
+
+        else:
+            return render(request, 'users/activation.html',)
+
+# class SignUpView(CreateView):
+#     template_name = "users/signup.html"
+#     success_url = reverse_lazy("carpooling:index")
+#     form_class = SignupForm
+
+#     def form_valid(self, form):
+#         user = form.save()
+#         user.private_data.afpa_number = form.cleaned_data["afpa_number"]
+#         user.private_data.phone_number = form.cleaned_data["phone_number"]
+#         user.private_data.save()
+#         return super().form_valid(form)
+    
 
 class LoginView(FormView):
     form_class  = LoginForm
