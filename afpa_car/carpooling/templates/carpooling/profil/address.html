@@ -10,10 +10,6 @@
 
 {% block contenuProfil %}
 
-{% if address_user_context|length == 0 %}
-<p>Vos adresses enregistrées s'afficheront ici.</p>
-{% endif %}
-
 <div class="row">
     {% for address in addresses %}
     <div class='col-md-4 mb-3'>

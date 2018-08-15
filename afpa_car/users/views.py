@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (PasswordResetView as BasePasswordResetView, PasswordResetDoneView, 
-                                        PasswordResetConfirmView as BaseResetConfirmView, PasswordResetCompleteView )
+                                        PasswordResetConfirmView as BasePasswordResetConfirmView, PasswordResetCompleteView )
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
@@ -85,7 +85,7 @@ class PasswordResetView(BasePasswordResetView):
     success_url = reverse_lazy('users:password_reset_done')
     form_class = PasswordResetForm
 
-class PasswordResetConfirmView(BaseResetConfirmView):
+class PasswordResetConfirmView(BasePasswordResetConfirmView):
     template_name = 'users/password_reset_confirm.html'
     success_url = reverse_lazy('users:password_reset_complete')
     form_class = SetPasswordForm

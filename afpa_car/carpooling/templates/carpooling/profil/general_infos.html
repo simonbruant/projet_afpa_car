@@ -82,7 +82,7 @@
 
                 <label>Êtes-vous titulaire du permis de conduire ?</label>
 
-                {% if cars|length == 0 %} {% for choice in user_profile_form.driver_license %}
+                {% if not cars %} {% for choice in user_profile_form.driver_license %}
                 <div class="custom-control custom-radio">
                     {{ choice.tag }} {% if forloop.counter0 == 0 %}
                     <label @click="show" class="custom-control-label" for="{{ choice.id_for_label }}">Oui</label>
@@ -116,7 +116,7 @@
 
                     <label>Possedez-vous une voiture ?</label>
 
-                    {% if cars|length == 0 %} {% for choice in user_profile_form.car_owner %}
+                    {% if not cars %} {% for choice in user_profile_form.car_owner %}
                     <div class="custom-control custom-radio">
                         {{ choice.tag }}
                         <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>

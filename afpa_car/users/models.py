@@ -67,10 +67,10 @@ class UserProfile(models.Model):
                                         choices=( (True, "Bavard"), (False, 'Peu Bavard')))
     music           = models.BooleanField(default=False, verbose_name="Musique",
                                         choices=( (True, "Oui"), (False, 'Non')))
-    gender          = models.CharField(max_length=50, null=True, blank=True, choices=(
-                                        ('Other gender', "Autre"),
+    gender          = models.CharField(max_length=50, default='None',choices=(
+                                        ('None', "Non communiqué"),
                                         ('Woman', "Femme"),
-                                        ('Man', "Homme"),))
+                                        ('Man', "Homme"),),)
     afpa_center     = models.ForeignKey(AfpaCenter, null=True, blank=True, on_delete=models.SET_NULL)
 
 

@@ -13,7 +13,7 @@ class Address(models.Model):
 
     address_label      = models.CharField(max_length=100, null=True, blank=True)
     user               = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, 
-                                            null=True, blank=True, related_name='adresses')
+                                            null=True, blank=True, related_name='addresses')
 
     class Meta:
         verbose_name = 'Adresse'

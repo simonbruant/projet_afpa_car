@@ -11,18 +11,12 @@ from users.models import PrivateData, User, UserProfile
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'carpooling/dashboard.html'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['address_user_context'] = Address_User.objects.filter(user=self.request.user)
-    #     return context
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['cars'] = Car.objects.filter(users=self.request.user)
         context['addresses'] = Address.objects.filter(user=self.request.user)
         
         return context
-
 
 class CalendarView(LoginRequiredMixin, TemplateView):
     template_name = 'carpooling/calendar.html'
@@ -199,5 +193,5 @@ class AddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['address'] = address = Address.objects.get(pk=self.kwargs['pk'])
+        context['address'] = Address.objects.get(pk=self.kwargs['pk'])
         return context
