@@ -129,7 +129,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-LOGIN_URL = "/" 
+LOGIN_URL = "{% url 'carpooling:index' %}" 
 LOGIN_REDIRECT_URL = '{% url "carpooling:dashboard" %}'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

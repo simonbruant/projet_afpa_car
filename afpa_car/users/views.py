@@ -28,8 +28,7 @@ class SignUpView(CreateView):
     token_generator = account_activation_token
 
     def send_mail(self, subject_template_name, email_template_name,
-                context, from_email, to_email):
-
+                    context, from_email, to_email):
         subject = render_to_string(subject_template_name, context)
         subject = ''.join(subject.splitlines())
         body = render_to_string(email_template_name, context)
@@ -39,15 +38,13 @@ class SignUpView(CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        user.set_password(form.cleaned_data["password1"])
         user.is_active = False
         user.save()
         user.private_data.afpa_number = form.cleaned_data["afpa_number"]
         user.private_data.phone_number = form.cleaned_data["phone_number"]
         user.private_data.save()    
 
-####### Envoie email de confirmation #########
-        
+        # Envoie email de confirmation
         current_site = get_current_site(self.request)
         site_name = current_site.name
         domain = current_site.domain
@@ -85,9 +82,7 @@ class Activate(View):
         if user is not None and account_activation_token.check_token(user, token):
             user.is_active = True
             user.save()
-
             return render(request, 'users/activation.html')
-
         else:
             return render(request, 'users/activation_link_invalid.html',)
 
@@ -95,11 +90,18 @@ class LoginView(FormView):
     form_class  = LoginForm
     template_name = 'carpooling/index.html'
 
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('carpooling:dashboard')
+        else:
+            form = self.form_class() 
+            return render(request, self.template_name, {'form': form})
+
     def form_valid(self, form):
         request = self.request
         next_ = request.GET.get('next')
         redirect_path = next_ or None
-        email = form.cleaned_data.get('email')
+        email = form.cleaned_data['email']
         password = form.cleaned_data.get('password')
         user = authenticate(request, username=email, password=password)
         if user is not None:
@@ -114,13 +116,6 @@ class LoginView(FormView):
                 return redirect('carpooling:dashboard')
         return super(LoginView, self).form_invalid(form)
 
-    def get(self, request, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            return redirect('carpooling:dashboard')
-        else:
-            form = self.form_class() 
-            return render(request, self.template_name, {'form': form})
-
 class LogoutView(LoginRequiredMixin, FormView):
     form_class = LogoutForm
     template_name = 'users/logout.html'
@@ -134,8 +129,7 @@ class ChangePassword(LoginRequiredMixin, TemplateView):
 
     def get(self, request):
         form = PasswordChangeForm(user=request.user)
-        context = {'form': form }
-        return render(request, self.template_name, context)
+        return render(request, self.template_name, {'form': form })
 
     def post(self, request):
         form = PasswordChangeForm(data=request.POST, user=request.user)
@@ -143,9 +137,7 @@ class ChangePassword(LoginRequiredMixin, TemplateView):
             form.save()
             update_session_auth_hash(request, form.user)
             return redirect('carpooling:dashboard')
-        context = {'form': form }
-        return render(request, self.template_name, context)
-
+        return render(request, self.template_name, {'form': form })
 
 class PasswordResetView(BasePasswordResetView):
     email_template_name = 'users/password_reset_email.html'
