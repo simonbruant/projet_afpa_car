@@ -5,7 +5,6 @@ from django.contrib.auth.forms import (ReadOnlyPasswordHashField, PasswordChange
                                         PasswordResetForm as BasePasswordResetForm, 
                                         SetPasswordForm as BaseSetPasswordForm)
 from django.forms import TextInput, PasswordInput
-
 from .models import User, PrivateData
 
 class SignupForm(forms.ModelForm):
@@ -30,7 +29,6 @@ class SignupForm(forms.ModelForm):
                                     error_messages = {'invalid': "Votre ne pseudonyme ne peut contenir que des lettres,"
                                     "nombres ou caractères suivants : ./_/-"},
                                     widget=TextInput(attrs={'class': 'form-control'}) )
-
     phone_number = forms.RegexField(regex=r'^[0+][\d]+$',label="Numéro de téléphone",
                                     min_length=10, max_length=13, 
                                     error_messages={'invalid': 'Numéro de téléphone invalide'}, 
@@ -61,25 +59,59 @@ class SignupForm(forms.ModelForm):
             raise forms.ValidationError("Passwords don't match")
         return password2
 
-    def save(self, commit=True):
-        user = super(SignupForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        # user.is_active = False # send confirmation email via signals
-        if commit:
-            user.save()
-        return user
+    # def send_mail(self, subject_template_name, email_template_name,
+    #             context, from_email, to_email):
+
+    #     print('send_mail1')
+    #     subject = render_to_string(subject_template_name, context)
+    #     subject = ''.join(subject.splitlines())
+    #     body = render_to_string(email_template_name, context)
+
+    #     email_message = EmailMultiAlternatives(subject, body, from_email, [to_email])
+    #     email_message.send()
+    #     print('send_mail2')
+
+    # def save(self, domain_override=None, subject_template_name, email_template_name,
+    #         use_https=False, token_generator, from_email, 
+    #         request):
+
+    #     email = self.cleaned_data["email"]
+    #     if not domain_override:
+    #         current_site = get_current_site(request)
+    #         site_name = current_site.name
+    #         domain = current_site.domain
+    #         print(site_name, domain)
+    #     else:
+    #         site_name = domain = domain_override
+
+    #     context = {
+    #         'email': email,
+    #         'domain': domain,
+    #         'site_name': site_name,
+    #         'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+    #         'token': token_generator.make_token(email),
+    #         'protocol': 'https' if use_https else 'http',
+    #     }
+
+    #     self.send_mail(
+    #         subject_template_name, email_template_name, context, from_email,
+    #         email,
+    #     )
 
 class LoginForm(forms.Form):
     email = forms.EmailField(widget=TextInput(attrs={'class':'form-control mb-3','placeholder': 'Adresse Email'}))
     password = forms.CharField(widget=PasswordInput(attrs={'class':'form-control mb-3','placeholder': 'Mot de Passe'}))
 
     def clean(self):
-        email = self.cleaned_data.get('email')
-        password = self.cleaned_data.get('password')
+        email = self.cleaned_data['email']
+        password = self.cleaned_data['password']
         user = authenticate(username=email, password=password)
-        if not user or not user.is_active:
+        print(user)
+        if not user:
             raise forms.ValidationError("Vos identifiants ne correspondent pas")
-        return self.cleaned_data
+        if not user.is_active:
+            raise forms.ValidationError("Veuillez confirmez votre adresse email")
+        return user
 
 class LogoutForm(forms.Form):
     pass

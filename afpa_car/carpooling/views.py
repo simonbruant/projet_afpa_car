@@ -26,7 +26,7 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
     success_message = "Informations mises à jour"
 
     def get(self, request):
-        user = self.request.user
+        user = request.user
         user_form = UserUpdateForm(instance=user)
         user_profile_form = UserProfileUpdateForm(instance=user.user_profile)
 

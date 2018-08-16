@@ -9,7 +9,7 @@ app_name = 'users'
 urlpatterns = [
 
     path('signup/', SignUpView.as_view(), name='signup'),
-    path('activate/<str:uid>/<str:token>', Activate.as_view(), name='activate'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', Activate.as_view(), name='activate'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('password-reset/', PasswordResetView.as_view(), name='password_reset'),
     path('password-reset/done/', PasswordResetDoneView.as_view(template_name="users/password_reset_done.html"), 

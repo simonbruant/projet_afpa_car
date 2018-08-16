@@ -4,9 +4,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.views import (PasswordResetView as BasePasswordResetView, PasswordResetDoneView, 
                                         PasswordResetConfirmView as BasePasswordResetConfirmView, PasswordResetCompleteView )
-from django.core.mail import EmailMessage                                        
+from django.core.mail import EmailMessage, EmailMultiAlternatives                                        
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import is_safe_url, urlsafe_base64_encode, urlsafe_base64_decode
 from django.urls import reverse, reverse_lazy
@@ -18,35 +19,61 @@ from .tokens import account_activation_token
 
 User = get_user_model()
 
-class SignUpView(TemplateView):
-    template_name = 'users/signup.html'
+class SignUpView(CreateView):
+    template_name = "users/signup.html"
+    form_class = SignupForm
+    subject_template_name = 'users/activation_email_subject.txt'
+    email_template_name = 'users/activation_email.html'
+    from_email = None
+    token_generator = account_activation_token
 
-    def get(self, request):
-        form = SignupForm()
-        return render(request, self.template_name, {'form': form,})
+    def send_mail(self, subject_template_name, email_template_name,
+                context, from_email, to_email):
 
-    def post(self, request):
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
-            user.private_data.afpa_number = form.cleaned_data["afpa_number"]
-            user.private_data.phone_number = form.cleaned_data["phone_number"]
-            user.private_data.save()
+        subject = render_to_string(subject_template_name, context)
+        subject = ''.join(subject.splitlines())
+        body = render_to_string(email_template_name, context)
 
-            mail_subject = 'Activate your account.'
-            current_site = get_current_site(request)
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            token = account_activation_token.make_token(user)
-            activation_link = "{0}/?uid={1}&token{2}".format(current_site, uid, token)
-            message = "Hello {0},\n {1}".format(user.username, activation_link)
-            to_email =  form.cleaned_data["email"]
-            email = EmailMessage(mail_subject, message, to=[to_email])
-            email.send()
-            return render(request, 'users/activation_link_send.html')
+        email_message = EmailMultiAlternatives(subject, body, from_email, [to_email])
+        email_message.send()
 
-        return render(request, self.template_name, {'form': form,})
+    def form_valid(self, form):
+        user = form.save()
+        user.set_password(form.cleaned_data["password1"])
+        user.is_active = False
+        user.save()
+        user.private_data.afpa_number = form.cleaned_data["afpa_number"]
+        user.private_data.phone_number = form.cleaned_data["phone_number"]
+        user.private_data.save()    
+
+####### Envoie email de confirmation #########
+        
+        current_site = get_current_site(self.request)
+        site_name = current_site.name
+        domain = current_site.domain
+        uid = urlsafe_base64_encode(force_bytes(user.pk)).decode()
+        token = self.token_generator.make_token(user)
+        use_https = self.request.is_secure()
+
+        context = {
+            'domain': domain,
+            'site_name': site_name,
+            'uid': uid,
+            'token': token,
+            'protocol': 'https' if use_https else 'http',
+        }
+
+        subject_template = self.subject_template_name
+        email_template = self.email_template_name
+        from_email = self.from_email
+        email = user.email
+
+        self.send_mail(
+            subject_template, email_template, context, from_email,
+            email,
+        )
+
+        return render(self.request, 'users/activation_link_send.html')
 
 class Activate(View):
     def get(self, request, uidb64, token):
@@ -56,28 +83,13 @@ class Activate(View):
         except(TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
         if user is not None and account_activation_token.check_token(user, token):
-            # activate user and login:
             user.is_active = True
             user.save()
-            login(request, user)
 
             return render(request, 'users/activation.html')
 
         else:
-            return render(request, 'users/activation.html',)
-
-# class SignUpView(CreateView):
-#     template_name = "users/signup.html"
-#     success_url = reverse_lazy("carpooling:index")
-#     form_class = SignupForm
-
-#     def form_valid(self, form):
-#         user = form.save()
-#         user.private_data.afpa_number = form.cleaned_data["afpa_number"]
-#         user.private_data.phone_number = form.cleaned_data["phone_number"]
-#         user.private_data.save()
-#         return super().form_valid(form)
-    
+            return render(request, 'users/activation_link_invalid.html',)
 
 class LoginView(FormView):
     form_class  = LoginForm
