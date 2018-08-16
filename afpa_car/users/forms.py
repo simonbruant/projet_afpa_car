@@ -59,45 +59,6 @@ class SignupForm(forms.ModelForm):
             raise forms.ValidationError("Passwords don't match")
         return password2
 
-    # def send_mail(self, subject_template_name, email_template_name,
-    #             context, from_email, to_email):
-
-    #     print('send_mail1')
-    #     subject = render_to_string(subject_template_name, context)
-    #     subject = ''.join(subject.splitlines())
-    #     body = render_to_string(email_template_name, context)
-
-    #     email_message = EmailMultiAlternatives(subject, body, from_email, [to_email])
-    #     email_message.send()
-    #     print('send_mail2')
-
-    # def save(self, domain_override=None, subject_template_name, email_template_name,
-    #         use_https=False, token_generator, from_email, 
-    #         request):
-
-    #     email = self.cleaned_data["email"]
-    #     if not domain_override:
-    #         current_site = get_current_site(request)
-    #         site_name = current_site.name
-    #         domain = current_site.domain
-    #         print(site_name, domain)
-    #     else:
-    #         site_name = domain = domain_override
-
-    #     context = {
-    #         'email': email,
-    #         'domain': domain,
-    #         'site_name': site_name,
-    #         'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-    #         'token': token_generator.make_token(email),
-    #         'protocol': 'https' if use_https else 'http',
-    #     }
-
-    #     self.send_mail(
-    #         subject_template_name, email_template_name, context, from_email,
-    #         email,
-    #     )
-
 class LoginForm(forms.Form):
     email = forms.EmailField(widget=TextInput(attrs={'class':'form-control mb-3','placeholder': 'Adresse Email'}))
     password = forms.CharField(widget=PasswordInput(attrs={'class':'form-control mb-3','placeholder': 'Mot de Passe'}))
@@ -106,7 +67,6 @@ class LoginForm(forms.Form):
         email = self.cleaned_data['email']
         password = self.cleaned_data['password']
         user = authenticate(username=email, password=password)
-        print(user)
         if not user:
             raise forms.ValidationError("Vos identifiants ne correspondent pas")
         if not user.is_active:
