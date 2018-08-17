@@ -24,10 +24,12 @@ class UserAdmin(BaseUserAdmin):
 
     list_display = ('email','username', 'is_active', 'is_admin',  'is_staff', 'date_joined')
     list_filter = ('is_admin', 'is_active', 'is_staff')
+    readonly_fields = ('date_joined', 'confirm', 'confirmation_date')
     fieldsets = (
         (None, {'fields': ('email', 'username', 'password')}),
         ('Personal infos', {'fields': ('first_name', 'last_name',)}),
         ('Permissions', {'fields': ('is_admin', 'is_staff', 'is_active')}),   
+        ('Other infos', {'fields': ('date_joined', 'confirm', 'confirmation_date')}),   
     )
     add_fieldsets = (
         ('Required Fields', {

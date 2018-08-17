@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash, get_user_model
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,9 +10,10 @@ from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
+from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import is_safe_url, urlsafe_base64_encode, urlsafe_base64_decode
-from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import CreateView, FormView, TemplateView
 
@@ -81,6 +84,8 @@ class Activate(View):
             user = None
         if user is not None and account_activation_token.check_token(user, token):
             user.is_active = True
+            user.confirm = True
+            user.confirmation_date = timezone.now()
             user.save()
             return render(request, 'users/activation.html')
         else:

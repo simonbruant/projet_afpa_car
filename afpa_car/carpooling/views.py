@@ -177,7 +177,7 @@ class AddressUpdateView(SuccessMessageMixin, UpdateView):
     def form_valid(self, form):
         address = form.save()
         address_label = form.cleaned_data['address_label']
-        address.address_label = "Adresse" if not address_label else address_label
+        address.address_label = "Adresse" if not address_label else address_label.capitalize()
         address.save()
         return super().form_valid(form)
 

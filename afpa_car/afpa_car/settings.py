@@ -132,7 +132,6 @@ STATICFILES_DIRS = (
 
 LOGIN_URL = '/login/' 
 LOGIN_REDIRECT_URL = '/dashboard/'
-
 LOGIN_EXEMPT_URLS = (
     r'^$',
     r'^signup/$',

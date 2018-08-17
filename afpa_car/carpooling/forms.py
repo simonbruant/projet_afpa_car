@@ -91,7 +91,7 @@ class ProfilImageUpdateForm(forms.ModelForm):
 
     def save(self, commit=False, *args, **kwargs):
         user_profile = super(ProfilImageUpdateForm, self).save(commit=False, *args, **kwargs)
-        if self.cleaned_data.get('remove_profile_image'):
+        if self.cleaned_data['remove_profile_image']:
             user_profile.profile_image = None
             user_profile.save()
         else:

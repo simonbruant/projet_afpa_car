@@ -7,18 +7,18 @@ from .managers import UserManager
 from carpooling.models import AfpaCenter
 
 class User(AbstractBaseUser):
-    email           = models.EmailField(max_length=255, unique=True, verbose_name='email adress')
-    username        = models.CharField(max_length=15, unique=True, verbose_name='pseudo',)
-    first_name      = models.CharField(max_length=30, verbose_name='prénom')
-    last_name       = models.CharField(max_length=50, verbose_name='nom')
+    email             = models.EmailField(max_length=255, unique=True, verbose_name='Adresse Email')
+    username          = models.CharField(max_length=15, unique=True, verbose_name='Pseudo',)
+    first_name        = models.CharField(max_length=30, verbose_name='Prénom')
+    last_name         = models.CharField(max_length=50, verbose_name='Nom')
     
-    is_active       = models.BooleanField(default=True, verbose_name='Utilisateur actif')
-    is_staff        = models.BooleanField(default=False, verbose_name="Staff")
-    is_admin        = models.BooleanField(default=False, verbose_name='Admin')
-    date_joined     = models.DateTimeField(editable=False, default=timezone.now)
+    is_active         = models.BooleanField(default=True, verbose_name='Utilisateur actif')
+    is_staff          = models.BooleanField(default=False, verbose_name="Staff")
+    is_admin          = models.BooleanField(default=False, verbose_name='Admin')
+    date_joined       = models.DateTimeField(editable=False, default=timezone.now)
 
-    # confirm   = models.BooleanField(default=False) #==>email confirmation
-    # confirmed_date = models.DateTimeField(default=False)
+    confirm           = models.BooleanField(default=False)
+    confirmation_date = models.DateTimeField(null=True)
 
     class Meta:
         verbose_name = "Utilisateur"
@@ -52,6 +52,9 @@ class PrivateData(models.Model):
     phone_number    = models.CharField(max_length=20)
     afpa_number     = models.CharField(max_length=20)
 
+    def __str__(self):
+        return "Données Privées de : " + str(self.user) 
+
 class UserProfile(models.Model):
     user            = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
     driver_license  = models.BooleanField(default=False, verbose_name="permis",
@@ -72,6 +75,9 @@ class UserProfile(models.Model):
                                         ('Woman', "Femme"),
                                         ('Man', "Homme"),),)
     afpa_center     = models.ForeignKey(AfpaCenter, null=True, blank=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return "Profile de : " + str(self.user)
 
 
 def create_user_data(sender, instance, created, **kwargs):
