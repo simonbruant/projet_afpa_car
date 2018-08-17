@@ -8,7 +8,7 @@ from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, ProfilImageUp
 from .models import Car, Car_User, Address
 from users.models import PrivateData, User, UserProfile
 
-class DashboardView(LoginRequiredMixin, TemplateView):
+class DashboardView(TemplateView):
     template_name = 'carpooling/dashboard.html'
 
     def get_context_data(self, **kwargs):
@@ -18,10 +18,10 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         
         return context
 
-class CalendarView(LoginRequiredMixin, TemplateView):
+class CalendarView(TemplateView):
     template_name = 'carpooling/calendar.html'
 
-class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
+class UserUpdateView(SuccessMessageMixin, TemplateView):
     template_name = 'carpooling/profil/general_infos.html'
     success_message = "Informations mises à jour"
 
@@ -53,7 +53,7 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
         context['cars'] = Car.objects.filter(users=self.request.user)
         return context
         
-class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class PrivateDataUpdateView(SuccessMessageMixin, UpdateView):
     template_name = 'carpooling/profil/private_infos.html'
     success_url = reverse_lazy('carpooling:private_infos')
     success_message = "Informations mises à jour"
@@ -64,7 +64,7 @@ class PrivateDataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
         return user
         
 
-class ProfilImageUpdateView(LoginRequiredMixin, UpdateView):
+class ProfilImageUpdateView(UpdateView):
     template_name = 'carpooling/profil/photo.html'
     success_url = reverse_lazy('carpooling:photo')
     form_class = ProfilImageUpdateForm
@@ -74,7 +74,7 @@ class ProfilImageUpdateView(LoginRequiredMixin, UpdateView):
         user = UserProfile.objects.get(user=self.request.user)       
         return user
         
-class PreferencesUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class PreferencesUpdateView(SuccessMessageMixin, UpdateView):
     model = UserProfile
     template_name = 'carpooling/profil/preferences.html'
     success_url = reverse_lazy('carpooling:preferences')
@@ -85,7 +85,7 @@ class PreferencesUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
         user_profile = UserProfile.objects.get(user=self.request.user)       
         return user_profile
         
-class CarCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class CarCreateView(SuccessMessageMixin, CreateView):
     template_name = 'carpooling/profil/car.html'
     success_url = reverse_lazy('carpooling:car')
     success_message = "Vehicule crée"
@@ -108,7 +108,7 @@ class CarCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         car_user.save()
         return super(CarCreateView, self).form_valid(form)
 
-class CarUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class CarUpdateView(SuccessMessageMixin, UpdateView):
     model = Car
     template_name = 'carpooling/profil/car.html'
     success_message = "Informations du véhicule mises à jour"
@@ -122,7 +122,7 @@ class CarUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         queryset = queryset.filter(users=self.request.user)
         return queryset
 
-class CarDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class CarDeleteView(SuccessMessageMixin, DeleteView):
     model = Car
     template_name = 'carpooling/profil/car_delete.html'
     success_url = reverse_lazy('carpooling:car')
@@ -140,7 +140,7 @@ class CarDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         return context
 
 
-class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class AddressCreateView(SuccessMessageMixin, CreateView):
     template_name = 'carpooling/profil/address.html'
     success_url = reverse_lazy('carpooling:address')
     success_message = "Adresse crée"
@@ -160,7 +160,7 @@ class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return context
 
 
-class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class AddressUpdateView(SuccessMessageMixin, UpdateView):
     model = Address
     template_name = 'carpooling/profil/address.html'
     success_message = "Informations mises à jour"
@@ -181,7 +181,7 @@ class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         address.save()
         return super().form_valid(form)
 
-class AddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class AddressDeleteView(SuccessMessageMixin, DeleteView):
     model = Address
     template_name = 'carpooling/profil/address_delete.html'
     success_url = reverse_lazy('carpooling:address')

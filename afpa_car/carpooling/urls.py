@@ -1,8 +1,9 @@
 from django.conf import settings
+from django.conf.urls import url
 from django.conf.urls.static import static
-from django.urls import path
-from django.views.generic import TemplateView
-
+from django.urls import path, reverse_lazy
+from django.views.generic import TemplateView, RedirectView
+reverse_lazy
 from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, CalendarView, 
                     CarCreateView, CarUpdateView, CarDeleteView,
                     ProfilImageUpdateView, PreferencesUpdateView,
@@ -14,6 +15,7 @@ app_name = 'carpooling'
 urlpatterns = [ 
     
     path('', LoginView.as_view(), name="index"),
+    path('login/', RedirectView.as_view(url=reverse_lazy('carpooling:index')), name='login'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('calendar/', CalendarView.as_view(), name='calendar'),
     path('cgu/', TemplateView.as_view(template_name='carpooling/cgu.html'), name='cgu'),

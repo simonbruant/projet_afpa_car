@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'afpa_car.middlewares.LoginRequiredMiddleware'
 ]
 
 ROOT_URLCONF = 'afpa_car.urls'
@@ -129,8 +130,22 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-LOGIN_URL = "{% url 'carpooling:index' %}" 
-LOGIN_REDIRECT_URL = '{% url "carpooling:dashboard" %}'
+LOGIN_URL = '/login/' 
+LOGIN_REDIRECT_URL = '/dashboard/'
+
+LOGIN_EXEMPT_URLS = (
+    r'^$',
+    r'^signup/$',
+    r'^password-reset/$',
+    r'^password-reset/done/$',
+    r'^password-reset/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
+    r'^password-reset/complete/$',
+    r'^activate/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
+)
+
+GLOBAL_URLS = (
+    r'^cgu/$',
+)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
