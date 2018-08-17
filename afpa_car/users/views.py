@@ -1,7 +1,8 @@
 import datetime
 
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash, get_user_model
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm, AuthenticationForm
+from django.contrib.auth.views import LoginView as BaseLoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.views import (PasswordResetView as BasePasswordResetView, PasswordResetDoneView, 
@@ -21,6 +22,65 @@ from .forms import LoginForm, SignupForm, LogoutForm, PasswordChangeForm, Passwo
 from .tokens import account_activation_token
 
 User = get_user_model()
+
+class HomeView(TemplateView):
+    template_name = 'users/home.html'
+
+    def get(self, request):
+        context = {
+            'signup_form': SignupForm(),
+            'login_form': LoginForm(),
+        }
+        return render(request, self.template_name, context)
+    
+    def post(self, request):
+        # login_form = LoginForm(request.POST)
+        # signup_form = SignupForm(request.POST)
+        if 'login' in request.POST:
+            print("login")
+            login_form = LoginForm(request.POST)
+            if login_form.is_valid():
+                request = self.request
+                next_ = request.GET.get('next')
+                redirect_path = next_ or None
+                email = login_form.cleaned_data['email']
+                password = login_form.cleaned_data.get('password')
+                user = authenticate(request, username=email, password=password)
+                if user is not None:
+                    login(request, user)
+                    try:
+                        del request.session['guest_email_id']
+                    except:
+                        pass
+                    if is_safe_url(redirect_path, request.get_host()):
+                        return redirect(redirect_path)
+                    else:
+                        return redirect('carpooling:dashboard')
+
+            context = {
+                'login_form': login_form,
+                'signup_form': SignupForm(),
+            }
+
+        elif 'signup' in request.POST:
+            print("signup")
+            signup_form = SignupForm(request.POST)
+            if signup_form.is_valid():
+                user = signup_form.save()
+                user.is_active = False
+                user.save()
+                user.private_data.afpa_number = signup_form.cleaned_data["afpa_number"]
+                user.private_data.phone_number = signup_form.cleaned_data["phone_number"]
+                user.private_data.save()
+                print(user)
+
+                return render(self.request, 'users/activation_link_send.html')
+            context = {
+                'login_form': LoginForm(),
+                'signup_form': signup_form,
+            }
+            
+        return render(request, self.template_name, context)
 
 class SignUpView(CreateView):
     template_name = "users/signup.html"
@@ -75,7 +135,7 @@ class SignUpView(CreateView):
 
         return render(self.request, 'users/activation_link_send.html')
 
-class Activate(View):
+class ActivateView(View):
     def get(self, request, uidb64, token):
         try:
             uid = force_text(urlsafe_base64_decode(uidb64))
@@ -95,13 +155,6 @@ class LoginView(FormView):
     form_class  = LoginForm
     template_name = 'carpooling/index.html'
 
-    def get(self, request, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            return redirect('carpooling:dashboard')
-        else:
-            form = self.form_class() 
-            return render(request, self.template_name, {'form': form})
-
     def form_valid(self, form):
         request = self.request
         next_ = request.GET.get('next')
@@ -120,6 +173,7 @@ class LoginView(FormView):
             else:
                 return redirect('carpooling:dashboard')
         return super(LoginView, self).form_invalid(form)
+
 
 class LogoutView(LoginRequiredMixin, FormView):
     form_class = LogoutForm

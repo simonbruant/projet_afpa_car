@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import (ReadOnlyPasswordHashField, PasswordChangeForm as BasePasswordChangeForm, 
                                         PasswordResetForm as BasePasswordResetForm, 
                                         SetPasswordForm as BaseSetPasswordForm)
-from django.forms import TextInput, PasswordInput
+from django.forms import TextInput, PasswordInput, EmailInput
 from .models import User, PrivateData
 
 class SignupForm(forms.ModelForm):
@@ -12,9 +12,9 @@ class SignupForm(forms.ModelForm):
         model = User
         fields = ('email', 'username', 'first_name', 'last_name')
         widgets = {
-            'email': TextInput(attrs={'class': 'form-control'}),
-            'first_name': TextInput(attrs={'class': 'form-control'}),
-            'last_name': TextInput(attrs={'class': 'form-control'}),
+            'email': EmailInput(attrs={'class': 'form-control', 'placeholder': 'Adresse Email'}),
+            'first_name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Prénom'}),
+            'last_name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom'}),
         }
         labels = {
             'email': "Adresse Email",
@@ -22,21 +22,21 @@ class SignupForm(forms.ModelForm):
             'last_name': "Nom de famille",
         }
 
-    password1   = forms.CharField(label="Mot de Passe",  widget=PasswordInput(attrs={'class': 'form-control'}))
-    password2   = forms.CharField(label='Confirmation Mot de Passe', widget=PasswordInput(attrs={'class': 'form-control'}))
+    password1   = forms.CharField(label="Mot de Passe",  widget=PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Mot de Passs'}))
+    password2   = forms.CharField(label='Confirmation Mot de Passe', widget=PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirmation Mot de Passe'}))
     username    = forms.RegexField(regex=r'^[\w._-]+$', label='Pseudonyme',
                                     min_length=3,
                                     error_messages = {'invalid': "Votre ne pseudonyme ne peut contenir que des lettres,"
                                     "nombres ou caractères suivants : ./_/-"},
-                                    widget=TextInput(attrs={'class': 'form-control'}) )
+                                    widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Pseudonyme'}) )
     phone_number = forms.RegexField(regex=r'^[0+][\d]+$',label="Numéro de téléphone",
                                     min_length=10, max_length=13, 
                                     error_messages={'invalid': 'Numéro de téléphone invalide'}, 
-                                    widget=TextInput(attrs={'class': 'form-control'}))
+                                    widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Numéro de Téléphone'}))
     afpa_number = forms.RegexField(regex=r'^\d+$', label="Identifiant Afpa",
                                     min_length=8, max_length=8,
                                     error_messages={'invalid': 'Le numéro AFPA est composé uniquement de nombres'}, 
-                                    widget=TextInput(attrs={'class': 'form-control'}))
+                                    widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Identifiant AFPA'}))
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
@@ -67,17 +67,18 @@ class SignupForm(forms.ModelForm):
         return user
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(widget=TextInput(attrs={'class':'form-control mb-3','placeholder': 'Adresse Email'}))
+    email = forms.EmailField(widget=EmailInput(attrs={'class':'form-control mb-3','placeholder': 'Adresse Email'}))
     password = forms.CharField(widget=PasswordInput(attrs={'class':'form-control mb-3','placeholder': 'Mot de Passe'}))
 
     def clean(self):
         email = self.cleaned_data['email']
         password = self.cleaned_data['password']
-        user = authenticate(username=email, password=password)
-        if not user:
-            raise forms.ValidationError("Vos identifiants ne correspondent pas")
-        elif not user.is_active:
-            raise forms.ValidationError("Veuillez confirmez votre adresse email")
+        if email is not None and password:
+            self.user = authenticate(username=email, password=password)
+            if not self.user:
+                raise forms.ValidationError("Vos identifiants ne correspondent pas")
+            elif not self.user.is_active:
+                raise forms.ValidationError("Veuillez confirmez votre adresse email")
         return self.cleaned_data
 
 class LogoutForm(forms.Form):

@@ -2,14 +2,14 @@ from django.urls import path
 from django.conf.urls import url
 from django.contrib.auth.views import PasswordResetDoneView, PasswordResetCompleteView
 
-from .views import PasswordResetView, PasswordResetConfirmView, LogoutView, SignUpView, Activate
+from .views import PasswordResetView, PasswordResetConfirmView, LogoutView, SignUpView, ActivateView, HomeView
 
 app_name = 'users'                            
 
 urlpatterns = [
 
     path('signup/', SignUpView.as_view(), name='signup'),
-    url(r'^activate/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', Activate.as_view(), name='activate'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', ActivateView.as_view(), name='activate'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('password-reset/', PasswordResetView.as_view(), name='password_reset'),
     path('password-reset/done/', PasswordResetDoneView.as_view(template_name="users/password_reset_done.html"), 
@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^password-reset/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', PasswordResetConfirmView.as_view(), 
                                                                         name='password_reset_confirm'),
     path('password-reset/complete/', PasswordResetCompleteView.as_view(template_name="users/password_reset_complete.html"), name='password_reset_complete'),
+    path('home/', HomeView.as_view(), name='home')
 ]

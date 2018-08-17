@@ -1,0 +1,91 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block css %} "{% static 'carpooling/css/index.css' %}" {% endblock css %}
+
+{% block section %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'carpooling/css/index.css' %}" />
+</head>
+
+<body class="container">
+    <div class="row">
+        <div class="col-md-12" id="background_accueil">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="card1" class="card text-center" style="max-width: 18rem;">
+                <div id="header_card1" class="card-header">Pas encore de compte ?</div>
+                <div class="card-body">
+                    <h5 id="sous_titre_card1" class="card-title">S'inscrire</h5>
+                    <form method='POST'> {% csrf_token %}
+                    <div class="mb-3">
+                        {{ signup_form.first_name }} 
+                    </div>
+                    <div class="mb-3">
+                        {{ signup_form.last_name }} 
+                    </div>
+                    <div class="mb-3">
+                        {{ signup_form.email }} 
+                    </div>
+                    <div class="mb-3">
+                        {{ signup_form.username }} 
+                    </div>
+                    <div class="mb-3">
+                        {{ signup_form.phone_number }} 
+                    </div>
+                    <div class="mb-3">
+                        {{ signup_form.afpa_number }} 
+                    </div>
+                    <div class="mb-3">
+                        {{ signup_form.password1 }} 
+                    </div>
+                    <div class="mb-3">
+                        {{ signup_form.password2 }} 
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2 mb-2" name="signup">S'inscrire</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div id="card2" class="card text-center" style="max-width: 18rem;">
+                <div id="header_card2" class="card-header">Déjà un compte ?</div>
+                <div class="card-body">
+                    <h5 class="card-title">Se connecter</h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div>
+                            {{ login_form.email }} 
+                        </div>
+                        <div>
+                            {{ login_form.password }} 
+                        </div>
+                        {% if login_form.non_field_errors %}
+                        <div id="error_login">
+                            {% for error in login_form.non_field_errors %}
+                            {{ error }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <button type="submit" class="btn btn-success mt-2 mb-2" name="login">Connexion</button>
+                    </form>
+                    <a id="reset-password" href="{% url 'users:password_reset' %}"> Mot de passe oublié ?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" id="espace_vide_accueil"></div>
+    </div>  
+</div>
+</div>
+</div>
+</body>  
+
+
+
+{% endblock %}

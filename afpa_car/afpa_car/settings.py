@@ -140,6 +140,7 @@ LOGIN_EXEMPT_URLS = (
     r'^password-reset/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
     r'^password-reset/complete/$',
     r'^activate/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
+    r'^home/$',
 )
 
 GLOBAL_URLS = (
