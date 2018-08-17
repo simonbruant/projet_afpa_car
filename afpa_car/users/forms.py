@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import (ReadOnlyPasswordHashField, PasswordChangeForm as BasePasswordChangeForm, 
                                         PasswordResetForm as BasePasswordResetForm, 
                                         SetPasswordForm as BaseSetPasswordForm)
-from django.forms import TextInput, PasswordInput
+from django.forms import TextInput, PasswordInput, EmailInput
 from .models import User, PrivateData
 
 class SignupForm(forms.ModelForm):
@@ -42,21 +42,21 @@ class SignupForm(forms.ModelForm):
         email = self.cleaned_data['email'].lower()
         user = User.objects.filter(email=email)
         if user.count():
-            raise ValidationError("Email already exists")
+            raise ValidationError("Cette adresse email est déjà utilisée sur le site")
         return email
 
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
         user = User.objects.filter(username=username)
         if user.count():
-            raise ValidationError("Username already exists")
+            raise ValidationError("Pseudonyme existant")
         return username
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords don't match")
+            raise forms.ValidationError("Les deux mots de passe ne correspondent pas")
         return password2
 
     def save(self, commit=True):
@@ -67,18 +67,26 @@ class SignupForm(forms.ModelForm):
         return user
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(widget=TextInput(attrs={'class':'form-control mb-3','placeholder': 'Adresse Email'}))
+    email = forms.EmailField(widget=EmailInput(attrs={'class':'form-control mb-3','placeholder': 'Adresse Email'}))
     password = forms.CharField(widget=PasswordInput(attrs={'class':'form-control mb-3','placeholder': 'Mot de Passe'}))
+
+    def __init__(self, request, *args, **kwargs):
+        # simply do not pass 'request' to the parent
+        super().__init__(*args, **kwargs)
 
     def clean(self):
         email = self.cleaned_data['email']
         password = self.cleaned_data['password']
-        user = authenticate(username=email, password=password)
-        if not user:
-            raise forms.ValidationError("Vos identifiants ne correspondent pas")
-        elif not user.is_active:
-            raise forms.ValidationError("Veuillez confirmez votre adresse email")
+        if email is not None and password:
+            self.user = authenticate(username=email, password=password)
+            if not self.user:
+                raise forms.ValidationError("Vos identifiants ne correspondent pas")
+            elif not self.user.is_active:
+                raise forms.ValidationError("Veuillez confirmez votre adresse email")
         return self.cleaned_data
+
+    def get_user(self):
+        return self.user
 
 class LogoutForm(forms.Form):
     pass

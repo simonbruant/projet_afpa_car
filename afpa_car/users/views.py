@@ -2,6 +2,7 @@ import datetime
 
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash, get_user_model
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.views import LoginView as BaseLoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.views import (PasswordResetView as BasePasswordResetView, PasswordResetDoneView, 
@@ -91,35 +92,9 @@ class Activate(View):
         else:
             return render(request, 'users/activation_link_invalid.html',)
 
-class LoginView(FormView):
-    form_class  = LoginForm
+class LoginView(BaseLoginView):
+    form_class = LoginForm
     template_name = 'carpooling/index.html'
-
-    def get(self, request, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            return redirect('carpooling:dashboard')
-        else:
-            form = self.form_class() 
-            return render(request, self.template_name, {'form': form})
-
-    def form_valid(self, form):
-        request = self.request
-        next_ = request.GET.get('next')
-        redirect_path = next_ or None
-        email = form.cleaned_data['email']
-        password = form.cleaned_data.get('password')
-        user = authenticate(request, username=email, password=password)
-        if user is not None:
-            login(request, user)
-            try:
-                del request.session['guest_email_id']
-            except:
-                pass
-            if is_safe_url(redirect_path, request.get_host()):
-                return redirect(redirect_path)
-            else:
-                return redirect('carpooling:dashboard')
-        return super(LoginView, self).form_invalid(form)
 
 class LogoutView(LoginRequiredMixin, FormView):
     form_class = LogoutForm
