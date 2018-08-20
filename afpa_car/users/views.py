@@ -23,8 +23,14 @@ from .tokens import account_activation_token
 
 User = get_user_model()
 
-class HomeView(TemplateView):
+class HomeView(View):
     template_name = 'users/home.html'
+    subject_template_name = 'users/activation_email_subject.txt'
+    email_template_name = 'users/activation_email.html'
+    from_email = None
+    extra_email_context = None
+    token_generator = account_activation_token
+
 
     def get(self, request):
         context = {
@@ -33,9 +39,8 @@ class HomeView(TemplateView):
         }
         return render(request, self.template_name, context)
     
+    
     def post(self, request):
-        # login_form = LoginForm(request.POST)
-        # signup_form = SignupForm(request.POST)
         if 'login' in request.POST:
             print("login")
             login_form = LoginForm(request.POST)
@@ -64,6 +69,7 @@ class HomeView(TemplateView):
 
         elif 'signup' in request.POST:
             print("signup")
+
             signup_form = SignupForm(request.POST)
             if signup_form.is_valid():
                 user = signup_form.save()
@@ -74,13 +80,46 @@ class HomeView(TemplateView):
                 user.private_data.save()
                 print(user)
 
+                current_site = get_current_site(self.request)
+                site_name = current_site.name
+                domain = current_site.domain
+                uid = urlsafe_base64_encode(force_bytes(user.pk)).decode()
+                token = self.token_generator.make_token(user)
+                use_https = request.is_secure()
+
+                email_context = {
+                    'domain': domain,
+                    'site_name': site_name,
+                    'uid': uid,
+                    'token': token,
+                    'protocol': 'https' if use_https else 'http',
+                }
+
+                subject_template = self.subject_template_name
+                email_template = self.email_template_name
+                from_email = self.from_email
+                email = user.email
+
+                self.send_mail(
+                    subject_template, email_template, email_context, from_email,
+                    email,
+                )
                 return render(self.request, 'users/activation_link_send.html')
+
             context = {
                 'login_form': LoginForm(),
                 'signup_form': signup_form,
-            }
-            
+            } 
         return render(request, self.template_name, context)
+
+    def send_mail(self, subject_template_name, email_template_name,
+                context, from_email, to_email):
+        subject = render_to_string(subject_template_name, context)
+        subject = ''.join(subject.splitlines())
+        body = render_to_string(email_template_name, context)
+
+        email_message = EmailMultiAlternatives(subject, body, from_email, [to_email])
+        email_message.send()
 
 class SignUpView(CreateView):
     template_name = "users/signup.html"
@@ -142,6 +181,8 @@ class ActivateView(View):
             user = User.objects.get(pk=uid)
         except(TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
+        print('user pk:', user.pk, user)
+        print('token: ', account_activation_token.check_token(user, token))
         if user is not None and account_activation_token.check_token(user, token):
             user.is_active = True
             user.confirm = True
