@@ -29,8 +29,9 @@ class UserUpdateView(SuccessMessageMixin, TemplateView):
         user = request.user
         user_form = UserUpdateForm(instance=user)
         user_profile_form = UserProfileUpdateForm(instance=user.user_profile)
-
+        
         context = {'user_form': user_form, 'user_profile_form': user_profile_form,}
+        context['cars'] = Car.objects.filter(users=self.request.user)
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -47,12 +48,6 @@ class UserUpdateView(SuccessMessageMixin, TemplateView):
         context = {'user_form': user_form, 'user_profile_form': user_profile_form,}
         return render(request, self.template_name, context)
 
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['cars'] = Car.objects.filter(users=self.request.user)
-        return context
-        
 class PrivateDataUpdateView(SuccessMessageMixin, UpdateView):
     template_name = 'carpooling/profil/private_infos.html'
     success_url = reverse_lazy('carpooling:private_infos')
