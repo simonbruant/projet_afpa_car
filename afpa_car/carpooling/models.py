@@ -65,3 +65,81 @@ class AfpaCenter(models.Model):
     def __str__(self):
         return self.center_name
 
+class DefaultTrip(models.Model):
+    DAY = (
+        ('Monday', 'Lundi'),
+        ('Tuesday', 'Mardi'),
+        ('Wednesday', 'Mercredi'),
+        ('Thursday', 'Jeudi'),
+        ('Friday', 'Vendredi'),
+    )
+    morning_departure_time          = models.DateTimeField(verbose_name="Heure de départ aller")
+    morning_arriving_time           = models.DateTimeField(verbose_name="Heure d'arrivée aller")
+    evening_departure_time          = models.DateTimeField(verbose_name="Heure de départ retour")
+    evening_estimated_arriving_time = models.DateTimeField(verbose_name="Heure d'arrivée estimée retour")
+    estimated_trip_cost             = models.IntegerField(editable=False, default=0, verbose_name="Coût du trajet estimé")
+    day                 = models.CharField(max_length=10, choices=DAY, verbose_name="Nom du Jour")
+
+    user                = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Utilisateur")
+    has_for_start       = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="Départ", verbose_name="Adresse de Départ")
+    has_for_destination = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="Destination", verbose_name="Adresse d'Arrivée")
+
+    class Meta:
+        verbose_name = "Trajet Type"
+        verbose_name_plural = "Trajets Type"
+
+    def __str__(self): 
+        return "Trajet par défaut"
+
+class Trip(DefaultTrip):
+
+    trip_date = models.DateField(null=True, verbose_name="Jour du trajet")
+
+    passenger = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='passengers', verbose_name="Passager", through= "Trip_Passenger")
+
+
+    class Meta:
+        verbose_name = "Trajet Particulier"
+        verbose_name_plural = "Trajets Particuliers"
+
+class Trip_Passenger(models.Model):
+    validated_proposal = models.BooleanField(default=False, verbose_name='Proposition validée')
+
+    trip    = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name="Trajet")
+    passenger    = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Passager")
+
+    def __str__(self): 
+        return ""
+
+class MeetingPoint(models.Model):
+    public_or_private = models.BooleanField(default=False, verbose_name="Public ou privé",
+                                        choices=( (True, "Public"), (False, 'Private')))
+
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Adresse")
+
+    class Meta:
+        verbose_name = "Point de rencontre"
+        verbose_name_plural = "Points de rencontre"
+
+    def __str__(self): 
+        return ""
+
+class VisibleBy(models.Model):
+    user          = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Utilisateur")
+    meeting_point = models.ForeignKey(MeetingPoint, on_delete=models.CASCADE, verbose_name="Point de rencontre")
+
+class Proposal(models.Model):
+    proposal_date      = models.DateTimeField(null=True, verbose_name="Date de la proposition")
+    is_validated       = models.BooleanField(default=False, verbose_name="Proposition validée")
+    meeting_point_name = models.CharField(max_length=50, verbose_name="Nom du point de rencontre")
+
+    user          = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Utilisateur")
+    meeting_point = models.ForeignKey(MeetingPoint, on_delete=models.CASCADE, verbose_name="Point de rencontre")
+
+    class Meta:
+        verbose_name = "Proposition"
+        verbose_name_plural = "Propositions"
+
+class IsAStep(models.Model):
+    trip          = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name="Trajet")
+    meeting_point = models.ForeignKey(MeetingPoint, on_delete=models.CASCADE, verbose_name="Point de rencontre")
