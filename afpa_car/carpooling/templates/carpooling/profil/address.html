@@ -10,36 +10,31 @@
 
 {% block contenuProfil %}
 
-{% comment %} {% if address_user_context|length == 0 %}
-<p>Vos adresses enregistrées s'afficheront ici.</p>
-{% endif %}
-{% endcomment %}
-{% comment %} TODO : .capitalize() premiere lettre du LABEL dans la card {% endcomment %}
-
 <div class="row">
-    {% for address_user in address_user_context %}
+    {% for address in addresses %}
     <div class='col-md-4 mb-3'>
 
         <div id="card_address_content" class="card col-md-12">
 
             <div class=row>
                 <div id="address_label" class="card-header bg-default col-md-12">
-                    {{ address_user.address_label_private }} 
+                    {{ address.address_label }} 
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 mt-3">
-                    <div>{{ address_user.address.street_number }} {{ address_user.address.street_name }}</div>
-                    <div>{{ address_user.address.zip_code }}, {{ address_user.address.city }}</div>
+                    <div>{% if address.street_number %}{{ address.street_number }},{% endif %} {{ address.street_name }}</div>
+                    <div>{{ address.zip_code }}, {{ address.city }}</div>
                 </div>
                 <div class="col-md-5 mt-3 mb-4">
-                    <a href="{% url 'carpooling:address_update' address_user.address.id %}" id="btn_card_footer">Modifier</a>
+                    
+                    <a href="{% url 'carpooling:address_update' address.id %}" id="btn_card_footer">Modifier</a>
                 </div>
                 <div class="col-md-1 mt-3">
                     <div>|</div>
                 </div>
                 <div class="col-md-5 mt-3">
-                    <a href="{% url 'carpooling:address_delete' address_user.address.id %}" id="btn_card_footer">Supprimer</a>
+                <a href="{% url 'carpooling:address_delete' address.id %}" id="btn_card_footer">Supprimer</a>
                 </div>
             </div>
 
@@ -48,58 +43,56 @@
     {% endfor %}
 </div>
 
-
 <div class="row">
 
 <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
 
+<div id="message_update" class="col-md-12">
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+
 </div>
+
+</div>
+
 <div class="row">
     <div class="col-md-2"></div>
 
-    <form class="col-md-8" action="" method="POST">
+    <form class="col-md-8"method="POST">
         {% csrf_token %}
-
+        
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Libellé de l'adresse</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.address_label.label }}</div>
             </div>
             {{ form.address_label }}
+        </div>
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">{{ form.zip_code.label }}</div>
+            </div>
+            {{ form.zip_code }}
+        </div>
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <div id="header_input_profil" class="input-group-text">{{ form.city.label }}</div>
+            </div>
+            {{ form.city }}
         </div>
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Numéro de la rue</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.street_number.label }}</div>
             </div>
             {{ form.street_number }} 
         </div>
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Nom de la rue</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.street_name.label }}</div>
             </div>
             {{ form.street_name }} 
-        </div>
-
-        <div class="input-group mb-3 mt-3">
-            <div class="input-group-prepend">
-                    <div id="header_input_profil" class="input-group-text">Complément d'adresse</div>
-            </div>
-            {{ form.street_complement }} 
-        </div>
-
-        <div class="input-group mb-3 mt-3">
-            <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Code Postal</div>
-            </div>
-            {{ form.zip_code }} 
-        </div>
-
-        <div class="input-group mb-3 mt-3">
-            <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">Ville</div>
-            </div>
-            {{ form.city }} 
         </div>
 
         <div id="submit_profil">
@@ -112,6 +105,10 @@
         <br />
     </form>
 
+</div>
+
+<div class='row'>
+    <div class='col-md-3 require-input-legend'><p id='text_legend'>Champ obligatoire</p> </div>
 </div>
 
 {% endblock contenuProfil %}

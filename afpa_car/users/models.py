@@ -1,37 +1,24 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
+from django.db.models.signals import post_save
 from django.utils import timezone
 
 from .managers import UserManager
 from carpooling.models import AfpaCenter
 
-class User(AbstractBaseUser, PermissionsMixin):
-    email           = models.EmailField(max_length=255, unique=True, verbose_name='email adress')
-    username        = models.CharField(max_length=15, unique=True, verbose_name='pseudo',)
-    first_name      = models.CharField(max_length=30, verbose_name='prénom')
-    last_name       = models.CharField(max_length=50, verbose_name='nom')
-    driver_license  = models.BooleanField(default=False, verbose_name="permis",
-                                        choices=( (True, "Oui"), (False, "Non")) )
-    trainee         = models.BooleanField(default=False, verbose_name="statut",
-                                        choices=( (True, "Stagiare"),(False, "Employé") ))
-    car_owner       = models.BooleanField(default=False, verbose_name="propriétaire d'un véhicule",
-                                        choices=( (True, "Oui"), (False, "Non")) )
-    avatar          = models.ImageField(null=True, blank=True, upload_to='avatars/')
-    smoker          = models.BooleanField(default=False, verbose_name="Fumeur",
-                                        choices=( (True, "Fumeur"), (False, 'Non Fumeur')))
-    talker          = models.BooleanField(default=False, verbose_name="Bavard",
-                                        choices=( (True, "Tres Bavard"), (False, 'Peu Bavard')))
-    music          = models.BooleanField(default=False, verbose_name="Musique",
-                                        choices=( (True, "Oui"), (False, 'Non')))
+class User(AbstractBaseUser):
+    email             = models.EmailField(max_length=255, unique=True, verbose_name='Adresse Email')
+    username          = models.CharField(max_length=15, unique=True, verbose_name='Pseudo',)
+    first_name        = models.CharField(max_length=30, verbose_name='Prénom')
+    last_name         = models.CharField(max_length=50, verbose_name='Nom')
+    
+    is_active         = models.BooleanField(default=True, verbose_name='Utilisateur actif')
+    is_staff          = models.BooleanField(default=False, verbose_name="Staff")
+    is_admin          = models.BooleanField(default=False, verbose_name='Admin')
+    date_joined       = models.DateTimeField(editable=False, default=timezone.now)
 
-    is_active       = models.BooleanField(default=True, verbose_name='Utilisateur actif')
-    is_staff        = models.BooleanField(default=False, verbose_name="Staff")
-    is_admin        = models.BooleanField(default=False, verbose_name='Admin')
-    date_joined     = models.DateTimeField(editable=False, default=timezone.now)
-
-    afpa_center     = models.ForeignKey(AfpaCenter, null=True, blank=True, on_delete=models.SET_NULL)
-    # confirm   = models.BooleanField(default=False)
-    # confirmed_date = models.DateTimeField(default=False)
+    confirm           = models.BooleanField(default=False)
+    confirmation_date = models.DateTimeField(null=True)
 
     class Meta:
         verbose_name = "Utilisateur"
@@ -61,6 +48,41 @@ class User(AbstractBaseUser, PermissionsMixin):
         return True
 
 class PrivateData(models.Model):
-    user            = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number    = models.CharField(max_length=15, null=True, default="0")
-    afpa_number     = models.CharField(max_length=15, null=True, default="0")
+    user            = models.OneToOneField(User, on_delete=models.CASCADE, related_name='private_data')
+    phone_number    = models.CharField(max_length=20)
+    afpa_number     = models.CharField(max_length=20)
+
+    def __str__(self):
+        return "Données Privées de : " + str(self.user) 
+
+class UserProfile(models.Model):
+    user            = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
+    driver_license  = models.BooleanField(default=False, verbose_name="permis",
+                                        choices=( (True, "Oui"), (False, "Non")) )
+    trainee         = models.BooleanField(default=False, verbose_name="statut",
+                                        choices=( (True, "Stagiare"),(False, "Employé") ))
+    car_owner       = models.BooleanField(default=False, verbose_name="Propriétaire d'un Véhicule",
+                                        choices=( (True, "Oui"), (False, "Non")) )
+    profile_image   = models.ImageField(null=True, blank=True, upload_to='avatars/')
+    smoker          = models.BooleanField(default=False, verbose_name="Fumeur",
+                                        choices=( (True, "Fumeur"), (False, 'Non Fumeur')))
+    talker          = models.BooleanField(default=False, verbose_name="Bavard",
+                                        choices=( (True, "Bavard"), (False, 'Peu Bavard')))
+    music           = models.BooleanField(default=False, verbose_name="Musique",
+                                        choices=( (True, "Oui"), (False, 'Non')))
+    gender          = models.CharField(max_length=50, default='None',choices=(
+                                        ('None', "Non communiqué"),
+                                        ('Woman', "Femme"),
+                                        ('Man', "Homme"),),)
+    afpa_center     = models.ForeignKey(AfpaCenter, null=True, blank=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return "Profile de : " + str(self.user)
+
+
+def create_user_data(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+        PrivateData.objects.create(user=instance)
+
+post_save.connect(create_user_data, sender=User)

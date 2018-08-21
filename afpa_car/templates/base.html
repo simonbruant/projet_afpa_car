@@ -33,7 +33,7 @@
             <a href="{% url 'carpooling:index' %}"><img id="logo_afpa" src="{% static 'img/logo_afpa.jpg' %}" alt="AFPA"></a>
         </div>
         <div class="col-md-6">
-            <div id="titre_base">AFPACAR - Le carpooling de l'Afpa</div>
+            <div id="titre_base">AFPACAR - Le Covoiturage de l'AFPA</div>
         </div>
     </header>
 
@@ -41,17 +41,17 @@
         {% if user.is_authenticated %}
         <navbar class="row">
             <nav id="navbar" class="site-header sticky-top py-1 col-md-12">
-                    <div class="container d-flex flex-column flex-md-row justify-content-between">
-                        <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:dashboard'%}">Tableau de bord</a>
-                        <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:profil' %}">Profil</a>
-                        <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:calendar' %}">Semaine Type / Calendrier</a>
-                        <a class="py-2 d-none d-md-inline-block" href="#">Messagerie</a>
-                        <a class="py-2 d-none d-md-inline-block" href="#">Rechercher un trajet</a>
-                        <a class="py-2 d-none d-md-inline-block" href="#">Afpa</a>
-                        <a href="{% url 'carpooling:logout' %}" class="btn fas fa-sign-out-alt" id="logout" title="Déconnexion"></a>
-                    </nav>
+                <div id="filtre_url_navbar" class="container d-flex flex-column flex-md-row justify-content-between">
+                    <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:dashboard'%}">Tableau de bord</a>
+                    <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:general_infos' %}">Profil</a>
+                    <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:calendar' %}">Semaine Type / Calendrier</a>
+                    <a class="py-2 d-none d-md-inline-block" href="#">Messagerie</a>
+                    <a class="py-2 d-none d-md-inline-block" href="#">Rechercher un trajet</a>
+                    <a class="py-2 d-none d-md-inline-block" href="https://www.afpa.fr">Afpa</a>
+                    <a href="{% url 'users:logout' %}" class="btn fas fa-sign-out-alt" id="logout" title="Déconnexion"></a>
                 </div>
-            </navbar>
+            </nav>
+        </navbar>
         {% else %}
         <div class="row">
                 <div class="col-md-12" id="bandeau_footer"></div>
@@ -83,11 +83,15 @@
         <hr class="hr_down">
 
         <div id="liens_footer" class="col-md-12">
-            <a>CGU</a>
+            <a href="{% url 'carpooling:cgu' %}">CGU</a>
             <span id="border_test"></span>
-            <a>Mentions Legales</a>
+            <a href="{% url 'carpooling:cgu' %}#mentionsLegales">Mentions Légales</a>
             <span id="border_test"></span>
             <a>Plan du site</a>
+            {% if user.is_admin %}
+            <span id="border_test"></span>
+            <a href="{% url 'admin:index' %}">Administration</a>
+            {% endif %}
         </div>
     </footer>
 
@@ -96,7 +100,21 @@
     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+
+    <script>
+        $(document).ready(function() {
+
+
+            $("#filtre_url_navbar a").each(function( index ) {
+                if ( this.href == document.location.href)
+                {
+                    $(this).css('color', '#FFF');
+                }
+            })
+        });
+
+    </script>
 
 </body>
 

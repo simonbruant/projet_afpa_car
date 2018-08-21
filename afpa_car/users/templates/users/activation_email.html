@@ -1,0 +1,10 @@
+{% autoescape off %}
+Vous vous êtes récemment inscrit sur {{ site_name }}, merci de confirmer votre adresse email en cliquant sur le lien ci-dessous.
+
+{{ protocol }}://{{ domain }}{% url 'users:activate' uidb64=uid token=token %}
+
+Merci d'utiliser notre site.
+
+The {{ site_name }} team
+
+{% endautoescape %}

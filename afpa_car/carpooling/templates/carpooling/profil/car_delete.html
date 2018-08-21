@@ -2,7 +2,7 @@
 
 {% block contenuProfil %}
 
-<form action="" method="post">{% csrf_token %}
+<form method="post">{% csrf_token %}
     <hr/>
     
     <h4 class="mb-5">Êtes-vous sur de vouloir supprimer le véhicule &laquo; {{ car.model }} &raquo; ?</h4>
@@ -20,7 +20,7 @@
                     <div>{{ car.color }}</div>
                     <div>{{ car.amount_of_free_seats }}  places passager</div>
                     <div>{{ car.fuel }}</div>
-                    <div>{{ car.consumption }}</div>
+                    <div>{% if car.consumption %}{{ car.consumption }}{% else %}&nbsp;{% endif %}</div>
                 </div>
             </div>
             </div>
@@ -31,7 +31,7 @@
 </form>
 
 
-<div align="left"><a  class="btn btn-success btn-sm mt-4" href="{% url 'carpooling:car' %}">Retour à la page Vehicule </a></div>
+<div align="left"><a  class="btn btn-success btn-sm mt-4" href="{% url 'carpooling:car' %}">Retour à la page Véhicules </a></div>
 <hr/>
 {% endblock %}
 

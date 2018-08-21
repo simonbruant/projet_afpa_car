@@ -1,29 +1,29 @@
 from django.conf import settings
+from django.conf.urls import url
 from django.conf.urls.static import static
-from django.urls import path
-from django.views.generic import TemplateView
-
+from django.urls import path, reverse_lazy
+from django.views.generic import TemplateView, RedirectView
+reverse_lazy
 from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, CalendarView, 
-                    CarCreateView, CarUpdateView, CarDeleteView, ProfilRedirectview, 
-                    ProfilImageUpdateView, PreferencesUpdateView, 
+                    CarCreateView, CarUpdateView, CarDeleteView,
+                    ProfilImageUpdateView, PreferencesUpdateView,
                     AddressCreateView, AddressUpdateView, AddressDeleteView )
-from users.views import LoginView, LogoutView, signup_view, change_password
+from users.views import LoginView, ChangePassword
 
 app_name = 'carpooling'
 
-urlpatterns = [
+urlpatterns = [ 
     
     path('', LoginView.as_view(), name="index"),
-    path('signup/', signup_view, name='signup'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('login/', RedirectView.as_view(url=reverse_lazy('carpooling:index')), name='login'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('calendar/', CalendarView.as_view(), name='calendar'),
+    path('cgu/', TemplateView.as_view(template_name='carpooling/cgu.html'), name='cgu'),
 
-    path('profil/', ProfilRedirectview.as_view(), name='profil'),
     path('profil/infos-generales/', UserUpdateView.as_view(), name='general_infos'),
     path('profil/infos-privees/', PrivateDataUpdateView.as_view(), name='private_infos'),
     path('profil/photo/', ProfilImageUpdateView.as_view(), name='photo'),
-    path('profil/password/', change_password, name='password'),
+    path('profil/password/', ChangePassword.as_view(), name='password'),
     path('profil/preferences/', PreferencesUpdateView.as_view(), name="preferences"),
     
     path('profil/vehicule/', CarCreateView.as_view(), name='car'),

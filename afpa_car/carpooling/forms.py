@@ -1,42 +1,67 @@
 from django import forms
-from django.forms import TextInput, RadioSelect, Select, DateInput
+from django.forms import TextInput, RadioSelect, Select, DateInput, FileInput, CheckboxInput
 
-from .models import Car, FormationSession, AfpaCenter, Address
-from users.models import PrivateData, User
+from .models import Car, AfpaCenter, Address
+from users.models import PrivateData, User, UserProfile
+
 
 class PrivateDataUpdateForm(forms.ModelForm):
     class Meta:
         model = PrivateData
-        fields = ('phone_number', 'afpa_number')
-        widgets = {
-            'phone_number': TextInput(attrs={'class': 'form-control'}),
-            'afpa_number': TextInput(attrs={'class': 'form-control'})
-        }
+        fields = ('afpa_number', 'phone_number')
 
-    
-class UserUpdateForm (forms.ModelForm):
+    phone_number = forms.RegexField(regex=r'^[0+][\d]+$', label="Numéro de Téléphone",
+                                    min_length=10, max_length=13, 
+                                    error_messages={'invalid': 'Numéro de téléphone invalide'}, 
+                                    widget=TextInput(attrs={'class': 'form-control require-input'}))
+
+    afpa_number = forms.RegexField( regex=r'^\d+$', label="Identifiant AFPA",
+                                    min_length=8, max_length=8,
+                                    error_messages={'invalid': 'Le numéro AFPA est composé de chiffres'}, 
+                                    widget=TextInput(attrs={'class': 'form-control require-input'}))
+
+class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ( 'username', 'first_name', 'last_name', 'email', 'trainee', 'driver_license', 'car_owner', 'afpa_center' )
+        fields = ( 'username', 'first_name', 'last_name', 'email',)
         widgets = {
-            'username': TextInput(attrs={'class': 'form-control'}),
-            'first_name': TextInput(attrs={'class': 'form-control'}),
-            'last_name': TextInput(attrs={'class': 'form-control'}),
-            'email': TextInput(attrs={'class': 'form-control'}),
-            'trainee': RadioSelect(attrs={'class': 'custom-control-input'}),
-            'driver_license': RadioSelect(attrs={'class': 'custom-control-input'}),
-            'afpa_center': Select(attrs={'class': 'custom-select'}),
-            'car_owner': RadioSelect(attrs={'class': 'custom-control-input'}),
+            'username': TextInput(attrs={'class': 'form-control require-input'}),
+            'first_name': TextInput(attrs={'class': 'form-control require-input'}),
+            'last_name': TextInput(attrs={'class': 'form-control require-input'}),
+            'email': TextInput(attrs={'class': 'form-control require-input'}),
         }
+        labels = {
+            'username': 'Pseudonyme',
+            'first_name': 'Prénom',
+            'last_name': 'Nom de famille',
+            'email': 'Adresse Email',   
+        }
+
+class UserProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('trainee', 'driver_license', 'car_owner', 'afpa_center', 'gender',)
+        widgets = {
+                'trainee': RadioSelect(attrs={'class': 'custom-control-input'}),
+                'driver_license': RadioSelect(attrs={'class': 'custom-control-input'}),
+                'car_owner': RadioSelect(attrs={'class': 'custom-control-input'}),
+                'afpa_center': Select(attrs={'class': 'custom-select'}),
+                'gender': Select(attrs={'class': 'custom-select'})
+        }
+        labels = { 
+            'afpa_center': 'Centre AFPA',
+            'gender': 'Genre',
+        }
+
 
 class CarForm(forms.ModelForm):
     class Meta:
         model = Car
-        fields = ( 'color', 'model', 'amount_of_free_seats', 'consumption','fuel' )
+        fields = ( 'color', 'model', 'amount_of_free_seats', 'consumption', 'fuel')
         widgets = {
-            'color': TextInput(attrs={'class': 'form-control'}),
-            'model': TextInput(attrs={'class': 'form-control'}),
-            'amount_of_free_seats': TextInput(attrs={'class': 'form-control'}),
+            'color': TextInput(attrs={'class': 'form-control require-input'}),
+            'model': TextInput(attrs={'class': 'form-control require-input'}),
+            'amount_of_free_seats': TextInput(attrs={'class': 'form-control require-input'}),
             'consumption': TextInput(attrs={'class': 'form-control'}),
             'fuel': Select(attrs={'class': 'custom-select'}),
         }
@@ -45,50 +70,41 @@ class CarForm(forms.ModelForm):
                 'invalid': ("Saisir un nombre"),
             },
         }
+        labels = {
+            'color': 'Couleur',
+            'model': 'Modèle de ma voiture',
+            'amount_of_free_seats': 'Nombre de places disponibles',
+            'consumption': 'Consommation (L/100km)',
+            'fuel': 'Carburant',
+        }
 
 class ProfilImageUpdateForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ('avatar', )
-    avatar = forms.ImageField(label='Company Logo', required=False,
-                                    error_messages ={'invalid': "Image files only"},
-                                    widget=forms.FileInput)    
-    remove_avatar = forms.BooleanField(required=False)
+        model = UserProfile
+        fields = ('profile_image', )
+    profile_image = forms.ImageField(label='Image de Profil', required=False,
+                                    error_messages ={'invalid': "Importer uniquement un fichier .png ou .jpg"},
+                                    widget=FileInput(attrs={'class': 'custom-file-input',
+                                                        '@change': 'previewImage'}))    
+    remove_profile_image = forms.BooleanField(label="Supprimer l'avatar", required=False, 
+                                        widget=CheckboxInput(attrs={'class': 'custom-control-input'}))
 
     def save(self, commit=False, *args, **kwargs):
-        obj = super(ProfilImageUpdateForm, self).save(commit=False, *args, **kwargs)
-        if self.cleaned_data.get('remove_avatar'):
-            print('ok')
-            obj.avatar = None
-            obj.save()
+        user_profile = super(ProfilImageUpdateForm, self).save(commit=False, *args, **kwargs)
+        if self.cleaned_data['remove_profile_image']:
+            user_profile.profile_image = None
+            user_profile.save()
         else:
-            obj.avatar = self.cleaned_data['avatar']
-            obj.save()
+            user_profile.profile_image = self.cleaned_data['profile_image']
+            print(user_profile.profile_image)
+            user_profile.save()
+        return user_profile
 
-        return obj
 
-class FormationSessionForm(forms.ModelForm):
-    class Meta:
-        model = FormationSession
-        fields = ('formation_session_start_date', 'formation_session_end_date', 'work_experience_start_date', 'work_experience_end_date')
-        widgets = {
-            'formation_session_start_date': DateInput(attrs={'type': 'date','class': 'form-control'}),
-            'formation_session_end_date': DateInput(attrs={'type': 'date','class': 'form-control'}),
-            'work_experience_start_date': DateInput(attrs={'type': 'date','class': 'form-control'}),
-            'work_experience_end_date': DateInput(attrs={'type': 'date','class': 'form-control'}),
-        }
-
-class AfpaCenterForm(forms.ModelForm):
-    class Meta:
-        model = AfpaCenter
-        fields = ('center_name',)
-        widgets = {
-            'center_name': Select(attrs={'class': 'custom-select'}),
-        }
 
 class PreferencesForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = UserProfile
         fields = ('smoker', 'talker', 'music')
         widgets = {
             'smoker': RadioSelect(),
@@ -96,38 +112,27 @@ class PreferencesForm(forms.ModelForm):
             'music': RadioSelect(),
         }
 
-
 class AddressForm(forms.ModelForm):
-    address_label = forms.CharField(required=False, widget=TextInput(attrs={'class': 'form-control'}))
+    def __init__(self, *args, **kwargs):
+        super(AddressForm, self).__init__(*args, **kwargs)
+        self.fields['zip_code'].required = True
+        self.fields['city'].required = True
+        self.fields['street_name'].required = True
 
     class Meta: 
         model = Address
-        fields = ('street_number', 'street_name', 'street_complement', 'zip_code', 'city')
-        exclude = ['lattitude', 'longitude', ]
+        fields = ('zip_code', 'city', 'street_number', 'street_name', 'address_label')
         widgets = {
+            'zip_code': TextInput(attrs={'class': 'form-control require-input'}),
+            'city': TextInput(attrs={'class': 'form-control require-input'}),
             'street_number': TextInput(attrs={'class': 'form-control'}),
-            'street_name': TextInput(attrs={'class': 'form-control'}),
-            'street_complement': TextInput(attrs={'class': 'form-control'}),
-            'zip_code': Select(attrs={'class': 'form-control'}),
-            'city': Select(attrs={'class': 'form-control'}),
+            'street_name': TextInput(attrs={'class': 'form-control require-input'}),
+            'address_label': TextInput(attrs={'class': 'form-control'}),
         }
-
-
-
-    # ## VERIFICATION DE LA PRESENCE DE L'ADRESSE DANS LA BDD LORS DE LA CREATION    
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     address_label = cleaned_data.get("address_label") 
-    #     street_number = cleaned_data.get("street_number") 
-    #     street_name = cleaned_data.get("street_name") 
-    #     street_complement = cleaned_data.get("street_complement") 
-    #     zip_code = cleaned_data.get("zip_code") 
-    #     city = cleaned_data.get("city") 
-    #     rslt = Address.objects.filter(address_label=address_label, street_number=street_number, 
-    #                                     street_name=street_name, street_complement=street_complement, 
-    #                                     zip_code=zip_code, city=city)
-    #     if rslt.count() :
-    #         print( "adresse exxite déjà")
-    #         raise forms.ValidationError("Cette adresse existe déjà")
-    #     else :
-    #         print( "adresse créée")
+        labels = {
+            'zip_code': 'Code Postal',
+            'city': 'Ville',
+            'street_number': 'Numéro de la Rue' ,
+            'street_name': 'Nom de la Rue',
+            'address_label': "Libellé de l'Adresse",
+        }

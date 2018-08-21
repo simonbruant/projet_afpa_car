@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block section %}
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" style="text-align: center;">
+        <h3 class="mb-5">Désolé, cette page est introuvable...</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <svg version="1.1" viewBox="0 0 1000 1000">
+
+            <g>
+
+                <!-- Tete -->
+                <circle id="tete" cx="530" cy="200" r="150" fill="#F3DBCF" stroke="black"/>
+                
+                <ellipse id="masque" cx="470" cy="250" rx="75" ry="35" fill="#44A33D" stroke="#44A33D" />
+                <circle id="oeildroit" cx="490" cy="250" r="15" fill="white" stroke="black" />
+                <circle id="oeilgauche" cx="450" cy="250" r="15" fill="white" stroke="black" />
+                <circle id="pupildroite" cx="485" cy="258" r="5" fill="black" stroke="black" />
+                <circle id="pupilgauche" cx="445" cy="258" r="5" fill="black" stroke="black" />
+                <ellipse id="bouche" cx="500" cy="325" rx="20" ry="5"></ellipse>
+                
+                <!-- Animation Tete -->
+                <animate xlink:href="#oeildroit" id="animoed1" attributeName="cx" from="490" to="610" dur="0.5s" fill="freeze" begin="0s; animoed2.end"></animate>
+                <animate xlink:href="#oeildroit" id="animoed2" attributeName="cx" from="610" to="490" dur="0.5s" fill="freeze" begin="animoed1.end"></animate>
+                <animate xlink:href="#masque" id="animtoed1" attributeName="cx" from="470" to="590" dur="0.5s" fill="freeze" begin="0s; animoed2.end"></animate>
+                <animate xlink:href="#masque" id="animtoed2" attributeName="cx" from="590" to="470" dur="0.5s" fill="freeze" begin="animoed1.end"></animate>
+                
+                <animate xlink:href="#oeilgauche" id="animoeg1" attributeName="cx" from="450" to="570" dur="0.5s" fill="freeze" begin="0s; animoeg2.end"></animate>
+                <animate xlink:href="#oeilgauche" id="animoeg2" attributeName="cx" from="570" to="450" dur="0.5s" fill="freeze" begin="animoeg1.end"></animate>
+                
+                <animate xlink:href="#pupildroite" id="animpd1" attributeName="cx" from="485" to="615" dur="0.5s" fill="freeze" begin="0s; animpd2.end"></animate>
+                <animate xlink:href="#pupildroite" id="animpd2" attributeName="cx" from="615" to="485" dur="0.5s" fill="freeze" begin="animpd1.end"></animate>
+                
+                <animate xlink:href="#pupilgauche" id="animpg1" attributeName="cx" from="445" to="575" dur="0.5s" fill="freeze" begin="0s; animpg2.end"></animate>
+                <animate xlink:href="#pupilgauche" id="animpg2" attributeName="cx" from="575" to="445" dur="0.5s" fill="freeze" begin="animpg1.end"></animate>
+                
+                <animate xlink:href="#bouche" id="animb1" attributeName="cx" from="480" to="570" dur="0.5s" fill="freeze" begin="0s; animb2.end"></animate>
+                <animate xlink:href="#bouche" id="animb2" attributeName="cx" from="570" to="480" dur="0.5s" fill="freeze" begin="animb1.end"></animate>
+                
+                <!-- Corps -->
+                <rect id="corps" x="400" y="350" width="250" height="300" rx="50" fill="#F3DBCF" stroke="black"/>
+                <path id="shirt" d="M450 350 Q 400 350 400 400 L 400 600 Q 400 650 450 650 L 600 650 Q 650 650 650 600 L 650 400 Q 650 350 600 350 L 570 350 Q 520 400 480 350 Z" fill="#44A33D"/>
+                <rect id="ceinture" x="400" y="580" width="250" height="20" fill="saddlebrown"></rect>
+                <rect id="boucleceinture" x="500" y="580" width="50" height="20" fill="goldenrod"></rect>
+                <path id="pantalon" d="M 400 600 Q 400 650 450 650 L 600 650 Q 650 650 650 600 L 400 600 " fill="dodgerblue"/>
+                
+                <!-- Jambe Droite -->
+                <path id="jambedroite" d="M 590 637 Q 646 712 602 838" stroke="dodgerblue" stroke-width="20" fill="transparent"/>
+                <animate xlink:href="#jambedroite" id="animjd1" attributeName="d" from="M 590 637 Q 646 712 602 838" to="M 590 637 Q 715 667 602 716" dur="0.2s" fill="freeze" begin="0.2s; animjd2.end"></animate>
+                <animate xlink:href="#jambedroite" id="animjd2" attributeName="d" from="M 590 637 Q 715 667 602 716" to="M 590 637 Q 646 712 602 838" dur="0.2s" fill="freeze" begin="animjd1.end"></animate>
+                
+                <!-- Jambe Gauche -->
+                <path id="jambegauche" d="M 459 637 Q 399 714 426 834 " stroke="dodgerblue" stroke-width="20" fill="transparent"/>
+                <animate xlink:href="#jambegauche" id="animjg1" attributeName="d" from="M 459 637 Q 399 714 426 834" to="M 459 637 Q 334 660 410 768" dur="0.2s" fill="freeze" begin="0s; animjg2.end"></animate>
+                <animate xlink:href="#jambegauche" id="animjg2" attributeName="d" from="M 459 637 Q 334 660 410 768" to="M 459 637 Q 399 714 426 834" dur="0.2s" fill="freeze" begin="animjg1.end"></animate>
+                
+                <!-- Bras Droit -->
+                <path id="brasdroit" d="M640 396 C 696 269 811 357 847 246" stroke="#44A33D" stroke-width="20" fill="transparent"/>
+                <animate xlink:href="#brasdroit" id="animbd1" attributeName="d" from="M640 396 C 696 269 811 357 847 246" to="M640 396 C 765 342 763 200 840 246" dur="0.2s" fill="freeze" begin="0s; animbd3.end"></animate>
+                <animate xlink:href="#brasdroit" id="animbd2" attributeName="d" from="M640 396 C 765 342 763 200 840 246" to="M640 396 C 681 301 762 309 725 209" dur="0.2s" fill="freeze" begin="animbd1.end"></animate>
+                <animate xlink:href="#brasdroit" id="animbd3" attributeName="d" from="M640 396 C 681 301 762 309 725 209" to="M640 396 C 696 269 811 357 847 246" dur="0.2s" fill="freeze" begin="animbd2.end"></animate>
+                
+                <!-- Bras Gauche -->
+                <path id="brasgauche" d="M410,399 C264,440 341,182 236,194" stroke="#44A33D" stroke-width="20" fill="transparent"/>
+                <animate xlink:href="#brasgauche" id="animbg1" attributeName="d" from="M410,399 C264,440 341,182 236,194" to="M410,399 C197,318 341,182 377,248" dur="0.2s" fill="freeze" begin="0s; animbg3.end"></animate>
+                <animate xlink:href="#brasgauche" id="animbg2" attributeName="d" from="M410,399 C197,318 341,182 377,248" to="M410,399 C303,352 436,120 228,269" dur="0.2s" fill="freeze" begin="animbg1.end"></animate>
+                <animate xlink:href="#brasgauche" id="animbg3" attributeName="d" from="M410,399 C303,352 436,120 228,269" to="M410,399 C264,440 341,182 236,194" dur="0.2s" fill="freeze" begin="animbg2.end"></animate>       
+                
+                <!-- Casier de Gauche -->
+                <polyline id="tiroiravant" points="460,860 460,750 350,720 350,830" fill="dimgray" stroke="black"/>
+                <polyline id="tiroirright" points="350,880 450,850 450,760 350,790 350,880" fill="darkgray" stroke="black"/>
+                <polyline id="tiroiravantetage2" points="350,780 350,670 240,640 240,750" fill="dimgray" stroke="black"/>
+                <polyline id="tiroirrightetage2" points="240,800 340,770 340,680 240,710 240,800" fill="darkgray" stroke="black"/>
+                <polyline id="casiertop" points="50,500 200,470 350,500 200,530 50,500" fill="darkgray" stroke="black" />
+                <polyline id="casierleft" points="50,500 200,530 200,930 50,890 50,500" fill="dimgray" stroke="black"/>
+                <polyline id="casierright" points="200,530 350,500 350,890 200,930 200,530" fill="darkgray" stroke="black" />                
+                
+                <!-- Animation Casier de Gauche -->
+                <animate xlink:href="#tiroiravant" id="animta11" attributeName="points" from="460,860 460,750 350,720 350,830" to="350,890 350,780 240,740 240,850" dur="0.5s" fill="freeze" begin="0s; animta22.end"></animate>
+                <animate xlink:href="#tiroiravant" id="animta22" attributeName="points" from="350,890 350,780 240,740 240,850" to="460,860 460,750 350,720 350,830" dur="0.5s" fill="freeze" begin="animtae1.end"></animate>
+                
+                <animate xlink:href="#tiroirright" id="animtl11" attributeName="points" from="350,880 450,850 450,760 350,790 350,880" to="240,910 340,880 340,790 240,820 240,910" dur="0.5s" fill="freeze" begin="0s; animta22.end"></animate>
+                <animate xlink:href="#tiroirright" id="animtl22" attributeName="points" from="240,910 340,880 340,790 240,820 240,910" to="350,880 450,850 450,760 350,790 350,880" dur="0.5s" fill="freeze" begin="animtae1.end"></animate>
+                
+                <!-- Etage2 -->
+                <animate xlink:href="#tiroiravantetage2" id="animtae11" attributeName="points" from="350,780 350,670 240,640 240,750" to="460,750 460,640 350,610 350,720" dur="0.5s" fill="freeze" begin="animta2.end"></animate>
+                <animate xlink:href="#tiroiravantetage2" id="animtae22" attributeName="points" from="460,750 460,640 350,610 350,720" to="350,780 350,670 240,640 240,750" dur="0.5s" fill="freeze" begin="animtae11.end"></animate>
+                
+                <animate xlink:href="#tiroirrightetage2" id="animtle11" attributeName="points" from="240,800 340,770 340,680 240,710 240,800" to="350,770 450,740 450,650 350,680 350,770" dur="0.5s" fill="freeze" begin="animta2.end"></animate>
+                <animate xlink:href="#tiroirrightetage2" id="animtle22" attributeName="points" from="350,770 450,740 450,650 350,680 350,770" to="240,800 340,770 340,680 240,710 240,800" dur="0.5s" fill="freeze" begin="animtae11.end"></animate>
+                
+                <!-- Casier de Droite -->
+                <polyline id="tiroiravant2" points="590,860 590,750 750,710 750,820" fill="dimgray" stroke="black"/>
+                <polyline id="tiroirleft" points="700,880 600,850 600,760 700,790" fill="darkgray" stroke="black"/>
+                <polyline id="tiroiravantetage3" points="700,670 700,560 860,520 860,630" fill="dimgray" stroke="black"/>
+                <polyline id="tiroirleftetage3" points="810,690 710,660 710,570 810,600" fill="darkgray" stroke="black"/>
+                <polyline id="casiertop2" points="700,500 850,470 1000,500 850,530 700,500" fill="darkgray" stroke="black" />
+                <polyline id="casierleft2" points="700,500 850,530 850,930 700,890 700,500" fill="darkgray" stroke="black"/>
+                <polyline id="casierright2" points="850,530 1000,500 1000,890 850,930 850,530" fill="dimgray" stroke="black" /> 
+                
+                <!-- Animation Casier de Droite -->
+                <animate xlink:href="#tiroiravant2" id="animta1" attributeName="points" from="590,860 590,750 750,710 750,820" to="700,890 700,780 860,740 860,850" dur="0.5s" fill="freeze" begin="animta2.end"></animate>
+                <animate xlink:href="#tiroiravant2" id="animta2" attributeName="points" from="700,890 700,780 860,740 860,850" to="590,860 590,750 750,710 750,820" dur="0.5s" fill="freeze" begin="0s; animta22.end"></animate>
+                
+                <animate xlink:href="#tiroirleft" id="animtl1" attributeName="points" from="700,880 600,850 600,760 700,790" to="810,910 710,880 710,790 810,820" dur="0.5s" fill="freeze" begin="animta2.end"></animate>
+                <animate xlink:href="#tiroirleft" id="animtl2" attributeName="points" from="810,910 710,880 710,790 810,820" to="700,880 600,850 600,760 700,790" dur="0.5s" fill="freeze" begin="0s; animta22.end"></animate>
+                
+                <!-- Etage 2 -->
+                <animate xlink:href="#tiroiravantetage3" id="animtae1" attributeName="points" from="700,670 700,560 860,520 860,630" to="590,640 590,530 750,490 750,600" dur="0.5s" fill="freeze" begin="animtae11.end"></animate>
+                <animate xlink:href="#tiroiravantetage3" id="animtae2" attributeName="points" from="590,640 590,530 750,490 750,600" to="700,670 700,560 860,520 860,630" dur="0.5s" fill="freeze" begin="animtae1.end"></animate>
+                
+                <animate xlink:href="#tiroirleftetage3" id="animtle1" attributeName="points" from="810,690 710,660 710,570 810,600" to="700,660 600,630 600,540 700,570" dur="0.5s" fill="freeze" begin="animtae11.end"></animate>
+                <animate xlink:href="#tiroirleftetage3" id="animtle2" attributeName="points" from="700,660 600,630 600,540 700,570" to="810,690 710,660 710,570 810,600" dur="0.5s" fill="freeze" begin="animtae1.end"></animate>
+                
+                <text x="410" y="520" font-size="150" fill="#E3007E" font-family="Impact">404</text>
+
+            </g>
+            
+        </svg>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" style="text-align: center;">
+        <h3 class="mt-5">Pourtant Afpa-Man recherche inlassablement...</h3>
+    </div>
+</div>
+
+
+{% endblock section %}

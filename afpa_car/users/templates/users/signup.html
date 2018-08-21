@@ -1,0 +1,113 @@
+{% extends "base.html" %} {% load static %} {% block css %} "{% static 'carpooling/css/signup.css' %}" {% endblock css %}
+{% block section %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="header_signup">
+                <div id="titre_signup" class="mb-3"> CREER UN COMPTE </div>
+                <div id="text_header_signup" class="mb-3"> Et commencer votre aventure de covoitureur Afpanien </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-3 mt-4"></div>
+
+        <div id="from_signup" class="col-md-9">
+            <form method='POST'> {% csrf_token %}
+
+                <div class="input-group mb-3 mt-3">
+                    <div class="input-group-prepend">
+                        <div id="header_input_signup" class="input-group-text">{{ form.last_name.label }}</div>
+                    </div>
+                    {{ form.last_name }}
+                    <div class='col-md-4'></div>
+                </div>
+
+                <div class="input-group mb-3 mt-3">
+                    <div class="input-group-prepend">
+                        <div id="header_input_signup" class="input-group-text">{{ form.first_name.label }}</div>
+                    </div>
+                    {{ form.first_name }}
+                    <div class='col-md-4'></div>
+                </div>
+
+                <div class="input-group mb-3 mt-3">
+                    <div class="input-group-prepend">
+                        <div id="header_input_signup" class="input-group-text">{{ form.email.label }}</div>
+                    </div>
+                    {{ form.email }}
+
+                    <div class='col-md-4 password_error'>
+                        {% for error in form.email.errors %} {{ error }} {% endfor %}
+                    </div>
+                </div>
+
+                <div class="input-group mb-3 mt-3">
+                    <div class="input-group-prepend">
+                        <div id="header_input_signup" class="input-group-text">{{ form.phone_number.label }}</div>
+                    </div>
+                    {{ form.phone_number }}
+                    <div class='col-md-4 password_error'>
+                        {% for error in form.phone_number.errors %} {{ error }} {% endfor %}
+                    </div>
+                </div>
+                <div class='row'>
+                    <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+                    <div class='col-md-4'></div>
+                </div>
+                <div class="input-group mb-3 mt-3">
+                    <div class="input-group-prepend">
+                        <div id="header_input_signup" class="input-group-text ">{{ form.afpa_number.label }}</div>
+                    </div>
+                    {{ form.afpa_number }}
+                    <div class='col-md-4 password_error'>
+                        {% for error in form.afpa_number.errors %} {{ error }} {% endfor %}
+                    </div>
+
+                </div>
+
+                <div class="input-group mb-3 mt-3">
+                    <div class="input-group-prepend">
+                        <div id="header_input_signup" class="input-group-text">{{ form.username.label }}</div>
+                    </div>
+                    {{ form.username }}
+                    <div class='col-md-4 password_error'>
+                        {% for error in form.username.errors %} {{ error }} {% endfor %}
+                    </div>
+                </div>
+
+                <div class="input-group mb-3 mt-3">
+                    <div class="input-group-prepend">
+                        <div id="header_input_signup" class="input-group-text ">{{ form.password1.label }}</div>
+                    </div>
+                    {{ form.password1 }}
+                    <div class='col-md-4'></div>
+                </div>
+
+                <div class="input-group mb-3 mt-3">
+                    <div class="input-group-prepend">
+                        <div id="header_input_signup" class="input-group-text ">{{ form.password2.label }}</div>
+                    </div>
+                    {{ form.password2 }}
+                    <div class='col-md-4 password_error'>
+                        {% for error in form.password2.errors %} {{ error }} {% endfor %}
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-4'></div>
+
+                    <div id="submit_profil1">
+                        <button type="submit" class="btn btn-success mb-3">Envoyer</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock section %}

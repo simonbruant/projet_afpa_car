@@ -9,14 +9,29 @@
 
     <div class="col-md-4">
 
+
+        {% if not addresses or user.user_profile.car_owner and not cars %}
+
         <div class="card mt-3 mb-3">
             <div class="card-header bg-success mb-2">Completez votre profil</div>
             <div class="card-content" id="alertes_profil">
-                <p class="mt-2"><span class="fas fa-exclamation"></span> Précisez vos préférences</p>
-                <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 250px; border: none;">
-                <p class="mt-2"><span class="fas fa-exclamation"></span> Enregistrez vos adresses</p>
+
+                {% if not addresses %}
+                    <p class="mt-2"><span class="fas fa-exclamation"><a id="alert_dashboard" href="{% url 'carpooling:address' %}"> Vous n'avez aucune adresse enregistrée.</span></a></p>
+                {% endif %}
+
+                {% if not addresses and not cars and user.user_profile.car_owner %}
+                    <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 250px; border: none;">
+                {% endif %}
+
+                {% if not cars and user.user_profile.car_owner %}
+                    <p class="mt-2"><span class="fas fa-exclamation"><a id="alert_dashboard" href="{% url 'carpooling:car' %}"> Vous avez indiqué avoir un véhicule mais ne l'avez pas renseigné.</span></a></p>
+                {% endif %}
+
             </div>
         </div>
+
+        {% endif %}
 
         <div class="card mt-3 mb-3">
             <div class="card-header bg-success">Vos trajets de la semaine</div>
@@ -59,11 +74,24 @@
     
     <div class="col-md-8">
 
-        <h3 class="mt-3"><img id="rond" src="../../../../static/img/avatar_generique.png"> Bonjour {{ user.username }}</h3>
+        <h3 class="mt-3">
+            
+                {% if user.user_profile.profile_image %}
+                <img v-else class="col-md-4" id="rond_dashboard" src="{{ user.user_profile.profile_image.url }}">
+                {% else %}
+                <img v-else class="col-md-4" id="rond_dashboard" src="../../../../static/img/avatar_generique.png">
+                {% endif %}
+            
+            Bonjour {{ user.username }}
+        
+        
+        </h3>
+
+
 
         <br>
         <br>
-        <h4 class="sousParties"><span class="fas fa-car"></span><b> Propositions de carpooling reçues (2)</b></h4>
+        <h4 class="sousParties"><span class="fas fa-car"></span><b> Propositions de covoiturages reçues (2)</b></h4>
         <br>
         <hr style="height: 2px; color: lightgray; background-color: lightgray; border: none;">
         <p>Jojo vous propose un point de rencontre à l'arret de tram Saint Eloi</p>
@@ -78,6 +106,8 @@
 
     </div>
 </div>
+
+
 
 
 

@@ -2,16 +2,23 @@
     color: white;
 }
 
-#alertes_profil {
+/* couleur des '!' et des liens d'avertissement */
+#alertes_profil, #alert_dashboard {
     color: #E3007E;
 }
 
-#rond {
+#alert_dashboard:hover {
+    color: rgb(247, 91, 176);
+}
+
+
+#rond_dashboard {
     border-radius: 50%;
-    width: 10%;
-    height: 10%;
+    height: 180px;
+
 }
 
 .sousParties {
     float: left;
 }
+
