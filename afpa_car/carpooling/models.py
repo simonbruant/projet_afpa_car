@@ -73,16 +73,16 @@ class DefaultTrip(models.Model):
         ('Thursday', 'Jeudi'),
         ('Friday', 'Vendredi'),
     )
-    morning_departure_time          = models.DateTimeField(verbose_name="Heure de départ aller")
-    morning_arriving_time           = models.DateTimeField(verbose_name="Heure d'arrivée aller")
-    evening_departure_time          = models.DateTimeField(verbose_name="Heure de départ retour")
-    evening_estimated_arriving_time = models.DateTimeField(verbose_name="Heure d'arrivée estimée retour")
+    morning_departure_time          = models.TimeField(verbose_name="Heure de départ aller")
+    morning_arriving_time           = models.TimeField(verbose_name="Heure d'arrivée aller")
+    evening_departure_time          = models.TimeField(verbose_name="Heure de départ retour")
+    evening_estimated_arriving_time = models.TimeField(null=True, verbose_name="Heure estimée retour")
     estimated_trip_cost             = models.IntegerField(editable=False, default=0, verbose_name="Coût du trajet estimé")
-    day                 = models.CharField(max_length=10, choices=DAY, verbose_name="Nom du Jour")
+    day                             = models.CharField(max_length=10, choices=DAY, verbose_name="Jour")
 
-    user                = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Utilisateur")
-    has_for_start       = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="Départ", verbose_name="Adresse de Départ")
-    has_for_destination = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="Destination", verbose_name="Adresse d'Arrivée")
+    user                = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="default_trip" ,verbose_name="Utilisateur")
+    has_for_start       = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="depart", verbose_name="Adresse de Départ")
+    has_for_destination = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="destination", verbose_name="Adresse d'Arrivée")
 
     class Meta:
         verbose_name = "Trajet Type"

@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.urls import path, reverse_lazy
 from django.views.generic import TemplateView, RedirectView
 reverse_lazy
-from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, CalendarView, 
+from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, DefaultTripCreateView, 
                     CarCreateView, CarUpdateView, CarDeleteView,
                     ProfilImageUpdateView, PreferencesUpdateView,
                     AddressCreateView, AddressUpdateView, AddressDeleteView )
@@ -17,8 +17,6 @@ urlpatterns = [
     path('', LoginView.as_view(), name="index"),
     path('login/', RedirectView.as_view(url=reverse_lazy('carpooling:index')), name='login'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
-    path('calendar/', CalendarView.as_view(), name='calendar'),
-    path('cgu/', TemplateView.as_view(template_name='carpooling/cgu.html'), name='cgu'),
 
     path('profil/infos-generales/', UserUpdateView.as_view(), name='general_infos'),
     path('profil/infos-privees/', PrivateDataUpdateView.as_view(), name='private_infos'),
@@ -34,4 +32,9 @@ urlpatterns = [
     path('profil/adresse/<int:pk>', AddressUpdateView.as_view(), name='address_update'),
     path('profil/adresse/<int:pk>/delete', AddressDeleteView.as_view(), name='address_delete'),
 
+    path('calendar/', DefaultTripCreateView.as_view(), name='calendar'),
+
+    path('cgu/', TemplateView.as_view(template_name='carpooling/cgu.html'), name='cgu'),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

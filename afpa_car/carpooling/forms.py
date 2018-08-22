@@ -1,7 +1,7 @@
 from django import forms
-from django.forms import TextInput, RadioSelect, Select, DateInput, FileInput, CheckboxInput
+from django.forms import TextInput, RadioSelect, Select, DateInput, FileInput, CheckboxInput, TimeInput
 
-from .models import Car, AfpaCenter, Address
+from .models import Car, AfpaCenter, Address, DefaultTrip
 from users.models import PrivateData, User, UserProfile
 
 
@@ -135,4 +135,27 @@ class AddressForm(forms.ModelForm):
             'street_number': 'Numéro de la Rue' ,
             'street_name': 'Nom de la Rue',
             'address_label': "Libellé de l'Adresse",
+        }
+
+class DefaultTripForm(forms.ModelForm):
+
+    has_for_start = forms.ModelChoiceField(queryset=None, widget=Select(attrs={'class': 'custom-select'}), 
+                                                 label="Adresse de départ" )
+    
+    has_for_destination = forms.ModelChoiceField(queryset=AfpaCenter.objects.all(),
+                                                 widget=Select(attrs={'class': 'custom-select'}), 
+                                                 label="Adresse d'arrivée" )
+                                                
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['has_for_start'].queryset = Address.objects.filter(user=user)
+
+    class Meta:
+        model = DefaultTrip
+        fields =('morning_departure_time', 'morning_arriving_time', 'evening_departure_time', 'day', 'has_for_start' )
+        widgets = {
+            'morning_departure_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
+            'morning_arriving_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
+            'evening_departure_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
+            'day': Select(attrs={'class': 'custom-select'}),
         }

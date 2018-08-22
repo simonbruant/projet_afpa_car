@@ -1,11 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
+from django.views import View
 from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView
 
-from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, ProfilImageUpdateForm, PreferencesForm, UserProfileUpdateForm, AddressForm
-from .models import Car, Car_User, Address
+from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, ProfilImageUpdateForm, PreferencesForm, UserProfileUpdateForm, AddressForm, DefaultTripForm
+from .models import Car, Car_User, Address, DefaultTrip
 from users.models import PrivateData, User, UserProfile
 
 class DashboardView(TemplateView):
@@ -17,9 +19,6 @@ class DashboardView(TemplateView):
         context['addresses'] = Address.objects.filter(user=self.request.user)
         
         return context
-
-class CalendarView(TemplateView):
-    template_name = 'carpooling/calendar.html'
 
 class UserUpdateView(SuccessMessageMixin, TemplateView):
     template_name = 'carpooling/profil/general_infos.html'
@@ -190,3 +189,40 @@ class AddressDeleteView(SuccessMessageMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context['address'] = Address.objects.get(pk=self.kwargs['pk'])
         return context
+
+class DefaultTripCreateView(SuccessMessageMixin, View):
+    template_name = 'carpooling/calendar.html'
+    success_message = "Mise à jour de la semaine type"
+
+
+    def get(self, request):
+        user=self.request.user
+        form = DefaultTripForm(user=user)
+        context = {}
+        context['trips'] = user.default_trip.all()
+        context['form'] = form
+
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = DefaultTripForm(data=request.POST, user=self.request.user)
+        if form.is_valid():
+            default_trip = form.save(commit=False)
+            default_trip.user = self.request.user
+            default_trip.has_for_destination = form.cleaned_data['has_for_destination'].address
+            default_trip.save()
+
+            if self.success_message:
+                messages.success(self.request, self.success_message)
+
+            return redirect('carpooling:calendar')
+        
+        return render(request, self.template_name, {'form': form})
+
+    def form_valid(self, form):
+        print("form valid")
+        default_trip = form.save(commit=False)
+        default_trip.user = self.request.user
+        return super().form_valid(form)
+
+    

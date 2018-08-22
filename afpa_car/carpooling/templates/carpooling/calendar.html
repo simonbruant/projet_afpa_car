@@ -5,70 +5,178 @@
 
 {% block section %}
 
-<div class="card mt-3 mb-3">
-    <div class="card-header bg-success">Votre semaine type<span class="fas fa-bars" id="burger"></span></div>
-    <div class="card-content" id="semaineType">
-        <table class="table-striped table-bordered">
-            <tr>
-                <td id="tableSemaineType" class="p-1"><b>Jour</b></td>
-                <td id="tableSemaineType" class="p-1"><b>Adresse de départ</b></td>
-                <td id="tableSemaineType" class="p-1"><b>Horaire de départ</b></td>
-                <td id="tableSemaineType" class="p-1"><b>Horaire d'arrivée</b></td>
-                <td id="tableSemaineType" class="p-1"><b>Adresse d'arrivée</b></td>
-                <td id="tableSemaineType" class="p-1"><b>Horaire de retour</b></td>
-                <td id="tableSemaineType" class="p-1"><b>Horaire d'arrivée retour</b></td>
-            </tr>
-            <tr>
-                <td>Lundi</td>
-                <td>Domicile</td>
-                <td>7:00</td>
-                <td>8:15</td>
-                <td>AFPA</td>
-                <td>18:00</td>
-                <td>19:00</td>
-            </tr>
-            <tr>
-                <td>Mardi</td>
-                <td>Domicile</td>
-                <td>6:50</td>
-                <td>8:15</td>
-                <td>AFPA</td>
-                <td>17:50</td>
-                <td>19:00</td>
-            </tr>
-            <tr>
-                <td>Mercredi</td>
-                <td>Domicile</td>
-                <td>7:00</td>
-                <td>8:15</td>
-                <td>AFPA</td>
-                <td>18:00</td>
-                <td>19:00</td>
-            </tr>
-            <tr>
-                <td>Jeudi</td>
-                <td>Domicile</td>
-                <td>6:50</td>
-                <td>8:15</td>
-                <td>AFPA</td>
-                <td>17:50</td>
-                <td>19:00</td>
-            </tr>
-            <tr>
-                <td>Vendredi</td>
-                <td>Domicile</td>
-                <td>7:00</td>
-                <td>8:15</td>
-                <td>AFPA</td>
-                <td>18:00</td>
-                <td>19:00</td>
-            </tr>
-        </table>
+
+
+
+<div id='default_week'>
+
+    <div class='row'>
+        <div class='col-md-12'>
+
+            <div class="card mt-3 mb-3">
+                <div id="titre_calendar" class="card-header bg-success col-md-12">Votre semaine type<span @click="show_update" class="fas fa-pencil-alt" id="burger"></span></div>
+                    <div v-if='update_default_week'>
+
+                        <div class='row'></div>
+
+                        <div id="message_update_calendar" class="col-md-12 mt-3">
+                            {% if messages %}
+                            {% for message in messages %}
+                                {{ message }}
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class='row'>
+                                <div class='col-md-3'></div>
+
+                            <form class='col-md-5 mt-3 mb-3' method='POST'>
+                                    {% csrf_token %}
+                                
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <div id="header_input_calendar" class="input-group-text">{{ form.morning_departure_time.label }}</div>
+                                        </div>
+                                        {{ form.morning_departure_time }}
+                                        <div class='message_errors'>
+                                            {% for error in form.morning_departure_time.errors %} {{ error }} {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <div id="header_input_calendar" class="input-group-text">{{ form.morning_arriving_time.label }}</div>
+                                        </div>
+                                        {{ form.morning_arriving_time }}
+                                        <div class='message_errors'>
+                                            {% for error in form.morning_arriving_time.errors %} {{ error }} {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <div id="header_input_calendar" class="input-group-text">{{ form.evening_departure_time.label }}</div>
+                                        </div>
+                                        {{ form.evening_departure_time }}
+                                        <div class='message_errors'>
+                                            {% for error in form.evening_departure_time.errors %} {{ error }} {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <div id="header_input_calendar" class="input-group-text">{{ form.day.label }}</div>
+                                        </div>
+                                        {{ form.day }}
+                                        <div class='message_errors'>
+                                            {% for error in form.day.errors %} {{ error }} {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <div id="header_input_calendar" class="input-group-text">{{ form.has_for_start.label }}</div>
+                                        </div>
+                                        {{ form.has_for_start }}
+                                        <div class='message_errors'>
+                                            {% for error in form.has_for_start.errors %} {{ error }} {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <div id="header_input_calendar" class="input-group-text">{{ form.has_for_destination.label }}</div>
+                                        </div>
+                                        {{ form.has_for_destination }}
+                                        <div class='message_errors'>
+                                            {% for error in form.has_for_destination.errors %} {{ error }} {% endfor %}
+                                        </div>
+                                    </div>
+                                    
+
+                                <button type='submit' class='btn btn-success' >Valider</button>
+                                <button class='btn btn-danger' @click='hide_update' >Annuler</button>
+
+                    
+                            </form> 
+                        </div>
+                        
+                        <div class='row'>
+                            <div class='col-md-3'></div>
+                            <div class='col-md-2 require-input-legend mt-2'><p id='text_legend'>Champ obligatoire</p> </div>
+                        </div>
+                     
+                    </div>
+
+                    <div v-if='preview_default_week'>
+                        <table class="table-striped table-bordered">
+                            <tr>
+                                <td id="tableSemaineType" class="p-1"><b>{{form.day.label}}</b></td>
+                                <td id="tableSemaineType" class="p-1"><b>{{form.has_for_start.label}}</b></td>
+                                <td id="tableSemaineType" class="p-1"><b>{{form.morning_departure_time.label}}</b></td>
+                                <td id="tableSemaineType" class="p-1"><b>{{form.morning_arriving_time.label}}</b></td>
+                                <td id="tableSemaineType" class="p-1"><b>{{form.has_for_destination.label}}</b></td>
+                                <td id="tableSemaineType" class="p-1"><b>{{form.evening_departure_time.label}}</b></td>
+                                <td id="tableSemaineType" class="p-1"><b>Heure estimée retour</b></td>
+                            </tr>
+                            <tr>
+                                <td>Lundi</td>
+                                <td>Domicile</td>
+                                <td>7:00</td>
+                                <td>8:15</td>
+                                <td>AFPA</td>
+                                <td>18:00</td>
+                                <td>19:00</td>
+                            </tr>
+                            <tr>
+                                <td>Mardi</td>
+                                <td>Domicile</td>
+                                <td>6:50</td>
+                                <td>8:15</td>
+                                <td>AFPA</td>
+                                <td>17:50</td>
+                                <td>19:00</td>
+                            </tr>
+                            <tr>
+                                <td>Mercredi</td>
+                                <td>Domicile</td>
+                                <td>7:00</td>
+                                <td>8:15</td>
+                                <td>AFPA</td>
+                                <td>18:00</td>
+                                <td>19:00</td>
+                            </tr>
+                            <tr>
+                                <td>Jeudi</td>
+                                <td>Domicile</td>
+                                <td>6:50</td>
+                                <td>8:15</td>
+                                <td>AFPA</td>
+                                <td>17:50</td>
+                                <td>19:00</td>
+                            </tr>
+                            <tr>
+                                <td>Vendredi</td>
+                                <td>Domicile</td>
+                                <td>7:00</td>
+                                <td>8:15</td>
+                                <td>AFPA</td>
+                                <td>18:00</td>
+                                <td>19:00</td>
+                            </tr>
+                        </table>
+
+
+                </div>
+
+        </div>
     </div>
+
+</div>
 </div>
 
 <div class="card">
-    <div class="card-header bg-success">Votre calendrier</div>
+    <div id="titre_calendar" class="card-header bg-success">Votre calendrier</div>
     <div class="card-content">
         <div class="row">
             <div class="col-md-6" id="conteneur_calendrier">
@@ -78,7 +186,8 @@
                         :monday-first="true" 
                         :full-month-name="true" 
                         :language="fr" 
-                        calendar-class="datepicker_calendar"></vuejs-datepicker>
+                        calendar-class="datepicker_calendar">
+                    </vuejs-datepicker>
                 </div>
             </div>
             <div class="col-md-6">                     
@@ -87,46 +196,36 @@
     </div>
 </div>
 
-<script src="https://unpkg.com/vue"></script>
-<script src="https://unpkg.com/vuejs-datepicker"></script>
-
-<script>
-    const app = new Vue({
-        el: '#datepicker',
-        components: {
-            vuejsDatepicker
-        },
-        data: { fr: { 
-            language: 'Français',
-            months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'], 
-            monthsAbbr: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'], 
-            days: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
-            yearSuffix: '' } }
-        })
-</script>
+<script type="text/javascript" src="{% static 'js/vue.js' %}"></script>
+<script type="text/javascript" src="https://unpkg.com/vuejs-datepicker"></script>
+<script type="text/javascript" src="../../static/carpooling/js/calendar.js"></script>
 
 <style>
+    
     .datepicker_calendar {
         border: none;
         color: white;
         background-color: #28A745;
         border-radius: 5%;
     }
-    .vdp-datepicker__calendar .cell.selected {
+    .vdp-datepickercalendar .cell.selected {
         background: #E3007E;
         border-radius: 20%;
     }
-    .vdp-datepicker__calendar .cell.selected:hover {
+    .vdp-datepickercalendar .cell.selected:hover {
         background: #E3007E;
         border-radius: 20%;
     }
-    .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover, .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover, .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
+    .vdp-datepickercalendar .cell:not(.blank):not(.disabled).day:hover, .vdp-datepickercalendar .cell:not(.blank):not(.disabled).month:hover, .vdp-datepickercalendar .cell:not(.blank):not(.disabled).year:hover {
         border: 1px solid #E3007E;
         border-radius: 20%;
     }
-    .vdp-datepicker__calendar header .prev:not(.disabled):hover, .vdp-datepicker__calendar header .next:not(.disabled):hover, .vdp-datepicker__calendar header .up:not(.disabled):hover {
+    .vdp-datepickercalendar header .prev:not(.disabled):hover, .vdp-datepickercalendar header .next:not(.disabled):hover, .vdp-datepickercalendar header .up:not(.disabled):hover {
         background: transparent;
     }
     
 </style>
-{% endblock section %}
+    
+
+
+    {% endblock section %}
