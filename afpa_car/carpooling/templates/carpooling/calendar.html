@@ -27,22 +27,59 @@
 
                         <div class='row'>
 
+                            <div class="col-md-2"></div>
                             <form class='col-md-12 mt-3 mb-3' method='POST'>
                                 {% csrf_token %}
                                 <div class="row">
                                     {{ formset.management_form }}
                                     {% for i in range %}
-                                        <div class="col-md-3">
+                                    {% if forloop.counter0 <= 2 %}
+                                        <div class="col-md-4 mb-3">
                                             <div class="card mb-3">
-                                                <div class="card-header bg-success">{{ day_label|index:i }}</div>
+                                                <div id="titre_calendar" class="card-header bg-success">{{ day_label|index:i }}</div>
                                                 <div class="card-content">
-                                                    {{ formset|index:i }}
+                                                    <div class="row">
+                                                        <div class="col-md-2"></div>
+                                                        <div class="col-md-8 mb-2">
+                                                        {{ formset|index:i }}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div> 
-                                        {% endfor %}                                                                                                 
+                                    {% elif forloop.counter0 == 3 %}
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card mb-3">
+                                                <div id="titre_calendar" class="card-header bg-success">{{ day_label|index:i }}</div>
+                                                <div class="card-content">
+                                                    <div class="row">
+                                                        <div class="col-md-2"></div>
+                                                        <div class="col-md-8 mb-2">
+                                                            {{ formset|index:i }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    {% else %}
+                                        <div class="col-md-4">
+                                            <div class="card mb-3">
+                                                <div id="titre_calendar" class="card-header bg-success">{{ day_label|index:i }}</div>
+                                                <div class="card-content">
+                                                    <div class="row">
+                                                        <div class="col-md-2"></div>
+                                                        <div class="col-md-8 mb-2">
+                                                            {{ formset|index:i }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        {% endif %}
+                                    {% endfor %}  
                                         
-                                    </div>
+                                </div>
 
                                 <button type='submit' class='btn btn-success' >Valider</button>
                                 <button type='button' class='btn btn-danger' @click='hide_update' >Annuler</button>
