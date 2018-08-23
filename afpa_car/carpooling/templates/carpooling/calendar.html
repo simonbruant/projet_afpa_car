@@ -1,18 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load calendar_tags %}
 
 {% block css %} "{% static 'carpooling/css/calendar.css' %}" {% endblock css %}
 
 {% block section %}
-
-{% for trip in trips %}
-
-    {{ trip.day }}
-    {{ trip.evening_departure_time }}
-    <br>
-
-{% endfor %}
-
 
 <div id='default_week'>
 
@@ -20,7 +12,7 @@
         <div class='col-md-12'>
 
             <div class="card mt-3 mb-3">
-                <div id="titre_calendar" class="card-header bg-success col-md-12">Votre semaine type<span @click="show_update" class="fas fa-pencil-alt" id="burger"></span></div>
+                <div id="titre_calendar" class="card-header bg-success col-md-12">Votre semaine type<span @click="show_update" class="fas fa-pencil-alt" v-if="burger" style="float: right"></span></div>
                     <div v-if='update_default_week'>
 
                         <div class='row'></div>
@@ -36,92 +28,24 @@
                         <div class='row'>
 
                             <form class='col-md-12 mt-3 mb-3' method='POST'>
-                                    {% csrf_token %}
-                                    <div class="row">
-                                            {{ formset.management_form }}
-                                    {% for form in formset %}
+                                {% csrf_token %}
+                                <div class="row">
+                                    {{ formset.management_form }}
+                                    {% for i in range %}
                                         <div class="col-md-3">
-                                         {{ form.as_table }}
-                                        </div>
-                                        {% endfor %}
-                                    </div>
-
-                                    {% comment %} <div class="row"> 
-
-                                            <div class='col-md-12'>
-                                                <div id="card_car_content" class="card col-md-12">
-                                    
-                                                    <div class='row'>
-                                                        <div id="address_label" class="card-header bg-default col-md-12">
-                                                            Lundi
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12 mt-3">                                                                                           
-                                                        
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <div id="header_input_calendar" class="input-group-text">{{ form.morning_departure_time.label }}</div>
-                                                                </div>
-                                                                {{ form.morning_departure_time }}
-                                                                <div class='message_errors'>
-                                                                    {% for error in form.morning_departure_time.errors %} {{ error }} {% endfor %}
-                                                                </div>
-                                                            </div>
-                        
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <div id="header_input_calendar" class="input-group-text">{{ form.morning_arriving_time.label }}</div>
-                                                                </div>
-                                                                {{ form.morning_arriving_time }}
-                                                                <div class='message_errors'>
-                                                                    {% for error in form.morning_arriving_time.errors %} {{ error }} {% endfor %}
-                                                                </div>
-                                                            </div>
-                        
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <div id="header_input_calendar" class="input-group-text">{{ form.evening_departure_time.label }}</div>
-                                                                </div>
-                                                                {{ form.evening_departure_time }}
-                                                                <div class='message_errors'>
-                                                                    {% for error in form.evening_departure_time.errors %} {{ error }} {% endfor %}
-                                                                </div>
-                                                            </div>
-                        
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <div id="header_input_calendar" class="input-group-text">{{ form.has_for_start.label }}</div>
-                                                                </div>
-                                                                {{ form.has_for_start }}
-                                                                <div class='message_errors'>
-                                                                    {% for error in form.has_for_start.errors %} {{ error }} {% endfor %}
-                                                                </div>
-                                                            </div>
-                        
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <div id="header_input_calendar" class="input-group-text">{{ form.has_for_destination.label }}</div>
-                                                                </div>
-                                                                {{ form.has_for_destination }}
-                                                                <div class='message_errors'>
-                                                                    {% for error in form.has_for_destination.errors %} {{ error }} {% endfor %}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-5 mt-3 mb-4">
-                                                            <a href="" id="btn_card_footer">Assigner à toute la semaine</a>
-                                                        </div>
-                                                    </div>
-                                    
+                                            <div class="card mb-3">
+                                                <div class="card-header bg-success">{{ day_label|index:i }}</div>
+                                                <div class="card-content">
+                                                    {{ formset|index:i }}
                                                 </div>
                                             </div>
-                                    </div> {% endcomment %}
-                                                                                                    
+                                        </div> 
+                                        {% endfor %}                                                                                                 
+                                        
+                                    </div>
 
                                 <button type='submit' class='btn btn-success' >Valider</button>
-                                <button class='btn btn-danger' @click='hide_update' >Annuler</button>
-
+                                <button type='button' class='btn btn-danger' @click='hide_update' >Annuler</button>
                     
                             </form> 
                         </div>
@@ -136,13 +60,13 @@
                     <div v-if='preview_default_week'>
                         <table class="table-striped table-bordered">
                             <tr>
-                                <td id="tableSemaineType" class="p-1"><b>{{form.day.label}}</b></td>
-                                <td id="tableSemaineType" class="p-1"><b>{{form.has_for_start.label}}</b></td>
-                                <td id="tableSemaineType" class="p-1"><b>{{form.morning_departure_time.label}}</b></td>
-                                <td id="tableSemaineType" class="p-1"><b>{{form.morning_arriving_time.label}}</b></td>
-                                <td id="tableSemaineType" class="p-1"><b>{{form.has_for_destination.label}}</b></td>
-                                <td id="tableSemaineType" class="p-1"><b>{{form.evening_departure_time.label}}</b></td>
-                                <td id="tableSemaineType" class="p-1"><b>Heure estimée retour</b></td>
+                                <td id="tableSemaineType" class="p-1"><b>Jour</b></td>
+                                <td id="tableSemaineType" class="p-1"><b>Départ</b></td>
+                                <td id="tableSemaineType" class="p-1"><b>Heure de départ</b></td>
+                                <td id="tableSemaineType" class="p-1"><b>Heure d'arrivée</b></td>
+                                <td id="tableSemaineType" class="p-1"><b>Destination</b></td>
+                                <td id="tableSemaineType" class="p-1"><b>Heure de retour</b></td>
+                                <td id="tableSemaineType" class="p-1"><b>Arrivée estimée</b></td>
                             </tr>
                             <tr>
                                 <td>Lundi</td>

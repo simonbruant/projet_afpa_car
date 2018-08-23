@@ -142,8 +142,7 @@ class AddressForm(forms.ModelForm):
 class DefaultTripForm(forms.ModelForm):
 
     has_for_start = forms.ModelChoiceField(queryset=None, widget=Select(attrs={'class': 'custom-select'}), 
-                                                 label="Adresse de départ" )
-
+                                                 label="Départ" )
                                                 
     def __init__(self, user=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -156,7 +155,6 @@ class DefaultTripForm(forms.ModelForm):
             'morning_departure_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
             'morning_arriving_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
             'evening_departure_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
-            'day': Select(attrs={'class': 'custom-select'}),
         }
 
 DefaultTripFormSet = modelformset_factory(DefaultTrip ,form=DefaultTripForm,

@@ -1,17 +1,20 @@
 new Vue({
     el: '#default_week',
     data: {
-        update_default_week: true,
-        preview_default_week : false,
+        update_default_week: false,
+        preview_default_week : true,
+        burger : true,
     },
     methods: {
         show_update: function () {
             this.update_default_week = true,
-            this.preview_default_week = false
+            this.preview_default_week = false,
+            this.burger = false
         },
         hide_update: function () {
             this.update_default_week = false,
-            this.preview_default_week = true
+            this.preview_default_week = true,
+            this.burger = true
         }
     }
 });

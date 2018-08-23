@@ -198,11 +198,14 @@ class DefaultTripCreateView(SuccessMessageMixin, View):
     def get(self, request):
         user=self.request.user
         formset = DefaultTripFormSet(queryset=DefaultTrip.objects.filter(user=user), form_kwargs={'user': user},)
-        context = {}
-        context['trips'] = user.default_trip.all()
-        context['formset'] = formset
-        print("get ok")
-
+        day_label = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"]
+        context = {
+            'trips': user.default_trip.all(),
+            'formset': formset,
+            'day_label': day_label,
+            'range': range(5),
+            'form': DefaultTripForm
+        }
         return render(request, self.template_name, context)
 
     def post(self, request):
