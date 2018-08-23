@@ -89,7 +89,7 @@ class DefaultTrip(models.Model):
         verbose_name_plural = "Trajets Type"
 
     def __str__(self): 
-        return "Trajet par défaut"
+        return "Trajet type de {0} du {1}" .format(self.user.get_full_name(), self.day)
 
 class Trip(DefaultTrip):
 

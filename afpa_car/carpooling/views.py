@@ -6,8 +6,8 @@ from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView
 
-from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, ProfilImageUpdateForm, PreferencesForm, UserProfileUpdateForm, AddressForm, DefaultTripForm
-from .models import Car, Car_User, Address, DefaultTrip
+from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, ProfilImageUpdateForm, PreferencesForm, UserProfileUpdateForm, AddressForm, DefaultTripForm, DefaultTripFormSet
+from .models import Car, Car_User, Address, DefaultTrip, AfpaCenter
 from users.models import PrivateData, User, UserProfile
 
 class DashboardView(TemplateView):
@@ -197,27 +197,35 @@ class DefaultTripCreateView(SuccessMessageMixin, View):
 
     def get(self, request):
         user=self.request.user
-        form = DefaultTripForm(user=user)
+        formset = DefaultTripFormSet(queryset=DefaultTrip.objects.filter(user=user), form_kwargs={'user': user},)
         context = {}
         context['trips'] = user.default_trip.all()
-        context['form'] = form
+        context['formset'] = formset
+        print("get ok")
 
         return render(request, self.template_name, context)
 
     def post(self, request):
-        form = DefaultTripForm(data=request.POST, user=self.request.user)
-        if form.is_valid():
-            default_trip = form.save(commit=False)
-            default_trip.user = self.request.user
-            default_trip.has_for_destination = form.cleaned_data['has_for_destination'].address
-            default_trip.save()
+        user = self.request.user
+        formset = DefaultTripFormSet(request.POST, queryset=DefaultTrip.objects.filter(user=user), form_kwargs={'user': user})
+        if formset.is_valid():
+            print("formset is valid")
+            x = 0
+            for form in formset.forms:
+                default_trip = form.save(commit=False)
+                default_trip.user = user
+                default_trip.has_for_destination = user.user_profile.afpa_center.address
+                if not default_trip.day:
+                    default_trip.day = default_trip._meta.get_field('day').choices[x][1]
+                    x += 1
+                default_trip.save()
 
             if self.success_message:
                 messages.success(self.request, self.success_message)
 
             return redirect('carpooling:calendar')
         
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {'formset': formset })
 
     def form_valid(self, form):
         print("form valid")

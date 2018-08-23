@@ -5,7 +5,13 @@
 
 {% block section %}
 
+{% for trip in trips %}
 
+    {{ trip.day }}
+    {{ trip.evening_departure_time }}
+    <br>
+
+{% endfor %}
 
 
 <div id='default_week'>
@@ -28,71 +34,90 @@
                         </div>
 
                         <div class='row'>
-                                <div class='col-md-3'></div>
 
-                            <form class='col-md-5 mt-3 mb-3' method='POST'>
+                            <form class='col-md-12 mt-3 mb-3' method='POST'>
                                     {% csrf_token %}
-                                
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <div id="header_input_calendar" class="input-group-text">{{ form.morning_departure_time.label }}</div>
+                                    <div class="row">
+                                            {{ formset.management_form }}
+                                    {% for form in formset %}
+                                        <div class="col-md-3">
+                                         {{ form.as_table }}
                                         </div>
-                                        {{ form.morning_departure_time }}
-                                        <div class='message_errors'>
-                                            {% for error in form.morning_departure_time.errors %} {{ error }} {% endfor %}
-                                        </div>
+                                        {% endfor %}
                                     </div>
 
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <div id="header_input_calendar" class="input-group-text">{{ form.morning_arriving_time.label }}</div>
-                                        </div>
-                                        {{ form.morning_arriving_time }}
-                                        <div class='message_errors'>
-                                            {% for error in form.morning_arriving_time.errors %} {{ error }} {% endfor %}
-                                        </div>
-                                    </div>
+                                    {% comment %} <div class="row"> 
 
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <div id="header_input_calendar" class="input-group-text">{{ form.evening_departure_time.label }}</div>
-                                        </div>
-                                        {{ form.evening_departure_time }}
-                                        <div class='message_errors'>
-                                            {% for error in form.evening_departure_time.errors %} {{ error }} {% endfor %}
-                                        </div>
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <div id="header_input_calendar" class="input-group-text">{{ form.day.label }}</div>
-                                        </div>
-                                        {{ form.day }}
-                                        <div class='message_errors'>
-                                            {% for error in form.day.errors %} {{ error }} {% endfor %}
-                                        </div>
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <div id="header_input_calendar" class="input-group-text">{{ form.has_for_start.label }}</div>
-                                        </div>
-                                        {{ form.has_for_start }}
-                                        <div class='message_errors'>
-                                            {% for error in form.has_for_start.errors %} {{ error }} {% endfor %}
-                                        </div>
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <div id="header_input_calendar" class="input-group-text">{{ form.has_for_destination.label }}</div>
-                                        </div>
-                                        {{ form.has_for_destination }}
-                                        <div class='message_errors'>
-                                            {% for error in form.has_for_destination.errors %} {{ error }} {% endfor %}
-                                        </div>
-                                    </div>
+                                            <div class='col-md-12'>
+                                                <div id="card_car_content" class="card col-md-12">
                                     
+                                                    <div class='row'>
+                                                        <div id="address_label" class="card-header bg-default col-md-12">
+                                                            Lundi
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12 mt-3">                                                                                           
+                                                        
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <div id="header_input_calendar" class="input-group-text">{{ form.morning_departure_time.label }}</div>
+                                                                </div>
+                                                                {{ form.morning_departure_time }}
+                                                                <div class='message_errors'>
+                                                                    {% for error in form.morning_departure_time.errors %} {{ error }} {% endfor %}
+                                                                </div>
+                                                            </div>
+                        
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <div id="header_input_calendar" class="input-group-text">{{ form.morning_arriving_time.label }}</div>
+                                                                </div>
+                                                                {{ form.morning_arriving_time }}
+                                                                <div class='message_errors'>
+                                                                    {% for error in form.morning_arriving_time.errors %} {{ error }} {% endfor %}
+                                                                </div>
+                                                            </div>
+                        
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <div id="header_input_calendar" class="input-group-text">{{ form.evening_departure_time.label }}</div>
+                                                                </div>
+                                                                {{ form.evening_departure_time }}
+                                                                <div class='message_errors'>
+                                                                    {% for error in form.evening_departure_time.errors %} {{ error }} {% endfor %}
+                                                                </div>
+                                                            </div>
+                        
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <div id="header_input_calendar" class="input-group-text">{{ form.has_for_start.label }}</div>
+                                                                </div>
+                                                                {{ form.has_for_start }}
+                                                                <div class='message_errors'>
+                                                                    {% for error in form.has_for_start.errors %} {{ error }} {% endfor %}
+                                                                </div>
+                                                            </div>
+                        
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <div id="header_input_calendar" class="input-group-text">{{ form.has_for_destination.label }}</div>
+                                                                </div>
+                                                                {{ form.has_for_destination }}
+                                                                <div class='message_errors'>
+                                                                    {% for error in form.has_for_destination.errors %} {{ error }} {% endfor %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5 mt-3 mb-4">
+                                                            <a href="" id="btn_card_footer">Assigner à toute la semaine</a>
+                                                        </div>
+                                                    </div>
+                                    
+                                                </div>
+                                            </div>
+                                    </div> {% endcomment %}
+                                                                                                    
 
                                 <button type='submit' class='btn btn-success' >Valider</button>
                                 <button class='btn btn-danger' @click='hide_update' >Annuler</button>
@@ -102,7 +127,7 @@
                         </div>
                         
                         <div class='row'>
-                            <div class='col-md-3'></div>
+                            <div class='col-md-5'></div>
                             <div class='col-md-2 require-input-legend mt-2'><p id='text_legend'>Champ obligatoire</p> </div>
                         </div>
                      

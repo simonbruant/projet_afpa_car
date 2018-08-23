@@ -1,8 +1,8 @@
 new Vue({
     el: '#default_week',
     data: {
-        update_default_week: false,
-        preview_default_week : true,
+        update_default_week: true,
+        preview_default_week : false,
     },
     methods: {
         show_update: function () {
