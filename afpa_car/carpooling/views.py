@@ -15,8 +15,12 @@ class DashboardView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['cars'] = Car.objects.filter(users=self.request.user)
-        context['addresses'] = Address.objects.filter(user=self.request.user)
+        user = self.request.user
+        context = {
+            'cars': Car.objects.filter(users=user),
+            'addresses': Address.objects.filter(user=user),
+            'trips': user.default_trip.all(),
+        }
         
         return context
 
@@ -193,7 +197,6 @@ class AddressDeleteView(SuccessMessageMixin, DeleteView):
 class DefaultTripCreateView(SuccessMessageMixin, View):
     template_name = 'carpooling/calendar.html'
     success_message = "Mise à jour de la semaine type"
-
 
     def get(self, request):
         user=self.request.user

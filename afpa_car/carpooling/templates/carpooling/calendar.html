@@ -11,7 +11,7 @@
     <div class='row'>
         <div class='col-md-12'>
 
-            <div class="card mt-3 mb-3">
+            <div class="card mt-3 mb-3" id="carte_semaine">
                 <div id="titre_calendar" class="card-header bg-success col-md-12">Votre semaine type<span @click="show_update" class="fas fa-pencil-alt" v-if="burger" style="float: right"></span></div>
                     <div v-if='update_default_week'>
 
@@ -35,7 +35,7 @@
                                     {% for i in range %}
                                     {% if forloop.counter0 <= 2 %}
                                         <div class="col-md-4 mb-3">
-                                            <div class="card mb-3">
+                                            <div class="card mb-3" id="jour_type">
                                                 <div id="titre_calendar" class="card-header bg-success">{{ day_label|index:i }}</div>
                                                 <div class="card-content">
                                                     <div class="row">
@@ -50,7 +50,7 @@
                                     {% elif forloop.counter0 == 3 %}
                                         <div class="col-md-2"></div>
                                         <div class="col-md-4 mb-3">
-                                            <div class="card mb-3">
+                                            <div class="card mb-3" id="jour_type">
                                                 <div id="titre_calendar" class="card-header bg-success">{{ day_label|index:i }}</div>
                                                 <div class="card-content">
                                                     <div class="row">
@@ -64,7 +64,7 @@
                                         </div> 
                                     {% else %}
                                         <div class="col-md-4">
-                                            <div class="card mb-3">
+                                            <div class="card mb-3" id="jour_type">
                                                 <div id="titre_calendar" class="card-header bg-success">{{ day_label|index:i }}</div>
                                                 <div class="card-content">
                                                     <div class="row">
@@ -105,51 +105,17 @@
                                 <td id="tableSemaineType" class="p-1"><b>Heure de retour</b></td>
                                 <td id="tableSemaineType" class="p-1"><b>Arrivée estimée</b></td>
                             </tr>
+                            {% for trip in trips %}
                             <tr>
-                                <td>Lundi</td>
-                                <td>Domicile</td>
-                                <td>7:00</td>
-                                <td>8:15</td>
-                                <td>AFPA</td>
-                                <td>18:00</td>
-                                <td>19:00</td>
+                                <td>{{ trip.day }}</td>
+                                <td>{{ trip.has_for_start }}</td>
+                                <td>{{ trip.morning_departure_time }}</td>
+                                <td>{{ trip.morning_arriving_time }}</td>
+                                <td>{{ trip.has_for_destination }}</td>
+                                <td>{{ trip.evening_departure_time }}</td>
+                                <td>{{ trip.evening_estimated_arriving_time }}</td>
                             </tr>
-                            <tr>
-                                <td>Mardi</td>
-                                <td>Domicile</td>
-                                <td>6:50</td>
-                                <td>8:15</td>
-                                <td>AFPA</td>
-                                <td>17:50</td>
-                                <td>19:00</td>
-                            </tr>
-                            <tr>
-                                <td>Mercredi</td>
-                                <td>Domicile</td>
-                                <td>7:00</td>
-                                <td>8:15</td>
-                                <td>AFPA</td>
-                                <td>18:00</td>
-                                <td>19:00</td>
-                            </tr>
-                            <tr>
-                                <td>Jeudi</td>
-                                <td>Domicile</td>
-                                <td>6:50</td>
-                                <td>8:15</td>
-                                <td>AFPA</td>
-                                <td>17:50</td>
-                                <td>19:00</td>
-                            </tr>
-                            <tr>
-                                <td>Vendredi</td>
-                                <td>Domicile</td>
-                                <td>7:00</td>
-                                <td>8:15</td>
-                                <td>AFPA</td>
-                                <td>18:00</td>
-                                <td>19:00</td>
-                            </tr>
+                            {% endfor %}
                         </table>
 
 
@@ -167,6 +133,7 @@
         <div class="row">
             <div class="col-md-6" id="conteneur_calendrier">
                 <div id="datepicker" class="mt-3 mb-3">
+                    
                     <vuejs-datepicker 
                         :inline="true" 
                         :monday-first="true" 
@@ -174,6 +141,7 @@
                         :language="fr" 
                         calendar-class="datepicker_calendar">
                     </vuejs-datepicker>
+                    
                 </div>
             </div>
             <div class="col-md-6">                     
