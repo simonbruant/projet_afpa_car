@@ -38,7 +38,7 @@ class Car(models.Model):
     fuel        = models.CharField(max_length=20, choices=FUEL, verbose_name="Type de carburant")    
     amount_of_free_seats = models.IntegerField(default=1, verbose_name="Nombre de places libres")
 
-    users       = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='cars', verbose_name="Utilisateur", through= "Car_User")
+    user       = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='cars', null=True, verbose_name="Utilisateur", on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Voiture"
@@ -47,16 +47,9 @@ class Car(models.Model):
     def __str__(self):
         return self.model
 
-class Car_User(models.Model):
-    car     = models.ForeignKey(Car, on_delete=models.CASCADE, verbose_name="Vehicule")
-    user    = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="", )
-
-    def __str__(self): 
-        return ""
-
 class AfpaCenter(models.Model):
     center_name = models.CharField(max_length=50, verbose_name="Nom du centre")
-    address     = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Adresse")
+    address     = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Adresse", related_name='addresses')
 
     class Meta:
         verbose_name = "Centre AFPA"

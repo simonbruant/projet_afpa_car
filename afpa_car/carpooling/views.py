@@ -5,17 +5,17 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView
 
 from .forms import PrivateDataUpdateForm, UserUpdateForm, CarForm, ProfilImageUpdateForm, PreferencesForm, UserProfileUpdateForm, AddressForm
-from .models import Car, Car_User, Address
+from .models import Car, Address
 from users.models import PrivateData, User, UserProfile
 
 class DashboardView(TemplateView):
     template_name = 'carpooling/dashboard.html'
 
     def get_context_data(self, **kwargs):
+        user = self.request.user
         context = super().get_context_data(**kwargs)
-        context['cars'] = Car.objects.filter(users=self.request.user)
-        context['addresses'] = Address.objects.filter(user=self.request.user)
-        
+        context['cars'] = user.cars.all()
+        context['addresses'] = user.addresses.all()
         return context
 
 class CalendarView(TemplateView):
@@ -30,8 +30,11 @@ class UserUpdateView(SuccessMessageMixin, TemplateView):
         user_form = UserUpdateForm(instance=user)
         user_profile_form = UserProfileUpdateForm(instance=user.user_profile)
         
-        context = {'user_form': user_form, 'user_profile_form': user_profile_form,}
-        context['cars'] = Car.objects.filter(users=self.request.user)
+        context = {
+            'user_form': user_form, 
+            'user_profile_form': user_profile_form,
+            'cars': user.cars.all()
+        }
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -40,12 +43,14 @@ class UserUpdateView(SuccessMessageMixin, TemplateView):
         user_profile_form = UserProfileUpdateForm(request.POST, instance=user.user_profile)
         if user_form.is_valid() and user_profile_form.is_valid():
             user = user_form.save()
-            user_profile = user_profile_form.save(commit=False)
-            user_profile.user = user
-            user_profile.save()
+            user_profile_form.save()
             return redirect('carpooling:general_infos')
 
-        context = {'user_form': user_form, 'user_profile_form': user_profile_form,}
+        context = {
+            'user_form': user_form, 
+            'user_profile_form': user_profile_form,
+            'cars': user.cars.all()
+        }
         return render(request, self.template_name, context)
 
 class PrivateDataUpdateView(SuccessMessageMixin, UpdateView):
@@ -55,19 +60,18 @@ class PrivateDataUpdateView(SuccessMessageMixin, UpdateView):
     form_class = PrivateDataUpdateForm
     
     def get_object(self, queryset=None):
-        user = PrivateData.objects.get(user=self.request.user)       
-        return user
+        private_data = self.request.user.private_data      
+        return private_data
         
 
 class ProfilImageUpdateView(UpdateView):
     template_name = 'carpooling/profil/photo.html'
     success_url = reverse_lazy('carpooling:photo')
     form_class = ProfilImageUpdateForm
-    context_object_name = 'user_profile'
 
     def get_object(self, queryset=None):
-        user = UserProfile.objects.get(user=self.request.user)       
-        return user
+        user_profile = self.request.user.user_profile       
+        return user_profile
         
 class PreferencesUpdateView(SuccessMessageMixin, UpdateView):
     model = UserProfile
@@ -77,7 +81,7 @@ class PreferencesUpdateView(SuccessMessageMixin, UpdateView):
     form_class = PreferencesForm
 
     def get_object(self, queryset=None):
-        user_profile = UserProfile.objects.get(user=self.request.user)       
+        user_profile = self.request.user.user_profile       
         return user_profile
         
 class CarCreateView(SuccessMessageMixin, CreateView):
@@ -88,20 +92,16 @@ class CarCreateView(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['cars'] = Car.objects.filter(users=self.request.user)
+        context['cars'] = self.request.user.cars.all()
         return context
 
     def form_valid(self, form):
         user = self.request.user
         car = form.save()
-        
         car.model = form.cleaned_data['model'].capitalize()
-        car_user = Car_User()
-        car_user.car = car
-        car_user.user = user
+        car.user = user
         car.save()
-        car_user.save()
-        return super(CarCreateView, self).form_valid(form)
+        return super().form_valid(form)
 
 class CarUpdateView(SuccessMessageMixin, UpdateView):
     model = Car
@@ -114,7 +114,7 @@ class CarUpdateView(SuccessMessageMixin, UpdateView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(users=self.request.user)
+        queryset = queryset.filter(user=self.request.user)
         return queryset
 
 class CarDeleteView(SuccessMessageMixin, DeleteView):
@@ -125,7 +125,7 @@ class CarDeleteView(SuccessMessageMixin, DeleteView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(users=self.request.user)
+        queryset = queryset.filter(user=self.request.user)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -151,7 +151,7 @@ class AddressCreateView(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(AddressCreateView, self).get_context_data(**kwargs)
-        context['addresses'] = Address.objects.filter(user=self.request.user)
+        context['addresses'] = self.request.user.addresses.all()
         return context
 
 

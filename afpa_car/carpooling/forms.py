@@ -78,10 +78,23 @@ class CarForm(forms.ModelForm):
             'fuel': 'Carburant',
         }
 
+    def clean_amount_of_free_seats(self):
+        amount_of_free_seats = int(self.cleaned_data['amount_of_free_seats'])
+        if amount_of_free_seats < 1:
+            raise forms.ValidationError('Il doit y avoir au moins une place de libre dans votre véhicule')
+        return amount_of_free_seats
+
+    def clean_consumption(self):
+        consumption = int(self.cleaned_data['consumption'])
+        if consumption < 1:
+            raise forms.ValidationError('Le nombre entré est incorrect')
+        return consumption
+
 class ProfilImageUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('profile_image', )
+
     profile_image = forms.ImageField(label='Image de Profil', required=False,
                                     error_messages ={'invalid': "Importer uniquement un fichier .png ou .jpg"},
                                     widget=FileInput(attrs={'class': 'custom-file-input',
@@ -91,12 +104,12 @@ class ProfilImageUpdateForm(forms.ModelForm):
 
     def save(self, commit=False, *args, **kwargs):
         user_profile = super(ProfilImageUpdateForm, self).save(commit=False, *args, **kwargs)
+        
         if self.cleaned_data['remove_profile_image']:
             user_profile.profile_image = None
             user_profile.save()
         else:
             user_profile.profile_image = self.cleaned_data['profile_image']
-            print(user_profile.profile_image)
             user_profile.save()
         return user_profile
 
