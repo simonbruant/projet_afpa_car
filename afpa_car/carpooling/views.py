@@ -103,7 +103,7 @@ class CarCreateView(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         user = self.request.user
-        car = form.save()
+        car = form.save(commit=False)
         car.model = form.cleaned_data['model'].capitalize()
         car.user = user
         car.save()
