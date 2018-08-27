@@ -2,10 +2,11 @@
 
 {% block section %}
 <h3>Thread for {% if user != object.first %}{{ object.first.username }}{% else %}{{ object.second.username }}{% endif %}</h3>
-<ul id='chat-items'>
-{% for chat in object.chatmessage_set.all %}
 
-<li>{{ chat.user.username }} : {{ chat.message }}</li>
+<ul id='chat-items'>
+{% for message in object.chatmessage_set.all %}
+
+<li>{{ message.user.username }} : {{ message.message }}</li>
 
 {% endfor %}
 </ul>
@@ -41,7 +42,7 @@ var socket = new ReconnectingWebSocket(endpoint)
 socket.onmessage = function(e) {
     console.log('message', e)
     var chatDataMsg = JSON.parse(e.data)
-    chatHolder.append('<li>' + chatDataMsg.message + " via " + chatDataMsg.username + '</li>')
+    chatHolder.append('<li>' + chatDataMsg.username + " : " + chatDataMsg.message + '</li>')
 }
 socket.onopen = function(e) {
     console.log('open', e)
