@@ -38,7 +38,7 @@ class Car(models.Model):
     fuel        = models.CharField(max_length=20, choices=FUEL, verbose_name="Type de carburant")    
     amount_of_free_seats = models.IntegerField(default=1, verbose_name="Nombre de places libres")
 
-    user       = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='cars', null=True, verbose_name="Utilisateur", on_delete=models.CASCADE)
+    user       = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='cars', verbose_name="Utilisateur", on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Voiture"
@@ -74,8 +74,8 @@ class DefaultTrip(models.Model):
     day                             = models.CharField(max_length=10, choices=DAY, verbose_name="Jour")
 
     user                = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="default_trips" ,verbose_name="Utilisateur")
-    has_for_start       = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Départ")
-    has_for_destination = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Destination")
+    has_for_start       = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="start", verbose_name="Départ")
+    has_for_destination = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="destination", verbose_name="Destination")
 
     class Meta:
         verbose_name = "Trajet Type"
