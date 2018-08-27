@@ -1,6 +1,6 @@
 #burger {
     float: right;
-    color: black;
+    color: White;
 }
 
 .card-header {
@@ -23,3 +23,28 @@
 #conteneur_calendrier {
     border-right: 2px solid lightgray;
 }
+
+#header_input_calendar{
+    min-width: 220px;
+}
+
+#message_update_calendar {
+    color : #E3007E;
+}
+
+#titre_calendar{
+    color : white;
+}
+
+#carte_semaine{
+    border: none;
+}
+
+#jour_type{
+    border : 1px solid;
+    border-color: lightgray; 
+    box-shadow:0 0 3px rgba(0,0,0,0.4);
+}
+
+/* ## DATEPICKER ## */
+

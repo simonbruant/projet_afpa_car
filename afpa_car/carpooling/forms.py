@@ -1,7 +1,9 @@
-from django import forms
-from django.forms import TextInput, RadioSelect, Select, DateInput, FileInput, CheckboxInput
+from functools import partial, wraps
 
-from .models import Car, AfpaCenter, Address
+from django import forms
+from django.forms import TextInput, RadioSelect, Select, DateInput, FileInput, CheckboxInput, TimeInput, CheckboxSelectMultiple, modelformset_factory
+
+from .models import Car, AfpaCenter, Address, DefaultTrip
 from users.models import PrivateData, User, UserProfile
 
 
@@ -136,3 +138,29 @@ class AddressForm(forms.ModelForm):
             'street_name': 'Nom de la Rue',
             'address_label': "Libellé de l'Adresse",
         }
+
+class DefaultTripForm(forms.ModelForm):
+
+    has_for_start = forms.ModelChoiceField(queryset=None, widget=Select(attrs={'class': 'custom-select'}), 
+                                                 label="Départ" )
+                                                
+    def __init__(self, user=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['has_for_start'].queryset = Address.objects.filter(user=user)
+
+    class Meta:
+        model = DefaultTrip
+        fields =('morning_departure_time', 'morning_arriving_time', 'evening_departure_time','has_for_start' )
+        widgets = {
+            'morning_departure_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
+            'morning_arriving_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
+            'evening_departure_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
+        }
+
+DefaultTripFormSet = modelformset_factory(DefaultTrip ,form=DefaultTripForm,
+                                        extra=5, max_num=5, 
+                                        fields = ('morning_departure_time', 'morning_arriving_time', 
+                                                    'evening_departure_time','has_for_start',))
+
+
+

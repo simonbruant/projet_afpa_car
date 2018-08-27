@@ -42,31 +42,13 @@
                         <td class="p-1"><b>Horaire de départ</b></td>
                         <td class="p-1"><b>Horaire de retour</b></td>
                     </tr>
-                    <tr>
-                        <td class="p-1">Lundi</td>
-                        <td>7:00</td>
-                        <td>18:00</td>
-                    </tr>
-                    <tr> 
-                        <td class="p-1">Mardi</td>
-                        <td>6:50</td>
-                        <td>17:50</td>
-                    </tr>
-                    <tr> 
-                        <td class="p-1">Mercredi</td>
-                        <td>7:00</td>
-                        <td>18:00</td>
-                    </tr>
-                    <tr> 
-                        <td class="p-1">Jeudi</td>
-                        <td>6:50</td>
-                        <td>17:50</td>
-                    </tr>
-                    <tr> 
-                        <td class="p-1">Vendredi</td>
-                        <td>7:00</td>
-                        <td>18:00</td>
-                    </tr>
+                    {% for trip in trips %}
+                        <tr>
+                            <td>{{ trip.day }}</td>
+                            <td>{{ trip.morning_departure_time }}</td>
+                            <td>{{ trip.evening_departure_time }}</td>
+                        </tr>
+                    {% endfor %}
                 </table>
             </div>
         </div>
