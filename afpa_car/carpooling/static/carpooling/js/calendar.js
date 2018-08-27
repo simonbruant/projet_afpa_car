@@ -1,3 +1,5 @@
+
+
 new Vue({
     el: '#default_week',
     data: {
@@ -19,18 +21,27 @@ new Vue({
     }
 });
 
-const app = new Vue({
+new Vue({
     el: '#datepicker',
     components: {
         vuejsDatepicker
     },
-    data: { fr: { 
-        language: 'Français',
-        months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'], 
-        monthsAbbr: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'], 
-        days: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
-        yearSuffix: '' } }
+    data: { 
+        fr: { 
+            language: 'Français',
+            months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'], 
+            monthsAbbr: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'], 
+            days: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+            yearSuffix: '' },
+
+        },
+
     });
+
+    
+
+
+    
 
 
     

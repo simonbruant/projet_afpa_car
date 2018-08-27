@@ -36,6 +36,7 @@
         <div class="card mt-3 mb-3">
             <div class="card-header bg-success">Vos trajets de la semaine</div>
             <div class="card-content">
+                {% if trips %}
                 <table class="table-striped table-bordered">
                     <tr>
                         <td class="p-1"><b>Jour</b></td>
@@ -50,6 +51,11 @@
                         </tr>
                     {% endfor %}
                 </table>
+                {% else %}
+                    <div id="alertes_profil">
+                        <p class="mt-2"><span class="fas fa-exclamation"><a id="alert_dashboard" href="{% url 'carpooling:calendar' %}"> Vous n'avez pas renseigné de semaine type.</span></a></p>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

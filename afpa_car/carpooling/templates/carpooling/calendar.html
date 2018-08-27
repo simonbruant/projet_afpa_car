@@ -13,55 +13,55 @@
 
             <div class="card mt-3 mb-3" id="carte_semaine">
                 <div id="titre_calendar" class="card-header bg-success col-md-12">Votre semaine type<span @click="show_update" class="fas fa-pencil-alt" v-if="burger" style="float: right"></span></div>
-                    <div v-if='update_default_week'>
-
-                        <div class='row'></div>
-
-                        <div id="message_update_calendar" class="col-md-12 mt-3">
-                            {% if messages %}
-                            {% for message in messages %}
-                                {{ message }}
-                            {% endfor %}
-                            {% endif %}
-                        </div>
-
-                        <div class='row'>
-
-                            <div class="col-md-2"></div>
-                            <form class='col-md-12 mt-3 mb-3' method='POST'>
-                                {% csrf_token %}
-                                <div class="row">
-                                    {{ formset.management_form }}
-                                    {% for i in range %}
-                                    {% if forloop.counter0 <= 2 %}
-                                        <div class="col-md-4 mb-3">
-                                            <div class="card mb-3" id="jour_type">
-                                                <div id="titre_calendar" class="card-header bg-success">{{ day_label|index:i }}</div>
-                                                <div class="card-content">
-                                                    <div class="row">
-                                                        <div class="col-md-2"></div>
-                                                        <div class="col-md-8 mb-2">
-                                                        {{ formset|index:i }}
-                                                        </div>
-                                                    </div>
+                <div v-if='update_default_week'>
+                    
+                    <div class='row'></div>
+                    
+                    <div class="col-md-12 mt-3 message_update_calendar">
+                        {% if messages %}
+                        {% for message in messages %}
+                        {{ message }}
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    
+                    <div class='row'>
+                        
+                        <div class="col-md-2"></div>
+                        <form class='col-md-12 mt-3 mb-3' method='POST'>
+                            {% csrf_token %}
+                            <div class="row">
+                                {{ formset.management_form }}
+                                {% for i in range %}
+                                {% if forloop.counter0 <= 2 %}
+                                <div class="col-md-4 mb-3">
+                                    <div class="card mb-3" id="jour_type">
+                                        <div id="titre_calendar" class="card-header bg-success">{{ day_label|index:i }}</div>
+                                        <div class="card-content">
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-8 mb-2">
+                                                    {{ formset|index:i }}
+                                                </div>
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
+                                    </div> 
                                     {% elif forloop.counter0 == 3 %}
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-4 mb-3">
-                                            <div class="card mb-3" id="jour_type">
-                                                <div id="titre_calendar" class="card-header bg-success">{{ day_label|index:i }}</div>
-                                                <div class="card-content">
-                                                    <div class="row">
-                                                        <div class="col-md-2"></div>
-                                                        <div class="col-md-8 mb-2">
-                                                            {{ formset|index:i }}
-                                                        </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card mb-3" id="jour_type">
+                                            <div id="titre_calendar" class="card-header bg-success">{{ day_label|index:i }}</div>
+                                            <div class="card-content">
+                                                <div class="row">
+                                                    <div class="col-md-2"></div>
+                                                    <div class="col-md-8 mb-2">
+                                                        {{ formset|index:i }}
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
+                                    </div> 
                                     {% else %}
                                         <div class="col-md-4">
                                             <div class="card mb-3" id="jour_type">
@@ -77,24 +77,25 @@
                                             </div>
                                         </div> 
                                         {% endif %}
-                                    {% endfor %}  
+                                        {% endfor %}  
                                         
-                                </div>
-
-                                <button type='submit' class='btn btn-success' >Valider</button>
-                                <button type='button' class='btn btn-danger' @click='hide_update' >Annuler</button>
-                    
-                            </form> 
+                                    </div>
+                                
+                                    <button type='submit' class='btn btn-success' >Valider</button>
+                                    <button type='button' class='btn btn-danger' @click='hide_update' >Annuler</button>
+                                    
+                                </form> 
+                            </div>
+                            
+                            <div class='row'>
+                                <div class='col-md-5'></div>
+                                <div class='col-md-2 require-input-legend mt-2'><p id='text_legend'>Champ obligatoire</p> </div>
+                            </div>
+                            
                         </div>
-                        
-                        <div class='row'>
-                            <div class='col-md-5'></div>
-                            <div class='col-md-2 require-input-legend mt-2'><p id='text_legend'>Champ obligatoire</p> </div>
-                        </div>
-                     
-                    </div>
 
                     <div v-if='preview_default_week'>
+                        {% if trips %}
                         <table class="table-striped table-bordered">
                             <tr>
                                 <td id="tableSemaineType" class="p-1"><b>Jour</b></td>
@@ -117,7 +118,10 @@
                             </tr>
                             {% endfor %}
                         </table>
-
+                        {% else %}
+                            <p class='mt-3 message_update_calendar'> Vous n'avez pas renseigné de semaine type </p>
+                            <button @click="show_update" class='btn btn-success'>Creer une semaine type</button>
+                        {% endif %}
 
                 </div>
 
@@ -128,70 +132,56 @@
 </div>
 
 <div class="card">
-    <div id="titre_calendar" class="card-header bg-success">Votre calendrier</div>
-    <div class="card-content">
-        <div class="row">
-            <div class="col-md-6" id="conteneur_calendrier">
-                <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-6">
+        <div id="titre_calendar" class="card-header bg-success">Votre calendrier</div>
+        <div class="card-content">
+            <div class="row">
+                <div class="col-md-6" id="conteneur_calendrier">
                     <div id="datepicker" class="mt-3 mb-3">
-                        
-                        <div class="input-group-prepend">
-                            <div id="header_input_profil_general_infos" class="input-group-text">Date :</div>
-                            <input type="date" name="date_select">
-                        </div>
+                        <vuejs-datepicker 
+                            :inline="true" 
+                            :monday-first="true" 
+                            :full-month-name="true" 
+                            :language="fr" 
+                            calendar-class="datepicker_calendar"
+                            >
+                        </vuejs-datepicker>
+
                     </div>
                 </div>
-
-                    
-                <vuejs-datepicker 
-                    :inline="true" 
-                    :monday-first="true" 
-                    :full-month-name="true" 
-                    :language="fr" 
-                    calendar-class="datepicker_calendar">
-                </vuejs-datepicker>
-                    
-                    
+                <div class="col-md-6">              
                 </div>
-            </div>
-            <div class="col-md-6">                     
             </div>
         </div>
     </div>
-</div>
 
-<script type="text/javascript" src="{% static 'js/vue.js' %}"></script>
-<script type="text/javascript" src="https://unpkg.com/vuejs-datepicker"></script>
-<script type="text/javascript" src="../../static/carpooling/js/calendar.js"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/vue.js' %}"></script>
+    <script type="text/javascript" src="https://unpkg.com/vuejs-datepicker"></script>
+    <script type="text/javascript" src="../../static/carpooling/js/calendar.js"></script>
 
-<style>
-    
-    .datepicker_calendar {
-        border: none;
-        color: white;
-        background-color: #28A745;
-        border-radius: 5%;
-    }
-    .vdp-datepickercalendar .cell.selected {
-        background: #E3007E;
-        border-radius: 20%;
-    }
-    .vdp-datepickercalendar .cell.selected:hover {
-        background: #E3007E;
-        border-radius: 20%;
-    }
-    .vdp-datepickercalendar .cell:not(.blank):not(.disabled).day:hover, .vdp-datepickercalendar .cell:not(.blank):not(.disabled).month:hover, .vdp-datepickercalendar .cell:not(.blank):not(.disabled).year:hover {
-        border: 1px solid #E3007E;
-        border-radius: 20%;
-    }
-    .vdp-datepickercalendar header .prev:not(.disabled):hover, .vdp-datepickercalendar header .next:not(.disabled):hover, .vdp-datepickercalendar header .up:not(.disabled):hover {
-        background: transparent;
-    }
-    
-</style>
-    
 
+    <style>
+
+        /* ## DATEPICKER ## */
+
+        .datepicker_calendar {
+            border: none;
+            color: black;
+            background-color: lightgray;
+            border-radius: 5%;
+        }
+        .vdp-datepicker__calendar .cell.selected {
+            background: #E3007E;
+            border-radius: 20%;
+        }
+        .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover, .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover, .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
+            border: 1px solid #E3007E;
+            border-radius: 20%;
+        }
+        .vdp-datepicker__calendar .cell.selected:hover {
+            background: #E3007E;
+        }
+            
+    </style>
 
     {% endblock section %}
