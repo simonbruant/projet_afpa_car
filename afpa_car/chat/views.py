@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 from django.views.generic.edit import FormMixin
 
 from django.views.generic import DetailView, ListView
@@ -14,8 +15,7 @@ class InboxView(LoginRequiredMixin, ListView):
     template_name = 'chat/inbox.html'
     
     def get_queryset(self):
-        return Thread.objects.by_user(self.request.user)
-
+        return Thread.objects.by_user(self.request.user).order_by('-updated')
 
 class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
     template_name = 'chat/thread.html'
@@ -55,6 +55,8 @@ class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
         thread = self.get_object()
         user = self.request.user
         message = form.cleaned_data.get("message")
+        thread.updated = timezone.now
+        thread.save()
         ChatMessage.objects.create(user=user, thread=thread, message=message)
         return super().form_valid(form)
 

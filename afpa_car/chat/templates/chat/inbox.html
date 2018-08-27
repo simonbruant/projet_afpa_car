@@ -1,6 +1,13 @@
 {% extends "base.html" %}
+{% load inbox_tags %}
 
-{% block content %}
+{% block section %}
 
+{% for thread in object_list %}
+<a href="{% url 'chat:thread' username=thread|choose:user %}"> 
+   <p>Conversation avec : {{ thread|choose:user }} / dernier message : {{ thread.chatmessage_set.all.last.message }} / 
+       {{ thread.chatmessage_set.all.last.timestamp }}</p>
+</a>
+{% endfor %} 
 
 {% endblock %}

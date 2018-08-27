@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block section %}
-<h3>Thread for {% if user != object.first %}{{ object.first }}{% else %}{{ object.second }}{% endif %}</h3>
+<h3>Thread for {% if user != object.first %}{{ object.first.username }}{% else %}{{ object.second.username }}{% endif %}</h3>
 <ul id='chat-items'>
 {% for chat in object.chatmessage_set.all %}
 
-<li>{{ chat.message }} via {{ chat.user }}</li>
+<li>{{ chat.user.username }} : {{ chat.message }}</li>
 
 {% endfor %}
 </ul>
