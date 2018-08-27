@@ -28,7 +28,7 @@ SECRET_KEY = 'j@&a0cmkkh)_00n#(jze%=sbofi&u0*d1xh1&xb_v2+2#f0d26'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','10.111.62.43', '127.0.0.1', '10.111.61.90', '10.111.62.4', '10.111.61.88', '192.168.1.42']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
+    'chat',
     'users',
     'carpooling',
 ]
@@ -56,6 +58,18 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'afpa_car.urls'
+
+ASGI_APPLICATION = "afpa_car.routing.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+            # "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')]
+        },
+    },
+}
 
 TEMPLATES = [
     {
