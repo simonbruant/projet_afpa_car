@@ -7,7 +7,7 @@ class AddressAdmin(admin.ModelAdmin):
 
 class CarAdmin(admin.ModelAdmin):
     model = Car
-    list_display('model', 'user')
+    list_display = ('model', 'user')
     
 class AfpaCenterAdmin(admin.ModelAdmin):
     model = AfpaCenter
