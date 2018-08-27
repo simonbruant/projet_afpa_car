@@ -1,19 +1,44 @@
 /* ###### Fonction d'affichage pour la side-bar ###### */
-$(document).ready(function () {
-    $("#filtre_url_contenu a").each(function (index) {
-        if (this.href == document.location.href) {
-            $(this).addClass('active')
-        }
-        /* adresses */
-        else if (this.href == document.location.href.substr(0, 40)) {
-            $(this).addClass('active')
-        }
-        /* vehicule */
-        else if (this.href == document.location.href.substr(0, 41)) {
-            $(this).addClass('active')
-        }
-    })
+// $(document).ready(function () {
+//     $("#filtre_url_contenu a").each(function (index) {
+//         if (this.href == document.location.href) {
+//             $(this).addClass('active')
+//             console.log("ok jquery")
+//         }
+//         /* adresses */
+//         else if (this.href == document.location.href.substr(0, 40)) {
+//             $(this).addClass('active')
+//         }
+//         /* vehicule */
+//         else if (this.href == document.location.href.substr(0, 41)) {
+//             $(this).addClass('active')
+//         }
+//     })
+// });
+
+new Vue({
+    el: '#test',
+    data: {
+
+    },
+    created: function() { 
+        $("#filtre_url_contenu a").each(function (index) {
+            if (this.href == document.location.href) {
+                $(this).addClass('active')
+                console.log("ok vuejs")
+            }
+            /* adresses */
+            else if (this.href == document.location.href.substr(0, 40)) {
+                $(this).addClass('active')
+            }
+            /* vehicule */
+            else if (this.href == document.location.href.substr(0, 41)) {
+                $(this).addClass('active')
+            }
+        })
+    }
 });
+
 
 /* ###### Vue.Js pour les préférences ###### */
 new Vue({

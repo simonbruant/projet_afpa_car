@@ -4,7 +4,6 @@
 {% block css %} "{% static 'carpooling/css/profil.css' %}" {% endblock css %}
 
 {% block section %}
-
 <div id="profile_body">
     <div id="container_profil" class="container">
         <div class="row">
@@ -13,6 +12,7 @@
                     <div class="card nav" active-text-color="#F1F1F1">
                         <div id="titre_profil" class="card-header bg-success">Profil</div>
                         <div class="list-group side-menu" id="filtre_url_contenu">
+                                <div id="test">
                             <a href="{% url 'carpooling:general_infos' %}" class="list-group-item link_sidebar">Informations Générales</a>
                             <a href="{% url 'carpooling:private_infos' %}"   class="list-group-item link_sidebar" id="informations_privees">Informations Privées</a>
                             <a href="{% url 'carpooling:photo' %}"           class="list-group-item link_sidebar" id="photo" >Photo</a>
@@ -22,6 +22,7 @@
                             <a href="{% url 'carpooling:password' %}"        class="list-group-item link_sidebar">Mot de Passe</a>
                             <a href="{% url 'carpooling:preferences' %}"     class="list-group-item link_sidebar">Préférences</a>
                             <a href="{% url 'carpooling:address' %}"         class="list-group-item link_sidebar">Adresses</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -37,6 +38,7 @@
 </div>
 
 <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/vue.js' %}"></script>
 <script type="text/javascript" src="{% static 'carpooling/js/profil.js' %}"></script>
 
 {% endblock %}
