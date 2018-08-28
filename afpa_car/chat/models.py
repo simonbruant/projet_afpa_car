@@ -52,6 +52,13 @@ class Thread(models.Model):
             broadcast_msg_to_chat(msg, group_name=self.room_group_name, user='admin')
             return True
         return False
+    
+    def __str__(self):
+        return "Conversation entre {} et {}".format(self.first.username, self.second.username)
+
+    class Meta:
+        verbose_name = 'Conversation'
+        verbose_name_plural = 'Conversations'
 
 
 class ChatMessage(models.Model):
