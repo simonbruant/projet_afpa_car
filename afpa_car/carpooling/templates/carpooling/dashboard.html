@@ -65,9 +65,9 @@
         <h3 class="mt-3">
             
                 {% if user.user_profile.profile_image %}
-                <img v-else class="col-md-4" id="rond_dashboard" src="{{ user.user_profile.profile_image.url }}">
+                <img class="col-md-4" id="rond_dashboard" src="{{ user.user_profile.profile_image.url }}">
                 {% else %}
-                <img v-else class="col-md-4" id="rond_dashboard" src="../../../../static/img/avatar_generique.png">
+                <img class="col-md-4" id="rond_dashboard" src="../../../../static/img/avatar_generique.png">
                 {% endif %}
             
             Bonjour {{ user.username }}

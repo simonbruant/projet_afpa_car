@@ -46,10 +46,10 @@ new Vue({
 
     },
     methods: {
-        dateSelected :function(e){
-            console.log (e),
-            this.message = e
-        },
+        // dateSelected :function(e){
+        //     console.log (e),
+        //     this.message = e
+        // },
         customFormatter(date) {
             this.message =  moment(date).format('D MMMM YYYY');
             console.log(this.message)
