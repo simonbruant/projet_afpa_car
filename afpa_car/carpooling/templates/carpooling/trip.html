@@ -1,0 +1,62 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block css %} "{% static 'carpooling/css/trip.css' %}" {% endblock css %}
+
+{% block section %}
+
+
+<br/>
+
+<div class="row">
+    
+
+    {% for trip in object_list %}
+    <div class='col-md-4 mb-3'>
+        <div id="card_address_content" class="card col-md-12">
+
+            <div class=row>
+                <div id="address_label" class="card-header bg-default col-md-12">
+                    
+                    {% if user.user_profile.profile_image %}
+                    <img class="col-md-4 rond_trip" src="{{ trip.user.user_profile.profile_image.url }}">
+                    {% else %}
+                    <img class="col-md-4 rond_trip" src='{% static "img/avatar_generique.png" %}'>
+                    {% endif %}
+                    
+                    {{ trip.user.first_name }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mt-3">
+
+                    <div style='color:red'> ALLER </div>
+                    <div> Part de <strong>{{ trip.has_for_start.city }} à {{ trip.morning_departure_time }} </strong></div>
+                    <div> à destination de <strong>{{ trip.has_for_destination }} pour {{ trip.morning_arriving_time }} </strong></div>
+                    <div> ------------------------ </div>
+                    <div style='color:red'> RETOUR </div>
+                    <div> Depart de <strong>{{ trip.has_for_destination }} à {{ trip.evening_departure_time }}</strong> </div>
+                    <br>
+                    <div> fumeur --> {{ trip.user.user_profile.smoker }} </div>
+                    <div> bavard --> {{ trip.user.user_profile.talker }} </div>
+                    <div> musique -->{{ trip.user.user_profile.music }} </div>
+                </div>
+                <div class="col-md-12 mt-3 mb-4">
+                    <a href="" >Reserver une place</a>
+                    <a> | </a>
+                    <a href="" class="fas fa-comments" id="btn_card_footer"></a>
+                    <!-- Ajout icon nombre place restantes -->
+                    <!-- https://icones8.fr/icon/set/passager/all -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+
+{% endblock section %}

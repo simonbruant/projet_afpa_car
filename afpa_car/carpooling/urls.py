@@ -7,7 +7,7 @@ reverse_lazy
 from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, DefaultTripCreateView, 
                     CarCreateView, CarUpdateView, CarDeleteView,
                     ProfilImageUpdateView, PreferencesUpdateView,
-                    AddressCreateView, AddressUpdateView, AddressDeleteView )
+                    AddressCreateView, AddressUpdateView, AddressDeleteView, TripView )
 from users.views import LoginView, ChangePassword
 
 app_name = 'carpooling'
@@ -33,6 +33,9 @@ urlpatterns = [
     path('profil/adresse/<int:pk>/delete', AddressDeleteView.as_view(), name='address_delete'),
 
     path('calendar/', DefaultTripCreateView.as_view(), name='calendar'),
+    
+    path('trip/', TripView.as_view(), name="trip"),
+
 
     path('cgu/', TemplateView.as_view(template_name='carpooling/cgu.html'), name='cgu'),
     
