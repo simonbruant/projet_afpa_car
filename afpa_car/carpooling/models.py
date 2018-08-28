@@ -20,7 +20,7 @@ class Address(models.Model):
         verbose_name_plural = 'Adresses'
     
     def __str__(self):
-        return self.address_label
+        return self.address_label if self.address_label else "Adresse"
 
 class Car(models.Model):
     FUEL = (

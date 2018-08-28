@@ -1,96 +1,127 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "base.html" %} 
+{% load static %} 
+{% load chat_tags %}
 
-{% block css %} "{% static 'chat/css/thread.css' %}" {% endblock css %}
+{% block css %} "{% static 'chat/css/thread.css' %}" {% endblock css %} 
 
 {% block section %}
 
 <div class="row mt-3">
-    <div class="col-md-3"></div>
-    <div class="card col-md-6">
-    <div class="card-header">
-        <h2>{% if user != object.first %}{{ object.first.username }}{% else %}{{ object.second.username }}{% endif %}</h3>
+    <div class="col-md-3">
+        <table class="table-bordered">
+            <th>
+                Conversations
+            </th>
+            {% for thread in threads %}
+            <tr>
+                <th>
+                    <a href="{% url 'chat:thread' thread|choose_username:user %}">
+                        <div class="row">
+                            <div class="col-md-5">{{ thread|choose_username:user }} </div>
+                        </div>
+                            {{ thread.chatmessage_set.all.last.message }} / 
+                            {{ thread.chatmessage_set.all.last.timestamp }}</p>
+                    </a>
+                </th>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
-    <div class="card-content" id='chat-items'>
-    {% for message in object.chatmessage_set.all %}
-    <div class="row mb-1 mt-2">
-        {% if message.user == user %}
-            <div class="col-md-8"></div>
-            <div class="col-md-3 user-1">{{ message.message }}</div>
-        {% else %}
-        <div class="col-md-1"></div>
-            <div class="col-md-3 user-2">{{ message.message }}</div>
-        
-        {% endif %}
+    <div class="col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                {% if object|choose_photo:user %} 
+                <img class="col-md-4" id="photo" src="{{ object|choose_photo_display:user }}">
+                {% else %}
+                <img class="col-md-4" id="photo" src="{% static 'img/avatar_generique.png' %}">
+                {% endif %}
+                {{ object|choose_username:user }}
+            </h2>
+        </div>
+        <div class="card-content" id='chat-items'>
+            {% for message in object.chatmessage_set.all %}
+            <div class="row mb-2 mt-2">
+                {% if message.user == user %}
+                <div class="col-md-7"></div>
+                <div class="col-md-4 pt-1 user-1">{{ message.message }}</div>
+                {% else %}
+                <div class="col-md-1"></div>
+                <div class="col-md-4 pt-1 user-2">{{ message.message }}</div>
+
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
     </div>
-    {% endfor %}
 </div>
 </div>
-</div>
+
 <div class="row">
     <div class="col-md-3"></div>
-    <form class="col-md-6 mt-3" id='form' method='POST'> {% csrf_token %}
+    <form class="col-md-6 mt-3 mb-3" id='form' method='POST'> {% csrf_token %}
+        <div class="row">
+            <div class="col-md-9">{{ form.message }}</div>
+            <input type='submit' class='btn btn-success col-md-3' />
+        </div>
         <input type="hidden" id="myUsername" value='{{ user.username }}' />
-        {{ form.message }}
-        <input type='submit' class='btn btn-success mb-3 mt-3'/>
     </form>
 </div>
 
 
 
-{% endblock %}
-
-
-{% block script %}
+{% endblock %} {% block script %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js"></script>
 
 <script>
 
-var loc = window.location
-console.log(loc)
-var formData = $('#form')
-var msgInput = $("#id_message")
-var chatHolder = $('#chat-items')
-var me = $('#myUsername').val()
+    var loc = window.location
+    console.log(loc)
+    var formData = $('#form')
+    var msgInput = $("#id_message")
+    var chatHolder = $('#chat-items')
+    var me = $('#myUsername').val()
 
-var wsStart = 'ws://'
-if (loc.protocol == 'https:') {
-    wsStart = 'wss://'
-}
-var endpoint = wsStart + loc.host + loc.pathname
-var socket = new ReconnectingWebSocket(endpoint)
-
-socket.onmessage = function(e) {
-    console.log('message', e)
-    var chatDataMsg = JSON.parse(e.data)
-    if (me == chatDataMsg.username) {
-        chatHolder.append('<div class="row mb-3"><div class="col-md-8"></div><div class="col-md-3 user-1">'
-                            + chatDataMsg.message + '</div></div>')
+    var wsStart = 'ws://'
+    if (loc.protocol == 'https:') {
+        wsStart = 'wss://'
     }
-    if (me != chatDataMsg.username ) {
-        chatHolder.append('<div class="row mb-3"><div class="col-md-1"></div><div class="col-md-3 user-2">'
-                            + chatDataMsg.message + '</div></div>')
-    }
-}
+    var endpoint = wsStart + loc.host + loc.pathname
+    var socket = new ReconnectingWebSocket(endpoint)
 
-socket.onopen = function(e) {
-    console.log('open', e)
-    formData.submit(function(event) {
-        event.preventDefault()
-        var msgText = msgInput.val()
-        var finalData = {
-            'message': msgText
+
+    socket.onmessage = function (e) {
+        console.log('message', e)
+        var chatDataMsg = JSON.parse(e.data)
+        if (me == chatDataMsg.username) {
+            chatHolder.append('<div class="row mb-2 mt-2"><div class="col-md-7"></div><div class="col-md-4 user-1">'
+                + chatDataMsg.message + '</div></div>')
         }
-        socket.send(JSON.stringify(finalData))
-        formData[0].reset()
-    })
-}
-socket.onerror = function(e) {
-    console.log('error', e)
-}
-socket.onclose = function(e) {
-    console.log('close', e)
-}
+        if (me != chatDataMsg.username) {
+            chatHolder.append('<div class="row mb-1 mt-2"><div class="col-md-1"></div><div class="col-md-4 user-2">'
+                + chatDataMsg.message + '</div></div>')
+        }
+        chatHolder.scrollTop(chatHolder.prop("scrollHeight"));
+    }
 
-</script>
-{% endblock %}
+    socket.onopen = function (e) {
+        console.log('open', e)
+        chatHolder.scrollTop(chatHolder.prop("scrollHeight"));
+        formData.submit(function (event) {
+            event.preventDefault()
+            var msgText = msgInput.val()
+            var finalData = {
+                'message': msgText
+            }
+            socket.send(JSON.stringify(finalData))
+            formData[0].reset()
+        })
+    }
+    socket.onerror = function (e) {
+        console.log('error', e)
+    }
+    socket.onclose = function (e) {
+        console.log('close', e)
+    }
+
+</script> {% endblock %}

@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% load inbox_tags %}
+{% load chat_tags %}
 
 {% block section %}
 
 {% for thread in object_list %}
-<a href="{% url 'chat:thread' username=thread|choose:user %}"> 
-   <p>Conversation avec : {{ thread|choose:user }} / dernier message : {{ thread.chatmessage_set.all.last.message }} / 
+<a href="{% url 'chat:thread' thread|choose_username:user %}"> 
+   <p>Conversation avec : {{ thread|choose_username:user }} / dernier message : {{ thread.chatmessage_set.all.last.message }} / 
        {{ thread.chatmessage_set.all.last.timestamp }}</p>
 </a>
 {% endfor %} 
