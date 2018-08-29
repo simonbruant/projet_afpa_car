@@ -255,6 +255,7 @@ class DefaultTripView(SuccessMessageMixin, View):
         default_trip.user = self.request.user
         return super().form_valid(form)
 
+from django.db.models import Q
 
 class TripView(View):
     template_name = 'carpooling/trip.html'
@@ -266,7 +267,14 @@ class TripView(View):
         if not query:
             trips = DefaultTrip.objects.all()
         else:
-            trips = DefaultTrip.objects.filter(day__icontains=query,)
+            trips = DefaultTrip.objects.filter(Q(day__startswith=query) & Q(user__first_name__startswith=query),
+                                            # Q(day__icontains=query) | Q(user__first_name__icontains=query)
+                                                )
+                        
+            # user__first_name__icontains=query
+
+            
+            
 
         day = "Résultats pour la requête %s" % query
         context = {
