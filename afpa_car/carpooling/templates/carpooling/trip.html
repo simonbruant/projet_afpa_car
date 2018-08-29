@@ -11,9 +11,24 @@
 <div class="row">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-3">filtre recherche</div>
+            <div class="col-md-3 border border-primary">
+                <label for="searchForm"><u>filtre recherche</u></label>
+
+
+
+
+                    <form method="get" accept-charset="utf-8">
+                      <div class="form-group">
+                        <input id="searchForm" class="form-control" name="query">
+                      </div>
+                    </form>
+        
+
+                </div>
+
+
                 <div class='col-md-8 mb-3' id="scroller_trip" >
-                    {% for trip in object_list %}
+                    {% for trip in trips %}
                     <div class="row mb-1">
                     <div class="col-md-12 card">
                         <div class='row card_trip'>

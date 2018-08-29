@@ -256,13 +256,40 @@ class DefaultTripView(SuccessMessageMixin, View):
         return super().form_valid(form)
 
 
-class TripView(ListView):
+class TripView(View):
     template_name = 'carpooling/trip.html'
 
-    def get_queryset(self):
-        print("********************")
-        print("ICI LES TRIPS ->", Trip.objects.all())
-        print("DEFAULT TRIPS->", DefaultTrip.objects.all())
-        print("********************")
-        # return Trip.objects.all()
-        return DefaultTrip.objects.all()
+    def get(self, request):
+
+        
+        query = request.GET.get('query')
+        if not query:
+            trips = DefaultTrip.objects.all()
+        else:
+            trips = DefaultTrip.objects.filter(day__icontains=query,)
+
+        day = "Résultats pour la requête %s" % query
+        context = {
+            'trips': trips,
+            'day': day
+        }
+
+        return render(request, 'carpooling/trip.html', context)
+
+    # def search(self, request):
+    #     print('testttt')
+    #     query = request.GET.get('query')
+    #     if not query:
+    #         print('coucou')
+    #         trips = DefaultTrip.objects.all()
+    #     else:
+    #         trips = DefaultTrip.objects.filter(day__icontains=query)
+    #     # if not DefaultTrip.exists():
+    #     #     trip = DefaultTrip.objects.filter(artists__name__icontains=query)
+    #     day = "Résultats pour la requête %s"%query
+    #     context = {
+    #         'trips': trips,
+    #         'day': day
+    #     }
+
+    #     return render(request, 'carpooling/trip.html', context)
