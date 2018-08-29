@@ -9,8 +9,6 @@
 <br/>
 
 <div class="row">
-    
-
     {% for trip in object_list %}
     <div class='col-md-4 mb-3'>
         <div id="card_address_content" class="card col-md-12">
@@ -33,21 +31,46 @@
                     <div style='color:red'> ALLER </div>
                     <div> Part de <strong>{{ trip.has_for_start.city }} à {{ trip.morning_departure_time }} </strong></div>
                     <div> à destination de <strong>{{ trip.has_for_destination }} pour {{ trip.morning_arriving_time }} </strong></div>
-                    <div> ------------------------ </div>
+                    
+                    <div class="row">
+                        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 300px; border: none;">
+                    </div>
+
                     <div style='color:red'> RETOUR </div>
                     <div> Depart de <strong>{{ trip.has_for_destination }} à {{ trip.evening_departure_time }}</strong> </div>
-                    <br>
-                    <div> fumeur --> {{ trip.user.user_profile.smoker }} </div>
-                    <div> bavard --> {{ trip.user.user_profile.talker }} </div>
-                    <div> musique -->{{ trip.user.user_profile.music }} </div>
-                </div>
-                <div class="col-md-12 mt-3 mb-4">
-                    <a href="" >Reserver une place</a>
-                    <a> | </a>
-                    <a href="" class="fas fa-comments" id="btn_card_footer"></a>
-                    <!-- Ajout icon nombre place restantes -->
-                    <!-- https://icones8.fr/icon/set/passager/all -->
+                    
+                    <div class="row mt-2">
+                        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 300px; border: none;">
+                    </div>
 
+                    <div class=" mt-2 ">
+                        {% if trip.user.user_profile.smoker %}
+                        <span class="icon_pref_trip fas fa-smoking mr-3"></span>
+                        {% else %}
+                        <span class="icon_pref_trip fas fa-smoking-ban mr-3"></span>
+                        {% endif %}
+
+                        {% if trip.user.user_profile.talker %}
+                        <span alt='coucou' class="icon_pref_trip far fa-comments mr-3"></span>
+                        {% else %}
+                        <span class="icon_pref_trip far fa-comment mr-3"></span>
+                        {% endif %}
+
+                        {% if trip.user.user_profile.music %}
+                        <span class="icon_pref_trip fas fa-volume-up" ></span>
+                        {% else %}
+                        <span class="icon_pref_trip fas fa-volume-off" ></span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mt-3 mb-4">
+                        <a href="" >Reserver une place</a>
+                        <a> | </a>
+                        <a href="" class="fas fa-comments" id="btn_card_footer"></a>
+                        <!-- Ajout icon nombre place restantes -->
+                        <!-- https://icones8.fr/icon/set/passager/all -->
+                        
+                    </div>
                 </div>
             </div>
 
