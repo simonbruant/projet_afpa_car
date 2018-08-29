@@ -1,11 +1,17 @@
 .rond_trip {
     border-radius: 50%;
-    height: 60px;
+    height: 50px;
     width: 70% ;
 }
 
 .icon_pref_trip{
-    color : red;
+    color : #E3007E;
     font-size: 150%
 
 }
+.card_trip:hover{
+    background-color: lightgray;
+    border : solid 1px darkgrey;
+    box-shadow:0 0 10px rgba(0,0,0,0.5);
+}
+
