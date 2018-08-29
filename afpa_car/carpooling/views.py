@@ -159,6 +159,7 @@ class AddressCreateView(SuccessMessageMixin, CreateView):
         address.user = self.request.user
         address_label = form.cleaned_data['address_label']
         address.address_label = "Adresse" if not address_label else address_label.capitalize()
+        address.city = address.city.capitalize()
         address.save()
         return super().form_valid(form)
 

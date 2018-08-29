@@ -12,31 +12,74 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-3">filtre recherche</div>
-                <div class='col-md-8'>
+                <div class='col-md-8 mb-3' id="scroller_trip" >
                     {% for trip in object_list %}
                     <div class="row mb-1">
                     <div class="col-md-12 card">
                         <div class='row card_trip'>
-                            <div class="col-md-4 mt-3 infos_user">
-                        
-                                {% if user.user_profile.profile_image %}
-                                <img class="col-md-4 rond_trip" src="{{ trip.user.user_profile.profile_image.url }}">
-                                {% else %}
-                                <img class="col-md-4 rond_trip" src='{% static "img/avatar_generique.png" %}'>
-                                {% endif %}
-                                {{ trip.user.first_name }}
+                            <div class="col-md-3 mt-3 infos_user">
+
+                                    {% if user.user_profile.profile_image %}
+                                    <img class="col-md-12 rond_trip" src="{{ trip.user.user_profile.profile_image.url }}">
+                                    {% else %}
+                                    <img class="col-md-12 rond_trip" src='{% static "img/avatar_generique.png" %}'>
+                                    {% endif %}
+                                
+                                    <div class="first_name_user row">
+                                        <div class='col-md-12'>
+                                            {{ trip.user.first_name }}
+                                        </div>
+                                    </div>
 
                             </div>
-                    
-                            <div class="col-md-4 mt-3 mb-3">
-                                <div style='color:red'> ALLER </div>
-                                <div class='mb-2'> {{ trip.has_for_start.city }} ({{ trip.morning_departure_time }}) -->  {{ trip.has_for_destination }} ({{ trip.morning_arriving_time }})</div> 
+
+                            <div class="col-md-2 mt-3">
+                                {{ trip.day }}
+                                
+                                <div class=" mt-2">
+                                        {% if trip.user.user_profile.smoker %}
+                                        <img title='Trajet fumeur' src="{% static 'img/icons/smoking-pink.svg' %}" class="icon_pref_trip mr-1">
+                                        {% else %}
+                                        <img title='Trajet non fumeur' src="{% static 'img/icons/smoking-ban-pink.svg' %}" class="icon_pref_trip mr-1">                                        {% endif %}
+    
+                                        {% if trip.user.user_profile.talker %}
+                                        <img title='Je suis bavard' src="{% static 'img/icons/comments-pink.svg' %}" class="icon_pref_trip mr-1">
+                                        {% else %}  
+                                        <img title='Je ne suis pas forcément bavard' src="{% static 'img/icons/comment-pink.svg' %}" class="icon_pref_trip mr-1">
+                                        {% endif %}
+    
+                                        {% if trip.user.user_profile.music %}
+                                        <img title="J'aime écouter de la musique" src="{% static 'img/icons/volume-on-pink.svg' %}" class="icon_pref_trip" >
+                                        {% else %}
+                                        <img title="Je n'écoute pas de musique" src="{% static 'img/icons/volume-off-pink.svg' %}" class="icon_pref_trip" >
+                                        {% endif %}
+                                    </div>
                             </div>
 
-                            <div class="col-md-4 mt-3 mb-3">
-                                <div style='color:red'> RETOUR </div>
-                                <div> {{ trip.has_for_destination }} ( {{ trip.evening_departure_time }} ) -- > {{ trip.has_for_start.city }}</div>
+                            <div class="col-md-6">
+                            <div class="row">
+                            <div class="col-md-12 mt-3">
+                                <div class='mb-2 text-left'> 
+                                    <span style='color:red'> ALLER  : </span>
+                                    {{ trip.has_for_start.city }} ({{ trip.morning_departure_time }}) 
+                                    <span class='fas fa-arrow-right'></span> 
+                                    {{ trip.has_for_destination }} ({{ trip.morning_arriving_time }})
+                                </div> 
                             </div>
+                            </div>
+                            <div class="row">
+
+                            <div class="col-md-12 mb-3 text-left">
+                                <div> 
+                                    <span style='color:red'> RETOUR : </span>
+                                    {{ trip.has_for_destination }} ( {{ trip.evening_departure_time }} ) 
+                                    <span class='fas fa-arrow-right'></span>  
+                                    {{ trip.has_for_start.city }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
 
 
