@@ -1,10 +1,9 @@
 from django.conf import settings
-from django.conf.urls import url
 from django.conf.urls.static import static
 from django.urls import path, reverse_lazy
 from django.views.generic import TemplateView, RedirectView
 reverse_lazy
-from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, DefaultTripCreateView, 
+from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, DefaultTripView, 
                     CarCreateView, CarUpdateView, CarDeleteView,
                     ProfilImageUpdateView, PreferencesUpdateView,
                     AddressCreateView, AddressUpdateView, AddressDeleteView, TripView )
@@ -32,7 +31,7 @@ urlpatterns = [
     path('profil/adresse/<int:pk>', AddressUpdateView.as_view(), name='address_update'),
     path('profil/adresse/<int:pk>/delete', AddressDeleteView.as_view(), name='address_delete'),
 
-    path('calendar/', DefaultTripCreateView.as_view(), name='calendar'),
+    path('calendar/', DefaultTripView.as_view(), name='calendar'),
     
     path('trip/', TripView.as_view(), name="trip"),
 

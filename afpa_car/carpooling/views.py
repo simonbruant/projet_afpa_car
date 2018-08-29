@@ -12,6 +12,7 @@ from .forms import (PrivateDataUpdateForm, UserUpdateForm, CarForm,
 from .models import Car, Address, DefaultTrip, AfpaCenter, Trip
 from users.models import PrivateData, User, UserProfile
 
+
 class DashboardView(TemplateView):
     template_name = 'carpooling/dashboard.html'
 
@@ -24,8 +25,9 @@ class DashboardView(TemplateView):
             'addresses': user.addresses.all(),
             'trips': user.default_trips.all(),
         }
-        
+
         return context
+
 
 class UserUpdateView(SuccessMessageMixin, TemplateView):
     template_name = 'carpooling/profil/general_infos.html'
@@ -35,9 +37,9 @@ class UserUpdateView(SuccessMessageMixin, TemplateView):
         user = request.user
         user_form = UserUpdateForm(instance=user)
         user_profile_form = UserProfileUpdateForm(instance=user.user_profile)
-        
+
         context = {
-            'user_form': user_form, 
+            'user_form': user_form,
             'user_profile_form': user_profile_form,
             'cars': user.cars.all()
         }
@@ -46,29 +48,31 @@ class UserUpdateView(SuccessMessageMixin, TemplateView):
     def post(self, request):
         user = request.user
         user_form = UserUpdateForm(request.POST, instance=user)
-        user_profile_form = UserProfileUpdateForm(request.POST, instance=user.user_profile)
+        user_profile_form = UserProfileUpdateForm(
+            request.POST, instance=user.user_profile)
         if user_form.is_valid() and user_profile_form.is_valid():
             user = user_form.save()
             user_profile_form.save()
             return redirect('carpooling:general_infos')
 
         context = {
-            'user_form': user_form, 
+            'user_form': user_form,
             'user_profile_form': user_profile_form,
             'cars': user.cars.all()
         }
         return render(request, self.template_name, context)
+
 
 class PrivateDataUpdateView(SuccessMessageMixin, UpdateView):
     template_name = 'carpooling/profil/private_infos.html'
     success_url = reverse_lazy('carpooling:private_infos')
     success_message = "Informations mises à jour"
     form_class = PrivateDataUpdateForm
-    
+
     def get_object(self, queryset=None):
-        private_data = self.request.user.private_data      
+        private_data = self.request.user.private_data
         return private_data
-        
+
 
 class ProfilImageUpdateView(UpdateView):
     template_name = 'carpooling/profil/photo.html'
@@ -76,9 +80,10 @@ class ProfilImageUpdateView(UpdateView):
     form_class = ProfilImageUpdateForm
 
     def get_object(self, queryset=None):
-        user_profile = self.request.user.user_profile       
+        user_profile = self.request.user.user_profile
         return user_profile
-        
+
+
 class PreferencesUpdateView(SuccessMessageMixin, UpdateView):
     model = UserProfile
     template_name = 'carpooling/profil/preferences.html'
@@ -87,9 +92,10 @@ class PreferencesUpdateView(SuccessMessageMixin, UpdateView):
     form_class = PreferencesForm
 
     def get_object(self, queryset=None):
-        user_profile = self.request.user.user_profile       
+        user_profile = self.request.user.user_profile
         return user_profile
-        
+
+
 class CarCreateView(SuccessMessageMixin, CreateView):
     template_name = 'carpooling/profil/car.html'
     success_url = reverse_lazy('carpooling:car')
@@ -109,6 +115,7 @@ class CarCreateView(SuccessMessageMixin, CreateView):
         car.save()
         return super().form_valid(form)
 
+
 class CarUpdateView(SuccessMessageMixin, UpdateView):
     model = Car
     template_name = 'carpooling/profil/car.html'
@@ -123,11 +130,11 @@ class CarUpdateView(SuccessMessageMixin, UpdateView):
         queryset = queryset.filter(user=self.request.user)
         return queryset
 
+
 class CarDeleteView(SuccessMessageMixin, DeleteView):
     model = Car
     template_name = 'carpooling/profil/car_delete.html'
     success_url = reverse_lazy('carpooling:car')
-
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -182,6 +189,7 @@ class AddressUpdateView(SuccessMessageMixin, UpdateView):
         address.save()
         return super().form_valid(form)
 
+
 class AddressDeleteView(SuccessMessageMixin, DeleteView):
     model = Address
     template_name = 'carpooling/profil/address_delete.html'
@@ -197,13 +205,15 @@ class AddressDeleteView(SuccessMessageMixin, DeleteView):
         context['address'] = Address.objects.get(pk=self.kwargs['pk'])
         return context
 
-class DefaultTripCreateView(SuccessMessageMixin, View):
+
+class DefaultTripView(SuccessMessageMixin, View):
     template_name = 'carpooling/calendar.html'
     success_message = "Mise à jour de la semaine type"
 
     def get(self, request):
-        user=self.request.user
-        formset = DefaultTripFormSet(queryset=DefaultTrip.objects.filter(user=user), form_kwargs={'user': user},)
+        user = self.request.user
+        formset = DefaultTripFormSet(queryset=DefaultTrip.objects.filter(
+            user=user), form_kwargs={'user': user},)
         day_label = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"]
         context = {
             'trips': user.default_trips.all(),
@@ -216,7 +226,8 @@ class DefaultTripCreateView(SuccessMessageMixin, View):
 
     def post(self, request):
         user = self.request.user
-        formset = DefaultTripFormSet(request.POST, queryset=DefaultTrip.objects.filter(user=user), form_kwargs={'user': user})
+        formset = DefaultTripFormSet(request.POST, queryset=DefaultTrip.objects.filter(
+            user=user), form_kwargs={'user': user})
         if formset.is_valid():
             print("formset is valid")
             x = 0
@@ -225,7 +236,8 @@ class DefaultTripCreateView(SuccessMessageMixin, View):
                 default_trip.user = user
                 default_trip.has_for_destination = user.user_profile.afpa_center.address
                 if not default_trip.day:
-                    default_trip.day = default_trip._meta.get_field('day').choices[x][1]
+                    default_trip.day = default_trip._meta.get_field(
+                        'day').choices[x][1]
                     x += 1
                 default_trip.save()
 
@@ -233,8 +245,8 @@ class DefaultTripCreateView(SuccessMessageMixin, View):
                 messages.success(self.request, self.success_message)
 
             return redirect('carpooling:calendar')
-        
-        return render(request, self.template_name, {'formset': formset })
+
+        return render(request, self.template_name, {'formset': formset})
 
     def form_valid(self, form):
         print("form valid")
@@ -242,13 +254,14 @@ class DefaultTripCreateView(SuccessMessageMixin, View):
         default_trip.user = self.request.user
         return super().form_valid(form)
 
+
 class TripView(ListView):
     template_name = 'carpooling/trip.html'
 
     def get_queryset(self):
         print("********************")
-        print ("ICI LES TRIPS ->", Trip.objects.all())
-        print ("DEFAULT TRIPS->", DefaultTrip.objects.all())
+        print("ICI LES TRIPS ->", Trip.objects.all())
+        print("DEFAULT TRIPS->", DefaultTrip.objects.all())
         print("********************")
         # return Trip.objects.all()
         return DefaultTrip.objects.all()
