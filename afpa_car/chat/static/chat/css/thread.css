@@ -29,7 +29,29 @@
   width: 100px
 }
 
-td a {
-  display:block;
-  width:100%;
+#photo_side {
+  border-radius: 50%;
+  height: 40px;
+  width: 55px;
+
 }
+
+#card_thread:hover {
+  background-color: rgb(120, 196, 126);
+  
+}
+
+a, a:hover {
+  color: black;
+  text-decoration: none;
+
+}
+
+#thread_user {
+  font-size: 120%;
+}
+
+#last_message_timestamp {
+  font-size: 70%
+}
+
