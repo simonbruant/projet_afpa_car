@@ -31,7 +31,11 @@ def date_format(date):
                 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'] 
     days = ['Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.', 'Dim.']
 
-    if date.year != today.year:
+
+    if not date:
+        return ""
+
+    elif date.year != today.year:
         return "{} {} {}".format(date.day, months[date.month - 1], date.year)
 
     elif (today.day - date.day) > 6:

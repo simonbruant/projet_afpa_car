@@ -125,16 +125,34 @@ class PasswordResetForm(BasePasswordResetForm):
 #################################################################
     
 class UserAdminCreationForm(forms.ModelForm):
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    username  = forms.RegexField(regex=r'^[\w._-]+$', label='Pseudonyme',
+                                    min_length=3,
+                                    error_messages = {'invalid': "Votre ne pseudonyme ne peut contenir que des lettres,"
+                                    "nombres ou caractères suivants : . _ -"},
+                                    widget=TextInput(attrs={'class': 'form-control'}) ) 
 
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'username', 'is_active', 'is_staff', 'is_admin')
 
+        widgets = {
+            'email': TextInput(attrs={'class': 'form-control'}),
+            'first_name': TextInput(attrs={'class': 'form-control'}),
+            'last_name': TextInput(attrs={'class': 'form-control'}),
+        }
+
+    def clean_username(self):
+        username = self.cleaned_data['username'].lower()
+        user = User.objects.filter(username=username)
+        if user.count():
+            raise ValidationError("Pseudonyme existant")
+        return username
+
     def clean_password2(self):
-        password1 = self.cleaned_data["password1"]
-        password2 = self.cleaned_data.get["password2"]
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords don't match")
         return password2
