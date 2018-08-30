@@ -1,0 +1,61 @@
+.user-1 {
+  border: 1px solid #2659c9;
+  background-color: #2659c9;
+
+}
+
+.user-2 {
+  border: 1px solid #cc3300;
+  background-color: #cc3300;
+}
+
+
+.card-content {
+    height:400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-bottom: 30px;
+}
+
+.user-1, .user-2 {
+  min-height: 30px;
+  color: white;
+  border-radius: 8px;
+}
+
+#photo {
+  border-radius: 50%;
+  height: 60px;
+  width: 100px
+}
+
+#photo_side {
+  border-radius: 50%;
+  height: 40px;
+  width: 55px;
+
+}
+
+#card_thread:hover {
+  background-color: rgb(120, 196, 126);
+  
+}
+
+a, a:hover {
+  color: black;
+  text-decoration: none;
+
+}
+
+#thread_user {
+  font-size: 120%;
+}
+
+#last_message_timestamp {
+  font-size: 70%
+}
+
+#last_message {
+  color: rgb(150, 148, 148)
+}
+

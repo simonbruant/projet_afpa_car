@@ -1,0 +1,134 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% load chat_tags %}
+
+{% block css %} "{% static 'chat/css/thread.css' %}" {% endblock css %} 
+
+{% block section %}
+
+<div class="row mt-3">
+    <div class="col-md-3">
+            {% for thread in threads %}
+    
+            <div class="col-md-12 card mb-1" id="card_thread">
+                    <a href="{% url 'chat:thread' thread|choose_username:user %}">
+                    <div class="row">
+                        <div class="col-md-3 mt-2 mb-2">
+                                {% if thread|choose_photo:user %}
+                                <img id="photo_side" src="{{ thread|choose_photo_display:user }}">
+                                {% else %}
+                                <img id="photo_side" src="{% static 'img/avatar_generique.png' %}">
+                                {% endif %}
+                        </div>
+                        <div class="row col-md-10">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-7 text-left" id="thread_user">{{ thread|choose_username:user }}</div>
+                            <div id="last_message_timestamp">
+                                    {{ thread.chatmessage_set.all.last.timestamp|date_format }}
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div id="last_message">{{ thread.chatmessage_set.all.last.message }}</div>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>
+                {% if object|choose_photo:user %} 
+                <img class="col-md-4" id="photo" src="{{ object|choose_photo_display:user }}">
+                {% else %}
+                <img class="col-md-4" id="photo" src="{% static 'img/avatar_generique.png' %}">
+                {% endif %}
+                {{ object|choose_username:user }}
+            </h2>
+        </div>
+        <div class="card-content" id='chat-items'>
+            {% for message in object.chatmessage_set.all %}
+            <div class="row mb-2 mt-2">
+                {% if message.user == user %}
+                <div class="col-md-7"></div>
+                <div class="col-md-4 pt-1 user-1">{{ message.message }}</div>
+                {% else %}
+                <div class="col-md-1"></div>
+                <div class="col-md-4 pt-1 user-2">{{ message.message }}</div>
+
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <form class="col-md-6 mt-3 mb-3" id='form' method='POST'> {% csrf_token %}
+        <div class="row">
+            <div class="col-md-9">{{ form.message }}</div>
+            <input type='submit' class='btn btn-success col-md-3' />
+        </div>
+        <input type="hidden" id="myUsername" value='{{ user.username }}' />
+    </form>
+</div>
+
+
+
+{% endblock %} {% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js"></script>
+
+<script>
+
+    var loc = window.location
+    console.log(loc)
+    var formData = $('#form')
+    var msgInput = $("#id_message")
+    var chatHolder = $('#chat-items')
+    var me = $('#myUsername').val()
+
+    var wsStart = 'ws://'
+    if (loc.protocol == 'https:') {
+        wsStart = 'wss://'
+    }
+    var endpoint = wsStart + loc.host + loc.pathname
+    var socket = new ReconnectingWebSocket(endpoint)
+
+
+    socket.onmessage = function (e) {
+        console.log('message', e)
+        var chatDataMsg = JSON.parse(e.data)
+        if (me == chatDataMsg.username) {
+            chatHolder.append('<div class="row mb-2 mt-2"><div class="col-md-7"></div><div class="col-md-4 user-1">'
+                + chatDataMsg.message + '</div></div>')
+        }
+        if (me != chatDataMsg.username) {
+            chatHolder.append('<div class="row mb-1 mt-2"><div class="col-md-1"></div><div class="col-md-4 user-2">'
+                + chatDataMsg.message + '</div></div>')
+        }
+        chatHolder.scrollTop(chatHolder.prop("scrollHeight"));
+    }
+
+    socket.onopen = function (e) {
+        console.log('open', e)
+        chatHolder.scrollTop(chatHolder.prop("scrollHeight"));
+        formData.submit(function (event) {
+            event.preventDefault()
+            var msgText = msgInput.val()
+            var finalData = {
+                'message': msgText
+            }
+            socket.send(JSON.stringify(finalData))
+            formData[0].reset()
+        })
+    }
+    socket.onerror = function (e) {
+        console.log('error', e)
+    }
+    socket.onclose = function (e) {
+        console.log('close', e)
+    }
+
+</script> {% endblock %}
