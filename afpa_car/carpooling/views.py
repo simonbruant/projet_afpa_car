@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import Q
+# from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
@@ -263,17 +263,16 @@ class TripView(View):
 
     def get(self, request):
         query = request.GET.get('query')
-        if not query:
-            trips = DefaultTrip.objects.all()
+        query_day = request.GET.get('query_day')
+        context = {}
+        if not query and not query_day:
+            context['trips'] = DefaultTrip.objects.all()
         else:
-            trips = DefaultTrip.objects.filter(Q(has_for_start__city__startswith=query))
+            trips = DefaultTrip.objects.filter(has_for_start__city__startswith=query,
+                                                day__startswith=query_day)
+            context['trips'] = trips
                                             # Q(day__startswith=query)
                                             # Q(user__first_name__icontains=query)
                                             # Q(day__startswith=query) | Q(user__first_name__icontains=query)
 
-        day = "Résultats pour la requête %s" % query
-        context = {
-            'trips': trips,
-            'day': day
-        }
         return render(request, 'carpooling/trip.html', context)
