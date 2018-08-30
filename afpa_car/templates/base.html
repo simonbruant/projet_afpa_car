@@ -99,21 +99,28 @@
     <!-- jQuery -->
     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
 
+    <!-- VueJs -->
+    <script type="text/javascript" src="{% static 'js/vue.js' %}"></script>
+
+
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'js/bootstrap.js' %}"></script>
 
     <script>
-        $(document).ready(function() {
-
-
-            $("#filtre_url_navbar a").each(function( index ) {
-                if ( this.href == document.location.href)
-                {
-                    $(this).css('color', '#FFF');
-                }
-            })
+        new Vue({
+            el: '#app_filtre_url_contenu',
+            data: {
+        
+            },
+            created: function() { 
+                $("#filtre_url_navbar a").each(function( index ) {
+                    if ( this.href == document.location.href)
+                    {
+                        $(this).css('color', '#FFF');
+                    }
+                })
+            }
         });
-
     </script>
 
 </body>

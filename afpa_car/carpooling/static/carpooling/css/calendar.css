@@ -1,5 +1,4 @@
 #burger {
-    float: right;
     color: White;
 }
 
@@ -16,7 +15,7 @@
     width: 14%;
 }
 
-#datepicker {
+#date_picker_css {
     margin-left: 22%;
 }
 
@@ -24,11 +23,7 @@
     border-right: 2px solid lightgray;
 }
 
-#header_input_calendar{
-    min-width: 220px;
-}
-
-#message_update_calendar {
+.message_update_calendar {
     color : #E3007E;
 }
 
@@ -45,6 +40,4 @@
     border-color: lightgray; 
     box-shadow:0 0 3px rgba(0,0,0,0.4);
 }
-
-/* ## DATEPICKER ## */
 
