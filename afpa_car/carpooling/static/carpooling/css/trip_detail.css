@@ -1,0 +1,12 @@
+.rond_trip_detail {
+    border-radius: 50%;
+    height: 60px;
+    width: 100px;
+}
+
+.icon_pref_trip_detail {
+    color : #E3007E;
+    /* width: 25%; */
+    height: 40px;
+    width: 40px;
+}

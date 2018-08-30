@@ -9,14 +9,17 @@
     /* width: 25%; */
     height: 23px;
     width: 23px;
-
 }
+.card_trip:link, .card_trip:visited {
+    color : black;
+    text-decoration: none;
+}
+
 .card_trip:hover{
     background-color: lightgray;
     border : solid 1px darkgrey;
     box-shadow:0 0 10px rgba(0,0,0,0.5);
 }
-
 
 #scroller_trip{
     height : 600px;

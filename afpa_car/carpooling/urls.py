@@ -6,9 +6,10 @@ reverse_lazy
 from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, DefaultTripView, 
                     CarCreateView, CarUpdateView, CarDeleteView,
                     ProfilImageUpdateView, PreferencesUpdateView,
-                    AddressCreateView, AddressUpdateView, AddressDeleteView, TripView )
+                    AddressCreateView, AddressUpdateView, AddressDeleteView, 
+                    TripView, TripDetailView )
 from users.views import LoginView, ChangePassword
-
+from django.conf.urls import url
 app_name = 'carpooling'
 
 urlpatterns = [ 
@@ -34,6 +35,7 @@ urlpatterns = [
     path('calendar/', DefaultTripView.as_view(), name='calendar'),
     
     path('trip/', TripView.as_view(), name="trip"),
+    url(r'^trip/(?P<trip_id>[0-9]+)/$', TripDetailView.as_view(), name='trip_detail'),
 
 
     path('cgu/', TemplateView.as_view(template_name='carpooling/cgu.html'), name='cgu'),

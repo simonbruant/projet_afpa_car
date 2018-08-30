@@ -2,10 +2,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 # from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView, ListView
+from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView, ListView, DetailView
 
 from .forms import (PrivateDataUpdateForm, UserUpdateForm, CarForm,
                     ProfilImageUpdateForm, PreferencesForm, UserProfileUpdateForm,
@@ -276,3 +276,27 @@ class TripView(View):
                                             # Q(day__startswith=query) | Q(user__first_name__icontains=query)
 
         return render(request, 'carpooling/trip.html', context)
+
+
+class TripDetailView(DetailView):
+    model = DefaultTrip
+    template_name = 'carpooling/trip.html'
+
+    def get (self, request, trip_id) :
+        
+        trips = get_object_or_404(DefaultTrip, pk=trip_id)
+        context = {
+            'trip_day' : trips.day,
+            'trip_morning_departure_time' : trips.morning_departure_time,
+            'trip_morning_arriving_time' : trips.morning_arriving_time,
+            'trip_evening_departure_time' : trips.evening_departure_time,
+            'trip_driver' : trips.user.first_name,
+            'trip_driver_profile_image' : trips.user.user_profile.profile_image,
+            'trip_has_for_start' : trips.has_for_start.city,
+            'trip_has_for_destination' : trips.has_for_destination,
+            'trip_driver_music' : trips.user.user_profile.music,
+            'trip_driver_smoker' : trips.user.user_profile.smoker,
+            'trip_driver_talker' : trips.user.user_profile.talker,
+        }
+
+        return render(request, 'carpooling/trip_detail.html', context)
