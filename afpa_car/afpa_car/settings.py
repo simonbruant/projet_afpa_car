@@ -59,17 +59,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'afpa_car.urls'
 
-ASGI_APPLICATION = "afpa_car.routing.application"
-
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("localhost", 6379)],
-            # "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')]
-        },
-    },
-}
 
 TEMPLATES = [
     {
@@ -169,3 +158,16 @@ MEDIA_URL = '/media/'
 # EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 # EMAIL_PORT = EMAIL_PORT
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+#config pour les websockets
+ASGI_APPLICATION = "afpa_car.routing.application"
+
+CHANNEL_LAYERS = { 
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+            # "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')] #pour la production
+        },
+    },
+}
