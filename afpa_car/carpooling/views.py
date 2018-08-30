@@ -282,21 +282,19 @@ class TripDetailView(DetailView):
     model = DefaultTrip
     template_name = 'carpooling/trip.html'
 
-    def get (self, request, trip_id) :
+    def get(self, request, trip_id) :
         
-        trips = get_object_or_404(DefaultTrip, pk=trip_id)
+        trip = get_object_or_404(DefaultTrip, pk=trip_id)
+        user = request.user
+        # print(Car.objects.filter(user)) 
+        # Car.objects.all(self.request.user)
+        
+        car = trip.user.cars.all()[0]
+
         context = {
-            'trip_day' : trips.day,
-            'trip_morning_departure_time' : trips.morning_departure_time,
-            'trip_morning_arriving_time' : trips.morning_arriving_time,
-            'trip_evening_departure_time' : trips.evening_departure_time,
-            'trip_driver' : trips.user.first_name,
-            'trip_driver_profile_image' : trips.user.user_profile.profile_image,
-            'trip_has_for_start' : trips.has_for_start.city,
-            'trip_has_for_destination' : trips.has_for_destination,
-            'trip_driver_music' : trips.user.user_profile.music,
-            'trip_driver_smoker' : trips.user.user_profile.smoker,
-            'trip_driver_talker' : trips.user.user_profile.talker,
+            'trip' : trip,
+            'trip_car': car,
+            'range': range(car.amount_of_free_seats),
         }
 
         return render(request, 'carpooling/trip_detail.html', context)

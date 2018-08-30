@@ -50,21 +50,21 @@
                                 <div class=" mt-2">
 
                                     {% if trip.user.user_profile.smoker %}
-                                    <img title='Trajet fumeur' src="{% static 'img/icons/smoking-pink.svg' %}" class="icon_pref_trip mr-1">
+                                    <img title='Trajet fumeur' src="{% static 'img/icons/pink/smoking-pink.svg' %}" class="icon_pref_trip mr-1">
                                     {% else %}
-                                    <img title='Trajet non fumeur' src="{% static 'img/icons/smoking-ban-pink.svg' %}" class="icon_pref_trip mr-1"> 
+                                    <img title='Trajet non fumeur' src="{% static 'img/icons/pink/smoking-ban-pink.svg' %}" class="icon_pref_trip mr-1"> 
                                     {% endif %}
 
                                     {% if trip.user.user_profile.talker %}
-                                    <img title='Je suis bavard' src="{% static 'img/icons/comments-pink.svg' %}" class="icon_pref_trip mr-1">
+                                    <img title='Je suis bavard' src="{% static 'img/icons/pink/talker-up-pink.svg' %}" class="icon_pref_trip mr-1">
                                     {% else %}
-                                    <img title='Je ne suis pas forcément bavard' src="{% static 'img/icons/comment-pink.svg' %}" class="icon_pref_trip mr-1">
+                                    <img title='Je ne suis pas forcément bavard' src="{% static 'img/icons/pink/talker-pink.svg' %}" class="icon_pref_trip mr-1">
                                     {% endif %}
 
                                     {% if trip.user.user_profile.music %}
-                                    <img title="J'aime écouter de la musique" src="{% static 'img/icons/volume-on-pink.svg' %}" class="icon_pref_trip">
+                                    <img title="J'aime écouter de la musique" src="{% static 'img/icons/pink/volume-on-pink.svg' %}" class="icon_pref_trip">
                                     {% else %}
-                                    <img title="Je n'écoute pas de musique" src="{% static 'img/icons/volume-off-pink.svg' %}" class="icon_pref_trip">
+                                    <img title="Je n'écoute pas de musique" src="{% static 'img/icons/pink/volume-off-pink.svg' %}" class="icon_pref_trip">
                                     {% endif %}
 
                                 </div>
@@ -76,7 +76,7 @@
                                         <div class='mb-2 text-left'>
                                             <span style='color:red'> ALLER : </span>
                                             {{ trip.has_for_start.city }} ({{ trip.morning_departure_time }})
-                                            <span class='fas fa-arrow-right'></span>
+                                            <img  src=" {% static 'img/icons/arrow-right.svg' %}" class='arrow_trip'>
                                             {{ trip.has_for_destination }} ({{ trip.morning_arriving_time }})
                                         </div>
                                     </div>
@@ -87,7 +87,7 @@
                                         <div>
                                             <span style='color:red'> RETOUR : </span>
                                             {{ trip.has_for_destination }} ( {{ trip.evening_departure_time }} )
-                                            <span class='fas fa-arrow-right'></span>
+                                            <img  src=" {% static 'img/icons/arrow-right.svg' %}" class='arrow_trip'>
                                             {{ trip.has_for_start.city }}
                                         </div>
                                     </div>

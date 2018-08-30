@@ -60,7 +60,7 @@ class UserProfile(models.Model):
     driver_license  = models.BooleanField(default=False, verbose_name="permis",
                                         choices=( (True, "Oui"), (False, "Non")) )
     trainee         = models.BooleanField(default=False, verbose_name="statut",
-                                        choices=( (True, "Stagiare"),(False, "Employé") ))
+                                        choices=( (True, "Stagiaire"),(False, "Employé") ))
     car_owner       = models.BooleanField(default=False, verbose_name="Propriétaire d'un Véhicule",
                                         choices=( (True, "Oui"), (False, "Non")) )
     profile_image   = models.ImageField(null=True, blank=True, upload_to='avatars/')
