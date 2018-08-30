@@ -1,6 +1,5 @@
-# :notebook_with_decorative_cover: projet_afpa_car
-_notre projet covoit_
-
+# :notebook_with_decorative_cover: Projet Afpa Car
+Site de covoiturage pour l'AFPA
 
 ------------------------------------
 
