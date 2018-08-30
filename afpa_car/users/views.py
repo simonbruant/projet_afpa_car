@@ -6,7 +6,8 @@ from django.contrib.auth.views import LoginView as BaseLoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.views import (PasswordResetView as BasePasswordResetView, PasswordResetDoneView, 
-                                        PasswordResetConfirmView as BasePasswordResetConfirmView, PasswordResetCompleteView )
+                                        PasswordResetConfirmView as BasePasswordResetConfirmView, PasswordResetCompleteView, 
+                                        LogoutView as BaseLogoutView)
 from django.core.mail import EmailMessage, EmailMultiAlternatives                                        
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
@@ -96,7 +97,7 @@ class LoginView(BaseLoginView):
     form_class = LoginForm
     template_name = 'carpooling/index.html'
 
-class LogoutView(LoginRequiredMixin, FormView):
+class LogoutView(FormView):
     form_class = LogoutForm
     template_name = 'users/logout.html'
 
@@ -104,7 +105,7 @@ class LogoutView(LoginRequiredMixin, FormView):
         logout(self.request)
         return HttpResponseRedirect(reverse('carpooling:index'))
 
-class ChangePassword(LoginRequiredMixin, TemplateView):
+class ChangePassword(View):
     template_name = 'carpooling/profil/password.html'
 
     def get(self, request):

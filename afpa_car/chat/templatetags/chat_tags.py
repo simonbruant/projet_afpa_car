@@ -27,8 +27,8 @@ def choose_photo_display(object, user):
 def date_format(date):
     date = date
     today = timezone.now()
-    months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 
-                'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'] 
+    months = ['Janv', 'Févr.', 'Mars', 'Avr.', 'Mai', 'Juin', 'Juil.', 
+                'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'] 
     days = ['Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.', 'Dim.']
 
 
