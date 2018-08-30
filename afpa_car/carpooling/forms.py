@@ -105,7 +105,7 @@ class ProfilImageUpdateForm(forms.ModelForm):
                                         widget=CheckboxInput(attrs={'class': 'custom-control-input'}))
 
     def save(self, commit=False, *args, **kwargs):
-        user_profile = super(ProfilImageUpdateForm, self).save(commit=False, *args, **kwargs)
+        user_profile = super().save(commit=False, *args, **kwargs)
         
         if self.cleaned_data['remove_profile_image']:
             user_profile.profile_image = None
@@ -129,7 +129,7 @@ class PreferencesForm(forms.ModelForm):
 
 class AddressForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(AddressForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['zip_code'].required = True
         self.fields['city'].required = True
         self.fields['street_name'].required = True
