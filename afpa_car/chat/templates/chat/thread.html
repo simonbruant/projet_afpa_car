@@ -10,8 +10,9 @@
     <div class="col-md-3">
             {% for thread in threads %}
     
-            <div class="col-md-12 card" id="card_thread">
+            <div class="col-md-12 card mb-1" id="card_thread">
                     <a href="{% url 'chat:thread' thread|choose_username:user %}">
+                    <div class="row">
                         <div class="col-md-3 mt-2 mb-2">
                                 {% if thread|choose_photo:user %}
                                 <img id="photo_side" src="{{ thread|choose_photo_display:user }}">
@@ -19,20 +20,16 @@
                                 <img id="photo_side" src="{% static 'img/avatar_generique.png' %}">
                                 {% endif %}
                         </div>
-                        {% comment %}
-                        <div class="col-md-9">
-                            <div class="row mt-2 mb-1">
-                                <div id ="thread_user">{{ thread|choose_username:user }}</div>
-                                <div class="col-md-2"></div>
-                                <div id="last_message_timestamp">
+                        <div class="row col-md-10">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-7 text-left" id="thread_user">{{ thread|choose_username:user }}</div>
+                            <div id="last_message_timestamp">
                                     {{ thread.chatmessage_set.all.last.timestamp|date_format }}
                                 </div>
-                            </div>
-                            <div class="row">
-                                {{ thread.chatmessage_set.all.last.message }} / 
-                            </div>
+                                <div class="col-md-2"></div>
+                                <div id="last_message">{{ thread.chatmessage_set.all.last.message }}</div>
                         </div>
-                        {% endcomment %}
+                    </div>
                     </a>
                 </div>
                 {% endfor %}
