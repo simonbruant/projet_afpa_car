@@ -14,11 +14,7 @@
                     <a href="{% url 'chat:thread' thread|choose_username:user %}">
                     <div class="row">
                         <div class="col-md-3 mt-2 mb-2">
-                                {% if thread|choose_photo:user %}
-                                <img id="photo_side" src="{{ thread|choose_photo_display:user }}">
-                                {% else %}
-                                <img id="photo_side" src="{% static 'img/avatar_generique.png' %}">
-                                {% endif %}
+                                <img id="photo_side" src="{{ thread|choose_photo:user }}">
                         </div>
                         <div class="row col-md-10">
                             <div class="col-md-1"></div>
@@ -38,11 +34,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h2>
-                {% if object|choose_photo:user %} 
-                <img class="col-md-4" id="photo" src="{{ object|choose_photo_display:user }}">
-                {% else %}
-                <img class="col-md-4" id="photo" src="{% static 'img/avatar_generique.png' %}">
-                {% endif %}
+                <img class="col-md-4" id="photo" src="{{ object|choose_photo:user }}">
                 {{ object|choose_username:user }}
             </h2>
         </div>

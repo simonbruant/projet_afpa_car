@@ -24,7 +24,6 @@ class DashboardView(TemplateView):
             'addresses': user.addresses.all(),
             'trips': user.default_trips.all(),
         }
-        
         return context
 
 class UserUpdateView(SuccessMessageMixin, TemplateView):

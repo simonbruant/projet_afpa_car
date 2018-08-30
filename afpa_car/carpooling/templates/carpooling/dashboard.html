@@ -63,16 +63,8 @@
     <div class="col-md-8">
 
         <h3 class="mt-3">
-            
-                {% if user.user_profile.profile_image %}
                 <img class="col-md-4" id="rond_dashboard" src="{{ user.user_profile.profile_image.url }}">
-                {% else %}
-                <img class="col-md-4" id="rond_dashboard" src="../../../../static/img/avatar_generique.png">
-                {% endif %}
-            
             Bonjour {{ user.username }}
-        
-        
         </h3>
 
 

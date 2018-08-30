@@ -25,9 +25,6 @@
         {% if user.user_profile.profile_image %}
         <img v-if="imageData.length > 0" :src="imageData" class="col-md-4" id="rond">
         <img v-else class="col-md-4" id="rond" src="{{ user.user_profile.profile_image.url }}">
-        {% else %}
-        <img v-if="imageData.length > 0" :src="imageData" class="col-md-4" id="rond">
-        <img v-else class="col-md-4" id="rond" src="../../../../static/img/avatar_generique.png">
         {% endif %}
     </div>
 
@@ -41,9 +38,8 @@
                 {{ form.profile_image }}
                 <label class="custom-file-label" for="{{ form.profile_image.id_for_label }}">{{ form.profile_image.label }}</label>
             </div>
-                <p class="mt-1">PNG, JPG, de 4 Mo maximum<p>
+                <p class="mt-1">PNG, JPG<p>
             
-
             <div class="custom-control custom-checkbox">
                 {{ form.remove_profile_image }}
                 <label class="custom-control-label" for="{{ form.remove_profile_image.id_for_label }}">Supprimer l'avatar</label>

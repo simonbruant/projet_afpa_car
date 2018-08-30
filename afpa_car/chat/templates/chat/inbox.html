@@ -13,11 +13,7 @@
                 <a href="{% url 'chat:thread' thread|choose_username:user %}">
                 <div class="row">
                     <div class="col-md-3 mt-2 mb-2">
-                            {% if thread|choose_photo:user %}
-                            <img id="photo_side" src="{{ thread|choose_photo_display:user }}">
-                            {% else %}
-                            <img id="photo_side" src="{% static 'img/avatar_generique.png' %}">
-                            {% endif %}
+                            <img id="photo_side" src="{{ thread|choose_photo:user }}">
                     </div>
                     <div class="row col-md-10">
                         <div class="col-md-1"></div>

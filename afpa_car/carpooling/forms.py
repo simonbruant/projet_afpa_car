@@ -108,14 +108,13 @@ class ProfilImageUpdateForm(forms.ModelForm):
         user_profile = super().save(commit=False, *args, **kwargs)
         
         if self.cleaned_data['remove_profile_image']:
-            user_profile.profile_image = None
+            default_image = user_profile._meta.get_field('profile_image').get_default()
+            user_profile.profile_image = default_image
             user_profile.save()
         else:
             user_profile.profile_image = self.cleaned_data['profile_image']
             user_profile.save()
         return user_profile
-
-
 
 class PreferencesForm(forms.ModelForm):
     class Meta:

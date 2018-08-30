@@ -63,7 +63,7 @@ class UserProfile(models.Model):
                                         choices=( (True, "Stagiare"),(False, "Employé") ))
     car_owner       = models.BooleanField(default=False, verbose_name="Propriétaire d'un Véhicule",
                                         choices=( (True, "Oui"), (False, "Non")) )
-    profile_image   = models.ImageField(null=True, blank=True, upload_to='avatars/')
+    profile_image   = models.ImageField(blank=True, upload_to='avatars/', default='avatar_generique.jpg')
     smoker          = models.BooleanField(default=False, verbose_name="Fumeur",
                                         choices=( (True, "Fumeur"), (False, 'Non Fumeur')))
     talker          = models.BooleanField(default=False, verbose_name="Bavard",

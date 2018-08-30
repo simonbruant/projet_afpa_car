@@ -7,14 +7,15 @@ from django.contrib.auth.forms import (ReadOnlyPasswordHashField, PasswordChange
 from django.forms import TextInput, PasswordInput, EmailInput
 from .models import User, PrivateData
 
-class SignupForm(forms.ModelForm):
+class UserCreationForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('email', 'username', 'first_name', 'last_name')
+        fields = ('email', 'username', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_admin')
         widgets = {
             'email': TextInput(attrs={'class': 'form-control'}),
             'first_name': TextInput(attrs={'class': 'form-control'}),
             'last_name': TextInput(attrs={'class': 'form-control'}),
+
         }
         labels = {
             'email': "Adresse Email",
@@ -29,14 +30,6 @@ class SignupForm(forms.ModelForm):
                                     error_messages = {'invalid': "Votre ne pseudonyme ne peut contenir que des lettres,"
                                     "nombres ou caractères suivants : ./_/-"},
                                     widget=TextInput(attrs={'class': 'form-control'}) )
-    phone_number = forms.RegexField(regex=r'^[0+][\d]+$',label="Numéro de téléphone",
-                                    min_length=10, max_length=13, 
-                                    error_messages={'invalid': 'Numéro de téléphone invalide'}, 
-                                    widget=TextInput(attrs={'class': 'form-control'}))
-    afpa_number = forms.RegexField(regex=r'^\d+$', label="Identifiant Afpa",
-                                    min_length=8, max_length=8,
-                                    error_messages={'invalid': 'Le numéro AFPA est composé uniquement de nombres'}, 
-                                    widget=TextInput(attrs={'class': 'form-control'}))
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
@@ -60,18 +53,32 @@ class SignupForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
-        user = super().save()
+        user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
         return user
+
+class SignupForm(UserCreationForm):
+    phone_number = forms.RegexField(regex=r'^[0+][\d]+$',label="Numéro de téléphone",
+                                    min_length=10, max_length=13, 
+                                    error_messages={'invalid': 'Numéro de téléphone invalide'}, 
+                                    widget=TextInput(attrs={'class': 'form-control'}))
+    afpa_number = forms.RegexField(regex=r'^\d+$', label="Identifiant Afpa",
+                                    min_length=8, max_length=8,
+                                    error_messages={'invalid': 'Le numéro AFPA est composé uniquement de nombres'}, 
+                                    widget=TextInput(attrs={'class': 'form-control'}))
+    class Meta(UserCreationForm.Meta):
+        exclude = ('is_active', 'is_admin', 'is_staff')
+
+
 
 class LoginForm(forms.Form):
     email = forms.EmailField(widget=EmailInput(attrs={'class':'form-control mb-3','placeholder': 'Adresse Email'}))
     password = forms.CharField(widget=PasswordInput(attrs={'class':'form-control mb-3','placeholder': 'Mot de Passe'}))
 
     def __init__(self, request, *args, **kwargs):
-        # simply do not pass 'request' to the parent
+        # do not pass 'request' to the parent
         super().__init__(*args, **kwargs)
 
     def clean(self):
@@ -122,54 +129,17 @@ class PasswordChangeForm(SetPasswordForm, BasePasswordChangeForm, ):
 class PasswordResetForm(BasePasswordResetForm):
     email = forms.EmailField(label="Email", max_length=254, widget=TextInput(attrs={'class': 'form-control'}))
 
-#################################################################
-    
-class UserAdminCreationForm(forms.ModelForm):
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
-    username  = forms.RegexField(regex=r'^[\w._-]+$', label='Pseudonyme',
-                                    min_length=3,
-                                    error_messages = {'invalid': "Votre ne pseudonyme ne peut contenir que des lettres,"
-                                    "nombres ou caractères suivants : . _ -"},
-                                    widget=TextInput(attrs={'class': 'form-control'}) ) 
-
-    class Meta:
-        model = User
-        fields = ('first_name', 'last_name', 'email', 'username', 'is_active', 'is_staff', 'is_admin')
-
-        widgets = {
-            'email': TextInput(attrs={'class': 'form-control'}),
-            'first_name': TextInput(attrs={'class': 'form-control'}),
-            'last_name': TextInput(attrs={'class': 'form-control'}),
-        }
-
-    def clean_username(self):
-        username = self.cleaned_data['username'].lower()
-        user = User.objects.filter(username=username)
-        if user.count():
-            raise ValidationError("Pseudonyme existant")
-        return username
-
-    def clean_password2(self):
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords don't match")
-        return password2
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        user.save()
-        return user
-
-
 class UserAdminChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField()
 
     class Meta:
-        model = User
-        fields = ('email', 'password', 'username', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_admin')
+        fields = ('password', 'username', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_admin')
+
+    username   = forms.RegexField(regex=r'^[\w._-]+$', label='Pseudonyme',
+                                    min_length=3,
+                                    error_messages = {'invalid': "Votre ne pseudonyme ne peut contenir que des lettres,"
+                                    "nombres ou caractères suivants : ./_/-"},
+                                    widget=TextInput(attrs={'class': 'form-control'}) )
 
     def clean_password(self):
         return self.initial["password"]
