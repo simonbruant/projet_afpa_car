@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
@@ -178,6 +179,7 @@ class AddressUpdateView(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse('carpooling:address')
 
+
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(user=self.request.user)
@@ -255,49 +257,23 @@ class DefaultTripView(SuccessMessageMixin, View):
         default_trip.user = self.request.user
         return super().form_valid(form)
 
-from django.db.models import Q
 
 class TripView(View):
     template_name = 'carpooling/trip.html'
 
     def get(self, request):
-
-        
         query = request.GET.get('query')
         if not query:
             trips = DefaultTrip.objects.all()
         else:
-            trips = DefaultTrip.objects.filter(Q(day__startswith=query) & Q(user__first_name__startswith=query),
-                                            # Q(day__icontains=query) | Q(user__first_name__icontains=query)
-                                                )
-                        
-            # user__first_name__icontains=query
-
-            
-            
+            trips = DefaultTrip.objects.filter(Q(has_for_start__city__startswith=query))
+                                            # Q(day__startswith=query)
+                                            # Q(user__first_name__icontains=query)
+                                            # Q(day__startswith=query) | Q(user__first_name__icontains=query)
 
         day = "Résultats pour la requête %s" % query
         context = {
             'trips': trips,
             'day': day
         }
-
         return render(request, 'carpooling/trip.html', context)
-
-    # def search(self, request):
-    #     print('testttt')
-    #     query = request.GET.get('query')
-    #     if not query:
-    #         print('coucou')
-    #         trips = DefaultTrip.objects.all()
-    #     else:
-    #         trips = DefaultTrip.objects.filter(day__icontains=query)
-    #     # if not DefaultTrip.exists():
-    #     #     trip = DefaultTrip.objects.filter(artists__name__icontains=query)
-    #     day = "Résultats pour la requête %s"%query
-    #     context = {
-    #         'trips': trips,
-    #         'day': day
-    #     }
-
-    #     return render(request, 'carpooling/trip.html', context)
