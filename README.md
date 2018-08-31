@@ -4,10 +4,23 @@ Site de covoiturage pour l'AFPA
 Pour Linux il faut utiliser le fichier 'linux_requirements.txt'
 <br>
 Pour windows il faut utiliser le fichier 'requirements.txt'
+<br>
+### BDD
+Un petite base de données est déjà présente :
+On peut se connecter avec 'admin@admin.fr', les mots de passe de tous les utilisateurs crées sont 'afpa'
+<br>
+<br>
+
+### PREREQUIS (temporaires)
+Pour pouvoir créer les 'default trip' d'un utilisateur il doit avoir crée une adresse et il doit avoir un 'Centre AFPA' de sélectionné dans son profil
+<br>
+<br>
 
 ### WEBSOCKETS (disponible seulement sous linux, pour l'instant)
 
-La partie 'chat' du site utilise des websockets et l'application django-channels.
+La partie 'chat' du site utilise des websockets et l'application django-channels. <br>
+Il faut décommenter l'app 'channels' dans les 'INSTALLED_APPS' dans le settings.py
+<br>
 Il faut également install redis (installation sur une machine Ubuntu ci-dessous)
 
 Dans un premier temps, il faut exécuter :
