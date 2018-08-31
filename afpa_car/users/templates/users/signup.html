@@ -79,6 +79,14 @@
                         {% for error in form.username.errors %} {{ error }} {% endfor %}
                     </div>
                 </div>
+                
+                <div class="input-group mb-3 mt-3">
+                    <div class="input-group-prepend">
+                        <div id="header_input_signup" class="input-group-text">{{ form.afpa_center.label }}</div>
+                    </div>
+                    {{ form.afpa_center }}
+                    <div class='col-md-4'></div>
+                </div>
 
                 <div class="input-group mb-3 mt-3">
                     <div class="input-group-prepend">
