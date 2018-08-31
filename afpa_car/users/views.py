@@ -34,6 +34,7 @@ class SignUpView(CreateView):
 
     def send_mail(self, subject_template_name, email_template_name,
                     context, from_email, to_email):
+
         subject = render_to_string(subject_template_name, context)
         subject = ''.join(subject.splitlines())
         body = render_to_string(email_template_name, context)

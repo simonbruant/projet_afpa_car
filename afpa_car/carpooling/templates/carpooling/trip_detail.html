@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %} "{% static 'carpooling/css/trip_detail.css' %}" {% endblock css %}
+
+{% block section %}
+
+<div class="row mt-3 mb-3">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">       
+                <h3> Detail du trajet </h3>
+                <h4>
+                    {{ trip.has_for_start.city }}
+                    <img  src=" {% static 'img/icons/arrow.svg' %}" class='arrow_trip_detail'>
+                    {{ trip.has_for_destination }}
+                </h4>
+                <div> Pour le {{ trip.day }} [jj//mm/yy]</div>
+
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-5 mt-3 card">
+                <h5 class="mt-2">Aller</h5>
+                <div class='mt-2 row'>
+                    <div class="col-md-1">
+                        <img class='icons_trip_preview' src="{% static 'img/icons/pin-blue.svg' %}">
+                    </div>
+                    <div class="col-md-10 text-left">
+                        Depart de {{ trip.has_for_start.city }}  
+                        à {{ trip.morning_departure_time }} heures
+                    </div>
+                    <div class="col-md-1 mt-2">
+                        <img class='icons_trip_preview' src=" {% static 'img/icons/pin-red.svg' %} ">
+                    </div>
+                    <div class="col-md-10 mt-2 mb-2 text-left">  
+                        Arrive à l'{{ trip.has_for_destination }} à {{ trip.morning_arriving_time }} heures
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5 mt-3 card">
+                <h5 class="mt-2">Retour</h5>
+                <div class='mt-2 row'>
+                    <div class="col-md-1">
+                        <img class='icons_trip_preview' src=" {% static 'img/icons/pin-blue.svg' %} ">  
+                    </div>
+                    <div class="col-md-10 text-left">
+                        Depart de l'{{ trip.has_for_destination }} à {{ trip.evening_departure_time }}
+                    </div>
+
+                    <div class="col-md-1 mt-2">
+                        <img class='icons_trip_preview' src=" {% static 'img/icons/pin-red.svg' %} ">  
+                    </div>
+                    <div class="col-md-10 mt-2 text-left">
+                        Arrive à {{ trip.has_for_start.city }} à [{{ trip.evening_estimated_arriving_time }}] heures *auto_calculé*
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-1"></div>
+                <div class="col-md-10 mt-3 card">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="row">
+                            <div class="col-md-3 mt-3 mr-1">    
+                                <div id="profile_image_driver">
+                                    {% if user.user_profile.profile_image %}
+                                    <img class="rond_trip_detail" src="{{ trip.user.user_profile.profile_image.url }}">
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-8 text-left mt-4 ml-1"> 
+                                <div id="first_name_driver">
+                                    <h6>{{ trip.user.first_name }}</h6>
+                                    <h6>{{ trip.user.user_profile.get_trainee_display }}</h6>
+                                    
+
+                                </div>
+                            </div>
+                                <div class="col-md-12 mt-2">
+                                    <div>
+                                        <h6>Véhicule : {{ trip_car }} {{ trip_car.color }}</h6>
+                                    </div>
+                                    <div class='mb-3'>
+                                        {% if trip.user.user_profile.smoker %}
+                                        <img title='Trajet fumeur' src="{% static 'img/icons/pink/smoking-pink.svg' %}" class="icon_pref_trip_detail mr-1">
+                                        {% else %}
+                                        <img title='Trajet non fumeur' src="{% static 'img/icons/pink/smoking-ban-pink.svg' %}" class="icon_pref_trip_detail mr-1"> {% endif %}
+
+                                        {% if trip.user.user_profile.talker %}
+                                        <img title='Je suis bavard' src="{% static 'img/icons/pink/talker-up-pink.svg' %}" class="icon_pref_trip_detail mr-1">
+                                        {% else %}
+                                        <img title='Je ne suis pas forcément bavard' src="{% static 'img/icons/pink/talker-pink.svg' %}" class="icon_pref_trip_detail mr-1">
+                                        {% endif %}
+                                        {% if trip.user.user_profile.music %}
+                                        <img title="J'aime écouter de la musique" src="{% static 'img/icons/pink/volume-on-pink.svg' %}" class="icon_pref_trip_detail">
+                                        {% else %}
+                                        <img title="Je n'écoute pas de musique" src="{% static 'img/icons/pink/volume-off-pink.svg' %}" class="icon_pref_trip_detail">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <div class="col-md-5"> 
+                            <div class="mt-2">
+                                Conducteur :
+
+                            <div class="row mb-1">
+                                <div class="col-md-4 mr-1"></div>
+                                <div class="col-md-2 mt-2">
+                                    <img id="round_seat_car_trip" src="{{ trip.user.user_profile.profile_image.url }}">
+                                </div>
+                            </div>
+                                    
+                            Passagers sur ce trajet :
+                            {% comment %} 
+                            ### TODO : lié image passager inscrit dans le trajet
+                                    <div class="row">
+                                        <div class="col-md-12 d-flex justify-content-center">
+                                        {% for passenger in Trip_Passenger %}
+                                            <div class="col-md-2 mr-3 mt-2">
+                                                <img id="round_seat_car_trip" src="{{ trip.user.user_profile.profile_image.url }}">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    </div> 
+                            {% endcomment %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>  
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <img id="map_trip_preview" title="Aperçu du trajet" src=" {% static 'img/other/maps_trip.png' %} ">
+        </div>
+    </div>
+
+</div>
+
+{% endblock section %}

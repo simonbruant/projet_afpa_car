@@ -1,0 +1,48 @@
+.rond_trip {
+    border-radius: 50%;
+    height: 60px;
+    width: 100px;
+}
+
+.icon_pref_trip{
+    color : #E3007E;
+    /* width: 25%; */
+    height: 23px;
+    width: 23px;
+}
+.card_trip:link, .card_trip:visited {
+    color : black;
+    text-decoration: none;
+}
+
+.card_trip:hover{
+    background-color: lightgray;
+    border : solid 1px darkgrey;
+    box-shadow:0 0 10px rgba(0,0,0,0.5);
+}
+
+#scroller_trip{
+    height : 600px;
+    overflow-y: scroll;
+    /* border : solid 1px darkgrey; */
+    /* border-radius : 1%; */
+    /* border-top-left-radius : 1%;
+    border-bottom-left-radius : 1%; */
+}
+
+#scroller_trip::-webkit-scrollbar{
+    width: 10px;
+    height: 8px;
+    background-color: #aaa; /* or add it to the track */
+}
+
+#scroller_trip::-webkit-scrollbar-thumb{
+    background: #44A33D;
+}
+
+.arrow_trip{
+    height: 16px;
+    width: 16px;
+}
+
+/* blue #00a0e0 */

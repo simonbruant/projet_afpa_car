@@ -1,8 +1,12 @@
 /* ###### MODIFICATION GENERAL POUR TOUT LE SITE ###### */
+html{
+    background-color: #eeeeee;
+}
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
     background-color: #E3007E;
-  }
+}
+
 
 .custom-select {
     background: #fff url("../img/icon-controler.svg") no-repeat right 0.75rem center;

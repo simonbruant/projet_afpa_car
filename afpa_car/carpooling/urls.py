@@ -3,12 +3,13 @@ from django.conf.urls.static import static
 from django.urls import path, reverse_lazy
 from django.views.generic import TemplateView, RedirectView
 reverse_lazy
-from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, DefaultTripCreateView, 
+from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, DefaultTripView, 
                     CarCreateView, CarUpdateView, CarDeleteView,
                     ProfilImageUpdateView, PreferencesUpdateView,
-                    AddressCreateView, AddressUpdateView, AddressDeleteView )
+                    AddressCreateView, AddressUpdateView, AddressDeleteView, 
+                    TripView, TripDetailView )
 from users.views import LoginView, ChangePassword
-
+from django.conf.urls import url
 app_name = 'carpooling'
 
 urlpatterns = [ 
@@ -31,7 +32,11 @@ urlpatterns = [
     path('profil/adresse/<int:pk>', AddressUpdateView.as_view(), name='address_update'),
     path('profil/adresse/<int:pk>/delete', AddressDeleteView.as_view(), name='address_delete'),
 
-    path('calendar/', DefaultTripCreateView.as_view(), name='calendar'),
+    path('calendar/', DefaultTripView.as_view(), name='calendar'),
+    
+    path('trip/', TripView.as_view(), name="trip"),
+    url(r'^trip/(?P<trip_id>[0-9]+)/$', TripDetailView.as_view(), name='trip_detail'),
+
 
     path('cgu/', TemplateView.as_view(template_name='carpooling/cgu.html'), name='cgu'),
     

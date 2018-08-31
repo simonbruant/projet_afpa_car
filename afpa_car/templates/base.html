@@ -46,8 +46,8 @@
                     <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:general_infos' %}">Profil</a>
                     <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:calendar' %}">Semaine Type / Calendrier</a>
                     <a class="py-2 d-none d-md-inline-block" href="{% url 'chat:inbox' %}">Messagerie</a>
-                    <a class="py-2 d-none d-md-inline-block" href="#">Rechercher un trajet</a>
-                    <a class="py-2 d-none d-md-inline-block" href="https://www.afpa.fr">Afpa</a>
+                    <a class="py-2 d-none d-md-inline-block" href="{% url 'carpooling:trip' %}">Rechercher un trajet</a>
+                    <a class="py-2 d-none d-md-inline-block" href="https://www.afpa.fr">Afpa.fr</a>
                     <a href="{% url 'users:logout' %}" class="btn fas fa-sign-out-alt" id="logout" title="Déconnexion"></a>
                 </div>
             </nav>

@@ -88,9 +88,7 @@ class DefaultTrip(models.Model):
 class Trip(DefaultTrip):
 
     trip_date = models.DateField(null=True, verbose_name="Jour du trajet")
-
     passenger = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='passengers', verbose_name="Passager", through= "Trip_Passenger")
-
 
     class Meta:
         verbose_name = "Trajet Particulier"
