@@ -44,11 +44,13 @@
                         <td class="p-1"><b>Horaire de retour</b></td>
                     </tr>
                     {% for trip in trips %}
-                        <tr>
-                            <td>{{ trip.day }}</td>
-                            <td>{{ trip.morning_departure_time }}</td>
-                            <td>{{ trip.evening_departure_time }}</td>
-                        </tr>
+                        {% if not trip.deactivate %}
+                            <tr>
+                                <td>{{ trip.day }}</td>
+                                <td>{{ trip.morning_departure_time }}</td>
+                                <td>{{ trip.evening_departure_time }}</td>
+                            </tr>
+                        {% endif %}
                     {% endfor %}
                 </table>
                 {% else %}

@@ -216,29 +216,32 @@ class DefaultTripCreateView(SuccessMessageMixin, View):
     def post(self, request):
         user = self.request.user
         formset = DefaultTripFormSet(request.POST, queryset=DefaultTrip.objects.filter(user=user), form_kwargs={'user': user})
-        if formset.is_valid():
-            print("formset is valid")
-            x = 0
-            for form in formset.forms:
+        x = 0
+        for form in formset.forms:
+            if form.is_valid():
                 default_trip = form.save(commit=False)
                 default_trip.user = user
                 default_trip.has_for_destination = user.user_profile.afpa_center.address
-                if not default_trip.day:
-                    default_trip.day = default_trip._meta.get_field('day').choices[x][1]
-                    x += 1
+
+                is_form_valid = (not form.cleaned_data.get('morning_departure_time') 
+                                or not form.cleaned_data.get('morning_arriving_time')
+                                or not form.cleaned_data.get('evening_departure_time')
+                                or not form.cleaned_data.get('has_for_start')
+                                or form.cleaned_data.get('deactivate'))
+
+                if is_form_valid:
+                    default_trip.has_for_start = None
+                    default_trip.morning_departure_time = None
+                    default_trip.morning_arriving_time = None
+                    default_trip.evening_departure_time = None
+                    default_trip.deactivate = True
+  
+                default_trip.day = default_trip._meta.get_field('day').choices[x][1]
+                x += 1
                 default_trip.save()
 
-            if self.success_message:
-                messages.success(self.request, self.success_message)
+        if self.success_message:
+            messages.success(self.request, self.success_message)
 
-            return redirect('carpooling:calendar')
+        return redirect('carpooling:calendar')
         
-        return render(request, self.template_name, {'formset': formset })
-
-    def form_valid(self, form):
-        print("form valid")
-        default_trip = form.save(commit=False)
-        default_trip.user = self.request.user
-        return super().form_valid(form)
-
-    

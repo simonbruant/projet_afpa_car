@@ -154,7 +154,7 @@ class AddressForm(forms.ModelForm):
 class DefaultTripForm(forms.ModelForm):
 
     has_for_start = forms.ModelChoiceField(queryset=None, widget=Select(attrs={'class': 'custom-select'}), 
-                                                 label="Départ" )
+                                                 label="Départ", required=False )
                                                 
     def __init__(self, user=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -162,17 +162,18 @@ class DefaultTripForm(forms.ModelForm):
 
     class Meta:
         model = DefaultTrip
-        fields =('morning_departure_time', 'morning_arriving_time', 'evening_departure_time','has_for_start' )
+        fields =('morning_departure_time', 'morning_arriving_time', 'evening_departure_time','has_for_start', 'deactivate' )
         widgets = {
             'morning_departure_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
             'morning_arriving_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
             'evening_departure_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
+            'deactivate': CheckboxInput(attrs={'type': 'checkbox', 'class': 'form-control require-input'}),
         }
 
 DefaultTripFormSet = modelformset_factory(DefaultTrip ,form=DefaultTripForm,
                                         extra=5, max_num=5, 
                                         fields = ('morning_departure_time', 'morning_arriving_time', 
-                                                    'evening_departure_time','has_for_start',))
+                                                    'evening_departure_time','has_for_start', 'deactivate'))
 
 
 

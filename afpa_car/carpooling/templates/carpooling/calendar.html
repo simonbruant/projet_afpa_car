@@ -11,7 +11,7 @@
         <div class='col-md-12'>
 
             <div class="card mt-3 mb-3" id="carte_semaine">
-                <div id="titre_calendar" class="card-header bg-success col-md-12">Votre semaine type<span @click="show_update" class="fas fa-pencil-alt" v-if="burger" style="float: right"></span></div>
+                <div id="titre_calendar" class="card-header bg-success col-md-12">Votre semaine type{% if trips %}<span @click="show_update" class="fas fa-pencil-alt" v-if="burger" style="float: right"></span>{% endif %}</div>
                 <div v-if='update_default_week'>
                     
                     <div class='row'></div>
@@ -106,15 +106,17 @@
                                 <td id="tableSemaineType" class="p-1"><b>Arrivée estimée</b></td>
                             </tr>
                             {% for trip in trips %}
-                            <tr>
-                                <td>{{ trip.day }}</td>
-                                <td>{{ trip.has_for_start }}</td>
-                                <td>{{ trip.morning_departure_time }}</td>
-                                <td>{{ trip.morning_arriving_time }}</td>
-                                <td>{{ trip.has_for_destination }}</td>
-                                <td>{{ trip.evening_departure_time }}</td>
-                                <td>{{ trip.evening_estimated_arriving_time }}</td>
-                            </tr>
+                                {% if not trip.deactivate %}
+                                    <tr>
+                                        <td>{{ trip.day }}</td>
+                                        <td>{{ trip.has_for_start }}</td>
+                                        <td>{{ trip.morning_departure_time }}</td>
+                                        <td>{{ trip.morning_arriving_time }}</td>
+                                        <td>{{ trip.has_for_destination }}</td>
+                                        <td>{{ trip.evening_departure_time }}</td>
+                                        <td>{{ trip.evening_estimated_arriving_time }}</td>
+                                    </tr>
+                                {% endif %}  
                             {% endfor %}
                         </table>
                         {% else %}

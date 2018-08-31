@@ -66,16 +66,17 @@ class DefaultTrip(models.Model):
         ('Thursday', 'Jeudi'),
         ('Friday', 'Vendredi'),
     )
-    morning_departure_time          = models.TimeField(verbose_name="Heure de départ")
-    morning_arriving_time           = models.TimeField(verbose_name="Heure d'arrivée")
-    evening_departure_time          = models.TimeField(verbose_name="Heure de retour")
+    morning_departure_time          = models.TimeField(null=True, blank=True, verbose_name="Heure de départ")
+    morning_arriving_time           = models.TimeField(null=True, blank=True, verbose_name="Heure d'arrivée")
+    evening_departure_time          = models.TimeField(null=True, blank=True, verbose_name="Heure de retour")
     evening_estimated_arriving_time = models.TimeField(null=True, verbose_name="Arrivée estimée à")
     estimated_trip_cost             = models.IntegerField(editable=False, default=0, verbose_name="Coût du trajet estimé")
-    day                             = models.CharField(max_length=10, choices=DAY, verbose_name="Jour")
+    day                             = models.CharField(null=True, max_length=10, choices=DAY, verbose_name="Jour")
 
     user                = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="default_trips" ,verbose_name="Utilisateur")
-    has_for_start       = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="start", verbose_name="Départ")
+    has_for_start       = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True, related_name="start", verbose_name="Départ")
     has_for_destination = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="destination", verbose_name="Destination")
+    deactivate          = models.BooleanField(default=False, verbose_name="désactivation" )
 
     class Meta:
         verbose_name = "Trajet Type"
