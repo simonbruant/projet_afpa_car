@@ -47,7 +47,9 @@ class SignUpView(CreateView):
         user.save()
         user.private_data.afpa_number = form.cleaned_data["afpa_number"]
         user.private_data.phone_number = form.cleaned_data["phone_number"]
+        user.user_profile.afpa_center = form.cleaned_data["afpa_center"]
         user.private_data.save()    
+        user.user_profile.save()    
 
         # Envoie email de confirmation
         current_site = get_current_site(self.request)

@@ -5,7 +5,10 @@ from django.contrib.auth.forms import (ReadOnlyPasswordHashField, PasswordChange
                                         PasswordResetForm as BasePasswordResetForm, 
                                         SetPasswordForm as BaseSetPasswordForm)
 from django.forms import TextInput, PasswordInput, EmailInput
+
 from .models import User, PrivateData
+from carpooling.models import AfpaCenter
+
 
 class UserCreationForm(forms.ModelForm):
     class Meta:
@@ -68,6 +71,9 @@ class SignupForm(UserCreationForm):
                                     min_length=8, max_length=8,
                                     error_messages={'invalid': 'Le numéro AFPA est composé uniquement de nombres'}, 
                                     widget=TextInput(attrs={'class': 'form-control'}))
+    afpa_center = forms.ModelChoiceField(queryset=AfpaCenter.objects.all(), label='Centre AFPA',
+                                        widget=forms.Select(attrs={'class': 'custom-select'}))
+
     class Meta(UserCreationForm.Meta):
         exclude = ('is_active', 'is_admin', 'is_staff')
 
