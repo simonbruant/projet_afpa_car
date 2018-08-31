@@ -26,10 +26,6 @@ class DashboardView(TemplateView):
             'addresses': user.addresses.all(),
             'trips': user.default_trips.all(),
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> trajet_team
         return context
 
 
@@ -262,3 +258,43 @@ class DefaultTripView(SuccessMessageMixin, View):
 
         return redirect('carpooling:calendar')
         
+class TripView(View):
+    template_name = 'carpooling/trip.html'
+
+    def get(self, request):
+        query = request.GET.get('query')
+        query_day = request.GET.get('query_day')
+        context = {}
+        if not query and not query_day:
+            context['trips'] = DefaultTrip.objects.all()
+        else:
+            trips = DefaultTrip.objects.filter(has_for_start__city__startswith=query,
+                                                day__startswith=query_day)
+            context['trips'] = trips
+                                            # Q(day__startswith=query)
+                                            # Q(user__first_name__icontains=query)
+                                            # Q(day__startswith=query) | Q(user__first_name__icontains=query)
+
+        return render(request, 'carpooling/trip.html', context)
+
+
+class TripDetailView(DetailView):
+    model = DefaultTrip
+    template_name = 'carpooling/trip.html'
+
+    def get(self, request, trip_id) :
+        
+        trip = get_object_or_404(DefaultTrip, pk=trip_id)
+        user = request.user
+        # print(Car.objects.filter(user)) 
+        # Car.objects.all(self.request.user)
+        
+        # car = trip.user.cars.all()[0]
+
+        context = {
+            'trip' : trip,
+            # 'trip_car': car,
+            # 'trip_amount_of_free_seats': range(car.amount_of_free_seats),
+        }
+
+        return render(request, 'carpooling/trip_detail.html', context)

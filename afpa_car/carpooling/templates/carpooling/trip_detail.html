@@ -78,9 +78,9 @@
                                 </div>
                             </div>
                                 <div class="col-md-12 mt-2">
-                                    <div>
+                                    {% comment %} <div>
                                         <h6>Véhicule : {{ trip_car }} {{ trip_car.color }}</h6>
-                                    </div>
+                                    </div> {% endcomment %}
                                     <div class='mb-3'>
                                         {% if trip.user.user_profile.smoker %}
                                         <img title='Trajet fumeur' src="{% static 'img/icons/pink/smoking-pink.svg' %}" class="icon_pref_trip_detail mr-1">
