@@ -1,7 +1,7 @@
 # :notebook_with_decorative_cover: Projet Afpa Car
 Site de covoiturage pour l'AFPA
 
-Pour Linux il faut utiliser le fichier 'linux_requirements.txt'
+Pour Linux il faut utiliser le fichier 'linux_requirements.txt' (temporairement dans le dossier 'afpa_car')
 <br>
 Pour windows il faut utiliser le fichier 'requirements.txt'
 <br>
