@@ -111,17 +111,20 @@
                                     <img id="round_seat_car_trip" src="{{ trip.user.user_profile.profile_image.url }}">
                                 </div>
                             </div>
+                                    
                             Passagers sur ce trajet :
-
+                            {% comment %} 
+                            ### TODO : lié image passager inscrit dans le trajet
                                     <div class="row">
                                         <div class="col-md-12 d-flex justify-content-center">
-                                        {% for seat in trip_amount_of_free_seats %}
+                                        {% for passenger in Trip_Passenger %}
                                             <div class="col-md-2 mr-3 mt-2">
                                                 <img id="round_seat_car_trip" src="{{ trip.user.user_profile.profile_image.url }}">
                                             </div>
                                         {% endfor %}
                                     </div>
-                                    </div>
+                                    </div> 
+                            {% endcomment %}
                             </div>
                         </div>
                     </div>
