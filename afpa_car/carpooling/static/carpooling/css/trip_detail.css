@@ -1,7 +1,7 @@
 .rond_trip_detail {
     border-radius: 50%;
     height: 60px;
-    width: 80px;
+    width: 60px;
 }
 
 .icon_pref_trip_detail {
@@ -27,3 +27,13 @@
     width: 25px;
 }
 
+#round_seat_car_trip{
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    border: dashed 1px lightgrey;
+}
+
+.yellow{
+    background-color: yellowgreen;
+}

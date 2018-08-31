@@ -15,7 +15,7 @@
                     <img  src=" {% static 'img/icons/arrow.svg' %}" class='arrow_trip_detail'>
                     {{ trip.has_for_destination }}
                 </h4>
-                <div> Pour le {{ trip.day }} (date précise)</div>
+                <div> Pour le {{ trip.day }} [jj//mm/yy]</div>
 
             </div>
             <div class="col-md-1"></div>
@@ -45,14 +45,14 @@
                         <img class='icons_trip_preview' src=" {% static 'img/icons/pin-blue.svg' %} ">  
                     </div>
                     <div class="col-md-10 text-left">
-                        depart de l'{{ trip.has_for_destination }} à {{ trip.evening_departure_time }}
+                        Depart de l'{{ trip.has_for_destination }} à {{ trip.evening_departure_time }}
                     </div>
 
                     <div class="col-md-1 mt-2">
                         <img class='icons_trip_preview' src=" {% static 'img/icons/pin-red.svg' %} ">  
                     </div>
                     <div class="col-md-10 mt-2 text-left">
-                        Arrive à {{ trip.has_for_start.city }} à {{ trip.evening_estimated_arriving_time }} heures (calculer)
+                        Arrive à {{ trip.has_for_start.city }} à [{{ trip.evening_estimated_arriving_time }}] heures *auto_calculé*
                     </div>
                 </div>
             </div>
@@ -66,12 +66,10 @@
                                 <div id="profile_image_driver">
                                     {% if user.user_profile.profile_image %}
                                     <img class="rond_trip_detail" src="{{ trip.user.user_profile.profile_image.url }}">
-                                    {% else %}
-                                    <img class="rond_trip_detail" src='{% static "img/avatar_generique.png" %}'>
                                     {% endif %}
                                 </div>
                             </div>
-                            <div class="col-md-8 text-left mt-4 ml-3"> 
+                            <div class="col-md-8 text-left mt-4 ml-1"> 
                                 <div id="first_name_driver">
                                     <h6>{{ trip.user.first_name }}</h6>
                                     <h6>{{ trip.user.user_profile.get_trainee_display }}</h6>
@@ -105,13 +103,25 @@
                             </div>
                         <div class="col-md-5"> 
                             <div class="mt-2">
-                                Nombre de places disponibles :
-                                {{ trip_car.amount_of_free_seats }}
+                                Conducteur :
 
-                                {% for seat in range %}
-                                wesh
-                                {% endfor %}
+                            <div class="row mb-1">
+                                <div class="col-md-4 mr-1"></div>
+                                <div class="col-md-2 mt-2">
+                                    <img id="round_seat_car_trip" src="{{ trip.user.user_profile.profile_image.url }}">
+                                </div>
+                            </div>
+                            Passagers sur ce trajet :
 
+                                    <div class="row">
+                                        <div class="col-md-12 d-flex justify-content-center">
+                                        {% for seat in trip_amount_of_free_seats %}
+                                            <div class="col-md-2 mr-3 mt-2">
+                                                <img id="round_seat_car_trip" src="{{ trip.user.user_profile.profile_image.url }}">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    </div>
                             </div>
                         </div>
                     </div>

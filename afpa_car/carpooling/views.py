@@ -294,7 +294,7 @@ class TripDetailView(DetailView):
         context = {
             'trip' : trip,
             'trip_car': car,
-            'range': range(car.amount_of_free_seats),
+            'trip_amount_of_free_seats': range(car.amount_of_free_seats),
         }
 
         return render(request, 'carpooling/trip_detail.html', context)
