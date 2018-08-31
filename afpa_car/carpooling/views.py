@@ -4,11 +4,11 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView
+from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView, FormView
 
 from .forms import (PrivateDataUpdateForm, UserUpdateForm, CarForm,
                     ProfilImageUpdateForm, PreferencesForm, UserProfileUpdateForm,
-                    AddressForm, DefaultTripForm, DefaultTripFormSet)
+                    AddressForm, DefaultTripForm, DefaultTripFormSet, ContactForm)
 from .models import Car, Address, DefaultTrip, AfpaCenter
 from users.models import PrivateData, User, UserProfile
 
@@ -241,4 +241,6 @@ class DefaultTripCreateView(SuccessMessageMixin, View):
         default_trip.user = self.request.user
         return super().form_valid(form)
 
-    
+class ContactView(FormView):
+    template_name = 'carpooling/contact.html'
+    form_class = ContactForm    

@@ -174,5 +174,7 @@ DefaultTripFormSet = modelformset_factory(DefaultTrip ,form=DefaultTripForm,
                                         fields = ('morning_departure_time', 'morning_arriving_time', 
                                                     'evening_departure_time','has_for_start',))
 
-
-
+class ContactForm(forms.Form):
+    email = forms.EmailField(widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Adresse Email'}), 
+                            label='Adresse Email')
+    message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Votre Message'}))
