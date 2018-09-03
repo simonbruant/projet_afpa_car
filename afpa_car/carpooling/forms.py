@@ -176,5 +176,7 @@ DefaultTripFormSet = modelformset_factory(DefaultTrip ,form=DefaultTripForm,
 
 class ContactForm(forms.Form):
     email = forms.EmailField(widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Adresse Email'}), 
-                            label='Adresse Email')
+                            label='Adresse Email',)
+    name = forms.CharField(widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Votre nom'}))
+    subject = forms.CharField(widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Sujet du Message'}))
     message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Votre Message'}))
