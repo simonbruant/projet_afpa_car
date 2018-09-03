@@ -1,6 +1,5 @@
-
-
 {% extends 'carpooling/profil.html' %}
+{% load static %}
 
 {% block cardTitle %} 
 <div id="adresseContenu" class="row">
@@ -58,8 +57,7 @@
 
 <div class="row">
     <div class="col-md-2"></div>
-
-    <form class="col-md-8"method="POST">
+    <form id="form_address" class="col-md-8" method="POST">
         {% csrf_token %}
         
         <div class="input-group mb-3 mt-3">
@@ -72,7 +70,13 @@
             <div class="input-group-prepend">
                 <div id="header_input_profil" class="input-group-text">{{ form.zip_code.label }}</div>
             </div>
+            <div>
             {{ form.zip_code }}
+            <datalist id='citiesName'>
+                <option v-for="item in citiesName">[[ item ]]</option>
+                
+            </datalist>
+        </div>
         </div>
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
@@ -80,6 +84,7 @@
             </div>
             {{ form.city }}
         </div>
+
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
@@ -98,17 +103,27 @@
         <div id="submit_profil">
             <button type="submit" class="btn btn-success">Valider l'adresse</button>
         </div>
+        <div>
+            [[ citiesName ]]
+        </div>
 
         {% if form.errors %}
         <p>Il y a eu une erreur lors de la création</p>
         {% endif %}
         <br />
     </form>
-
+    <input id="basics" />
 </div>
 
 <div class='row'>
     <div class='col-md-3 require-input-legend'><p id='text_legend'>Champ obligatoire</p> </div>
 </div>
+
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/jquery.easy-autocomplete.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/vue.js' %}"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+<script type="text/javascript" src="{% static 'carpooling/js/address.js' %}"></script>
 
 {% endblock contenuProfil %}

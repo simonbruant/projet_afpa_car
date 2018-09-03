@@ -137,8 +137,8 @@ class AddressForm(forms.ModelForm):
         model = Address
         fields = ('zip_code', 'city', 'street_number', 'street_name', 'address_label')
         widgets = {
-            'zip_code': TextInput(attrs={'class': 'form-control require-input'}),
-            'city': TextInput(attrs={'class': 'form-control require-input'}),
+            'zip_code': TextInput(attrs={'class': 'form-control require-input', 'v-model': 'zipCode'}),
+            'city': TextInput(attrs={'class': 'form-control require-input', 'v-model':'city'}),
             'street_number': TextInput(attrs={'class': 'form-control'}),
             'street_name': TextInput(attrs={'class': 'form-control require-input'}),
             'address_label': TextInput(attrs={'class': 'form-control'}),
