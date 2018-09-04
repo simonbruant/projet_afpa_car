@@ -154,6 +154,7 @@ LOGIN_EXEMPT_URLS = (
 
 GLOBAL_URLS = (
     r'^cgu/$',
+    r'^contact/$'
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

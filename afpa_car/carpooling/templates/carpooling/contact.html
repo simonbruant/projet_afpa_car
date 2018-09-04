@@ -1,0 +1,30 @@
+{% extends 'base.html' %} 
+
+{% block section %}
+<div class="row mt-3">
+    <div class="col-md-4"></div>
+<div class="row">
+<form method='post'>
+    {% csrf_token %}
+    <div class='mb-3 row'>
+        <div class="col-md-6">
+            {{ form.name }}
+        </div>
+        <div class="col-md-6">
+            {{ form.email }}
+        </div>
+    </div>
+            <div class="mb-3">
+                {{ form.subject }}
+            </div>
+            <div class="mb-3">
+                {{ form.message }}
+            </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+    <button type="submit" class='btn btn-success col-md-4 mb-3'>Envoyer</button>
+</div>
+</div>
+</form>
+</div>
+{% endblock %}
