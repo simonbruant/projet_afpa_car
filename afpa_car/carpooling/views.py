@@ -1,7 +1,8 @@
+import re
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-# from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import View
@@ -159,7 +160,11 @@ class AddressCreateView(SuccessMessageMixin, CreateView):
         address.user = self.request.user
         address_label = form.cleaned_data['address_label']
         address.address_label = "Adresse" if not address_label else address_label.capitalize()
-        address.city = address.city.capitalize()
+        city_zip = form.cleaned_data['city_zip_code'].split('(')
+        city = city_zip[0]
+        zip = city_zip[1].split(')')[0]
+        address.city = city
+        address.zip_code = zip
         address.save()
         return super().form_valid(form)
 
@@ -177,7 +182,6 @@ class AddressUpdateView(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('carpooling:address')
-
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -228,9 +232,9 @@ class DefaultTripView(SuccessMessageMixin, View):
 
     def post(self, request):
         user = self.request.user
-        formset = DefaultTripFormSet(request.POST, queryset=DefaultTrip.objects.filter(user=user), form_kwargs={'user': user})
-        x = 0
-        for form in formset.forms:
+        formset = DefaultTripFormSet(request.POST, queryset=DefaultTrip.objects.filter(user=user), 
+                                    form_kwargs={'user': user})
+        for i, form in enumerate(formset.forms):
             if form.is_valid():
                 default_trip = form.save(commit=False)
                 default_trip.user = user
@@ -249,8 +253,7 @@ class DefaultTripView(SuccessMessageMixin, View):
                     default_trip.evening_departure_time = None
                     default_trip.deactivate = True
   
-                default_trip.day = default_trip._meta.get_field('day').choices[x][1]
-                x += 1
+                default_trip.day = default_trip._meta.get_field('day').choices[i][1]
                 default_trip.save()
 
         if self.success_message:

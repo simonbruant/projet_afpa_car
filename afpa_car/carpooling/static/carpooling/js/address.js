@@ -1,86 +1,67 @@
-var vm = new Vue ({
+new Vue ({
     delimiters: ['[[', ']]'],
     el: "#form_address",
     data: {
-        zipCode: '',
+        cityZipCode: '',
+        citiesZipCodesList: [],
         city: '',
-        citiesName: [],
-        options: {}
+        zipCode: '',
+        address:'',
+        response: '',
     },
     watch: { 
-        zipCode : function() {
-        this.citiesName = []
-        if (this.zipCode.length == 5) {
-            this.lookupZipCode()
-            }
+      cityZipCode : function() {
+        if (! this.cityZipCode.includes("(")) {
+          this.citiesZipCodesList = []
+          this.lookupcityZipCode()
+          }
+        },
+        address : function(){
+          this.lookupAddress()
         }
-    },
+      },
     methods: {
-        lookupZipCode: _.debounce(function() {
+        lookupcityZipCode: _.debounce(function() {
             var app = this
-            axios.get('https://geo.api.gouv.fr/communes?codePostal=' + app.zipCode)
+            axios.get('https://geo.api.gouv.fr/communes?codePostal=' + app.cityZipCode)
                     .then(function (response) {
-                    for (var key in response.data) {
-                        app.citiesName.push(response.data[key].nom)
-                    }
-                    options = {
-                        data: app.citiesName
+                    if (response.data.length)  {
+                      for (var key in response.data) {
+                        city = response.data[key].nom
+                        zipCode = app.cityZipCode
+                        app.citiesZipCodesList.push([city, zipCode])
+                      }
                     }
                 })
                 .catch(function (error) {
                 app.startingCity = "Invalid Zipcode"
                 })
+            axios.get("https://geo.api.gouv.fr/communes?nom=" + app.cityZipCode)
+            .then(function (response) {
+              if (response.data.length)  {
+                for (var i in response.data) {
+                  city = response.data[i]
+                  for (var j in city.codesPostaux) {
+                    zip = city.codesPostaux[j]
+                    app.citiesZipCodesList.push([city.nom, zip])
+                  }
+                }
+              }
+          })
         }, 500),
-    }
-})
-
-
-$("#id_zip_code").easyAutocomplete(vm.options);
-
-new Vue({
-    el: '#form_address2',
-    data: {
-    startingZip: '',
-    startingCity: '',
-    endingZip: '',
-    endingCity: ''
-    },
-    watch: {
-      startingZip: function() {
-        this.startingCity = ''
-        if (this.startingZip.length == 5) {
-          this.lookupStartingZip()
-        }
-      },
-      endingZip: function() {
-        this.endingCity = ''
-        if (this.endingZip.length == 5) {
-          this.lookupEndingZip()
-        }
+        selectedCityZip: function(cityZip) {
+            this.cityZipCode = cityZip[0] + " (" + cityZip[1] + ")"
+            this.city = cityZip[0]
+            this.zipCode = cityZip[1]
+            this.citiesZipCodesList = []
+        },
+        lookupAddress: _.debounce(function () {
+          var app = this
+          var address = _.replace(app.address,/ /g, '+')
+          axios.get('https://api-adresse.data.gouv.fr/search/?q=' + address + '&postcode=' + app.zipCode + '&city=' + app.city)
+            .then(function (response) {
+              app.response = response.data
+          })
+        }, 500),                      
       }
-    },
-    methods: {
-      lookupStartingZip: _.debounce(function() {
-        var app = this
-        app.startingCity = "Searching..."
-        axios.get('http://ziptasticapi.com/' + app.startingZip)
-              .then(function (response) {
-                app.startingCity = response.data.city + ', ' + response.data.state
-              })
-              .catch(function (error) {
-                app.startingCity = "Invalid Zipcode"
-              })
-      }, 500),
-      lookupEndingZip: _.debounce(function() {
-        var app = this
-        app.endingCity = "Searching..."
-        axios.get('http://ziptasticapi.com/' + app.endingZip)
-              .then(function (response) {
-                app.endingCity = response.data.city + ', ' + response.data.state
-              })
-              .catch(function (error) {
-                app.endingCity = "Invalid Zipcode"
-              })
-      }, 500)
-    }
-  })
+})

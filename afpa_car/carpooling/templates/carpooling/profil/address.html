@@ -68,51 +68,48 @@
         </div>
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.zip_code.label }}</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.city_zip_code.label }}</div>
             </div>
             <div>
-            {{ form.zip_code }}
-            <datalist id='citiesName'>
-                <option v-for="item in citiesName">[[ item ]]</option>
-                
-            </datalist>
-        </div>
-        </div>
-        <div class="input-group mb-3 mt-3">
-            <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.city.label }}</div>
+            {{ form.city_zip_code }}
+            <div class="panel-footer" v-if="citiesZipCodesList.length">
+                <ul class="list-group">
+                <li class="list-group-item" v-for="cityZip in citiesZipCodesList" @click="selectedCityZip(cityZip)">
+                        [[ cityZip[0] ]] ([[ cityZip[1] ]])
+                </li>
+                </ul>
             </div>
-            {{ form.city }}
+
         </div>
-
-
-        <div class="input-group mb-3 mt-3">
-            <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.street_number.label }}</div>
-            </div>
-            {{ form.street_number }} 
         </div>
 
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.street_name.label }}</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.address.label }}</div>
             </div>
-            {{ form.street_name }} 
+            {{ form.address }} 
         </div>
+
 
         <div id="submit_profil">
             <button type="submit" class="btn btn-success">Valider l'adresse</button>
         </div>
+
         <div>
-            [[ citiesName ]]
+            [[ city ]]
+            <br>
+            [[ zipCode ]]
+            <br>
+            [[ response ]]
+
         </div>
 
         {% if form.errors %}
         <p>Il y a eu une erreur lors de la création</p>
         {% endif %}
         <br />
+        
     </form>
-    <input id="basics" />
 </div>
 
 <div class='row'>
