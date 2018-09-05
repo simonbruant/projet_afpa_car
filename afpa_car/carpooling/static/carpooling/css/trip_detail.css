@@ -37,3 +37,21 @@
 .yellow{
     background-color: yellowgreen;
 }
+
+/* MapTrip.css */
+
+/* Personnalisation des popup */
+.leaflet-popup-tip,
+.leaflet-popup-content-wrapper {
+    background: white;
+    color: #e3007e;
+}
+
+.leaflet-control-geocoder-icon{
+    background-image: url(Leaflet/Plugins/leaflet-control-geocoder/images/geocoder.png);
+}
+
+/* Pour masquer complètement les instructions du trajet */ 
+.leaflet-control-container .leaflet-routing-container-hide {
+    display: none;
+}

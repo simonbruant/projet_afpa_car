@@ -298,3 +298,12 @@ class TripDetailView(DetailView):
         }
 
         return render(request, 'carpooling/trip_detail.html', context)
+
+class PropositionView(View):
+    template_name = 'carpooling/proposition.html'
+
+    def get(self, request):
+        query = request.GET.get('query')
+        context = {}
+
+        return render(request, 'carpooling/proposition.html', context)

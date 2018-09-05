@@ -14,9 +14,12 @@
     <link rel="stylesheet" type="text/css" href="{% static 'carpooling/css/signup.css' %}" />
     <link rel="stylesheet" type="text/css" href= {% block css %} {% endblock css %} />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
-        crossorigin="anonymous">
-
-
+    crossorigin="anonymous">
+    
+    <!-- TO-DO Clean les import -->
+    <link rel="stylesheet" type="text/css" href="{% static 'carpooling/js/Leaflet/leaflet.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'carpooling/js/Leaflet/Plugins/leaflet-control-geocoder/Control.Geocoder.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'carpooling/js/Leaflet/Plugins/leaflet-routing-machine/leaflet-routing-machine.css' %}" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -77,6 +80,8 @@
                 <img src="{% static 'img/kaklemakak.png' %}" id="icone_avatar" title="Simon M">
                 <img src="{% static 'img/Damien.PNG' %}" id="icone_avatar" title="Damien">
                 <img src="{% static 'img/Thibaud.PNG' %}" id="icone_avatar" title="Thibaud">
+                <img src="{% static 'img/flo2.PNG' %}" id="icone_avatar" title="Flo">
+                <img src="{% static 'img/avatarDex.PNG' %}" id="icone_avatar" title="Daniel - 'Dex'">
             </div>
         </div>
 

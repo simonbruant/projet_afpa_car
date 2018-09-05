@@ -7,7 +7,7 @@ from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, Defau
                     CarCreateView, CarUpdateView, CarDeleteView,
                     ProfilImageUpdateView, PreferencesUpdateView,
                     AddressCreateView, AddressUpdateView, AddressDeleteView, 
-                    TripView, TripDetailView )
+                    TripView, TripDetailView, PropositionView )
 from users.views import LoginView, ChangePassword
 from django.conf.urls import url
 app_name = 'carpooling'
@@ -36,6 +36,7 @@ urlpatterns = [
     
     path('trip/', TripView.as_view(), name="trip"),
     url(r'^trip/(?P<trip_id>[0-9]+)/$', TripDetailView.as_view(), name='trip_detail'),
+    path('proposition/', PropositionView.as_view(), name="proposition"),
 
 
     path('cgu/', TemplateView.as_view(template_name='carpooling/cgu.html'), name='cgu'),

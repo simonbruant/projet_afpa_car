@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %} "{% static 'carpooling/css/proposition.css' %}" {% endblock css %}
+
+{% block section %}
+
+<p>Sélectionnez une route et "draggez" un point de rencontre</p>
+<div id="mapProp" class="mt-3 mb-3" style="height: 600px; width: 100%;"></div>
+
+
+<script src="{% static 'carpooling/js/Leaflet/leaflet.js' %}"></script>
+<script src="{% static 'carpooling/js/Leaflet/Plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script>
+<script src="{% static 'carpooling/js/Leaflet/Plugins/leaflet-routing-machine/leaflet-routing-machine.js' %}"></script>
+<script src="{% static 'carpooling/js/Leaflet/mapProp.js' %}"></script>
+
+{% endblock section %}
