@@ -82,28 +82,27 @@
 
         </div>
         </div>
-
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
                 <div id="header_input_profil" class="input-group-text">{{ form.address.label }}</div>
             </div>
             {{ form.address }} 
+            <div class="panel-footer" v-if="addressesList.length">
+                <ul class="list-group">
+                <li class="list-group-item" v-for="address in addressesList" @click="selectedAddress(address)">
+                        [[ address.properties.label ]] 
+                </li>
+                </ul>
+            </div>
         </div>
+
+        <div>{{ form.json_hidden }}</div>
 
 
         <div id="submit_profil">
             <button type="submit" class="btn btn-success">Valider l'adresse</button>
         </div>
-
-        <div>
-            [[ city ]]
-            <br>
-            [[ zipCode ]]
-            <br>
-            [[ response ]]
-
-        </div>
-
+        
         {% if form.errors %}
         <p>Il y a eu une erreur lors de la création</p>
         {% endif %}
@@ -120,6 +119,8 @@
 <script src="{% static 'js/jquery.easy-autocomplete.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/vue.js' %}"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>axios.defaults.xsrfCookieName = 'csrftoken';
+        axios.defaults.xsrfHeaderName = 'X-CSRFToken';</script>
 <script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
 <script type="text/javascript" src="{% static 'carpooling/js/address.js' %}"></script>
 

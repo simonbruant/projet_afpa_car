@@ -140,16 +140,17 @@ class AddressForm(forms.ModelForm):
     
     city_zip_code = forms.CharField(widget=TextInput(attrs={'class': 'form-control require-input', 
                                                             'v-model': 'cityZipCode', 'autocomplete': 'off'}),
-                                    label="Ville ou Code Postal")
+                                    label="Ville ou Code Postal", required=True)
 
     address = forms.CharField(widget=TextInput(attrs={'class': 'form-control require-input', 
-                                                            'v-model': 'address'}),
-                                    label="Adresse")
+                                                            'v-model': 'address', 'autocomplete': 'off'}),
+                            label="Adresse", required=True)
+    json_hidden = forms.CharField(widget=forms.HiddenInput(attrs={'v-model': 'addressJSON'}))
 
 class DefaultTripForm(forms.ModelForm):
 
     has_for_start = forms.ModelChoiceField(queryset=None, widget=Select(attrs={'class': 'custom-select'}), 
-                                                 label="Départ", required=False )
+                                            label="Départ", required=False )
                                                 
     def __init__(self, user=None, *args, **kwargs):
         super().__init__(*args, **kwargs)

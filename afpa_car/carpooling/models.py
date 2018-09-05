@@ -7,7 +7,6 @@ class Address(models.Model):
     zip_code           = models.CharField(max_length=20, null=True, blank=True)
     street_name        = models.CharField(max_length=200, null=True, blank=True)
     street_number      = models.CharField(max_length=10, null=True, blank=True)
-    national_reference = models.CharField(max_length=20, null=True, blank=True)
     latitude           = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     longitude          = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 

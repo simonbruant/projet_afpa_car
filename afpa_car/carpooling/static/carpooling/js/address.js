@@ -1,4 +1,4 @@
-new Vue ({
+var vm = new Vue ({
     delimiters: ['[[', ']]'],
     el: "#form_address",
     data: {
@@ -7,18 +7,29 @@ new Vue ({
         city: '',
         zipCode: '',
         address:'',
-        response: '',
+        addressesList: [],
+        addressJSON: {},
+        valid: false,
     },
     watch: { 
       cityZipCode : function() {
         if (! this.cityZipCode.includes("(")) {
           this.citiesZipCodesList = []
           this.lookupcityZipCode()
-          }
+          this.city = ''
+          this.zipCode = ''
+        }
+        if (! this.valid) {
+        this.addressesList = []
+        this.lookupAddress()
+        }
         },
         address : function(){
+          if (! this.valid) {
+          this.addressesList = []
           this.lookupAddress()
         }
+      }
       },
     methods: {
         lookupcityZipCode: _.debounce(function() {
@@ -60,8 +71,27 @@ new Vue ({
           var address = _.replace(app.address,/ /g, '+')
           axios.get('https://api-adresse.data.gouv.fr/search/?q=' + address + '&postcode=' + app.zipCode + '&city=' + app.city)
             .then(function (response) {
-              app.response = response.data
+              if (response.data.features.length) {
+                for ( var i in response.data.features ){
+                  var addr = response.data.features[i]
+                  if (addr.properties.score > 0.5){
+                    app.addressesList.push(addr)
+                }
+              }
+            }
           })
-        }, 500),                      
+        }, 500),
+        selectedAddress: function(address) {
+          this.cityZipCode = address.properties.city + " (" + address.properties.postcode + ")"
+          this.address = address.properties.name
+          this.city = address.properties.city
+          this.zipCode = address.properties.postcode
+          this.addressesList = []
+          this.addressJSON = JSON.stringify(address)
+          this.valid = true
+          setTimeout(() => {
+            this.valid = false
+          }, 3000)
+        },                     
       }
 })
