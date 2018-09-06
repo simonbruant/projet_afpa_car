@@ -28,11 +28,11 @@ new Vue({
                 console.log("ok vuejs")
             }
             /* adresses */
-            else if (this.href == document.location.href.substr(0, 40)) {
+            else if (this.href == document.location.href.substr(0, 37)) {
                 $(this).addClass('active')
             }
             /* vehicule */
-            else if (this.href == document.location.href.substr(0, 41)) {
+            else if (this.href == document.location.href.substr(0, 39)) {
                 $(this).addClass('active')
             }
         })

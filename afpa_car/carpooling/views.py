@@ -12,6 +12,7 @@ from django.views.generic import TemplateView, UpdateView, CreateView, DeleteVie
 from .forms import (PrivateDataUpdateForm, UserUpdateForm, CarForm,
                     ProfilImageUpdateForm, PreferencesForm, UserProfileUpdateForm,
                     AddressForm, DefaultTripForm, DefaultTripFormSet)
+from .mixins import AddressMixin
 from .models import Car, Address, DefaultTrip, AfpaCenter, Trip
 from users.models import PrivateData, User, UserProfile
 
@@ -30,8 +31,7 @@ class DashboardView(TemplateView):
         }
         return context
 
-
-class UserUpdateView(SuccessMessageMixin, TemplateView):
+class UserUpdateView(SuccessMessageMixin, View):
     template_name = 'carpooling/profil/general_infos.html'
     success_message = "Informations mises à jour"
 
@@ -150,47 +150,20 @@ class CarDeleteView(SuccessMessageMixin, DeleteView):
         return context
 
 
-class AddressCreateView(SuccessMessageMixin, FormView):
+class AddressCreateView(AddressMixin, FormView):
     template_name = 'carpooling/profil/address.html'
     success_url = reverse_lazy('carpooling:address')
-    success_message = "Adresse crée"
     form_class = AddressForm
-
-    def form_valid(self, form):
-        address = form.save()
-        json_data = json.loads(form.cleaned_data['json_hidden'])
-        geo = json_data['geometry']
-        prop = json_data['properties']
-        
-        address.user = self.request.user
-        address_label = form.cleaned_data['address_label']
-        address.address_label = "Adresse" if not address_label else address_label.capitalize()
-        address.longitude = geo['coordinates'][0]
-        address.latitude = geo['coordinates'][1]
-        address.city = prop['city']
-        address.zip_code = prop['postcode']
-        street = prop.get('street')
-        street_number = prop.get('housenumber')
-        name = prop.get('name')
-        if street and street_number:
-            address.street_number = street_number
-            address.street_name = street
-        else:
-            address.street_name = name
-        address.save()
-
-        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super(AddressCreateView, self).get_context_data(**kwargs)
         context['addresses'] = self.request.user.addresses.all()
+        context['addresses_count'] = self.request.user.addresses.all().count()
         return context
 
-
-class AddressUpdateView(SuccessMessageMixin, UpdateView):
+class AddressUpdateView(AddressMixin, UpdateView):
     model = Address
     template_name = 'carpooling/profil/address.html'
-    success_message = "Informations mises à jour"
     form_class = AddressForm
 
     def get_success_url(self):
@@ -201,12 +174,10 @@ class AddressUpdateView(SuccessMessageMixin, UpdateView):
         queryset = queryset.filter(user=self.request.user)
         return queryset
 
-    def form_valid(self, form):
-        address = form.save()
-        address_label = form.cleaned_data['address_label']
-        address.address_label = "Adresse" if not address_label else address_label.capitalize()
-        address.save()
-        return super().form_valid(form)
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['update_view'] = True
+        return context
 
 
 class AddressDeleteView(SuccessMessageMixin, DeleteView):
@@ -265,7 +236,7 @@ class DefaultTripView(SuccessMessageMixin, View):
                     default_trip.morning_arriving_time = None
                     default_trip.evening_departure_time = None
                     default_trip.deactivate = True
-  
+
                 default_trip.day = default_trip._meta.get_field('day').choices[i][1]
                 default_trip.save()
 

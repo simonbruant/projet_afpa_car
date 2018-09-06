@@ -41,17 +41,18 @@
     </div>
     {% endfor %}
 </div>
-
+{% if addresses_count < 6 or update_view %}
+<div id="form_address">
 <div class="row">
 
-<hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
-
-<div id="message_update" class="col-md-12">
-    {% for message in messages %}
-        {{ message }}
-    {% endfor %}
-
-</div>
+    {% if update_view %}
+    <div class="col-md-12"><span style="font-weight: 700">Votre adresse actuelle</span> : {% if object.street_number %}{{ object.street_number }}{% endif %} {{ object.street_name }}
+    {{ object.zip_code }} {{ object.city }}
+    </div>
+    {% else %}
+    <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+    <div v-if="fullAddress" class="col-md-12"><span style="font-weight: 700">Adresse choisie </span>: [[ fullAddress ]]</div>
+    {% endif %}
 
 </div>
 
@@ -110,10 +111,12 @@
         
     </form>
 </div>
+</div>
 
 <div class='row'>
     <div class='col-md-3 require-input-legend'><p id='text_legend'>Champ obligatoire</p> </div>
 </div>
+{% endif %}
 
 <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
 <script src="{% static 'js/jquery.easy-autocomplete.min.js' %}"></script>

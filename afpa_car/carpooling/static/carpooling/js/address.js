@@ -1,4 +1,4 @@
-var vm = new Vue ({
+new Vue ({
     delimiters: ['[[', ']]'],
     el: "#form_address",
     data: {
@@ -7,6 +7,7 @@ var vm = new Vue ({
         city: '',
         zipCode: '',
         address:'',
+        fullAddress: '',
         addressesList: [],
         addressJSON: {},
         valid: false,
@@ -43,7 +44,7 @@ var vm = new Vue ({
                         app.citiesZipCodesList.push([city, zipCode])
                       }
                     }
-                })
+                }, 500)
                 .catch(function (error) {
                 app.startingCity = "Invalid Zipcode"
                 })
@@ -86,12 +87,13 @@ var vm = new Vue ({
           this.address = address.properties.name
           this.city = address.properties.city
           this.zipCode = address.properties.postcode
+          this.fullAddress = address.properties.label
           this.addressesList = []
           this.addressJSON = JSON.stringify(address)
           this.valid = true
           setTimeout(() => {
             this.valid = false
-          }, 3000)
+          }, 300)
         },                     
       }
 })
