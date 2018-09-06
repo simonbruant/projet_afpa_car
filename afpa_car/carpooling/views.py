@@ -7,7 +7,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView, ListView, DetailView
+from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView, ListView, DetailView, FormView
 
 from .forms import (PrivateDataUpdateForm, UserUpdateForm, CarForm,
                     ProfilImageUpdateForm, PreferencesForm, UserProfileUpdateForm,
@@ -150,7 +150,7 @@ class CarDeleteView(SuccessMessageMixin, DeleteView):
         return context
 
 
-class AddressCreateView(SuccessMessageMixin, CreateView):
+class AddressCreateView(SuccessMessageMixin, FormView):
     template_name = 'carpooling/profil/address.html'
     success_url = reverse_lazy('carpooling:address')
     success_message = "Adresse crée"
