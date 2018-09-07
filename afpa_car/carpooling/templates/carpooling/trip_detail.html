@@ -34,8 +34,12 @@
                         <img class='icons_trip_preview' src=" {% static 'img/icons/pin-red.svg' %} ">
                     </div>
                     <div class="col-md-10 mt-2 mb-2 text-left">  
-                        Arrive à l'{{ trip.has_for_destination }} à {{ trip.morning_arriving_time }} heures
+                        Arrivée à l'{{ trip.has_for_destination }} à {{ trip.morning_arriving_time }} heures
                     </div>
+                    <input id="start_lat" type="hidden" value="{{ trip.has_for_start.latitude }}">
+                    <input id="start_lng" type="hidden" value="{{ trip.has_for_start.longitude }}">
+                    <input id="destination_lat" type="hidden" value="{{ trip.has_for_destination.latitude }}">
+                    <input id="destination_lng" type="hidden" value="{{ trip.has_for_destination.longitude }}">
                 </div>
             </div>
 
@@ -53,7 +57,7 @@
                         <img class='icons_trip_preview' src=" {% static 'img/icons/pin-red.svg' %} ">  
                     </div>
                     <div class="col-md-10 mt-2 text-left">
-                        Arrive à {{ trip.has_for_start.city }} à [{{ trip.evening_estimated_arriving_time }}] heures *auto_calculé*
+                        Arrivée à {{ trip.has_for_start.city }} à [{{ trip.evening_estimated_arriving_time }}] heures *auto_calculé*
                     </div>
                 </div>
             </div>
@@ -138,11 +142,13 @@
                 <div id="mapTrip" style="height: 450px; width: 100%"></div>
             </div>
             <div class="col-md-3"></div>
-            <a class="btn btn-success col-md-6 mt-3" href="{% url 'carpooling:proposition'%}">Proposer un covoiturage</a>
+            <a class="btn btn-success col-md-6 mt-3" href="{% url 'carpooling:proposition' trip.id %}">Proposer un covoiturage</a>
         </div>
     </div>
 </div>
 
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
 <script src="{% static 'carpooling/js/Leaflet/leaflet.js' %}"></script>
 <script src="{% static 'carpooling/js/Leaflet/Plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script>
 <script src="{% static 'carpooling/js/Leaflet/Plugins/leaflet-routing-machine/leaflet-routing-machine.js' %}"></script>

@@ -1,3 +1,8 @@
+var startLat = _.replace($('#start_lat').val(), ',', '.')
+var startLng = _.replace($('#start_lng').val(), ',', '.')
+var destinationLat = _.replace($('#destination_lat').val(), ',', '.')
+var destinationLng = _.replace($('#destination_lng').val(), ',', '.')
+
 // Variables pour création de la carte
 var mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoia2FrbGVtYWthayIsImEiOiJjamxjMXpiMmQxMHV3M3dwZzB0bnk1c2Q2In0.LjmVM42iRFL4tU3TIzrgHw';
 var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
@@ -36,8 +41,8 @@ myRouter.options.language = 'fr';
 // Ajout du systeme de Routing (librairie leaflet-routing-machine)
 L.Routing.control({
     waypoints: [
-        L.latLng(43.690160349425206, 3.881751894950867),
-        L.latLng(43.56499, 3.8453)
+        L.latLng(startLat, startLng),
+        L.latLng(destinationLat, destinationLng)
     ],
     router: myRouter,
     geocoder: MapGeocoderProvider,
@@ -52,22 +57,6 @@ L.Routing.control({
     },
     show: false,
 })
-/*.on('routeselected', function(e) {
-    var route = e.route
-    var time = route.summary.totalTime
-    var heure = Math.floor(time/3600);
-    time = time - heure*3600
-    var min = Math.floor(time/60);
-    var sec = Math.floor(time - min * 60);
-    console.log(route.inputWaypoints[0]);
-    for (var i = 0 ; i < route.instructions.length-1 ; i++) {
-        console.log(route.instructions[i].text)
-    }
-    console.log("Depart : Latitude : " + route.inputWaypoints[0].latLng.lat + " Longitude : " + route.inputWaypoints[0].latLng.lng)
-    console.log("Arrivée : Latitude : " + route.inputWaypoints[1].latLng.lat + " Longitude : " + route.inputWaypoints[1].latLng.lng)
-    console.log("Distance : " + route.summary.totalDistance/1000 + "km")
-    console.log("Durée : " + heure + "h" + min + "m" + sec + "s")
-})*/
 .addTo(map);
 
 /* Fonction pour ajouter un marker au clic de la map avec un Popup contenant les coordonnées du point et un bouton supprimer */

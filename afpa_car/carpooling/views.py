@@ -326,5 +326,12 @@ class ContactView(SendMailMixin, FormView):
         )
         return super().form_valid(form)
 
-class PropositionView(TemplateView):
+class PropositionView(DetailView):
+    model = DefaultTrip
     template_name = 'carpooling/proposition.html'
+    context_object_name = 'trip'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_default_trips'] = self.request.user.default_trips.all()
+        return context
