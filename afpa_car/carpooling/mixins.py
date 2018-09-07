@@ -8,9 +8,10 @@ class AddressMixin:
             geo = json_data['geometry']
             prop = json_data['properties']
             user = self.request.user 
+            address_label = form.cleaned_data['address_label']
 
             address.user = user
-            address_label = form.cleaned_data['address_label']
+            address.address_label = address_label.capitalize()
             address.longitude = geo['coordinates'][0]
             address.latitude = geo['coordinates'][1]
             address.city = prop['city']
@@ -23,13 +24,9 @@ class AddressMixin:
                 address.street_name = street
             else:
                 address.street_name = name
+            
+            
 
-            address.save()
-
-            if not address_label:
-                for i, addr in enumerate(user.addresses.all()):
-                    if address == addr:
-                        address.address_label = "Adresse #" + str(i + 1)
             address.save()
 
             return super().form_valid(form)

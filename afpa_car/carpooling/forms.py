@@ -131,13 +131,9 @@ class AddressForm(forms.ModelForm):
     class Meta: 
         model = Address
         fields = ('address_label',)
-        widgets = {
-            'address_label': TextInput(attrs={'class': 'form-control'}),
-        }
-        labels = {
-            'address_label': "Libellé de l'Adresse",
-        }
-    
+
+    address_label = forms.CharField(widget=TextInput(attrs={'class': 'form-control require-input'}), label="Libellé de l'Adresse",
+                                    required=True)
     city_zip_code = forms.CharField(widget=TextInput(attrs={'class': 'form-control require-input', 
                                                             'v-model': 'cityZipCode', 'autocomplete': 'off'}),
                                     label="Ville ou Code Postal", required=True)

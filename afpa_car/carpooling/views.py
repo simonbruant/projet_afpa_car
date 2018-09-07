@@ -158,7 +158,7 @@ class AddressCreateView(AddressMixin, FormView):
     def get_context_data(self, **kwargs):
         context = super(AddressCreateView, self).get_context_data(**kwargs)
         context['addresses'] = self.request.user.addresses.all()
-        context['addresses_count'] = self.request.user.addresses.all().count()
+        context['addresses_count'] = len(self.request.user.addresses.all())
         return context
 
 class AddressUpdateView(AddressMixin, UpdateView):
