@@ -62,14 +62,6 @@ var routing = L.Routing.control({
         ]
     },
 })
-.on('waypointschanged', function(e) {
-    for (var i = 1; i < e.waypoints.length-1; i++) {
-        console.log("latitude : " + e.waypoints[i].latLng.lat + ", Longitude : " + e.waypoints[i].latLng.lng );
-    }
-    if (e.waypoints.length == 3) {
-        routing.options.addWaypoints = false
-    }
-})
 .addTo(map);
 
 // Trajet de l'utilisateur
