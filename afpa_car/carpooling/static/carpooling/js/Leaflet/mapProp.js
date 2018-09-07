@@ -41,7 +41,7 @@ L.Routing.control({
     ],
     router: myRouter,
     geocoder: MapGeocoderProvider,
-    draggableWaypoints: false,
+    draggableWaypoints: true,
     lineOptions: {
         styles: [
             {color: 'black', opacity: 0.5, weight: 11},
@@ -49,7 +49,7 @@ L.Routing.control({
             {color: 'white', opacity: 1, weight: 3}
         ]
     },
-    showAlternatives: true,
+    showAlternatives: false,
     altLineOptions: {
         styles: [
             {color: 'black', opacity: 0.5, weight: 11},
