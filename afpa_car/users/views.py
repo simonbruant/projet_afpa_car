@@ -21,26 +21,17 @@ from django.views.generic import CreateView, FormView, TemplateView
 
 from .forms import LoginForm, SignupForm, LogoutForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from .tokens import account_activation_token
+from afpa_car.mixins import SendMailMixin
 
 User = get_user_model()
 
-class SignUpView(CreateView):
+class SignUpView(SendMailMixin, CreateView):
     template_name = "users/signup.html"
     form_class = SignupForm
     subject_template_name = 'users/activation_email_subject.txt'
     email_template_name = 'users/activation_email.html'
     from_email = None
     token_generator = account_activation_token
-
-    def send_mail(self, subject_template_name, email_template_name,
-                    context, from_email, to_email):
-
-        subject = render_to_string(subject_template_name, context)
-        subject = ''.join(subject.splitlines())
-        body = render_to_string(email_template_name, context)
-
-        email_message = EmailMultiAlternatives(subject, body, from_email, [to_email])
-        email_message.send()
 
     def form_valid(self, form):
         user = form.save()

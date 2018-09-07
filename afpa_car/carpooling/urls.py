@@ -7,7 +7,7 @@ from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, Defau
                     CarCreateView, CarUpdateView, CarDeleteView,
                     ProfilImageUpdateView, PreferencesUpdateView,
                     AddressCreateView, AddressUpdateView, AddressDeleteView, 
-                    TripView, TripDetailView, PropositionView )
+                    TripView, TripDetailView, PropositionView, ContactView )
 from users.views import LoginView, ChangePassword
 from django.conf.urls import url
 app_name = 'carpooling'
@@ -40,6 +40,7 @@ urlpatterns = [
 
 
     path('cgu/', TemplateView.as_view(template_name='carpooling/cgu.html'), name='cgu'),
-    
+    path('contact/', ContactView.as_view(), name='contact'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

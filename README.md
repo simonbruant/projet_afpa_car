@@ -6,7 +6,7 @@ Pour Linux il faut utiliser le fichier 'linux_requirements.txt'
 Pour windows il faut utiliser le fichier 'requirements.txt'
 <br>
 ### BDD
-Un petite base de données est déjà présente :
+Un petite base de données est déjà présente sur la branche master :
 On peut se connecter avec 'admin@admin.fr', les mots de passe de tous les utilisateurs crées sont 'afpa'
 <br>
 <br>
