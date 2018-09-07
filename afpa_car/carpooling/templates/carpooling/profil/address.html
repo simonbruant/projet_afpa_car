@@ -1,6 +1,5 @@
-
-
 {% extends 'carpooling/profil.html' %}
+{% load static %}
 
 {% block cardTitle %} 
 <div id="adresseContenu" class="row">
@@ -42,24 +41,24 @@
     </div>
     {% endfor %}
 </div>
-
+{% if addresses_count < 6 or update_view %}
+<div id="form_address">
 <div class="row">
 
-<hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
-
-<div id="message_update" class="col-md-12">
-    {% for message in messages %}
-        {{ message }}
-    {% endfor %}
-
-</div>
+    {% if update_view %}
+    <div class="col-md-12"><span style="font-weight: 700">Votre adresse actuelle</span> : {% if object.street_number %}{{ object.street_number }}{% endif %} {{ object.street_name }}
+    {{ object.zip_code }} {{ object.city }}
+    </div>
+    {% else %}
+    <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+    <div v-if="fullAddress" class="col-md-12"><span style="font-weight: 700">Adresse choisie </span>: [[ fullAddress ]]</div>
+    {% endif %}
 
 </div>
 
 <div class="row">
     <div class="col-md-2"></div>
-
-    <form class="col-md-8"method="POST">
+    <form id="form_address" class="col-md-8" method="POST">
         {% csrf_token %}
         
         <div class="input-group mb-3 mt-3">
@@ -70,45 +69,62 @@
         </div>
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.zip_code.label }}</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.city_zip_code.label }}</div>
             </div>
-            {{ form.zip_code }}
+            <div>
+            {{ form.city_zip_code }}
+            <div class="panel-footer" v-if="citiesZipCodesList.length">
+                <ul class="list-group">
+                <li class="list-group-item" v-for="cityZip in citiesZipCodesList" @click="selectedCityZip(cityZip)">
+                        [[ cityZip[0] ]] ([[ cityZip[1] ]])
+                </li>
+                </ul>
+            </div>
+
+        </div>
         </div>
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.city.label }}</div>
+                <div id="header_input_profil" class="input-group-text">{{ form.address.label }}</div>
             </div>
-            {{ form.city }}
+            {{ form.address }} 
+            <div class="panel-footer" v-if="addressesList.length">
+                <ul class="list-group">
+                <li class="list-group-item" v-for="address in addressesList" @click="selectedAddress(address)">
+                        [[ address.properties.label ]] 
+                </li>
+                </ul>
+            </div>
         </div>
 
-        <div class="input-group mb-3 mt-3">
-            <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.street_number.label }}</div>
-            </div>
-            {{ form.street_number }} 
-        </div>
+        <div>{{ form.json_hidden }}</div>
 
-        <div class="input-group mb-3 mt-3">
-            <div class="input-group-prepend">
-                <div id="header_input_profil" class="input-group-text">{{ form.street_name.label }}</div>
-            </div>
-            {{ form.street_name }} 
-        </div>
 
         <div id="submit_profil">
             <button type="submit" class="btn btn-success">Valider l'adresse</button>
         </div>
-
+        
         {% if form.errors %}
         <p>Il y a eu une erreur lors de la création</p>
         {% endif %}
         <br />
+        
     </form>
-
+</div>
 </div>
 
 <div class='row'>
     <div class='col-md-3 require-input-legend'><p id='text_legend'>Champ obligatoire</p> </div>
 </div>
+{% endif %}
+
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/jquery.easy-autocomplete.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/vue.js' %}"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>axios.defaults.xsrfCookieName = 'csrftoken';
+        axios.defaults.xsrfHeaderName = 'X-CSRFToken';</script>
+<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+<script type="text/javascript" src="{% static 'carpooling/js/address.js' %}"></script>
 
 {% endblock contenuProfil %}

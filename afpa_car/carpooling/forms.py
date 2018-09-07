@@ -127,34 +127,26 @@ class PreferencesForm(forms.ModelForm):
         }
 
 class AddressForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['zip_code'].required = True
-        self.fields['city'].required = True
-        self.fields['street_name'].required = True
 
     class Meta: 
         model = Address
-        fields = ('zip_code', 'city', 'street_number', 'street_name', 'address_label')
-        widgets = {
-            'zip_code': TextInput(attrs={'class': 'form-control require-input'}),
-            'city': TextInput(attrs={'class': 'form-control require-input'}),
-            'street_number': TextInput(attrs={'class': 'form-control'}),
-            'street_name': TextInput(attrs={'class': 'form-control require-input'}),
-            'address_label': TextInput(attrs={'class': 'form-control'}),
-        }
-        labels = {
-            'zip_code': 'Code Postal',
-            'city': 'Ville',
-            'street_number': 'Numéro de la Rue' ,
-            'street_name': 'Nom de la Rue',
-            'address_label': "Libellé de l'Adresse",
-        }
+        fields = ('address_label',)
+
+    address_label = forms.CharField(widget=TextInput(attrs={'class': 'form-control require-input'}), label="Libellé de l'Adresse",
+                                    required=True)
+    city_zip_code = forms.CharField(widget=TextInput(attrs={'class': 'form-control require-input', 
+                                                            'v-model': 'cityZipCode', 'autocomplete': 'off'}),
+                                    label="Ville ou Code Postal", required=True)
+
+    address = forms.CharField(widget=TextInput(attrs={'class': 'form-control require-input', 
+                                                            'v-model': 'address', 'autocomplete': 'off'}),
+                            label="Adresse", required=True)
+    json_hidden = forms.CharField(widget=forms.HiddenInput(attrs={'v-model': 'addressJSON'}))
 
 class DefaultTripForm(forms.ModelForm):
 
     has_for_start = forms.ModelChoiceField(queryset=None, widget=Select(attrs={'class': 'custom-select'}), 
-                                                 label="Départ", required=False )
+                                            label="Départ", required=False )
                                                 
     def __init__(self, user=None, *args, **kwargs):
         super().__init__(*args, **kwargs)

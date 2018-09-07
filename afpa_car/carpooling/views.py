@@ -1,3 +1,6 @@
+import json
+import re
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -12,8 +15,9 @@ from django.views.generic import TemplateView, UpdateView, CreateView, DeleteVie
 from .forms import (PrivateDataUpdateForm, UserUpdateForm, CarForm,
                     ProfilImageUpdateForm, PreferencesForm, UserProfileUpdateForm,
                     AddressForm, DefaultTripForm, DefaultTripFormSet, ContactForm)
-from afpa_car.mixins import SendMailMixin
+from .mixins import AddressMixin
 from .models import Car, Address, DefaultTrip, AfpaCenter, Trip
+from afpa_car.mixins import SendMailMixin
 from users.models import PrivateData, User, UserProfile
 
 
@@ -31,8 +35,7 @@ class DashboardView(TemplateView):
         }
         return context
 
-
-class UserUpdateView(SuccessMessageMixin, TemplateView):
+class UserUpdateView(SuccessMessageMixin, View):
     template_name = 'carpooling/profil/general_infos.html'
     success_message = "Informations mises à jour"
 
@@ -151,48 +154,34 @@ class CarDeleteView(SuccessMessageMixin, DeleteView):
         return context
 
 
-class AddressCreateView(SuccessMessageMixin, CreateView):
+class AddressCreateView(AddressMixin, FormView):
     template_name = 'carpooling/profil/address.html'
     success_url = reverse_lazy('carpooling:address')
-    success_message = "Adresse crée"
     form_class = AddressForm
-
-    def form_valid(self, form):
-        address = form.save()
-        address.user = self.request.user
-        address_label = form.cleaned_data['address_label']
-        address.address_label = "Adresse" if not address_label else address_label.capitalize()
-        address.city = address.city.capitalize()
-        address.save()
-        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super(AddressCreateView, self).get_context_data(**kwargs)
         context['addresses'] = self.request.user.addresses.all()
+        context['addresses_count'] = len(self.request.user.addresses.all())
         return context
 
-
-class AddressUpdateView(SuccessMessageMixin, UpdateView):
+class AddressUpdateView(AddressMixin, UpdateView):
     model = Address
     template_name = 'carpooling/profil/address.html'
-    success_message = "Informations mises à jour"
     form_class = AddressForm
 
     def get_success_url(self):
         return reverse('carpooling:address')
-
 
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(user=self.request.user)
         return queryset
 
-    def form_valid(self, form):
-        address = form.save()
-        address_label = form.cleaned_data['address_label']
-        address.address_label = "Adresse" if not address_label else address_label.capitalize()
-        address.save()
-        return super().form_valid(form)
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['update_view'] = True
+        return context
 
 
 class AddressDeleteView(SuccessMessageMixin, DeleteView):
@@ -231,9 +220,9 @@ class DefaultTripView(SuccessMessageMixin, View):
 
     def post(self, request):
         user = self.request.user
-        formset = DefaultTripFormSet(request.POST, queryset=DefaultTrip.objects.filter(user=user), form_kwargs={'user': user})
-        x = 0
-        for form in formset.forms:
+        formset = DefaultTripFormSet(request.POST, queryset=DefaultTrip.objects.filter(user=user), 
+                                    form_kwargs={'user': user})
+        for i, form in enumerate(formset.forms):
             if form.is_valid():
                 default_trip = form.save(commit=False)
                 default_trip.user = user
@@ -251,9 +240,8 @@ class DefaultTripView(SuccessMessageMixin, View):
                     default_trip.morning_arriving_time = None
                     default_trip.evening_departure_time = None
                     default_trip.deactivate = True
-  
-                default_trip.day = default_trip._meta.get_field('day').choices[x][1]
-                x += 1
+
+                default_trip.day = default_trip._meta.get_field('day').choices[i][1]
                 default_trip.save()
 
         if self.success_message:

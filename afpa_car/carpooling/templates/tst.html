@@ -1,0 +1,13 @@
+<input id="basics" />
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/jquery.easy-autocomplete.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/vue.js' %}"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+<script>
+var options = {
+	data: ["blue", "green", "pink", "red", "yellow"]
+};
+
+$("#basics").easyAutocomplete(options);
+</script>
