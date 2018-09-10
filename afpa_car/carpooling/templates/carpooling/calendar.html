@@ -11,9 +11,17 @@
 		<div class='col-md-12'>
 
 			<div class="card mt-3 mb-3" id="carte_semaine">
-				<div id="titre_calendar" class="card-header bg-success col-md-12">Votre semaine type
-					{% if trips %}
-					<span @click="show_update" class="fas fa-pencil-alt" v-if="burger" style="float: right"></span>
+				<div class="row">
+
+					<div id="titre_calendar" class="card-header bg-success col-md-12">Votre semaine type
+						{% if trips %}
+						<!-- Burger Pencil -->
+
+						<span class="fas fa-pencil-alt mt-1" style="float: right"></span>
+						<span @click="show_update" style="float: right" v-if="burger">Modifier  </span>
+
+
+					</div>
 					{% endif %}
 				</div>
 				<div v-if='update_default_week'>
@@ -27,18 +35,29 @@
 							{% csrf_token %}
 							<div class="row">
 								{{ formset.management_form }}
-								{% for i in range %}
+								{% for form in formset %}
 
 								{% if forloop.counter0 <= 2 %} <div class="col-md-4 mb-3">
 									<div class="card mb-3" id="jour_type">
-										<div id="titre_calendar" class="card-header bg-success">{{ day_label|index:i }}</div>
+										<div id="titre_calendar" class="card-header bg-success">{{ day_label|index:forloop.counter0 }}</div>
 
 										<div class="card-content">
 											<div class="row">
 												<div class="col-md-2"></div>
 												<div class="col-md-8 mb-2">
 
-													{{ formset|index:i }}
+													{{ form.morning_departure_time.label }}
+													{{ form.morning_departure_time }}
+													{{ form.morning_arriving_time.label }}
+													{{ form.morning_arriving_time }}
+													{{ form.evening_departure_time.label }}
+													{{ form.evening_departure_time }}
+													{{ form.has_for_start.label }}
+													{{ form.has_for_start }}
+													{{ form.deactivate.label }}
+													{{ form.deactivate }}
+													{{ form.id }}
+
 												</div>
 											</div>
 										</div>
@@ -48,12 +67,24 @@
 							<div class="col-md-2"></div>
 							<div class="col-md-4 mb-3">
 								<div class="card mb-3" id="jour_type">
-									<div id="titre_calendar" class="card-header bg-success">{{ day_label|index:i }} {{ formset.deactivate }}</div>
+									<div id="titre_calendar" class="card-header bg-success">{{ day_label|index:forloop.counter0 }}</div>
 									<div class="card-content">
 										<div class="row">
 											<div class="col-md-2"></div>
 											<div class="col-md-8 mb-2">
-												{{ formset|index:i }}
+
+												{{ form.morning_departure_time.label }}
+												{{ form.morning_departure_time }}
+												{{ form.morning_arriving_time.label }}
+												{{ form.morning_arriving_time }}
+												{{ form.evening_departure_time.label }}
+												{{ form.evening_departure_time }}
+												{{ form.has_for_start.label }}
+												{{ form.has_for_start }}
+												{{ form.deactivate.label }}
+												{{ form.deactivate }}
+												{{ form.id }}
+
 											</div>
 										</div>
 									</div>
@@ -62,12 +93,23 @@
 							{% else %}
 							<div class="col-md-4">
 								<div class="card mb-3" id="jour_type">
-									<div id="titre_calendar" class="card-header bg-success">{{ day_label|index:i }}</div>
+									<div id="titre_calendar" class="card-header bg-success">{{ day_label|index:forloop.counter0 }}</div>
 									<div class="card-content">
 										<div class="row">
 											<div class="col-md-2"></div>
 											<div class="col-md-8 mb-2">
-												{{ formset|index:i }}
+												{{ form.morning_departure_time.label }}
+												{{ form.morning_departure_time }}
+												{{ form.morning_arriving_time.label }}
+												{{ form.morning_arriving_time }}
+												{{ form.evening_departure_time.label }}
+												{{ form.evening_departure_time }}
+												{{ form.has_for_start.label }}
+												{{ form.has_for_start }}
+												{{ form.deactivate.label }}
+												{{ form.deactivate }}
+												{{ form.id }}
+
 											</div>
 										</div>
 									</div>
@@ -75,7 +117,6 @@
 							</div>
 							{% endif %}
 							{% endfor %}
-
 
 					</div>
 					<button type='submit' class='btn btn-success'>Valider</button>
