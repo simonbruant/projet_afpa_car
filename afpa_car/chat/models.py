@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
+from django.http import Http404
 from django.utils import timezone
 
 
@@ -24,7 +25,10 @@ class ThreadManager(models.Manager):
             return qs.order_by('timestamp').first(), False
         else:
             Klass = user.__class__
-            user2 = Klass.objects.get(username=other_username)
+            try:
+                user2 = Klass.objects.get(username=other_username)
+            except Klass.DoesNotExist:
+                raise Http404
             if user != user2:
                 obj = self.model(
                         first=user, 

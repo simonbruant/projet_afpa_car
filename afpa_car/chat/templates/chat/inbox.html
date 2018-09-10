@@ -6,28 +6,36 @@
 
 {% block section %}
  
+{% if  object_list %}
 <div class="col-md-3 mt-2">
+        
         {% for thread in object_list %}
-
+        
         <div class="col-md-12 card mb-1" id="card_thread">
                 <a href="{% url 'chat:thread' thread|choose_username:user %}">
-                <div class="row">
-                    <div class="col-md-3 mt-2 mb-2">
-                            <img id="photo_side" src="{{ thread|choose_photo:user }}">
-                    </div>
-                    <div class="row col-md-10">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-7 text-left" id="thread_user">{{ thread|choose_username:user }}</div>
-                        <div id="last_message_timestamp">
-                                {{ thread.chatmessage_set.all.last.timestamp|date_format }}
-                            </div>
-                            <div class="col-md-2"></div>
-                            <div id="last_message">{{ thread.chatmessage_set.all.last.message }}</div>
-                    </div>
-                </div>
+                        <div class="row">
+                                <div class="col-md-3 mt-2 mb-2">
+                                        <img id="photo_side" src="{{ thread|choose_photo:user }}">
+                                </div>
+                                <div class="row col-md-10">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-7 text-left" id="thread_user">{{ thread|choose_username:user }}</div>
+                                        <div id="last_message_timestamp">
+                                                {{ thread.chatmessage_set.all.last.timestamp|date_format }}
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                        <div id="last_message">{{ thread.chatmessage_set.all.last.message }}</div>
+                                </div>
+                        </div>
                 </a>
-            </div>
-            {% endfor %}
         </div>
+        {% endfor %}
+        {% else %}
+</div>
+<div class="col-md-12 mb-4 mt-4">
+Vous n'avez aucune conversation en cours
+</div>
+
+{% endif %}
 
 {% endblock %}
