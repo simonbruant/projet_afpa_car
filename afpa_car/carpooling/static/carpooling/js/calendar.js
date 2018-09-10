@@ -2,8 +2,8 @@
 // import {en, es} from '../../../../../../../_Program/npm install/node_modules/vuejs-datepicker/dist/locale'
 
 
-	// Desactivate inputs @Votre semaine type
-var f = function (element_cliqued) {
+// Desactivate inputs @Votre semaine type
+var desactivate_fields = function (element_cliqued) {
     let i = element_cliqued.id.substr(8, 1)
 
     var mornDepTime = document.getElementsByName('form-' + i + '-morning_departure_time')[0]
@@ -17,7 +17,7 @@ var f = function (element_cliqued) {
     eveDepTime.disabled = !eveDepTime.disabled
     hasForStar.disabled = !hasForStar.disabled
 }
-
+// disable inputs @Votre semaine type
 new Vue({
     el: '#default_week',
     data: {
@@ -54,7 +54,21 @@ new Vue({
             this.update_default_week = false,
                 this.preview_default_week = true,
                 this.burger = true
-        }
+        },
+        // disable_fields: function (element_cliqued) {
+        //     let i = element_cliqued.id.substr(8, 1)
+
+        //     var mornDepTime = document.getElementsByName('form-' + i + '-morning_departure_time')[0]
+        //     var mornDepTime = document.getElementsByName('form-' + i + '-morning_departure_time')[0]
+        //     var mornArrTime = document.getElementsByName('form-' + i + '-morning_arriving_time')[0]
+        //     var eveDepTime = document.getElementsByName('form-' + i + '-evening_departure_time')[0]
+        //     var hasForStar = document.getElementsByName('form-' + i + '-has_for_start')[0]
+
+        //     mornDepTime.disabled = !mornDepTime.disabled
+        //     mornArrTime.disabled = !mornArrTime.disabled
+        //     eveDepTime.disabled = !eveDepTime.disabled
+        //     hasForStar.disabled = !hasForStar.disabled
+        // }
     }
 });
 
