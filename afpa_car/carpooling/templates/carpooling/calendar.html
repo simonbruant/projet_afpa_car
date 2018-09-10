@@ -197,29 +197,7 @@
 <script type="text/javascript" src="{% static 'js/vue.js' %}"></script>
 <script type="text/javascript" src="https://unpkg.com/vuejs-datepicker"></script>
 <script type="text/javascript" src="../../static/carpooling/js/calendar.js"></script>
-<script>
-	//fonction  en fin de chargement de la page
-	document.addEventListener("DOMContentLoaded", function (event) {
-		console.log("DOM fully loaded and parsed");
 
-		var i = 0
-		var element = document.getElementById('form-' + '0' + '-deactivate')
-
-		console.log( element )
-		console.log( element.disabled )
-		
-
-		var mornDepTime = document.getElementsByName('form-' + i + '-morning_departure_time')[0]
-		var mornArrTime = document.getElementsByName('form-' + i + '-morning_arriving_time')[0]
-		var eveDepTime = document.getElementsByName('form-' + i + '-evening_departure_time')[0]
-		var hasForStar = document.getElementsByName('form-' + i + '-has_for_start')[0]
-
-		mornDepTime.disabled = element.checked
-		mornArrTime.disabled = element.checked
-		eveDepTime.disabled = element.checked
-		hasForStar.disabled = element.checked
-	});
-</script>
 
 <style>
 	/* ## DATEPICKER ## */

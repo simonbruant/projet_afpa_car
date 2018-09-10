@@ -55,3 +55,18 @@
 .leaflet-control-container .leaflet-routing-container-hide {
     display: none;
 }
+[class*="col-"]
+{
+    line-height: 20px;
+    /* border: 1px solid indigo; */
+    text-align: center;
+}
+
+#btn-contact {
+    background-color: steelblue;
+    color: white;
+}
+#btn-contact:hover {
+    background-color :rgb(34, 100, 138);
+}
+
