@@ -200,9 +200,8 @@ class AddressDeleteView(SuccessMessageMixin, DeleteView):
         return context
 
 
-class DefaultTripView(SuccessMessageMixin, View):
+class DefaultTripView(View):
     template_name = 'carpooling/calendar.html'
-    success_message = "Mise à jour de la semaine type"
 
     def get(self, request):
         user = self.request.user
@@ -244,9 +243,6 @@ class DefaultTripView(SuccessMessageMixin, View):
                 default_trip.day = default_trip._meta.get_field('day').choices[i][1]
                 default_trip.save()
 
-        if self.success_message:
-            messages.success(self.request, self.success_message)
-
         return redirect('carpooling:calendar')
         
 class TripView(View):
@@ -257,14 +253,11 @@ class TripView(View):
         query_day = request.GET.get('query_day')
         context = {}
         if not query and not query_day:
-            context['trips'] = DefaultTrip.objects.all()
+            context['trips'] = DefaultTrip.objects.all().exclude(user=self.request.user)
         else:
             trips = DefaultTrip.objects.filter(has_for_start__city__startswith=query,
-                                                day__startswith=query_day)
+                                                day__startswith=query_day).exclude(user=self.request.user)
             context['trips'] = trips
-                                            # Q(day__startswith=query)
-                                            # Q(user__first_name__icontains=query)
-                                            # Q(day__startswith=query) | Q(user__first_name__icontains=query)
 
         return render(request, 'carpooling/trip.html', context)
 
@@ -277,13 +270,8 @@ class TripDetailView(DetailView):
         
         trip = get_object_or_404(DefaultTrip, pk=trip_id)
         user = request.user
-        # print(Car.objects.filter(user)) 
-        # Car.objects.all(self.request.user)
-        # car = trip.user.cars.all()[0]
         context = {
             'trip' : trip,
-            # 'trip_car': car,
-            # 'trip_amount_of_free_seats': range(car.amount_of_free_seats),
         }
         return render(request, 'carpooling/trip_detail.html', context)
 
