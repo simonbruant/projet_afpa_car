@@ -2,13 +2,7 @@
 
 {% block title %}VEHICULE{% endblock title %}
 
-{% block cardTitle %} 
-
-<div class="row">
-    <div id="titre_profil" class="card-header bg-success col-md-12 mb-3">Vehicule</div>
-</div>
-
-{% endblock cardTitle %}
+{% block cardTitle %} Vehicules {% endblock cardTitle %}
 
 {% block contenuProfil %}
 
@@ -25,7 +19,7 @@
                 <div class="row">
                     <div class="col-md-12 mt-3">
                         <div>{{ car.color }}</div>
-                        <div>{{ car.amount_of_free_seats }}  places passager</div>
+                        <div>{{ car.amount_of_free_seats }} places passager</div>
                         <div>{{ car.fuel }}</div>
                         <div>{% if car.consumption %}{{ car.consumption }}{% else %}&nbsp;{% endif %}</div>
                     </div>

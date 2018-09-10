@@ -178,8 +178,8 @@ class AddressUpdateView(AddressMixin, UpdateView):
         queryset = queryset.filter(user=self.request.user)
         return queryset
 
-    def get_context_data(self):
-        context = super().get_context_data()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context['update_view'] = True
         return context
 

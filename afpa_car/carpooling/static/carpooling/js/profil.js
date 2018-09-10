@@ -32,7 +32,7 @@ new Vue({
                 $(this).addClass('active')
             }
             /* vehicule */
-            else if (this.href == document.location.href.substr(0, 39)) {
+            else if (this.href == document.location.href.substr(0, 38)) {
                 $(this).addClass('active')
             }
         })

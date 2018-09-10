@@ -9,7 +9,7 @@ new Vue ({
         address:'',
         fullAddress: '',
         addressesList: [],
-        addressJSON: {},
+        addressJSON: '',
         valid: false,
     },
     watch: { 

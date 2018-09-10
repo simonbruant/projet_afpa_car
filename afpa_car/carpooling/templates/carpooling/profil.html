@@ -29,7 +29,12 @@
             </div>
         <div id="contenu" class="col-md-8">
             <div id="card_contenu" class="card col-md-12">
-                {% block cardTitle %}{% endblock cardTitle %}
+                    <div class="row">
+                            <div id="titre_profil" class="card-header bg-success col-md-12 mb-3">
+                                {% block cardTitle %}{% endblock cardTitle %}
+                            </div>
+                        </div>
+                
                 {% block contenuProfil %}{% endblock %}
                 </div>
             </div>

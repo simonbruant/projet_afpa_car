@@ -143,6 +143,12 @@ class AddressForm(forms.ModelForm):
                             label="Adresse", required=True)
     json_hidden = forms.CharField(widget=forms.HiddenInput(attrs={'v-model': 'addressJSON'}))
 
+    def clean(self):
+        json = self.cleaned_data.get('json_hidden')
+        if not json:
+            raise forms.ValidationError("Veuillez sélectionner une adresse")
+        return self.cleaned_data
+
 class DefaultTripForm(forms.ModelForm):
 
     has_for_start = forms.ModelChoiceField(queryset=None, widget=Select(attrs={'class': 'custom-select'}), 
