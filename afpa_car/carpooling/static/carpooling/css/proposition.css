@@ -12,3 +12,7 @@
 .leaflet-routing-geocoders{
     display: none;
 }
+
+.leaflet-control-container .leaflet-routing-container-hide {
+    display: none;
+}
