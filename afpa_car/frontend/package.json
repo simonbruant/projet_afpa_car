@@ -1,0 +1,31 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^2.2.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "parcel-bundler": "^1.9.7",
+    "vue-template-compiler": "^2.5.17",
+    "vue-template-compiler-loader": "^1.0.4",
+    "vueify": "^9.4.1",
+    "vuejs-datepicker": "^1.5.3"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2",
+    "popper.js": "^1.14.4",
+    "vue": "^2.5.17",
+    "vue-hot-reload-api": "^2.3.0"
+  }
+}
