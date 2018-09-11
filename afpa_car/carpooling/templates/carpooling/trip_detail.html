@@ -102,6 +102,8 @@
                                         {% else %}
                                         <img title="Je n'écoute pas de musique" src="{% static 'img/icons/pink/volume-off-pink.svg' %}" class="icon_pref_trip_detail">
                                         {% endif %}
+                                        <a id="btn-contact" class="btn btn-muted ml-5" href="{% url 'chat:thread' trip.user.username %}">Contacter </a> 
+
                                     </div>
                                 </div>
                             </div>

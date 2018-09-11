@@ -21,3 +21,7 @@
 .sousParties {
     float: left;
 }
+
+.min_width {
+    min-width: 100px; 
+}
