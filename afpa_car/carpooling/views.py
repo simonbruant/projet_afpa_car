@@ -212,7 +212,6 @@ class DefaultTripView(View):
             'trips': user.default_trips.all(),
             'formset': formset,
             'day_label': day_label,
-            'range': range(5),
             'form': DefaultTripForm
         }
         return render(request, self.template_name, context)

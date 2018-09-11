@@ -22,8 +22,7 @@ new Vue({
     el: '#default_week',
     data: {
         update_default_week: false,
-        preview_default_week: true,
-        burger: true,
+        preview_default_week: true
     },
     created: function () {
         for (var i = 0; i < 5; i++) {
@@ -45,15 +44,13 @@ new Vue({
 
     methods: {
         show_update: function () {
-            this.update_default_week = true,
-                this.preview_default_week = false,
-                this.burger = false,
-                console.log("script lancé")
+            this.update_default_week = true
+            this.preview_default_week = false
+            console.log("script lancé")
         },
         hide_update: function () {
-            this.update_default_week = false,
-                this.preview_default_week = true,
-                this.burger = true
+            this.update_default_week = false
+            this.preview_default_week = true
         },
         // disable_fields: function (element_cliqued) {
         //     let i = element_cliqued.id.substr(8, 1)
