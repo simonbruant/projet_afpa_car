@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load calendar_tags %}
 
 {% block css %} "{% static 'carpooling/css/dashboard.css' %}" {% endblock css %}
 
@@ -36,10 +37,10 @@
         <div class="card mt-3 mb-3">
             <div class="card-header bg-success">Vos trajets de la semaine</div>
             <div class="card-content">
-                {% if trips %}
+                {% if trips|is_deactivate %}
                 <table class="table-striped table-bordered">
                     <tr>
-                        <td class="p-1"><b>Jour</b></td>
+                        <td class="p-1 min_width"><b>Jour</b></td>
                         <td class="p-1"><b>Horaire de départ</b></td>
                         <td class="p-1"><b>Horaire de retour</b></td>
                     </tr>

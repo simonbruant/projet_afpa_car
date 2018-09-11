@@ -38,17 +38,25 @@
 }
 
 /* Create a custom checkbox */
-.checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 20px;
-    width: 20px;
+.dimension {
+    height: 15px;
+    width: 15px;
     background-color: #eee;
+}
+
+.mini_font_size{
+    font-size: 10px;
 }
 
 /* [class*="col-"]
 {
     line-height: 20px;
     border: 1px solid indigo;
+}
+
+[class*="row"]
+{
+    line-height: 20px;
+    border: 1px solid rgb(230, 207, 8);
 } */
+
