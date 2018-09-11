@@ -1,5 +1,6 @@
 import datetime
 
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash, get_user_model
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import LoginView as BaseLoginView
@@ -24,6 +25,8 @@ from .tokens import account_activation_token
 from afpa_car.mixins import SendMailMixin
 
 User = get_user_model()
+
+settings.app_static_url = 'carpooling/{}'.format('app')
 
 class SignUpView(SendMailMixin, CreateView):
     template_name = "users/signup.html"
@@ -103,8 +106,14 @@ class ChangePassword(View):
     template_name = 'carpooling/profil/password.html'
 
     def get(self, request):
+        print(settings.app_static_url, "CHANGE PASSWORD ##############################")
         form = PasswordChangeForm(user=request.user)
-        return render(request, self.template_name, {'form': form })
+        context = {
+            'form': form, 
+            'profil_url': '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
+        }
+        return render(request, self.template_name, context )
+
 
     def post(self, request):
         form = PasswordChangeForm(data=request.POST, user=request.user)

@@ -66,57 +66,7 @@
     </form>
 </div>
 
-<script type="text/javascript" src="{% static 'js/vue.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-
-<script>
-    /*
-    $(function($){
-        $('#id_smoker_0').click(function(e){
-            console.log('oui ok')
-            $('#sid_smoker_0').css('color', '#E3007E');
-            $('#sid_smoker_1').css('color', 'black');
-            
-        });
-        $('#id_smoker_1').click(function(e){
-            console.log('non ok')
-            $('#sid_smoker_1').css('color', '#E3007E');
-            $('#sid_smoker_0').css('color', 'black');
-            
-        });
-    }); 
-    
-
-    $(function($){
-        $('#oui_parler').click(function(e){
-            console.log('oui ok')
-            $('#icone_parler').css('color', '#E3007E');
-            $('#icone_non_parler').css('color', 'black');
-            
-        });
-        $('#non_parler').click(function(e){
-            console.log('non ok')
-            $('#icone_non_parler').css('color', '#E3007E');
-            $('#icone_parler').css('color', 'black');
-            
-        });
-    });
-
-    $(function($){
-        $('#oui_musique').click(function(e){
-            console.log('oui ok')
-            $('#icone_volume').css('color', '#E3007E');
-            $('#icone_no_volume').css('color', 'black');
-            
-        });
-        $('#non_musique').click(function(e){
-            console.log('non ok')
-            $('#icone_no_volume').css('color', '#E3007E');
-            $('#icone_volume').css('color', 'black');
-            
-        });
-    });
-    */
-</script>
+<script type="text/javascript" src="{% static profil_url %}"></script>
+<script type="text/javascript" src="{% static preferences_url %}"></script>
 
 {% endblock contenuProfil %}
