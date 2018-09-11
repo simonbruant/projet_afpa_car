@@ -50,7 +50,8 @@
 											</div>
 										</div>
 
-										<div class="card-content">
+										<div class="card-content"> <!-- card jour semaine -->
+											<!-- <div v-if=''></div> -->
 											<div class="row">
 												<div class="col-md-2"></div>
 												<div class="col-md-8 mb-2">
@@ -80,7 +81,8 @@
 										<div class="row text-align-center">
 											<div class="col-md-4"></div>
 											<div class="col-md-4">{{ day_label|index:forloop.counter0 }}</div>
-											<div id="mini_font_size" class="col-md-4 ">
+											<!-- Checkbox -->
+											<div id="mini_font_size" class="col-md-4">
 												<div class="row">
 													<div class="col-md-4"></div>
 													<div class="col-md-4">{{ form.deactivate }}</div>
@@ -90,6 +92,7 @@
 													<div class="col-md-12 mini_font_size">Désactiver</div>
 												</div>
 											</div>
+											<!-- // Checkbox -->
 										</div>
 									</div>
 									<div class="card-content">
@@ -227,7 +230,7 @@
 				<div class="col-md-6" id="conteneur_calendrier">
 					<div id="date_picker_css" class="mt-3 mb-3">
 						<vuejs-datepicker :inline="true" :monday-first="true" :format="customFormatter" :full-month-name="true"
-						 calendar-class="datepicker_calendar" @selected="dateSelected" :language="fr">
+						  calendar-class="datepicker_calendar" @selected="dateSelected" :language="fr">
 						</vuejs-datepicker>
 					</div>
 				</div>
@@ -240,6 +243,15 @@
 		</div>
 	</div>
 </div>
+</div>
+
+<br>
+<div class="onoffswitch">
+    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+    <label class="onoffswitch-label" for="myonoffswitch">
+        <span class="onoffswitch-inner"></span>
+        <span class="onoffswitch-switch"></span>
+    </label>
 </div>
 
 <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>

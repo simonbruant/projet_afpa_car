@@ -38,10 +38,10 @@
 }
 
 /* Create a custom checkbox */
-.dimension {
+.checkbox_size{
     height: 15px;
     width: 15px;
-    background-color: #eee;
+    background-color: #eeeeee;
 }
 
 .mini_font_size{
@@ -60,3 +60,49 @@
     border: 1px solid rgb(230, 207, 8);
 } */
 
+/* Switch */
+.onoffswitch {
+    position: relative; width: 69px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #423D3D; border-radius: 50px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 16px; padding: 0; line-height: 16px;
+    font-size: 11px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "Actif";
+    padding-left: 7px;
+    background-color: #44A33D; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "Inactif";
+    padding-right: 7px;
+    background-color: #DE3545; color: #FFFFFF;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 20px; margin: -2px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 49px;
+    border: 2px solid #423D3D; border-radius: 50px;
+    transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+}

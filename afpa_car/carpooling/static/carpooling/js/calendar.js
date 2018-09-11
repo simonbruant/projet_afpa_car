@@ -7,7 +7,6 @@ var desactivate_fields = function (element_cliqued) {
     let i = element_cliqued.id.substr(8, 1)
 
     var mornDepTime = document.getElementsByName('form-' + i + '-morning_departure_time')[0]
-    var mornDepTime = document.getElementsByName('form-' + i + '-morning_departure_time')[0]
     var mornArrTime = document.getElementsByName('form-' + i + '-morning_arriving_time')[0]
     var eveDepTime = document.getElementsByName('form-' + i + '-evening_departure_time')[0]
     var hasForStar = document.getElementsByName('form-' + i + '-has_for_start')[0]
