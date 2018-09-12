@@ -1,5 +1,7 @@
 {% extends "carpooling/profil.html" %}
 
+{% load static %}
+
 {% block contenuProfil %}
 
 <form method="post">{% csrf_token %}
@@ -30,5 +32,7 @@
 
 
 <div align="left"><a  class="btn btn-success btn-sm mt-4" href="{% url 'carpooling:address' %}">Retour à la page Adresses </a></div>
-<hr/>
+
+<script type="text/javascript" src="{% static profil_url %}"></script>
+
 {% endblock %}

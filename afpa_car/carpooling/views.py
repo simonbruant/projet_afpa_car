@@ -1,6 +1,7 @@
 import json
 import re
 
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -20,6 +21,8 @@ from .models import Car, Address, DefaultTrip, AfpaCenter, Trip
 from afpa_car.mixins import SendMailMixin
 from users.models import PrivateData, User, UserProfile
 
+
+settings.app_static_url = 'carpooling/{}'.format('app')
 
 class DashboardView(TemplateView):
     template_name = 'carpooling/dashboard.html'
@@ -47,7 +50,9 @@ class UserUpdateView(SuccessMessageMixin, View):
         context = {
             'user_form': user_form,
             'user_profile_form': user_profile_form,
-            'cars': user.cars.all()
+            'cars': user.cars.all(),
+            'profil_url' : '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE),
+            'general_infos_url' : '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_GENERAL_INFOS_FILE)
         }
         return render(request, self.template_name, context)
 
@@ -79,6 +84,11 @@ class PrivateDataUpdateView(SuccessMessageMixin, UpdateView):
         private_data = self.request.user.private_data
         return private_data
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
+        return context
+
 
 class ProfilImageUpdateView(UpdateView):
     template_name = 'carpooling/profil/photo.html'
@@ -88,6 +98,12 @@ class ProfilImageUpdateView(UpdateView):
     def get_object(self, queryset=None):
         user_profile = self.request.user.user_profile
         return user_profile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
+        context['avatar_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_AVATAR_FILE)
+        return context
 
 
 class PreferencesUpdateView(SuccessMessageMixin, UpdateView):
@@ -101,6 +117,13 @@ class PreferencesUpdateView(SuccessMessageMixin, UpdateView):
         user_profile = self.request.user.user_profile
         return user_profile
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
+        context['preferences_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PREFERENCES_FILE)
+        return context
+
+
 
 class CarCreateView(SuccessMessageMixin, CreateView):
     template_name = 'carpooling/profil/car.html'
@@ -111,6 +134,7 @@ class CarCreateView(SuccessMessageMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['cars'] = self.request.user.cars.all()
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
         return context
 
     def form_valid(self, form):
@@ -135,6 +159,11 @@ class CarUpdateView(SuccessMessageMixin, UpdateView):
         queryset = super().get_queryset()
         queryset = queryset.filter(user=self.request.user)
         return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
+        return context
 
 
 class CarDeleteView(SuccessMessageMixin, DeleteView):
@@ -151,6 +180,7 @@ class CarDeleteView(SuccessMessageMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         car = Car.objects.get(pk=self.kwargs['pk'])
         context['car'] = car
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
         return context
 
 
@@ -163,6 +193,7 @@ class AddressCreateView(AddressMixin, FormView):
         context = super(AddressCreateView, self).get_context_data(**kwargs)
         context['addresses'] = self.request.user.addresses.all()
         context['addresses_count'] = len(self.request.user.addresses.all())
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
         return context
 
 class AddressUpdateView(AddressMixin, UpdateView):
@@ -181,6 +212,7 @@ class AddressUpdateView(AddressMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['update_view'] = True
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
         return context
 
 
@@ -197,6 +229,7 @@ class AddressDeleteView(SuccessMessageMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['address'] = Address.objects.get(pk=self.kwargs['pk'])
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
         return context
 
 
@@ -208,11 +241,13 @@ class DefaultTripView(View):
         formset = DefaultTripFormSet(queryset=DefaultTrip.objects.filter(
             user=user), form_kwargs={'user': user},)
         day_label = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"]
+
         context = {
             'trips': user.default_trips.all(),
             'formset': formset,
             'day_label': day_label,
-            'form': DefaultTripForm
+            'form': DefaultTripForm,
+            'calendar_url' : '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_CALENDAR_FILE)
         }
         return render(request, self.template_name, context)
 

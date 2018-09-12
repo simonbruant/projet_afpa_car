@@ -8,3 +8,7 @@ ancien_models.py
 anciens_forms.py
 anciennes_views.py
 afpa_car/~
+afpa_car/frontend/node_modules
+afpa_car/frontend/.cache
+afpa_car/frontend/dist
+afpa_car/carpooling/static/carpooling/app

@@ -177,29 +177,7 @@
     </div>
 </div>
 
-<script type="text/javascript" src="{% static 'js/vue.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-
-<script>
-    /* $(function($){
-
-                $('#status_stagiaire').click(function(e){
-                    console.log('stagiaire ok')
-                    $('#date_status').removeClass('hidden');
-                    $('#contenu').css('height', '690px');
-                    $('#submit_profil1').addClass('hidden');
-                    $('#submit_profil2').removeClass('hidden');
-
-                });
-                $('#status_employe').click(function(e){
-                    console.log('employe ok')
-                    $('#date_status').addClass('hidden');
-                    $('#contenu').css('height', '500px');
-                    $('#submit_profil1').removeClass('hidden');
-                    $('#submit_profil2').addClass('hidden');
-                    
-                });
-            }); */
-</script>
+<script type="text/javascript" src="{% static profil_url %}"></script>
+<script type="text/javascript" src="{% static general_infos_url %}"></script>
 
 {% endblock contenuProfil %}
