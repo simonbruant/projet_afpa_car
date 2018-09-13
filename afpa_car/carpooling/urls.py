@@ -34,7 +34,7 @@ urlpatterns = [
     path('calendar/', DefaultTripView.as_view(), name='calendar'),
     
     path('trip/', TripView.as_view(), name="trip"),
-    re_path(r'^trip/(?P<trip_id>[0-9]+)/$', TripDetailView.as_view(), name='trip_detail'),
+    path('trip/<int:pk>/', TripDetailView.as_view(), name='trip_detail'),
     path('proposition/<int:pk>/', PropositionView.as_view(), name="proposition"),
 
 

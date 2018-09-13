@@ -159,20 +159,20 @@ class DefaultTripForm(forms.ModelForm):
     class Meta:
         model = DefaultTrip
         fields =('morning_departure_time', 'morning_arriving_time', 'evening_departure_time',
-                'has_for_start', 'deactivate', 'is_driver')
+                'has_for_start', 'deactivate', 'user_is_driver')
         widgets = {
             'morning_departure_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
             'morning_arriving_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
             'evening_departure_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
             'deactivate': CheckboxInput(attrs={'class': 'form-control checkbox_size', 
                                                 'onclick' : 'desactivate_fields(this)'}),
-            'is_driver': CheckboxInput(attrs={'class': 'form-control',}),
+            'user_is_driver': CheckboxInput(attrs={'class': 'form-control',}),
         }
 
 DefaultTripFormSet = modelformset_factory(DefaultTrip ,form=DefaultTripForm,
                                         extra=5, max_num=5, 
                                         fields = ('morning_departure_time', 'morning_arriving_time', 
-                                                    'evening_departure_time','has_for_start', 'deactivate', 'is_driver'))
+                                                    'evening_departure_time','has_for_start', 'deactivate', 'user_is_driver'))
 
 class ContactForm(forms.Form):
     email = forms.EmailField(widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Adresse Email'}), 

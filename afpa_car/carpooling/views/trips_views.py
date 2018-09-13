@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.views.generic import DetailView
 
+from calendar import day_abbr
 from carpooling.forms import DefaultTripFormSet
 from carpooling.models import DefaultTrip, Trip
 
@@ -53,34 +54,34 @@ class TripView(View):
     template_name = 'carpooling/trip.html'
 
     def get(self, request):
-        query = request.GET.get('query')
-        query_day = request.GET.get('query_day')
-        context = {}
+        city_search = request.GET.get('city')
+        day_search = request.GET.get('day')
         user = request.user
-        user_trips_day = [trip.day for trip in user.default_trips.all() if not trip.deactivate]
-        if not query and not query_day:
-            all_trips = DefaultTrip.objects.all().exclude(user=user)
-            context['trips'] = [trip for trip in all_trips if trip.day in user_trips_day]
-
+        visible_trips = []
+        user_trips = [trip for trip in user.default_trips.all() if not trip.deactivate]
+        if not city_search and not day_search:
+            all_trips = DefaultTrip.objects.all().exclude(user=user)            
         else:
-            trips = DefaultTrip.objects.filter(has_for_start__city__startswith=query,
-                                                day__startswith=query_day).exclude(user=user)
-            context['trips'] = trips
+            all_trips = DefaultTrip.objects.filter(has_for_start__city__startswith=city_search,
+                                                    day__startswith=day_search).exclude(user=user)
+            if day_search:
+                user_trips = user.default_trips.all()
 
-        return render(request, 'carpooling/trip.html', context)
+        for trip in all_trips:
+            for user_trip in user_trips:
+                if user_trip.day == trip.day:
+                    if user_trip.user_is_driver or (not user_trip.user_is_driver and trip.user_is_driver):
+                        visible_trips.append(trip)
+
+        return render(request, 'carpooling/trip.html', {'trips': visible_trips})
 
 class TripDetailView(DetailView):
     model = DefaultTrip
     template_name = 'carpooling/trip.html'
 
-    def get(self, request, trip_id) :
-        
-        trip = get_object_or_404(DefaultTrip, pk=trip_id)
-        user = request.user
-        context = {
-            'trip' : trip,
-        }
-        return render(request, 'carpooling/trip_detail.html', context)
+    def get(self, request, pk) :
+        trip = get_object_or_404(DefaultTrip, pk=pk)
+        return render(request, 'carpooling/trip_detail.html', {'trip': trip})
 
 class PropositionView(DetailView):
     model = DefaultTrip

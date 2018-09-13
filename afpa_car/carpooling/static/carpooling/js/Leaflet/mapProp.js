@@ -6,6 +6,7 @@ var userStartLat = _.replace($('#user_start_lat').val(), ',', '.')
 var userStartLng = _.replace($('#user_start_lng').val(), ',', '.')
 var userDestinationLat = _.replace($('#user_destination_lat').val(), ',', '.')
 var userDestinationLng = _.replace($('#user_destination_lng').val(), ',', '.')
+var trip_user = $('#trip_user').val()
 
 // Variables pour création de la carte
 var mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoia2FrbGVtYWthayIsImEiOiJjamxjMXpiMmQxMHV3M3dwZzB0bnk1c2Q2In0.LjmVM42iRFL4tU3TIzrgHw';
@@ -15,7 +16,7 @@ var streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets',   attribution: mbAttr})
     darkgrayscale   = L.tileLayer(mbUrl, {id: 'mapbox.dark', attribution: mbAttr});
 
 // Création de la carte
-var map = L.map('mapProp', { layers: streets });
+var map = L.map('mapProp', { layers: streets })
 
 // Définition des diférents layers
 var baseLayers = {
@@ -73,8 +74,8 @@ var trip = L.Routing.control({
     router: myRouter,
     geocoder: MapGeocoderProvider,
     position: 'bottomright',
-    draggableWaypoints: true,
-    addWaypoints: true,
+    draggableWaypoints: false,
+    addWaypoints: false,
     fitSelectedRoutes: 'smart',
     lineOptions: {
         styles: [
@@ -86,7 +87,8 @@ var trip = L.Routing.control({
 })
 .on('waypointschanged', function(e) {
     for (var j = 1; j < e.waypoints.length-1; j++) {
-        console.log("latitude : " + e.waypoints[j].latLng.lat + ", Longitude : " + e.waypoints[j].latLng.lng );
+        console.log("latitude : " + e.waypoints[j].latLng.lat + ", Longitude : " + e.waypoints[j].latLng.lng)
+        console.log(trip_user)
     }
     if (e.waypoints.length == 3) {
         trip.options.addWaypoints = false
@@ -95,3 +97,12 @@ var trip = L.Routing.control({
 
 routing.hide();
 trip.hide();
+
+new Vue ({
+    el: '#map',
+    created() {
+        if (trip_user) {
+            console.log("lkjdfkndswkjl")
+    } 
+}
+})

@@ -10,13 +10,13 @@ var desactivate_fields = function (element_cliqued) {
     var mornArrTime = document.getElementsByName('form-' + i + '-morning_arriving_time')[0]
     var eveDepTime = document.getElementsByName('form-' + i + '-evening_departure_time')[0]
     var hasForStar = document.getElementsByName('form-' + i + '-has_for_start')[0]
-    var isDriver = document.getElementsByName('form-' + i + '-is_driver')[0]
+    var userIsDriver = document.getElementsByName('form-' + i + '-user_is_driver')[0]
 
     mornDepTime.disabled = !mornDepTime.disabled
     mornArrTime.disabled = !mornArrTime.disabled
     eveDepTime.disabled = !eveDepTime.disabled
     hasForStar.disabled = !hasForStar.disabled
-    isDriver.disabled = !isDriver.disabled
+    userIsDriver.disabled = !userIsDriver.disabled
 }
 // disable inputs @Votre semaine type
 new Vue({
@@ -34,13 +34,13 @@ new Vue({
                 var mornArrTime = document.getElementsByName('form-' + i + '-morning_arriving_time')[0]
                 var eveDepTime = document.getElementsByName('form-' + i + '-evening_departure_time')[0]
                 var hasForStar = document.getElementsByName('form-' + i + '-has_for_start')[0]
-                var isDriver = document.getElementsByName('form-' + i + '-is_driver')[0]
+                var userIsDriver = document.getElementsByName('form-' + i + '-user_is_driver')[0]
 
                 mornDepTime.disabled = element.checked
                 mornArrTime.disabled = element.checked
                 eveDepTime.disabled = element.checked
                 hasForStar.disabled = element.checked
-                isDriver.disabled = element.checked
+                userIsDriver.disabled = element.checked
             }
         }
     },
