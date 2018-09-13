@@ -6,19 +6,14 @@
 
 {% block section %}
 
-<div id='default_week'>
+<div id='default_week' >
 	<div class='row'>
 		<div class='col-md-12'>
 			
 			<div class="card mt-3 mb-3" id="carte_semaine">
 				<div class="row">
 					
-					<div id="titre_calendar" class="card-header bg-success col-md-12">Votre semaine type
-						<!-- {% if trips %}
-							<span style="float: right" v-if="burger"  @click="show_update" class="fas fa-pencil-alt mt-1" ></span>
-							<span style="float: right" v-if="burger" @click="show_update">Modifier  </span>
-							{% endif %} -->
-						</div>
+					<div id="titre_calendar" class="card-header bg-success col-md-12">Votre semaine type</div>
 					</div>
 					
 					<div v-if='update_default_week'>
@@ -43,17 +38,23 @@
 														<div class="col-md-4">{{ form.deactivate }}</div>
 														<div class="col-md-4"></div>
 													</div>
-													<div class="row">
+													<div class="row" >
 														<div class="col-md-12 mini_font_size">Désactiver</div>
 													</div>
 												</div>
 											</div>
 										</div>
 
-										<div class="card-content"> <!-- card jour semaine -->
-											<!-- <div v-if=''></div> -->
+										<div class="card-content"  id="card-content-{{forloop.counter0}}">
 											<div class="row">
+												
+												{% if forloop.counter0 != 0 %}
+												<div class="col-md-2 align-self-center">
+													<img src="{% static 'img/icons/arrow-left.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour précédent" @click="duplicate({{forloop.counter0}}, 0)">
+												</div>
+											{% else %}
 												<div class="col-md-2"></div>
+											{% endif %}
 												<div class="col-md-8 mb-2">
 
 													{{ form.morning_departure_time.label }}
@@ -65,9 +66,12 @@
 													{{ form.has_for_start.label }}
 													{{ form.has_for_start }}
 													{{ form.id }}
-
+													
 												
 												</div>
+												<div class="col-md-2 align-self-center">
+														<img src="{% static 'img/icons/arrow-right.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour suivant" @click="duplicate({{forloop.counter0}}, 1)">
+													</div>
 											</div>
 										</div>
 									</div>
@@ -95,9 +99,11 @@
 											<!-- // Checkbox -->
 										</div>
 									</div>
-									<div class="card-content">
+									<div class="card-content" id="card-content-{{forloop.counter0}}">
 										<div class="row">
-											<div class="col-md-2"></div>
+											<div class="col-md-2 align-self-center">
+												<img src="{% static 'img/icons/arrow-left.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour précédent" @click="duplicate({{forloop.counter0}}, 0)">
+											</div>
 											<div class="col-md-8 mb-2">
 
 												{{ form.morning_departure_time.label }}
@@ -109,7 +115,9 @@
 												{{ form.has_for_start.label }}
 												{{ form.has_for_start }}
 												{{ form.id }}
-
+											</div>
+											<div class="col-md-2 align-self-center">
+												<img src="{% static 'img/icons/arrow-right.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour suivant" @click="duplicate({{forloop.counter0}})">
 											</div>
 										</div>
 									</div>
@@ -136,9 +144,11 @@
 										</div>
 									</div>
 
-									<div class="card-content">
-										<div class="row">
-											<div class="col-md-2"></div>
+									<div class="card-content" id="card-content-{{forloop.counter0}}" >
+										<div class="row" >
+											<div class="col-md-2 align-self-center">
+												<img src="{% static 'img/icons/arrow-left.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour précédent" @click="duplicate({{forloop.counter0}}, 0)">
+											</div>
 											<div class="col-md-8 mb-2">
 
 												{{ form.morning_departure_time.label }}
@@ -152,6 +162,7 @@
 												{{ form.id }}
 
 											</div>
+											
 										</div>
 									</div>
 								</div>
@@ -224,14 +235,6 @@
 
 </div>
 
-<br>
-<div class="onoffswitch">
-    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
-    <label class="onoffswitch-label" for="myonoffswitch">
-        <span class="onoffswitch-inner"></span>
-        <span class="onoffswitch-switch"></span>
-    </label>
-</div>
 
 <div id="calendar_app"></div>
     
