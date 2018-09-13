@@ -52,7 +52,14 @@
 
 										<div class="card-content"  id="card-content-{{forloop.counter0}}"> <!-- card jour semaine -->
 											<div class="row">
+												
+												{% if forloop.counter0 != 0 %}
+												<div class="col-md-2 align-self-center">
+													<img src="{% static 'img/icons/arrow-left.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour précédent" @click="duplicate({{forloop.counter0}}, 0)">
+												</div>
+											{% else %}
 												<div class="col-md-2"></div>
+											{% endif %}
 												<div class="col-md-8 mb-2">
 
 													{{ form.morning_departure_time.label }}
@@ -64,9 +71,12 @@
 													{{ form.has_for_start.label }}
 													{{ form.has_for_start }}
 													{{ form.id }}
-
+													
 												
 												</div>
+												<div class="col-md-2 align-self-center">
+														<img src="{% static 'img/icons/arrow-right.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour suivant" @click="duplicate({{forloop.counter0}}, 1)">
+													</div>
 											</div>
 										</div>
 									</div>
@@ -96,7 +106,9 @@
 									</div>
 									<div class="card-content" id="card-content-{{forloop.counter0}}">
 										<div class="row">
-											<div class="col-md-2"></div>
+											<div class="col-md-2 align-self-center">
+												<img src="{% static 'img/icons/arrow-left.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour précédent" @click="duplicate({{forloop.counter0}}, 0)">
+											</div>
 											<div class="col-md-8 mb-2">
 
 												{{ form.morning_departure_time.label }}
@@ -108,7 +120,9 @@
 												{{ form.has_for_start.label }}
 												{{ form.has_for_start }}
 												{{ form.id }}
-
+											</div>
+											<div class="col-md-2 align-self-center">
+												<img src="{% static 'img/icons/arrow-right.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour suivant" @click="duplicate({{forloop.counter0}})">
 											</div>
 										</div>
 									</div>
@@ -137,7 +151,9 @@
 
 									<div class="card-content" id="card-content-{{forloop.counter0}}" >
 										<div class="row" >
-											<div class="col-md-2"></div>
+											<div class="col-md-2 align-self-center">
+												<img src="{% static 'img/icons/arrow-left.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour précédent" @click="duplicate({{forloop.counter0}}, 0)">
+											</div>
 											<div class="col-md-8 mb-2">
 
 												{{ form.morning_departure_time.label }}
@@ -151,6 +167,7 @@
 												{{ form.id }}
 
 											</div>
+											
 										</div>
 									</div>
 								</div>
