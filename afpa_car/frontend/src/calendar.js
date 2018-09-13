@@ -1,4 +1,3 @@
-<<<<<<< HEAD:afpa_car/frontend/src/calendar.js
 import Vue from 'vue/dist/vue.js';
 import $ from 'jquery';
 
@@ -15,9 +14,6 @@ new Vue({
 
 
 // ~~~~~~~~ DEFAULT-TRIP ~~~~~~~~~~ //
-=======
-// disable inputs @Votre semaine type
->>>>>>> la_branche_de_Boris:afpa_car/carpooling/static/carpooling/js/calendar.js
 new Vue({
     el: '#default_week',
     data: {
@@ -51,19 +47,10 @@ new Vue({
             this.update_default_week = false
             this.preview_default_week = true
         },
-<<<<<<< HEAD:afpa_car/frontend/src/calendar.js
-        deactivate_fields: (element_cliqued) => {
-
-            console.log("eeeeeeeeeeeeeeeee")
-            console.log(element_cliqued)
-            let i = element_cliqued.id.substr(8, 1)
-            
-=======
         deactivate_fields: function (element_cliqued) {
             let i = element_cliqued.id.substr(8, 1)
 
             var divBgColor = document.getElementById('card-content-' + i)
->>>>>>> la_branche_de_Boris:afpa_car/carpooling/static/carpooling/js/calendar.js
             var mornDepTime = document.getElementsByName('form-' + i + '-morning_departure_time')[0]
             var mornArrTime = document.getElementsByName('form-' + i + '-morning_arriving_time')[0]
             var eveDepTime = document.getElementsByName('form-' + i + '-evening_departure_time')[0]
@@ -73,26 +60,6 @@ new Vue({
             mornArrTime.disabled = !mornArrTime.disabled
             eveDepTime.disabled = !eveDepTime.disabled
             hasForStar.disabled = !hasForStar.disabled
-<<<<<<< HEAD:afpa_car/frontend/src/calendar.js
-
-        }
-        // disable_fields: function (element_cliqued) {
-        //     let i = element_cliqued.id.substr(8, 1)
-
-        //     var mornDepTime = document.getElementsByName('form-' + i + '-morning_departure_time')[0]
-        //     var mornDepTime = document.getElementsByName('form-' + i + '-morning_departure_time')[0]
-        //     var mornArrTime = document.getElementsByName('form-' + i + '-morning_arriving_time')[0]
-        //     var eveDepTime = document.getElementsByName('form-' + i + '-evening_departure_time')[0]
-        //     var hasForStar = document.getElementsByName('form-' + i + '-has_for_start')[0]
-
-        //     mornDepTime.disabled = !mornDepTime.disabled
-        //     mornArrTime.disabled = !mornArrTime.disabled
-        //     eveDepTime.disabled = !eveDepTime.disabled
-        //     hasForStar.disabled = !hasForStar.disabled
-        // }
-    }
-});
-=======
             
             divBgColor.style.backgroundColor = divBgColor.style.backgroundColor === ""  ? "#d4d8db" : ""
 
@@ -176,4 +143,3 @@ new Vue({
 
 
 
->>>>>>> la_branche_de_Boris:afpa_car/carpooling/static/carpooling/js/calendar.js
