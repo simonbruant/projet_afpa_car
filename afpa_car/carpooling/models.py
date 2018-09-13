@@ -71,11 +71,12 @@ class DefaultTrip(models.Model):
     evening_estimated_arriving_time = models.TimeField(null=True, verbose_name="Arrivée estimée à")
     estimated_trip_cost             = models.IntegerField(editable=False, default=0, verbose_name="Coût du trajet estimé")
     day                             = models.CharField(null=True, max_length=10, choices=DAY, verbose_name="Jour")
+    deactivate                      = models.BooleanField(default=False, verbose_name="désactivation" )
+    is_driver                       = models.BooleanField(default=False, verbose_name="conducteur ou passager",)
 
     user                = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="default_trips" ,verbose_name="Utilisateur")
     has_for_start       = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True, related_name="start", verbose_name="Départ")
     has_for_destination = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="destination", verbose_name="Destination")
-    deactivate          = models.BooleanField(default=False, verbose_name="désactivation" )
 
     class Meta:
         verbose_name = "Trajet Type"

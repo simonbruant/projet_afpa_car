@@ -25,8 +25,6 @@ class AddressMixin:
             else:
                 address.street_name = name
             
-            
-
             address.save()
 
             return super().form_valid(form)
