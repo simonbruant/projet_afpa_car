@@ -52,53 +52,37 @@ new Vue({
         },
         duplicate: function (i, initial_direction) {
             var direction = 1
+
             if( initial_direction === 0){
                 direction = -1
             }
 
-            console.log("------ Fonction Duplicate ------")
-            console.log("------ "+ i + " ------")
-
-            
-            var divBgColor1 = document.getElementById('card-content-' + i)
-            
+            var divBgColor1 = document.getElementById('card-content-' + i)       
             var mornDepTime1 = document.getElementsByName('form-' + i + '-morning_departure_time')[0]
             var mornArrTime1 = document.getElementsByName('form-' + i + '-morning_arriving_time')[0]
             var eveDepTime1 = document.getElementsByName('form-' + i + '-evening_departure_time')[0]
             var hasForStar1 = document.getElementsByName('form-' + i + '-has_for_start')[0]
             var deactivate1 = document.getElementsByName('form-' + i + '-deactivate')[0]
             
-            console.log("1 " + deactivate1.checked + "      ########################")
             var divBgColor2 = document.getElementById('card-content-' + (i + direction))
-            
             var mornDepTime2 = document.getElementsByName('form-' + ( i + direction ) + '-morning_departure_time')[0]
             var mornArrTime2 = document.getElementsByName('form-' + ( i + direction ) + '-morning_arriving_time')[0]
             var eveDepTime2 = document.getElementsByName('form-' + ( i + direction ) + '-evening_departure_time')[0]
             var hasForStar2 = document.getElementsByName('form-' + ( i + direction ) + '-has_for_start')[0]
             var deactivate2 = document.getElementsByName('form-' +( i + direction ) + '-deactivate')[0]
             
-            console.log("2 " + deactivate2.checked + "      ########################")
-            
             mornDepTime2.value = mornDepTime1.value
             mornArrTime2.value = mornArrTime1.value
             eveDepTime2.value = eveDepTime1.value
             hasForStar2.value = hasForStar1.value
-
             deactivate2.checked = deactivate1.checked
-
 
             mornDepTime2.disabled = mornDepTime1.disabled
             mornArrTime2.disabled = mornArrTime1.disabled
             eveDepTime2.disabled = eveDepTime1.disabled
             hasForStar2.disabled = hasForStar1.disabled
 
-
             divBgColor2.style.backgroundColor = divBgColor1.style.backgroundColor
-
-            
-            console.log("3 " + deactivate2.checked + "      ########################")
-
-
         }
     }
 });
