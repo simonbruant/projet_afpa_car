@@ -179,3 +179,27 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+
+# ----- APPEL DES FICHERS DU FRONTEND -----#
+
+from os.path import dirname, realpath
+
+ROOT_DIR = realpath(dirname(dirname(__file__))) 
+
+CARPOOLING_CALENDAR_FILE = ""
+CARPOOLING_PROFIL_FILE = ""
+CARPOOLING_PREFERENCES_FILE = ""
+CARPOOLING_GENERAL_INFOS_FILE = ""
+CARPOOLING_AVATAR_FILE = ""
+app_path = os.path.join(ROOT_DIR, 'carpooling','static', 'carpooling', 'app')
+if os.path.exists(app_path):
+    app_static_files = os.listdir(app_path)
+    if app_static_files:
+        CARPOOLING_CALENDAR_FILE = [i for i in app_static_files if i.startswith('calendar.')][0]
+        CARPOOLING_PROFIL_FILE = [i for i in app_static_files if i.startswith('profil.')][0]
+        CARPOOLING_PREFERENCES_FILE = [i for i in app_static_files if i.startswith('preferences.')][0]
+        CARPOOLING_GENERAL_INFOS_FILE = [i for i in app_static_files if i.startswith('general_infos.')][0]
+        CARPOOLING_AVATAR_FILE = [i for i in app_static_files if i.startswith('avatar.')][0]
+
+        
