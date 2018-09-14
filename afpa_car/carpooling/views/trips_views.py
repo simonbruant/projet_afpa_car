@@ -3,7 +3,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.views.generic import DetailView
 
-from calendar import day_abbr
 from carpooling.forms import DefaultTripFormSet
 from carpooling.models import DefaultTrip, Trip
 
@@ -94,4 +93,5 @@ class PropositionView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['user_default_trips'] = self.request.user.default_trips.all()
+        context['map_prop_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_MAP_PROP_FILE)
         return context

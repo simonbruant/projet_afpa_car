@@ -40,11 +40,6 @@
     {% endfor %}
 </div>
 
-<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
-<script src="{% static 'carpooling/js/Leaflet/leaflet.js' %}"></script>
-<script src="{% static 'carpooling/js/Leaflet/Plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script>
-<script src="{% static 'carpooling/js/Leaflet/Plugins/leaflet-routing-machine/leaflet-routing-machine.js' %}"></script>
-<script src="{% static 'carpooling/js/Leaflet/mapProp.js' %}"></script>
+<script type="text/javascript" src="{% static map_prop_url %}"></script>
 
 {% endblock section %}
