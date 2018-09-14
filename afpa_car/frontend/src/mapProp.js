@@ -52,7 +52,7 @@ var searched_trip = L.Routing.control({
     geocoder: MapGeocoderProvider,
     position: 'bottomright',
     draggableWaypoints: false,
-    addWaypoints: true,
+    addWaypoints: false,
     lineOptions: {
         styles: [
             {color: 'black', opacity: 0.5, weight: 11},
@@ -82,7 +82,7 @@ var user_trip = L.Routing.control({
     geocoder: MapGeocoderProvider,
     position: 'bottomright',
     draggableWaypoints: false,
-    addWaypoints: false,
+    addWaypoints: true,
     fitSelectedRoutes: 'smart',
     lineOptions: {
         styles: [
@@ -95,7 +95,6 @@ var user_trip = L.Routing.control({
 .on('waypointschanged', function(e) {
     for (var j = 1; j < e.waypoints.length-1; j++) {
         console.log("latitude : " + e.waypoints[j].latLng.lat + ", Longitude : " + e.waypoints[j].latLng.lng)
-        console.log(trip_user)
     }
     if (e.waypoints.length == 3) {
         user_trip.options.addWaypoints = false
@@ -107,7 +106,7 @@ user_trip.hide();
 
 // new Vue ({
 //     el: '#map',
-//     created() {
+//     created () {
 //         if (trip_user) {
 //             console.log("user", user_trip.options.addWaypoints)
 //             console.log("search", searched_trip.options.addWaypoints)
@@ -119,3 +118,4 @@ user_trip.hide();
 //     }
 // }
 // })
+
