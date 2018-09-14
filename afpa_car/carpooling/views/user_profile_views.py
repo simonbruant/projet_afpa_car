@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
@@ -6,6 +7,8 @@ from django.views.generic import UpdateView
 
 from carpooling.forms import ( PreferencesForm, PrivateDataUpdateForm, 
                     ProfilImageUpdateForm, UserProfileUpdateForm, UserUpdateForm)
+
+settings.app_static_url = 'carpooling/app'
 
 class UserUpdateView(SuccessMessageMixin, View):
     template_name = 'carpooling/profil/general_infos.html'
@@ -19,7 +22,9 @@ class UserUpdateView(SuccessMessageMixin, View):
         context = {
             'user_form': user_form,
             'user_profile_form': user_profile_form,
-            'cars': user.cars.all()
+            'cars': user.cars.all(),
+            'profil_url' : '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE),
+            'general_infos_url' : '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_GENERAL_INFOS_FILE),
         }
         return render(request, self.template_name, context)
 
@@ -50,6 +55,11 @@ class PrivateDataUpdateView(SuccessMessageMixin, UpdateView):
     def get_object(self, queryset=None):
         private_data = self.request.user.private_data
         return private_data
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
+        return context
 
 
 class ProfilImageUpdateView(UpdateView):
@@ -60,6 +70,12 @@ class ProfilImageUpdateView(UpdateView):
     def get_object(self, queryset=None):
         user_profile = self.request.user.user_profile
         return user_profile
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
+        context['avatar_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_AVATAR_FILE)
+        return context
 
 
 class PreferencesUpdateView(SuccessMessageMixin, UpdateView):
@@ -71,3 +87,9 @@ class PreferencesUpdateView(SuccessMessageMixin, UpdateView):
     def get_object(self, queryset=None):
         user_profile = self.request.user.user_profile
         return user_profile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
+        context['preferences_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PREFERENCES_FILE)
+        return context

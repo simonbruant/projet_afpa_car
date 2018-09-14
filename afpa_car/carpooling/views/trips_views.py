@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.views.generic import DetailView
@@ -6,6 +7,7 @@ from calendar import day_abbr
 from carpooling.forms import DefaultTripFormSet
 from carpooling.models import DefaultTrip, Trip
 
+settings.app_static_url = 'carpooling/app'
 
 class DefaultTripView(View):
     template_name = 'carpooling/calendar.html'
@@ -19,6 +21,7 @@ class DefaultTripView(View):
             'trips': user.default_trips.all(),
             'formset': formset,
             'day_label': day_label,
+            'calendar_url' : '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_CALENDAR_FILE)
         }
         return render(request, self.template_name, context)
 

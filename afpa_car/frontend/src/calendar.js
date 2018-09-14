@@ -32,8 +32,7 @@ new Vue({
                 var hasForStar = document.getElementsByName('form-' + i + '-has_for_start')[0]
                 var userIsDriver = document.getElementsByName('form-' + i + '-user_is_driver')[0]
 
-                mornDepTime.disabled = mornArrTime.disabled = eveDepTime.disabled = 
-                hasForStar.disabled = userIsDriver = element.checked
+                mornDepTime.disabled = mornArrTime.disabled = eveDepTime.disabled = hasForStar.disabled = userIsDriver.disabled = element.checked
 
                 divBgColor.style.backgroundColor = "#d4d8db"
             }

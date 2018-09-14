@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DeleteView, FormView, UpdateView
@@ -6,6 +7,7 @@ from carpooling.forms import AddressForm, CarForm
 from carpooling.mixins import AddressMixin
 from carpooling.models import Address, Car
 
+settings.app_static_url = 'carpooling/app'
 ###### Car
 
 class CarCreateView(SuccessMessageMixin, CreateView):
@@ -17,6 +19,7 @@ class CarCreateView(SuccessMessageMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['cars'] = self.request.user.cars.all()
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
         return context
 
     def form_valid(self, form):
@@ -40,6 +43,11 @@ class CarUpdateView(SuccessMessageMixin, UpdateView):
         queryset = super().get_queryset()
         queryset = queryset.filter(user=self.request.user)
         return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
+        return context
 
 
 class CarDeleteView(SuccessMessageMixin, DeleteView):
@@ -56,6 +64,7 @@ class CarDeleteView(SuccessMessageMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         car = Car.objects.get(pk=self.kwargs['pk'])
         context['car'] = car
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
         return context
 
 ##### Address
@@ -69,6 +78,7 @@ class AddressCreateView(AddressMixin, FormView):
         context = super(AddressCreateView, self).get_context_data(**kwargs)
         context['addresses'] = self.request.user.addresses.all()
         context['addresses_count'] = len(self.request.user.addresses.all())
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
         return context
 
 class AddressUpdateView(AddressMixin, UpdateView):
@@ -87,6 +97,7 @@ class AddressUpdateView(AddressMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['update_view'] = True
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
         return context
 
 
@@ -103,4 +114,5 @@ class AddressDeleteView(SuccessMessageMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['address'] = Address.objects.get(pk=self.kwargs['pk'])
+        context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
         return context

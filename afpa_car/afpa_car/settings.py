@@ -201,5 +201,4 @@ if os.path.exists(app_path):
         CARPOOLING_PREFERENCES_FILE = [i for i in app_static_files if i.startswith('preferences.')][0]
         CARPOOLING_GENERAL_INFOS_FILE = [i for i in app_static_files if i.startswith('general_infos.')][0]
         CARPOOLING_AVATAR_FILE = [i for i in app_static_files if i.startswith('avatar.')][0]
-
         

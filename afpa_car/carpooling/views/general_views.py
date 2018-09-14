@@ -1,9 +1,12 @@
+from django.conf import settings
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import FormView, TemplateView
 
 from afpa_car.mixins import SendMailMixin
 from carpooling.forms import ContactForm
+
+settings.app_static_url = 'carpooling/app'
 
 class DashboardView(TemplateView):
     template_name = 'carpooling/dashboard.html'
