@@ -36,7 +36,7 @@ var myRouter = L.Routing.mapbox('pk.eyJ1Ijoia2FrbGVtYWthayIsImEiOiJjamxjMXpiMmQx
 myRouter.options.language = 'fr';
 
 // Trajet recherché
-var routing = L.Routing.control({
+var searched_trip = L.Routing.control({
     waypoints: [
         L.latLng(startLat, startLng),
         L.latLng(destinationLat, destinationLng)
@@ -66,7 +66,7 @@ var routing = L.Routing.control({
 .addTo(map);
 
 // Trajet de l'utilisateur
-var trip = L.Routing.control({
+var user_trip = L.Routing.control({
     waypoints: [
         L.latLng(userStartLat, userStartLng),
         L.latLng(userDestinationLat, userDestinationLng)
@@ -91,18 +91,24 @@ var trip = L.Routing.control({
         console.log(trip_user)
     }
     if (e.waypoints.length == 3) {
-        trip.options.addWaypoints = false
+        user_trip.options.addWaypoints = false
     }
 }).addTo(map);
 
-routing.hide();
-trip.hide();
+searched_trip.hide();
+user_trip.hide();
 
-new Vue ({
-    el: '#map',
-    created() {
-        if (trip_user) {
-            console.log("lkjdfkndswkjl")
-    } 
-}
-})
+// new Vue ({
+//     el: '#map',
+//     created() {
+//         if (trip_user) {
+//             console.log("user", user_trip.options.addWaypoints)
+//             console.log("search", searched_trip.options.addWaypoints)
+//             // user_trip.options.addWaypoints = true
+//         } else {
+//             console.log("user", user_trip.options.addWaypoints)
+//             console.log("search", searched_trip.options.addWaypoints)
+//         // searched_trip.options.addWaypoints = true
+//     }
+// }
+// })
