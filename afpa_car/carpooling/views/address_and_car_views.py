@@ -1,0 +1,106 @@
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse, reverse_lazy
+from django.views.generic import CreateView, DeleteView, FormView, UpdateView
+
+from carpooling.forms import AddressForm, CarForm
+from carpooling.mixins import AddressMixin
+from carpooling.models import Address, Car
+
+###### Car
+
+class CarCreateView(SuccessMessageMixin, CreateView):
+    template_name = 'carpooling/profil/car.html'
+    success_url = reverse_lazy('carpooling:car')
+    success_message = "Vehicule crée"
+    form_class = CarForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cars'] = self.request.user.cars.all()
+        return context
+
+    def form_valid(self, form):
+        user = self.request.user
+        car = form.save(commit=False)
+        car.model = form.cleaned_data['model'].capitalize()
+        car.user = user
+        car.save()
+        return super().form_valid(form)
+
+class CarUpdateView(SuccessMessageMixin, UpdateView):
+    model = Car
+    template_name = 'carpooling/profil/car.html'
+    success_message = "Informations du véhicule mises à jour"
+    form_class = CarForm
+
+    def get_success_url(self):
+        return reverse('carpooling:car')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user=self.request.user)
+        return queryset
+
+
+class CarDeleteView(SuccessMessageMixin, DeleteView):
+    model = Car
+    template_name = 'carpooling/profil/car_delete.html'
+    success_url = reverse_lazy('carpooling:car')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user=self.request.user)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        car = Car.objects.get(pk=self.kwargs['pk'])
+        context['car'] = car
+        return context
+
+##### Address
+
+class AddressCreateView(AddressMixin, FormView):
+    template_name = 'carpooling/profil/address.html'
+    success_url = reverse_lazy('carpooling:address')
+    form_class = AddressForm
+
+    def get_context_data(self, **kwargs):
+        context = super(AddressCreateView, self).get_context_data(**kwargs)
+        context['addresses'] = self.request.user.addresses.all()
+        context['addresses_count'] = len(self.request.user.addresses.all())
+        return context
+
+class AddressUpdateView(AddressMixin, UpdateView):
+    model = Address
+    template_name = 'carpooling/profil/address.html'
+    form_class = AddressForm
+
+    def get_success_url(self):
+        return reverse('carpooling:address')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user=self.request.user)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['update_view'] = True
+        return context
+
+
+class AddressDeleteView(SuccessMessageMixin, DeleteView):
+    model = Address
+    template_name = 'carpooling/profil/address_delete.html'
+    success_url = reverse_lazy('carpooling:address')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user=self.request.user)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['address'] = Address.objects.get(pk=self.kwargs['pk'])
+        return context

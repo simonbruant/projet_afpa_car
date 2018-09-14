@@ -30,8 +30,10 @@ new Vue({
                 var mornArrTime = document.getElementsByName('form-' + i + '-morning_arriving_time')[0]
                 var eveDepTime = document.getElementsByName('form-' + i + '-evening_departure_time')[0]
                 var hasForStar = document.getElementsByName('form-' + i + '-has_for_start')[0]
+                var userIsDriver = document.getElementsByName('form-' + i + '-user_is_driver')[0]
 
-                mornDepTime.disabled = mornArrTime.disabled = eveDepTime.disabled = hasForStar.disabled =  element.checked
+                mornDepTime.disabled = mornArrTime.disabled = eveDepTime.disabled = 
+                hasForStar.disabled = userIsDriver = element.checked
 
                 divBgColor.style.backgroundColor = "#d4d8db"
             }
@@ -55,11 +57,13 @@ new Vue({
             var mornArrTime = document.getElementsByName('form-' + i + '-morning_arriving_time')[0]
             var eveDepTime = document.getElementsByName('form-' + i + '-evening_departure_time')[0]
             var hasForStar = document.getElementsByName('form-' + i + '-has_for_start')[0]
+            var userIsDriver = document.getElementsByName('form-' + i + '-user_is_driver')[0]
             
             mornDepTime.disabled = !mornDepTime.disabled
             mornArrTime.disabled = !mornArrTime.disabled
             eveDepTime.disabled = !eveDepTime.disabled
             hasForStar.disabled = !hasForStar.disabled
+            userIsDriver.disabled = !userIsDriver.disabled
             
             divBgColor.style.backgroundColor = divBgColor.style.backgroundColor === ""  ? "#d4d8db" : ""
 
@@ -77,6 +81,7 @@ new Vue({
             var mornArrTime1 = document.getElementsByName('form-' + i + '-morning_arriving_time')[0]
             var eveDepTime1 = document.getElementsByName('form-' + i + '-evening_departure_time')[0]
             var hasForStar1 = document.getElementsByName('form-' + i + '-has_for_start')[0]
+            var userIsDriver1 = document.getElementsByName('form-' + i + '-user_is_driver')[0]
             var deactivate1 = document.getElementsByName('form-' + i + '-deactivate')[0]
             
             var divBgColor2 = document.getElementById('card-content-' + (i + direction))
@@ -84,18 +89,21 @@ new Vue({
             var mornArrTime2 = document.getElementsByName('form-' + ( i + direction ) + '-morning_arriving_time')[0]
             var eveDepTime2 = document.getElementsByName('form-' + ( i + direction ) + '-evening_departure_time')[0]
             var hasForStar2 = document.getElementsByName('form-' + ( i + direction ) + '-has_for_start')[0]
+            var userIsDriver2 = document.getElementsByName('form-' + ( i + direction ) + '-user_is_driver')[0]
             var deactivate2 = document.getElementsByName('form-' +( i + direction ) + '-deactivate')[0]
             
             mornDepTime2.value = mornDepTime1.value
             mornArrTime2.value = mornArrTime1.value
             eveDepTime2.value = eveDepTime1.value
             hasForStar2.value = hasForStar1.value
+            userIsDriver2.checked = userIsDriver1.checked
             deactivate2.checked = deactivate1.checked
 
             mornDepTime2.disabled = mornDepTime1.disabled
             mornArrTime2.disabled = mornArrTime1.disabled
             eveDepTime2.disabled = eveDepTime1.disabled
             hasForStar2.disabled = hasForStar1.disabled
+            userIsDriver2.disabled = userIsDriver1.disabled
 
             divBgColor2.style.backgroundColor = divBgColor1.style.backgroundColor
         }

@@ -5,7 +5,7 @@
 
 {% block section %}
 
-<div class="container">
+<div id="map" class="container">
     <p class="mt-3">Cliquez sur la route verte et étirez jusqu'au point de rencontre choisi</p>
     <p class="mt-3">La route verte est votre trajet</p>
     <p class="mt-3">La route violette est le trajet recherché</p>
@@ -24,11 +24,18 @@
     <input id="destination_lat" type="hidden" value="{{ trip.has_for_destination.latitude }}">
     <input id="destination_lng" type="hidden" value="{{ trip.has_for_destination.longitude }}">
     {% for default_trip in user_default_trips %}
-        {% if trip.day == default_trip.day %}
-        <input id="user_start_lat" type="hidden" value="{{ default_trip.has_for_start.latitude }}">
-        <input id="user_start_lng" type="hidden" value="{{ default_trip.has_for_start.longitude }}">
-        <input id="user_destination_lat" type="hidden" value="{{ default_trip.has_for_destination.latitude }}">
-        <input id="user_destination_lng" type="hidden" value="{{ default_trip.has_for_destination.longitude }}">
+    {% if trip.day == default_trip.day %}
+    <input id="user_start_lat" type="hidden" value="{{ default_trip.has_for_start.latitude }}">
+    <input id="user_start_lng" type="hidden" value="{{ default_trip.has_for_start.longitude }}">
+    <input id="user_destination_lat" type="hidden" value="{{ default_trip.has_for_destination.latitude }}">
+    <input id="user_destination_lng" type="hidden" value="{{ default_trip.has_for_destination.longitude }}">
+    {% if default_trip.user_is_driver %}
+    eeeeeeeeeee
+    <input id="trip_user" type="hidden" value="{{ default_trip.user_is_driver }}">
+        {% else %}
+        aaaaaaaaa
+        {% endif %}
+
         {% endif %}
     {% endfor %}
 </div>
