@@ -1,175 +1,162 @@
 /* ###### MODIFICATION GENERAL POUR TOUT LE SITE ###### */
-html{
-    background-color: #eeeeee;
+html {
+	background-color: #eeeeee;
 }
 
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
-    background-color: #E3007E;
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+	background-color: #E3007E;
 }
-
 
 .custom-select {
-    background: #fff url("../img/icon-controler.svg") no-repeat right 0.75rem center;
-    background-size: 12px 12px;
+	background: #fff url("../img/icon-controler.svg") no-repeat right 0.75rem center;
+	background-size: 12px 12px;
 }
 
 .require-input {
-    padding: 0.375rem 1.75rem 0.375rem 0.75rem;
-    line-height: 1.5;
-    color: #495057;
-    vertical-align: middle;
-    background: #fff url("../img/warning-input.svg") no-repeat right 0.75rem center;
-    background-size: 12px 12px;
+	padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+	line-height: 1.5;
+	color: #495057;
+	vertical-align: middle;
+	background: #fff url("../img/warning-input.svg") no-repeat right 0.75rem center;
+	background-size: 12px 12px;
 }
 
 .require-input-legend {
-    vertical-align: middle;
-    background: #fff url("../img/warning-input.svg") no-repeat left 0.75rem ;
-    background-size: 12px 12px;
+	vertical-align: middle;
+	background: #fff url("../img/warning-input.svg") no-repeat left 0.75rem;
+	background-size: 12px 12px;
 }
 
 .custom-file {
-text-align: left;
+	text-align: left;
 }
 
 .custom-file-label::after {
-    content: "Parcourir";
+	content: "Parcourir";
 }
 
-[class*="col-"]
-{
-    /* border: 1px solid indigo; */
-    text-align: center;
+[class*="col-"] {
+	text-align: center;
 }
 
 .password_error {
-    font-size: 0.75em;
-    color : red;
+	font-size: 0.75em;
+	color: red;
 }
 
-
-#body_base
-{
-    margin-top: 30px;
-    width: calc(80%);
-    box-shadow:0 0 20px rgba(0,0,0,0.8);
+#body_base {
+	margin-top: 30px;
+	width: calc(80%);
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
 }
 
 
 /* ###### HEADER ###### */
-
-#logo_afpa
-{
-    width: 250px;
-    position: relative;
-    top: 10px;
+#logo_afpa {
+	width: 250px;
+	position: relative;
+	top: 10px;
 }
 
-#titre_base
-{
-    font-size : 30px;
-    font-weight: bold;
-    margin-top: 50px;
+#titre_base {
+	font-size: 30px;
+	font-weight: bold;
+	margin-top: 50px;
 }
+
 
 /* ###### NAVBAR ###### */
-
-#navbar
-{
-    background-color: #44A33D;
-    margin-top : 20px;
+#navbar {
+	background-color: #44A33D;
+	margin-top: 20px;
 }
 
 .site-header {
-    background-color: rgba(0, 0, 0, .85);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-  }
-  .site-header a {
-    color: lightgray;
-    transition: ease-in-out color .15s;
-  }
-  .site-header a:hover {
-    color: #fff;
-    text-decoration: none;
-  }
+	background-color: rgba(0, 0, 0, .85);
+	-webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+.site-header a {
+	color: lightgray;
+	transition: ease-in-out color .15s;
+}
+
+.site-header a:hover {
+	color: #fff;
+	text-decoration: none;
+}
 
 #logout {
-    background-color: #44A33D;
+	background-color: #44A33D;
 }
+
 
 /* ###### FOOTER ###### */
-
-footer
-{
-    margin-bottom: 50px;
-    text-align: center
+footer {
+	margin-bottom: 50px;
+	text-align: center
 }
 
-#bandeau_footer
-{
-    height: 30px;
-    background-color: #44A33D
+#bandeau_footer {
+	height: 30px;
+	background-color: #44A33D
 }
 
-#icon_footer
-{
-    color : #E3007E;
-    text-align: center;
-    margin-top: 20px;
-    font-size : 40px;
-    width: 50px;
+#icon_footer {
+	color: #E3007E;
+	text-align: center;
+	margin-top: 20px;
+	font-size: 40px;
+	width: 50px;
 }
 
 #icone_avatar {
-    border-radius: 50%;
-    width: 8%;
+	border-radius: 50%;
+	width: 8%;
 }
 
-#border_test
-{
-    border-left: solid 2px lightgray;
-    margin-right: 3px;
+#border_test {
+	border-left: solid 2px lightgray;
+	margin-right: 3px;
 
 }
 
-#liens_footer
-{
-    padding-bottom: 50px;
+#liens_footer {
+	padding-bottom: 50px;
 }
 
-.hr_up { 
-    height: 30px; 
-    border-style: solid; 
-    border-color: #8c8b8b; 
-    border-width: 1px 0 0 0; 
-    border-radius: 20px; 
-    width: 650px;
-    margin-top: 20px;
-    margin-bottom: 15px;
-  } 
+.hr_up {
+	height: 30px;
+	border-style: solid;
+	border-color: #8c8b8b;
+	border-width: 1px 0 0 0;
+	border-radius: 20px;
+	width: 650px;
+	margin-top: 20px;
+	margin-bottom: 15px;
+}
 
+.hr_down {
+	display: block;
+	content: "";
+	height: 30px;
+	border-style: solid;
+	border-color: #8c8b8b;
+	border-width: 0 0 1px 0;
+	border-radius: 20px;
+	width: 650px;
+	margin-bottom: 20px;
+}
 
-.hr_down {  
-    display: block; 
-    content: ""; 
-    height: 30px;  
-    border-style: solid; 
-    border-color: #8c8b8b; 
-    border-width: 0 0 1px 0; 
-    border-radius: 20px; 
-    width: 650px;
-    margin-bottom: 20px;
-  }
 
 /* TEAM ROCKET */
-
-
 #icone_avatar {
-    border-radius: 50%;
-    -webkit-transition: -webkit-transform .8s ease-in-out;
-            transition:         transform .8s ease-in-out;
+	border-radius: 50%;
+	-webkit-transition: -webkit-transform .8s ease-in-out;
+	transition: transform .8s ease-in-out;
 }
+
 #icone_avatar:hover {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
+	-webkit-transform: rotate(360deg);
+	transform: rotate(360deg);
 }
