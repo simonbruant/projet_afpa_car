@@ -18,9 +18,9 @@ var trip_user = $('#trip_user').val()
 // Variables pour création de la carte
 var mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoia2FrbGVtYWthayIsImEiOiJjamxjMXpiMmQxMHV3M3dwZzB0bnk1c2Q2In0.LjmVM42iRFL4tU3TIzrgHw';
 var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
-var streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets',   attribution: mbAttr}),
-    satellite  = L.tileLayer(mbUrl, {id: 'mapbox.satellite',   attribution: mbAttr}),
-    darkgrayscale   = L.tileLayer(mbUrl, {id: 'mapbox.dark', attribution: mbAttr});
+var streets = L.tileLayer(mbUrl, { id: 'mapbox.streets', attribution: mbAttr }),
+    satellite = L.tileLayer(mbUrl, { id: 'mapbox.satellite', attribution: mbAttr }),
+    darkgrayscale = L.tileLayer(mbUrl, { id: 'mapbox.dark', attribution: mbAttr });
 
 // Création de la carte
 var map = L.map('mapProp', { layers: streets })
@@ -55,23 +55,32 @@ var searched_trip = L.Routing.control({
     addWaypoints: false,
     lineOptions: {
         styles: [
-            {color: 'black', opacity: 0.5, weight: 11},
-            {color: 'indigo', opacity: 0.9, weight: 9},
-            {color: 'white', opacity: 1, weight: 3}
+            { color: 'black', opacity: 0.5, weight: 11 },
+            { color: 'indigo', opacity: 0.9, weight: 9 },
+            { color: 'white', opacity: 1, weight: 3 }
         ]
     },
     showAlternatives: false,
     fitSelectedRoutes: false,
     altLineOptions: {
         styles: [
-            {color: 'black', opacity: 0.5, weight: 11},
-            {color: 'grey', opacity: 0.9, weight: 9},
-            {color: 'white', opacity: 1, weight: 3}
+            { color: 'black', opacity: 0.5, weight: 11 },
+            { color: 'grey', opacity: 0.9, weight: 9 },
+            { color: 'white', opacity: 1, weight: 3 }
         ]
     },
 })
-.addTo(map);
+    .on('waypointschanged', function (e) {
+        for (var j = 1; j < e.waypoints.length - 1; j++) {
+            console.log("latitude : " + e.waypoints[j].latLng.lat + ", Longitude : " + e.waypoints[j].latLng.lng)
+        }
+        if (e.waypoints.length == 3) {
+            searched_trip.options.addWaypoints = false
+        }
+        console.log(e.waypoints[1])
+    }).addTo(map);
 
+var markers = []
 // Trajet de l'utilisateur
 var user_trip = L.Routing.control({
     waypoints: [
@@ -86,36 +95,43 @@ var user_trip = L.Routing.control({
     fitSelectedRoutes: 'smart',
     lineOptions: {
         styles: [
-            {color: 'black', opacity: 0.5, weight: 11},
-            {color: 'green', opacity: 0.9, weight: 9},
-            {color: 'white', opacity: 1, weight: 3}
+            { color: 'black', opacity: 0.5, weight: 11 },
+            { color: 'green', opacity: 0.9, weight: 9 },
+            { color: 'white', opacity: 1, weight: 3 }
         ]
     }
 })
-.on('waypointschanged', function(e) {
-    for (var j = 1; j < e.waypoints.length-1; j++) {
-        console.log("latitude : " + e.waypoints[j].latLng.lat + ", Longitude : " + e.waypoints[j].latLng.lng)
-    }
-    if (e.waypoints.length == 3) {
-        user_trip.options.addWaypoints = false
-    }
-}).addTo(map);
+    .on('waypointschanged', function (e) {
+        for (var j = 1; j < e.waypoints.length - 1; j++) {
+            console.log('onwaypointchanged', e.waypoints[j].latLng)
+        }
+        if (e.waypoints.length == 3) {
+            user_trip.options.addWaypoints = false
+            var waypoints = [e.waypoints[1].latLng.lat, e.waypoints[1].latLng.lng]
+            var popupContent = 
+            '<button onclick="document.clearMarker(' + e.waypoints + ')">Supprimer ce point</button>';
+            L.marker(e.waypoints[1].latLng).bindPopup(popupContent).openPopup().addTo(map)
+        }
+    }).addTo(map);
 
-searched_trip.hide();
-user_trip.hide();
+document.clearMarker = function (wp, pq,jj) {
+    console.log(wp, pq)
+    map.removeLayer(wp)
+};
 
-// new Vue ({
-//     el: '#map',
-//     created () {
-//         if (trip_user) {
-//             console.log("user", user_trip.options.addWaypoints)
-//             console.log("search", searched_trip.options.addWaypoints)
-//             // user_trip.options.addWaypoints = true
-//         } else {
-//             console.log("user", user_trip.options.addWaypoints)
-//             console.log("search", searched_trip.options.addWaypoints)
-//         // searched_trip.options.addWaypoints = true
+    searched_trip.hide();
+    user_trip.hide();
+
+
+
+// $(function() {
+//     if (trip_user) {
+//         console.log("user", user_trip.options.addWaypoints)
+//         console.log("search", searched_trip.options.addWaypoints)
+//         user_trip.options.addWaypoints = true
+//     } else {
+//         console.log("user", user_trip.options.addWaypoints)
+//         console.log("search", searched_trip.options.addWaypoints)
+//         searched_trip.options.addWaypoints = true
 //     }
-// }
-// })
-
+// });

@@ -193,6 +193,7 @@ CARPOOLING_PREFERENCES_FILE = ""
 CARPOOLING_GENERAL_INFOS_FILE = ""
 CARPOOLING_AVATAR_FILE = ""
 CARPOOLING_MAP_PROP_FILE = ""
+CARPOOLING_MAP_TRIP_FILE = ""
 app_path = os.path.join(ROOT_DIR, 'carpooling','static', 'carpooling', 'app')
 if os.path.exists(app_path):
     app_static_files = os.listdir(app_path)
@@ -203,5 +204,4 @@ if os.path.exists(app_path):
         CARPOOLING_GENERAL_INFOS_FILE = [i for i in app_static_files if i.startswith('general_infos.')][0]
         CARPOOLING_AVATAR_FILE = [i for i in app_static_files if i.startswith('avatar.')][0]
         CARPOOLING_MAP_PROP_FILE = [i for i in app_static_files if i.startswith('mapProp.')][0]
-        print(CARPOOLING_MAP_PROP_FILE)
-        
+        CARPOOLING_MAP_TRIP_FILE = [i for i in app_static_files if i.startswith('mapTrip.')][0]

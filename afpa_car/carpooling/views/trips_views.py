@@ -83,7 +83,12 @@ class TripDetailView(DetailView):
 
     def get(self, request, pk) :
         trip = get_object_or_404(DefaultTrip, pk=pk)
-        return render(request, 'carpooling/trip_detail.html', {'trip': trip})
+        context = {
+            'trip': trip,
+            'map_trip_url': '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_MAP_TRIP_FILE),
+            'user_default_trips': self.request.user.default_trips.all()
+        }
+        return render(request, 'carpooling/trip_detail.html', context)
 
 class PropositionView(DetailView):
     model = DefaultTrip
@@ -92,6 +97,5 @@ class PropositionView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user_default_trips'] = self.request.user.default_trips.all()
         context['map_prop_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_MAP_PROP_FILE)
         return context

@@ -4,41 +4,21 @@
 {% block css %} "{% static 'carpooling/css/proposition.css' %}" {% endblock css %}
 
 {% block section %}
-
-<div id="map" class="container">
-    <p class="mt-3">Cliquez sur la route verte et étirez jusqu'au point de rencontre choisi</p>
-    <p class="mt-3">La route verte est votre trajet</p>
-    <p class="mt-3">La route violette est le trajet recherché</p>
-    <div id="mapProp" class="mt-3 mb-3" style="height: 600px; width: 100%;"></div>
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-3">
-            <a class="btn btn-danger mt-3 mb-3" href="{% url 'carpooling:trip_detail' trip.id %}">Revenir aux détails du trajet</a>
-        </div>
-        <div class="col-md-3">
-            <button class="btn btn-success mt-3 mb-3">Valider la proposition</button>
-        </div>
-    </div>
-    <input id="start_lat" type="hidden" value="{{ trip.has_for_start.latitude }}">
-    <input id="start_lng" type="hidden" value="{{ trip.has_for_start.longitude }}">
-    <input id="destination_lat" type="hidden" value="{{ trip.has_for_destination.latitude }}">
-    <input id="destination_lng" type="hidden" value="{{ trip.has_for_destination.longitude }}">
-    {% for default_trip in user_default_trips %}
-    {% if trip.day == default_trip.day %}
-    <input id="user_start_lat" type="hidden" value="{{ default_trip.has_for_start.latitude }}">
-    <input id="user_start_lng" type="hidden" value="{{ default_trip.has_for_start.longitude }}">
-    <input id="user_destination_lat" type="hidden" value="{{ default_trip.has_for_destination.latitude }}">
-    <input id="user_destination_lng" type="hidden" value="{{ default_trip.has_for_destination.longitude }}">
-    {% if default_trip.user_is_driver %}
-    eeeeeeeeeee
-    <input id="trip_user" type="hidden" value="{{ default_trip.user_is_driver }}">
-        {% else %}
-        aaaaaaaaa
-        {% endif %}
-
-        {% endif %}
-    {% endfor %}
-</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 <script type="text/javascript" src="{% static map_prop_url %}"></script>
 

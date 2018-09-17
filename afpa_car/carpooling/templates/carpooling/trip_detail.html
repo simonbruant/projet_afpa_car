@@ -149,11 +149,19 @@
     </div>
 </div>
 
-<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
-<script src="{% static 'carpooling/js/Leaflet/leaflet.js' %}"></script>
-<script src="{% static 'carpooling/js/Leaflet/Plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script>
-<script src="{% static 'carpooling/js/Leaflet/Plugins/leaflet-routing-machine/leaflet-routing-machine.js' %}"></script>
-<script src="{% static 'carpooling/js/Leaflet/mapTrip.js' %}"></script>
+<input id="start_lat" type="hidden" value="{{ trip.has_for_start.latitude }}">
+<input id="start_lng" type="hidden" value="{{ trip.has_for_start.longitude }}">
+<input id="destination_lat" type="hidden" value="{{ trip.has_for_destination.latitude }}">
+<input id="destination_lng" type="hidden" value="{{ trip.has_for_destination.longitude }}">
+{% for default_trip in user_default_trips %}
+{% if trip.day == default_trip.day %}
+<input id="user_start_lat" type="hidden" value="{{ default_trip.has_for_start.latitude }}">
+    <input id="user_start_lng" type="hidden" value="{{ default_trip.has_for_start.longitude }}">
+    <input id="user_destination_lat" type="hidden" value="{{ default_trip.has_for_destination.latitude }}">
+    <input id="user_destination_lng" type="hidden" value="{{ default_trip.has_for_destination.longitude }}">
+    {% endif %}
+{% endfor %}
+
+<script type="text/javascript" src="{% static map_trip_url %}"></script>
 
 {% endblock section %}
