@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block cardTitle %} Préférences {% endblock cardTitle %} 
+{% block cardTitle %} Préférences du trajet.{% endblock cardTitle %} 
 
 {% block contenuProfil %}
 
@@ -22,9 +22,9 @@
             {% for choice in form.smoker %}
                 {{ choice.tag }}
                     {% if forloop.counter0 == 0 %}
-                    <label for="{{ choice.id_for_label }}"><div @click="selected = 1" :class="{highlight:selected == 1}" id="icon_smoker" class=" fas fa-smoking mr-5"></div></label>
+                    <label for="{{ choice.id_for_label }}"><div @click="selected = 1" :class="{highlight:selected == 1}" id="icon_smoker" title='Trajet fumeur' class=" fas fa-smoking mr-5"></div></label>
                     {% else %}
-                    <label for="{{ choice.id_for_label }}"><div @click="selected = 2" :class="{highlight:selected == 2}" id="icon_smoker" class=" fas fa-smoking-ban"></div></label>
+                    <label for="{{ choice.id_for_label }}"><div @click="selected = 2" :class="{highlight:selected == 2}" id="icon_smoker" title='Trajet non fumeur' class=" fas fa-smoking-ban"></div></label>
                     {% endif %}
             {% endfor %}
         </div>
@@ -33,9 +33,9 @@
             {% for choice in form.talker %}
                 {{ choice.tag }}
                 {% if forloop.counter0 == 0 %}
-                <label for="{{ choice.id_for_label }}"><div @click="selected = 1" :class="{highlight:selected == 1}" id="icon_talker" class=" far fa-comments mr-5"></div></label>
+                <label for="{{ choice.id_for_label }}"><div @click="selected = 1" :class="{highlight:selected == 1}" id="icon_talker" title='Je suis bavard' class=" far fa-comments mr-5"></div></label>
                 {% else %}
-                <label for="{{ choice.id_for_label }}"><div @click="selected = 2" :class="{highlight:selected == 2}" id="icon_talker" class=" far fa-comment"></div></label>
+                <label for="{{ choice.id_for_label }}"><div @click="selected = 2" :class="{highlight:selected == 2}" id="icon_talker" title='Je ne suis pas forcément bavard' class=" far fa-comment"></div></label>
                 {% endif %}
             {% endfor %}
         </div> 
@@ -44,9 +44,9 @@
             {% for choice in form.music %}
                 {{ choice.tag }}
                 {% if forloop.counter0 == 0 %}
-                <label for="{{ choice.id_for_label }}"><div @click="selected = 1" :class="{highlight:selected == 1}" id="icon_music" class=" fas fa-volume-up mr-5"></div></label>
+                <label for="{{ choice.id_for_label }}"><div @click="selected = 1" :class="{highlight:selected == 1}" id="icon_music" title="J'aime écouter de la musique" class=" fas fa-volume-up mr-5"></div></label>
                 {% else %}
-                <label for="{{ choice.id_for_label }}"><div @click="selected = 2" :class="{highlight:selected == 2}" id="icon_music" class=" fas fa-volume-off"></div></label>
+                <label for="{{ choice.id_for_label }}"><div @click="selected = 2" :class="{highlight:selected == 2}" id="icon_music" title="Je n'écoute pas de musique" class=" fas fa-volume-off"></div></label>
                 {% endif %}
             {% endfor %}
         </div> 
