@@ -53,15 +53,15 @@ html {
 
 /* ###### HEADER ###### */
 #logo_afpa {
-	width: 250px;
+	width: 400px;
 	position: relative;
-	top: 10px;
 }
 
 #titre_base {
 	font-size: 30px;
 	font-weight: bold;
-	margin-top: 50px;
+	margin-top: 70px;
+	margin-left: 11%;
 }
 
 
