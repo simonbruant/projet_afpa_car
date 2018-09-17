@@ -12,3 +12,4 @@ afpa_car/frontend/node_modules
 afpa_car/frontend/.cache
 afpa_car/frontend/dist
 afpa_car/carpooling/static/carpooling/app/*
+afpa_car/frontend/package-lock.json
