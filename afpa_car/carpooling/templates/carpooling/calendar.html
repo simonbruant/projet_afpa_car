@@ -6,21 +6,21 @@
 
 {% block section %}
 
-<div id='default_week' >
+<div id='default_week'>
 	<div class='row'>
 		<div class='col-md-12'>
-			
+
 			<div class="card mt-3 mb-3" id="carte_semaine">
 				<div class="row">
-					
+
 					<div id="titre_calendar" class="card-header bg-success col-md-12">Votre semaine type</div>
-					</div>
-					
-					<div v-if='update_default_week'>
-						<div class='row'></div>
-						<div class='row'>
-							<div class="col-md-2"></div>
-							
+				</div>
+
+				<div v-if='update_default_week'>
+					<div class='row'></div>
+					<div class='row'>
+						<div class="col-md-2"></div>
+
 						<form class='col-md-12 mt-3 mb-3' method='POST'>
 							{% csrf_token %}
 							<div class="row">
@@ -34,29 +34,35 @@
 												<div class="col-md-4">{{ day_label|index:forloop.counter0 }}</div>
 												<div id="mini_font_size" class="col-md-4 ">
 													<div class="row">
-														<div class="col-md-4"></div>
-														<div class="col-md-4">{{ form.deactivate }}</div>
-														<div class="col-md-4"></div>
-													</div>
-													<div class="row" >
-														<div class="col-md-12 mini_font_size">Désactiver</div>
+														<div class="col-md-5 form_deactivate">
+															{{ form.deactivate }}
+															<label for="id_form-{{forloop.counter0}}-deactivate" class="loadcheck" id="loadcheck">
+																<span class="entypo-check">&#10008;</span>
+																<span class="load"></span>
+																<span class="load"></span>
+																<span class="load"></span>
+																<span class="load"></span>
+																<span class="load"></span>
+																<span class="entypo-cancel">&#10004;</span>
+															</label>
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 
-										<div class="card-content"  id="card-content-{{forloop.counter0}}">
+										<div class="card-content" id="card-content-{{forloop.counter0}}">
 											<div class="row">
-												
+
 												{% if forloop.counter0 != 0 %}
 												<div class="col-md-2 align-self-center">
-													<img src="{% static 'img/icons/arrow-left.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour précédent" @click="duplicate({{forloop.counter0}}, 0)">
+													<img src="{% static 'img/icons/arrow-left.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour précédent"
+													@click="duplicate({{forloop.counter0}}, 0)">
 												</div>
-											{% else %}
+												{% else %}
 												<div class="col-md-2"></div>
-											{% endif %}
+												{% endif %}
 												<div class="col-md-8 mb-2">
-
 													{{ form.morning_departure_time.label }}
 													{{ form.morning_departure_time }}
 													{{ form.morning_arriving_time.label }}
@@ -65,20 +71,21 @@
 													{{ form.evening_departure_time }}
 													{{ form.has_for_start.label }}
 													{{ form.has_for_start }}
-													{{ form.user_is_driver.label }}
-													{{ form.user_is_driver }}
+													<div class="form_user_driver mt-2">
+														{{ form.user_is_driver }}
+														<label class='col-md-12 ml-5' for="id_form-{{forloop.counter0}}-user_is_driver"><span class="ui"></span></label>
+													</div>
 													{{ form.id }}
-													
-												
 												</div>
 												<div class="col-md-2 align-self-center">
-														<img src="{% static 'img/icons/arrow-right.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour suivant" @click="duplicate({{forloop.counter0}}, 1)">
-													</div>
+													<img src="{% static 'img/icons/arrow-right.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour suivant"
+													@click="duplicate({{forloop.counter0}}, 1)">
+												</div>
 											</div>
 										</div>
 									</div>
 							</div>
-							
+
 							{% elif forloop.counter0 == 3 %}
 							<div class="col-md-2"></div>
 							<div class="col-md-4 mb-3">
@@ -87,41 +94,48 @@
 										<div class="row text-align-center">
 											<div class="col-md-4"></div>
 											<div class="col-md-4">{{ day_label|index:forloop.counter0 }}</div>
-											<!-- Checkbox -->
-											<div id="mini_font_size" class="col-md-4">
+											<div id="mini_font_size" class="col-md-4 ">
 												<div class="row">
-													<div class="col-md-4"></div>
-													<div class="col-md-4">{{ form.deactivate }}</div>
-													<div class="col-md-4"></div>
-												</div>
-												<div class="row">
-													<div class="col-md-12 mini_font_size">Désactiver</div>
+													<div class="col-md-5 form_deactivate">
+														{{ form.deactivate }}
+														<label for="id_form-{{forloop.counter0}}-deactivate" class="loadcheck" id="loadcheck">
+																<span class="entypo-check">&#10008;</span>
+																<span class="load"></span>
+																<span class="load"></span>
+																<span class="load"></span>
+																<span class="load"></span>
+																<span class="load"></span>
+																<span class="entypo-cancel">&#10004;</span>
+															</label>
+													</div>
 												</div>
 											</div>
-											<!-- // Checkbox -->
 										</div>
 									</div>
 									<div class="card-content" id="card-content-{{forloop.counter0}}">
 										<div class="row">
 											<div class="col-md-2 align-self-center">
-												<img src="{% static 'img/icons/arrow-left.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour précédent" @click="duplicate({{forloop.counter0}}, 0)">
+												<img src="{% static 'img/icons/arrow-left.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour précédent"
+												@click="duplicate({{forloop.counter0}}, 0)">
 											</div>
 											<div class="col-md-8 mb-2">
-
-												{{ form.morning_departure_time.label }}
-												{{ form.morning_departure_time }}
-												{{ form.morning_arriving_time.label }}
-												{{ form.morning_arriving_time }}
-												{{ form.evening_departure_time.label }}
-												{{ form.evening_departure_time }}
-												{{ form.has_for_start.label }}
-												{{ form.has_for_start }}
-												{{ form.user_is_driver.label }}
-												{{ form.user_is_driver }}
-												{{ form.id }}
-											</div>
+													{{ form.morning_departure_time.label }}
+													{{ form.morning_departure_time }}
+													{{ form.morning_arriving_time.label }}
+													{{ form.morning_arriving_time }}
+													{{ form.evening_departure_time.label }}
+													{{ form.evening_departure_time }}
+													{{ form.has_for_start.label }}
+													{{ form.has_for_start }}
+													<div class="form_user_driver mt-2">
+														{{ form.user_is_driver }}
+														<label class='col-md-12 ml-5' for="id_form-{{forloop.counter0}}-user_is_driver"><span class="ui"></span></label>
+													</div>
+													{{ form.id }}
+												</div>
 											<div class="col-md-2 align-self-center">
-												<img src="{% static 'img/icons/arrow-right.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour suivant" @click="duplicate({{forloop.counter0}})">
+												<img src="{% static 'img/icons/arrow-right.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour suivant"
+												@click="duplicate({{forloop.counter0}})">
 											</div>
 										</div>
 									</div>
@@ -137,38 +151,45 @@
 											<div class="col-md-4">{{ day_label|index:forloop.counter0 }}</div>
 											<div id="mini_font_size" class="col-md-4 ">
 												<div class="row">
-													<div class="col-md-4"></div>
-													<div class="col-md-4 ">{{ form.deactivate }}</div>
-													<div class="col-md-4"></div>
-												</div>
-												<div class="row">
-													<div class="col-md-12 mini_font_size">Désactiver</div>
+													<div class="col-md-5 form_deactivate">
+														{{ form.deactivate }}
+														<label for="id_form-{{forloop.counter0}}-deactivate" class="loadcheck" id="loadcheck">
+																<span class="entypo-check">&#10008;</span>
+																<span class="load"></span>
+																<span class="load"></span>
+																<span class="load"></span>
+																<span class="load"></span>
+																<span class="load"></span>
+																<span class="entypo-cancel">&#10004;</span>
+															</label>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 
-									<div class="card-content" id="card-content-{{forloop.counter0}}" >
-										<div class="row" >
+									<div class="card-content" id="card-content-{{forloop.counter0}}">
+										<div class="row">
 											<div class="col-md-2 align-self-center">
-												<img src="{% static 'img/icons/arrow-left.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour précédent" @click="duplicate({{forloop.counter0}}, 0)">
+												<img src="{% static 'img/icons/arrow-left.svg' %}" alt="Dupliquer Journée" title="Dupliquer au jour précédent"
+												@click="duplicate({{forloop.counter0}}, 0)">
 											</div>
 											<div class="col-md-8 mb-2">
+													{{ form.morning_departure_time.label }}
+													{{ form.morning_departure_time }}
+													{{ form.morning_arriving_time.label }}
+													{{ form.morning_arriving_time }}
+													{{ form.evening_departure_time.label }}
+													{{ form.evening_departure_time }}
+													{{ form.has_for_start.label }}
+													{{ form.has_for_start }}
+													<div class="form_user_driver mt-2">
+														{{ form.user_is_driver }}
+														<label class='col-md-12 ml-5' for="id_form-{{forloop.counter0}}-user_is_driver"><span class="ui"></span></label>
+													</div>
+													{{ form.id }}
+												</div>
 
-												{{ form.morning_departure_time.label }}
-												{{ form.morning_departure_time }}
-												{{ form.morning_arriving_time.label }}
-												{{ form.morning_arriving_time }}
-												{{ form.evening_departure_time.label }}
-												{{ form.evening_departure_time }}
-												{{ form.has_for_start.label }}
-												{{ form.has_for_start }}
-												{{ form.user_is_driver.label }}
-												{{ form.user_is_driver }}
-												{{ form.id }}
-
-											</div>
-											
 										</div>
 									</div>
 								</div>
@@ -243,7 +264,7 @@
 
 
 <div id="calendar_app"></div>
-    
+
 <script src="{% static calendar_url %}"></script>
 
 
