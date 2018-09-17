@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Address, Car, AfpaCenter, DefaultTrip, Trip, Trip_Passenger, MeetingPoint, Proposal
+from .models import Address, Car, AfpaCenter, DefaultTrip, Trip
 
 class AddressAdmin(admin.ModelAdmin):
     list_display = ('city', 'zip_code', 'street_name', 'street_number' )
@@ -21,6 +21,4 @@ admin.site.register(Car, CarAdmin)
 admin.site.register(AfpaCenter, AfpaCenterAdmin)
 admin.site.register(DefaultTrip)
 admin.site.register(Trip)
-admin.site.register(MeetingPoint)
-admin.site.register(Proposal)
 
