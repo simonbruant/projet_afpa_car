@@ -4,6 +4,10 @@ import L from 'leaflet'
 import 'leaflet-routing-machine';
 import 'leaflet-control-geocoder';
 
+$( document ).ready(function() {
+    console.log( "ready!" );
+});
+
 var startLat = _.replace($('#start_lat').val(), ',', '.')
 var startLng = _.replace($('#start_lng').val(), ',', '.')
 var destinationLat = _.replace($('#destination_lat').val(), ',', '.')

@@ -1,18 +1,9 @@
-/* Personnalisation des popup */
-.leaflet-popup-tip,
-.leaflet-popup-content-wrapper {
-    background: white;
-    color: #e3007e;
-}
-
-.leaflet-control-geocoder-icon{
-    background-image: url(Leaflet/Plugins/leaflet-control-geocoder/images/geocoder.png);
-}
-
-.leaflet-routing-geocoders{
-    display: none;
-}
-
-.leaflet-control-container .leaflet-routing-container-hide {
-    display: none;
-}
+.shadow-focus {
+    box-shadow: 0 0 0 4px rgba(52, 144, 220, 0.5);
+  }
+  .focus\:shadow-focus:focus {
+    box-shadow: 0 0 0 4px rgba(52, 144, 220, 0.5);
+  }
+  .focus\:outline-0:focus {
+    outline: 0;
+  }

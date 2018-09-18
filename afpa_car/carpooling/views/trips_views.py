@@ -90,12 +90,11 @@ class TripDetailView(DetailView):
         }
         return render(request, 'carpooling/trip_detail.html', context)
 
-class PropositionView(DetailView):
-    model = DefaultTrip
+class PropositionView(View):
     template_name = 'carpooling/proposition.html'
-    context_object_name = 'trip'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['map_prop_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_MAP_PROP_FILE)
-        return context
+    def get(self, request, pk):
+        context = {'map_prop_url': '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_MAP_PROP_FILE)}
+        return render(request, self.template_name, context)
+
+

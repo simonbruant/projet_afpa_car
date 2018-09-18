@@ -5,7 +5,7 @@ import $ from 'jquery';
 
 // ~~~~~~~~ DATEPICKER ~~~~~~~~~~ //
 
-import Calendar from './calendar/Calendar.vue';
+import Calendar from './components/Calendar.vue';
 
 new Vue({
     el: '#calendar_app',
