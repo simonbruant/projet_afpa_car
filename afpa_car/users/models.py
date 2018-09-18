@@ -16,6 +16,7 @@ class User(AbstractBaseUser):
     is_staff          = models.BooleanField(default=False, verbose_name="Staff")
     is_admin          = models.BooleanField(default=False, verbose_name='Admin')
     date_joined       = models.DateTimeField(editable=False, default=timezone.now)
+    first_connection  = models.BooleanField(default=True, verbose_name='Premiere connection')
 
     confirm           = models.BooleanField(default=False)
     confirmation_date = models.DateTimeField(null=True)

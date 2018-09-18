@@ -24,3 +24,4 @@ admin.site.register(Trip)
 admin.site.register(MeetingPoint)
 admin.site.register(Proposal)
 
+
