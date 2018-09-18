@@ -31,21 +31,11 @@
 										<div id="titre_calendar" class="card-header bg-success">
 											<div class="row text-align-center">
 												<div class="col-md-4"></div>
-												<div class="col-md-4">{{ day_label|index:forloop.counter0 }}</div>
-												<div id="mini_font_size" class="col-md-4 ">
-													<div class="row">
-														<div class="col-md-5 form_deactivate">
-															{{ form.deactivate }}
-															<label for="id_form-{{forloop.counter0}}-deactivate" class="loadcheck" id="loadcheck">
-																<span class="entypo-check">&#10008;</span>
-																<span class="load"></span>
-																<span class="load"></span>
-																<span class="load"></span>
-																<span class="load"></span>
-																<span class="load"></span>
-																<span class="entypo-cancel">&#10004;</span>
-															</label>
-														</div>
+												<div class="col-md-4">
+													{{ day_label|index:forloop.counter0 }}
+													<div class="form_deactivate_day mb-2">
+														{{ form.deactivate }}
+														<label class='col-md-12' for="id_form-{{forloop.counter0}}-deactivate"><span class="ui2"></span></label>
 													</div>
 												</div>
 											</div>
@@ -93,23 +83,13 @@
 									<div id="titre_calendar" class="card-header bg-success">
 										<div class="row text-align-center">
 											<div class="col-md-4"></div>
-											<div class="col-md-4">{{ day_label|index:forloop.counter0 }}</div>
-											<div id="mini_font_size" class="col-md-4 ">
-												<div class="row">
-													<div class="col-md-5 form_deactivate">
+											<div class="col-md-4">
+													{{ day_label|index:forloop.counter0 }}
+													<div class="form_deactivate_day mb-2">
 														{{ form.deactivate }}
-														<label for="id_form-{{forloop.counter0}}-deactivate" class="loadcheck" id="loadcheck">
-																<span class="entypo-check">&#10008;</span>
-																<span class="load"></span>
-																<span class="load"></span>
-																<span class="load"></span>
-																<span class="load"></span>
-																<span class="load"></span>
-																<span class="entypo-cancel">&#10004;</span>
-															</label>
+														<label class='col-md-12' for="id_form-{{forloop.counter0}}-deactivate"><span class="ui2"></span></label>
 													</div>
 												</div>
-											</div>
 										</div>
 									</div>
 									<div class="card-content" id="card-content-{{forloop.counter0}}">
@@ -148,21 +128,11 @@
 									<div id="titre_calendar" class="card-header bg-success">
 										<div class="row text-align-center">
 											<div class="col-md-4"></div>
-											<div class="col-md-4">{{ day_label|index:forloop.counter0 }}</div>
-											<div id="mini_font_size" class="col-md-4 ">
-												<div class="row">
-													<div class="col-md-5 form_deactivate">
-														{{ form.deactivate }}
-														<label for="id_form-{{forloop.counter0}}-deactivate" class="loadcheck" id="loadcheck">
-																<span class="entypo-check">&#10008;</span>
-																<span class="load"></span>
-																<span class="load"></span>
-																<span class="load"></span>
-																<span class="load"></span>
-																<span class="load"></span>
-																<span class="entypo-cancel">&#10004;</span>
-															</label>
-													</div>
+											<div class="col-md-4">
+												{{ day_label|index:forloop.counter0 }}
+												<div class="form_deactivate_day mb-2">
+													{{ form.deactivate }}
+													<label class='col-md-12' for="id_form-{{forloop.counter0}}-deactivate"><span class="ui2"></span></label>
 												</div>
 											</div>
 										</div>

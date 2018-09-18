@@ -164,7 +164,7 @@ class DefaultTripForm(forms.ModelForm):
             'morning_departure_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
             'morning_arriving_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
             'evening_departure_time': TimeInput(attrs={'type': 'time', 'class': 'form-control require-input'}),
-            'deactivate': CheckboxInput(attrs={'class': 'form-control checkbox_size displayNone', 
+            'deactivate': CheckboxInput(attrs={'class': 'toggle_button_deactivate_day', 
                                                 '@click' : 'deactivate_fields($event.target)' }),
             'user_is_driver': CheckboxInput(attrs={'class': 'toggle_button_driver'}),
         }
