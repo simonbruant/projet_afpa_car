@@ -91,8 +91,7 @@ a {
 }
 
 .custom-radio .custom-control-input:checked ~ .custom-control-label::before {
-    background-color: #E3007E;
-    
+    background-color: #E3007E;   
 }
 
 #checkbox_profil {

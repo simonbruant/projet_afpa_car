@@ -180,3 +180,17 @@ class ContactForm(forms.Form):
     name = forms.CharField(widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Votre nom'}))
     subject = forms.CharField(widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Sujet du Message'}))
     message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Votre Message'}))
+
+class FirstConnectionForm(forms.ModelForm):
+    class Meta: 
+        model = UserProfile
+        fields = ('trainee', 'driver_license', 'car_owner', 'gender',)
+        widgets = {
+                'trainee': RadioSelect(attrs={'class': 'custom-control-input'}),
+                'driver_license': RadioSelect(attrs={'class': 'custom-control-input'}),
+                'car_owner': RadioSelect(attrs={'class': 'custom-control-input'}),
+                'gender': Select(attrs={'class': 'custom-select'})
+        }
+        labels = { 
+            'gender': 'Genre',
+        }

@@ -1,10 +1,148 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% load calendar_tags %}
 
 {% block css %} "{% static 'carpooling/css/dashboard.css' %}" {% endblock css %}
 
 {% block section %}
+
+{% if user_first_connection %}
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content row">
+
+            <!-- Modal Header -->
+            <div class="modal-header col-md-12">
+                <h5 class="modal-title">C'est votre première connexion, nous avons besoin d'en connaitre un peu plus sur vous...</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body row">
+                <div class="col-md-2"></div>
+                <form class='col-md-8' method='POST'>
+                    {% csrf_token %}
+                    
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div id="header_input_profil_general_infos" class="input-group-text">{{ form.gender.label }}</div>
+                        </div>
+                        {{ form.gender }}
+                    </div>
+                    <div class="row">
+                        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+                    </div>
+
+                    <div id="view_car_owner">
+
+                            <label>Avez vous le permis de conduire ?</label>
+            
+                            {% if not cars %} {% for choice in form.driver_license %}
+                            <div class="custom-control custom-radio">
+                                {{ choice.tag }} {% if forloop.counter0 == 0 %}
+                                <label @click="show" class="custom-control-label" for="{{ choice.id_for_label }}">Oui</label>
+                                {% else %}
+                                <label @click="hide" class="custom-control-label" for="{{ choice.id_for_label }}">Non</label>
+                                {% endif %}
+                            </div>
+                            {% endfor %} {% else %}
+            
+                            <div class="custom-control custom-radio">
+                                <input type="radio" name="driver_license" value="True" class="custom-control-input" id="id_driver_license_0" checked />
+                                <label @click='show_error_message_license' class="custom-control-label" for="id_driver_license_0">Oui</label>
+                            </div>
+            
+                            <div class="custom-control custom-radio">
+                                <input type="radio" name="driver_license" value="False" class="custom-control-input" id="id_driver_license_1" disabled/>
+                                <label @click='show_error_message_license' class="custom-control-label" for="id_driver_license_1">Non</label>
+                            </div>
+            
+                            <div v-if="isVisibleLicense">
+                                <a href="{% url 'carpooling:car' %}" id='message_errors' class='mb-1'> Vous ne pouvez pas modifier votre choix si vous possédez déjà des véhicules. </a>
+                            </div>
+            
+                            {% endif %}
+            
+                            <div class="row">
+                                <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+                            </div>
+            
+                            <div v-if="isVisible">
+            
+                                <label>Possedez-vous une voiture ?</label>
+            
+                                {% if not cars %} {% for choice in form.car_owner %}
+                                <div class="custom-control custom-radio">
+                                    {{ choice.tag }}
+                                    <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>
+                                </div>
+                                {% endfor %}
+            
+                                <div class="row">
+                                    <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+                                </div>
+            
+                                {% else %}
+            
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" name="car_owner1" value="True" class="custom-control-input" id="id_car_owner_0" checked />
+                                    <label @click='show_error_message_car' for="id_car_owner_0" class="custom-control-label"> Oui </label>
+                                </div>
+            
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" name="car_owner1" value="False" class="custom-control-input" id="id_car_owner_1" disabled />
+                                    <label @click='show_error_message_car' for="id_car_owner_1" class="custom-control-label"> Non </label>
+                                </div>
+            
+                                <div v-if="isVisibleCar">
+                                    <a href="{% url 'carpooling:car' %}" id='message_errors' class='mb-1'> Vous ne pouvez pas modifier votre choix si vous possédez déjà des véhicules. </a>
+                                </div>
+            
+                                <div class="row">
+                                    <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 400px; border: none;">
+                                </div>                    
+                                {% endif %}
+            
+                            </div>
+            
+                        </div>
+
+                        <label>Quel est votre status ?</label>
+
+                        {% for choice in form.trainee %}
+                        <div class="custom-control custom-radio">
+                            {{ choice.tag }}
+                            <label for="{{ choice.id_for_label }}" class="custom-control-label"> {{ choice.choice_label }} </label>
+                        </div>
+                        {% endfor %}
+
+                        <div class='mt-3' id="submit_profil1">
+                            <button type="submit" class="btn btn-success">Envoyer</button>
+                        </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+
+<script>
+    
+    $(document).ready(function () {
+        $('#myModal').modal('show')
+    })
+    
+</script>
+
+<script type="text/javascript" src="{% static first_connection_url %}"></script>
+
+
+{% else %}
 
 <div class="row">
 
@@ -18,15 +156,17 @@
             <div class="card-content" id="alertes_profil">
 
                 {% if not addresses %}
-                    <p class="mt-2"><span class="fas fa-exclamation"><a id="alert_dashboard" href="{% url 'carpooling:address' %}"> Vous n'avez aucune adresse enregistrée.</span></a></p>
+                <p class="mt-2"><span class="fas fa-exclamation"><a id="alert_dashboard" href="{% url 'carpooling:address' %}">
+                            Vous n'avez aucune adresse enregistrée.</span></a></p>
                 {% endif %}
 
                 {% if not addresses and not cars and user.user_profile.car_owner %}
-                    <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 250px; border: none;">
+                <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 250px; border: none;">
                 {% endif %}
 
                 {% if not cars and user.user_profile.car_owner %}
-                    <p class="mt-2"><span class="fas fa-exclamation"><a id="alert_dashboard" href="{% url 'carpooling:car' %}"> Vous avez indiqué avoir un véhicule mais ne l'avez pas renseigné.</span></a></p>
+                <p class="mt-2"><span class="fas fa-exclamation"><a id="alert_dashboard" href="{% url 'carpooling:car' %}">
+                            Vous avez indiqué avoir un véhicule mais ne l'avez pas renseigné.</span></a></p>
                 {% endif %}
 
             </div>
@@ -45,28 +185,29 @@
                         <td class="p-1"><b>Horaire de retour</b></td>
                     </tr>
                     {% for trip in trips %}
-                        {% if not trip.deactivate %}
-                            <tr>
-                                <td>{{ trip.day }}</td>
-                                <td>{{ trip.morning_departure_time }}</td>
-                                <td>{{ trip.evening_departure_time }}</td>
-                            </tr>
-                        {% endif %}
+                    {% if not trip.deactivate %}
+                    <tr>
+                        <td>{{ trip.day }}</td>
+                        <td>{{ trip.morning_departure_time }}</td>
+                        <td>{{ trip.evening_departure_time }}</td>
+                    </tr>
+                    {% endif %}
                     {% endfor %}
                 </table>
                 {% else %}
-                    <div id="alertes_profil">
-                        <p class="mt-2"><span class="fas fa-exclamation"><a id="alert_dashboard" href="{% url 'carpooling:calendar' %}"> Vous n'avez pas renseigné de semaine type.</span></a></p>
-                    </div>
+                <div id="alertes_profil">
+                    <p class="mt-2"><span class="fas fa-exclamation"><a id="alert_dashboard" href="{% url 'carpooling:calendar' %}">
+                                Vous n'avez pas renseigné de semaine type.</span></a></p>
+                </div>
                 {% endif %}
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-8">
 
         <h3 class="mt-3">
-                <img class="col-md-4" id="rond_dashboard" src="{{ user.user_profile.profile_image.url }}">
+            <img class="col-md-4" id="rond_dashboard" src="{{ user.user_profile.profile_image.url }}">
             Bonjour {{ user.username }}
         </h3>
 
@@ -90,8 +231,8 @@
     </div>
 </div>
 
+<script type="text/javascript" src="{% static general_infos_url %}"></script>
 
-
-
+{% endif %}
 
 {% endblock section %}

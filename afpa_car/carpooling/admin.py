@@ -22,3 +22,4 @@ admin.site.register(AfpaCenter, AfpaCenterAdmin)
 admin.site.register(DefaultTrip)
 admin.site.register(Trip)
 
+
