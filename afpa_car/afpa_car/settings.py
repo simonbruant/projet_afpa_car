@@ -203,6 +203,6 @@ if os.path.exists(app_path):
         CARPOOLING_PREFERENCES_FILE = [i for i in app_static_files if i.startswith('preferences.')][0]
         CARPOOLING_GENERAL_INFOS_FILE = [i for i in app_static_files if i.startswith('general_infos.')][0]
         CARPOOLING_AVATAR_FILE = [i for i in app_static_files if i.startswith('avatar.')][0]
-        CARPOOLING_MAP_PROP_FILE = [i for i in app_static_files if i.startswith('mapProp.')][0]
+        # CARPOOLING_MAP_PROP_FILE = [i for i in app_static_files if i.startswith('mapProp.')][0]
         CARPOOLING_MAP_TRIP_FILE = [i for i in app_static_files if i.startswith('mapTrip.')][0]
         CARPOOLING_ADDR_POC_FILE = [i for i in app_static_files if i.startswith('addrPoc.')][0]

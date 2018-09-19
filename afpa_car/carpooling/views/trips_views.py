@@ -94,7 +94,7 @@ class PropositionView(View):
     template_name = 'carpooling/proposition.html'
 
     def get(self, request, pk):
-        context = {'map_prop_url': '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_MAP_PROP_FILE)}
+        # context = {'map_prop_url': '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_MAP_PROP_FILE)}
         return render(request, self.template_name, context)
 
 
