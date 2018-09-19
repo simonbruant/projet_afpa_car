@@ -7,7 +7,7 @@ from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, Defau
                     CarCreateView, CarUpdateView, CarDeleteView,
                     ProfilImageUpdateView, PreferencesUpdateView,
                     AddressCreateView, AddressUpdateView, AddressDeleteView, 
-                    TripView, TripDetailView, PropositionView, ContactView )
+                    TripView, TripDetailView, PropositionView, ContactView, AddressPOC)
 from users.views import LoginView, ChangePassword
 app_name = 'carpooling'
 
@@ -36,6 +36,8 @@ urlpatterns = [
     path('trip/', TripView.as_view(), name="trip"),
     path('trip/<int:pk>/', TripDetailView.as_view(), name='trip_detail'),
     path('proposition/<int:pk>/', PropositionView.as_view(), name="proposition"),
+
+    path('addr_poc/', AddressPOC.as_view(), name="addr_poc"),
 
 
     path('cgu/', TemplateView.as_view(template_name='carpooling/cgu.html'), name='cgu'),

@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
+from django.views import View
 from django.views.generic import CreateView, DeleteView, FormView, UpdateView
 
 from carpooling.forms import AddressForm, CarForm
@@ -116,3 +118,9 @@ class AddressDeleteView(SuccessMessageMixin, DeleteView):
         context['address'] = Address.objects.get(pk=self.kwargs['pk'])
         context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
         return context
+
+class AddressPOC(View):
+    template_name = "carpooling/addr_poc.html"
+    def get(self, request):
+        context = {'address_poc_url': '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_ADDR_POC_FILE)}
+        return render(request, self.template_name, context)
