@@ -1,12 +1,5 @@
+import $ from 'jquery';
 import Vue from 'vue/dist/vue.js'
-import $ from 'jquery'
-
-$(document).ready(function () {
-
-    $('#myModal').modal('show');
-    console.log("coucou")
-
-});
 
 /* ###### Vue.Js pour l'affichage du radio "Posedez-vous une voiture" dans infos generales ###### */
 
@@ -20,7 +13,7 @@ new Vue({
     mounted: function() { 
         if ( id_driver_license_0.checked ){
             this.isVisible = true
-        }  
+        } 
         },
     methods: {
         show: function () {

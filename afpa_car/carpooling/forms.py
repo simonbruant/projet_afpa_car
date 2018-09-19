@@ -185,16 +185,12 @@ class FirstConnectionForm(forms.ModelForm):
     class Meta: 
         model = UserProfile
         fields = ('trainee', 'driver_license', 'car_owner', 'gender',)
-        # widgets = {
-        #         'trainee': RadioSelect(),
-        #         'driver_license': RadioSelect(),
-        #         'car_owner': RadioSelect(),
-        #         'gender': Select()
-        # }
-
         widgets = {
                 'trainee': RadioSelect(attrs={'class': 'custom-control-input'}),
                 'driver_license': RadioSelect(attrs={'class': 'custom-control-input'}),
                 'car_owner': RadioSelect(attrs={'class': 'custom-control-input'}),
                 'gender': Select(attrs={'class': 'custom-select'})
+        }
+        labels = { 
+            'gender': 'Genre',
         }

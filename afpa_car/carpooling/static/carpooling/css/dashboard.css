@@ -25,3 +25,11 @@
 .min_width {
     min-width: 100px; 
 }
+
+.custom-radio .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #E3007E;   
+}
+
+#myModal {
+    margin-top: 100px;
+}

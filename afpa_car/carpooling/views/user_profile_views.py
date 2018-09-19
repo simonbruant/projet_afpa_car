@@ -73,6 +73,9 @@ class ProfilImageUpdateView(UpdateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        temp = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
+        print( temp, "/////////////////////" )
+        context['first_connection_url'] = temp
         context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
         context['avatar_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_AVATAR_FILE)
         return context

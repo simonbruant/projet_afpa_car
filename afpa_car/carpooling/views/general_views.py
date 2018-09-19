@@ -24,7 +24,9 @@ class DashboardView(UpdateView):
         context['addresses'] = user.addresses.all()
         context['trips'] = user.default_trips.all()
         context['user_first_connection'] = user.first_connection
-        context['first_connection_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_FIRST_CONNECTION_FILE),
+        temp = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_FIRST_CONNECTION_FILE)
+        print( temp, "/////////////////////" )
+        context['first_connection_url'] = temp
         return context
 
     def get_object(self, queryset=None):
