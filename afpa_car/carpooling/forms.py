@@ -1,7 +1,7 @@
 from django import forms
-from django.forms import TextInput, RadioSelect, Select, DateInput, FileInput, CheckboxInput, TimeInput, CheckboxSelectMultiple, modelformset_factory
+from django.forms import TextInput, RadioSelect, Select, DateInput, FileInput, CheckboxInput, TimeInput, CheckboxSelectMultiple, modelformset_factory, Textarea
 
-from .models import Car, AfpaCenter, Address, DefaultTrip
+from .models import Car, AfpaCenter, Address, DefaultTrip, Proposition
 from users.models import PrivateData, User, UserProfile
 
 
@@ -180,3 +180,13 @@ class ContactForm(forms.Form):
     name = forms.CharField(widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Votre nom'}))
     subject = forms.CharField(widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Sujet du Message'}))
     message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Votre Message'}))
+
+class PropositionForm(forms.ModelForm):
+
+    class Meta:
+        model = Proposition
+        fields =  ('message',)
+
+        widgets = {
+            'message': Textarea(attrs={'class': 'form-control', 'placeholder': 'Par exemple : Je vous propose de nous retrouver à ...'}),
+        }
