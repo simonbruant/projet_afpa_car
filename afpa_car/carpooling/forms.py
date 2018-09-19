@@ -1,7 +1,7 @@
 from django import forms
-from django.forms import TextInput, RadioSelect, Select, DateInput, FileInput, CheckboxInput, TimeInput, CheckboxSelectMultiple, modelformset_factory
+from django.forms import TextInput, RadioSelect, Select, DateInput, FileInput, CheckboxInput, TimeInput, CheckboxSelectMultiple, modelformset_factory, Textarea
 
-from .models import Car, AfpaCenter, Address, DefaultTrip
+from .models import Car, AfpaCenter, Address, DefaultTrip, Proposition
 from users.models import PrivateData, User, UserProfile
 
 
@@ -193,4 +193,14 @@ class FirstConnectionForm(forms.ModelForm):
         }
         labels = { 
             'gender': 'Genre',
+        }
+        
+class PropositionForm(forms.ModelForm):
+
+    class Meta:
+        model = Proposition
+        fields =  ('message',)
+
+        widgets = {
+            'message': Textarea(attrs={'class': 'form-control', 'placeholder': 'Par exemple : Je vous propose de nous retrouver à ...'}),
         }

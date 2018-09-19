@@ -1,9 +1,10 @@
 from django.conf import settings
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import DetailView
+from django.views.generic import DetailView, FormView, TemplateView
 
-from carpooling.forms import DefaultTripFormSet
+from carpooling.forms import DefaultTripFormSet, PropositionForm
 from carpooling.models import DefaultTrip, Trip
 
 settings.app_static_url = 'carpooling/app'
@@ -90,11 +91,29 @@ class TripDetailView(DetailView):
         }
         return render(request, 'carpooling/trip_detail.html', context)
 
-class PropositionView(View):
+class PropositionView(FormView):
     template_name = 'carpooling/proposition.html'
+    form_class = PropositionForm
+    success_url = reverse_lazy('carpooling:proposition_send')
 
-    def get(self, request, pk):
-        # context = {'map_prop_url': '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_MAP_PROP_FILE)}
-        return render(request, self.template_name, context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        trip = get_object_or_404(DefaultTrip, pk=self.kwargs['pk'])
+        context ['trip'] = trip
+        return context
 
+    def form_valid(self, form, **kwargs):
+        passenger = self.request.user
+        proposition = form.save(commit=False)
+        proposition.passenger = passenger
+        trip = get_object_or_404(DefaultTrip, pk=self.kwargs['pk'])
 
+        driver = trip.user
+        proposition.default_trip = trip
+        proposition.driver = driver
+        proposition.save()
+        return super().form_valid(form)
+
+class PropositionSendView(TemplateView):
+    template_name = 'carpooling/proposition_send.html'
+ 

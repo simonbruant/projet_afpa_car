@@ -99,7 +99,9 @@ class Proposition(models.Model):
                                 null=True, blank=True,verbose_name="Trajet", related_name='trip')
     default_trip    = models.ForeignKey(DefaultTrip, on_delete=models.CASCADE,
                                         null=True, blank=True, verbose_name="Trajet", related_name='default_trip')
-    passenger       = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Passager")
+    passenger       = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Passager", related_name='passenger')
+    driver          = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, verbose_name="Conducteur", related_name='driver')
+    message         = models.CharField(max_length=400)
 
     def __str__(self): 
-        return "Proposition de " + self.passenger
+        return "Proposition de " #+ self.passenger

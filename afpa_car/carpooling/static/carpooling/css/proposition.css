@@ -1,9 +1,4 @@
-.shadow-focus {
-    box-shadow: 0 0 0 4px rgba(52, 144, 220, 0.5);
-  }
-  .focus\:shadow-focus:focus {
-    box-shadow: 0 0 0 4px rgba(52, 144, 220, 0.5);
-  }
-  .focus\:outline-0:focus {
-    outline: 0;
-  }
+/* #id_message{
+    width: 250px;
+    height: 200px;
+} */
