@@ -47,3 +47,182 @@
 .mini_font_size{
     font-size: 10px;
 }
+
+/*  STYLE CHECKBOX DEACTIVATE  */
+
+.form_deactivate_day{
+    margin-left: -10px;
+}
+
+.toggle_button_deactivate_day:not(:checked),
+.toggle_button_deactivate_day:checked {
+    position: absolute;
+    left: -9999px;
+}
+.toggle_button_deactivate_day:not(:checked) + label,
+.toggle_button_deactivate_day:checked + label {
+    position: relative;
+    padding-left: 75px;
+    cursor: pointer;
+}
+.toggle_button_deactivate_day:not(:checked) + label:before,
+.toggle_button_deactivate_day:checked + label:before,
+.toggle_button_deactivate_day:not(:checked) + label:after,
+.toggle_button_deactivate_day:checked + label:after {
+    content: '';
+    position: absolute;
+}
+.toggle_button_deactivate_day:not(:checked) + label:before,
+.toggle_button_deactivate_day:checked + label:before {
+    left:0; top: -3px;
+    width: 120px; height: 30px;
+    background: lightgray;
+    border-radius: 15px;
+    -webkit-transition: background-color .2s;
+    -moz-transition: background-color .2s;
+    -ms-transition: background-color .2s;
+    transition: background-color .2s;
+}
+.toggle_button_deactivate_day:not(:checked) + label:after,
+.toggle_button_deactivate_day:checked + label:after {
+    width: 20px; height: 20px;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -ms-transition: all .2s;
+    transition: all .2s;
+    border-radius: 50%;
+    background: #7F8C9A;
+    top: 2px; left: 5px;
+}
+
+/* on checked */
+
+.toggle_button_deactivate_day:checked + label:before {
+    background: #7F8C9A; 
+}
+.toggle_button_deactivate_day:checked + label:after {
+    background: white;
+    top: 2px; left: 90px;
+}
+
+.toggle_button_deactivate_day:checked + label .ui2,
+.toggle_button_deactivate_day:not(:checked) + label .ui2:before,
+.toggle_button_deactivate_day:checked + label .ui2:after {
+    position: absolute;
+    left: 6px;
+    width: 77px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 22px;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -ms-transition: all .2s;
+    transition: all .2s;
+}
+.toggle_button_deactivate_day:not(:checked) + label .ui2:before {
+    content: "Activé";
+    color: #7F8C9A; 
+    left: 15px
+}
+.toggle_button_deactivate_day:checked + label .ui2:after {
+    content: "Desactivé";
+    color: #eeeeee;
+}
+.toggle_button_deactivate_day:focus + label:before {
+    border: 1px dashed #777;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-top: -1px;
+}
+
+/*  STYLE TOGGLE BUTTON DIVER  */
+
+.form_user_driver{
+    height: 50px;
+}
+
+.toggle_button_driver:not(:checked),
+.toggle_button_driver:checked {
+    position: absolute;
+    left: -9999px;
+}
+.toggle_button_driver:not(:checked) + label,
+.toggle_button_driver:checked + label {
+    position: relative;
+    padding-left: 75px;
+    cursor: pointer;
+}
+.toggle_button_driver:not(:checked) + label:before,
+.toggle_button_driver:checked + label:before,
+.toggle_button_driver:not(:checked) + label:after,
+.toggle_button_driver:checked + label:after {
+    content: '';
+    position: absolute;
+}
+.toggle_button_driver:not(:checked) + label:before,
+.toggle_button_driver:checked + label:before {
+    left:0; top: -3px;
+    width: 150px; height: 30px;
+    background: #DDDDDD;
+    border-radius: 15px;
+    -webkit-transition: background-color .2s;
+    -moz-transition: background-color .2s;
+    -ms-transition: background-color .2s;
+    transition: background-color .2s;
+}
+.toggle_button_driver:not(:checked) + label:after,
+.toggle_button_driver:checked + label:after {
+    width: 20px; height: 20px;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -ms-transition: all .2s;
+    transition: all .2s;
+    border-radius: 50%;
+    background: #7F8C9A;
+    top: 2px; left: 5px;
+}
+
+/* on checked */
+.toggle_button_driver:checked + label:before {
+    background:#34495E; 
+}
+.toggle_button_driver:checked + label:after {
+    background: #ccc;
+    top: 2px; left: 120px;
+}
+
+.toggle_button_driver:checked + label .ui,
+.toggle_button_driver:not(:checked) + label .ui:before,
+.toggle_button_driver:checked + label .ui:after {
+    position: absolute;
+    left: 6px;
+    width: 77px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 22px;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -ms-transition: all .2s;
+    transition: all .2s;
+}
+.toggle_button_driver:not(:checked) + label .ui:before {
+    content: "Passager";
+    left: 32px
+}
+.toggle_button_driver:checked + label .ui:after {
+    content: "Conducteur";
+    color: #ccc;
+}
+.toggle_button_driver:focus + label:before {
+    border: 1px dashed #777;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-top: -1px;
+}
+

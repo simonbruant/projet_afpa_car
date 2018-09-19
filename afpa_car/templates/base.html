@@ -7,6 +7,10 @@
     <meta charset="utf-8">
     <title>{% block title %}AFPA-CAR{% endblock title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+    <!-- FavIcon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
+    
     
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
@@ -33,12 +37,8 @@
 <body id="body_base" class="container">
     
     <header class="row">
-        <div class="col-md-4">
             <a href="{% url 'carpooling:index' %}"><img id="logo_afpa" src="{% static 'img/logo_afpa.jpg' %}" alt="AFPA"></a>
-        </div>
-        <div class="col-md-6">
             <div id="titre_base">Le Covoiturage de l'AFPA</div>
-        </div>
     </header>
 
     <div>

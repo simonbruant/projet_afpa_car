@@ -1,8 +1,6 @@
 import Vue from 'vue/dist/vue.js';
 import $ from 'jquery';
 
-
-
 // ~~~~~~~~ DATEPICKER ~~~~~~~~~~ //
 
 import Calendar from './components/Calendar.vue';
@@ -11,7 +9,6 @@ new Vue({
     el: '#calendar_app',
     render: h => h(Calendar),
 })
-
 
 // ~~~~~~~~ DEFAULT-TRIP ~~~~~~~~~~ //
 new Vue({
