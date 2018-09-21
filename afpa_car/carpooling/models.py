@@ -77,6 +77,7 @@ class DefaultTrip(models.Model):
     user                = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="default_trips" ,verbose_name="Utilisateur")
     has_for_start       = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True, related_name="start", verbose_name="Départ")
     has_for_destination = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="destination", verbose_name="Destination")
+    passengers          = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Register' ,related_name='passenger')
 
     class Meta:
         verbose_name = "Trajet Type"
@@ -93,15 +94,24 @@ class Trip(DefaultTrip):
         verbose_name_plural = "Trajets Particuliers"
 
 class Proposition(models.Model):
+    # first_user = createur de la proposition
+    # second_user = celui qui reçoit la proposition
     validated_proposal = models.BooleanField(default=False, verbose_name='Proposition validée')
 
     trip            = models.ForeignKey(Trip, on_delete=models.CASCADE, 
                                 null=True, blank=True,verbose_name="Trajet", related_name='trip')
     default_trip    = models.ForeignKey(DefaultTrip, on_delete=models.CASCADE,
                                         null=True, blank=True, verbose_name="Trajet", related_name='default_trip')
-    passenger       = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Passager", related_name='passenger')
-    driver          = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, verbose_name="Conducteur", related_name='driver')
-    message         = models.CharField(max_length=400)
+    first_user       = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, verbose_name="First User", related_name='first_user')
+    second_user      = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, verbose_name="Second User", related_name='second_user')
+    message          = models.CharField(max_length=400)
+
+    
 
     def __str__(self): 
         return "Proposition de " #+ self.passenger
+
+class Register(models.Model):
+    #ici ce trouve les passagers
+    trip = models.ForeignKey(DefaultTrip, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)

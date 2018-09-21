@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %} "{% static 'carpooling/css/proposition.css' %}" {% endblock css %}
+
+{% block section %}
+<div class="container">
+    <div class="row">
+        <p class='col-md-12 mt-3' > Etes vous sur de vouloir supprimer la proposition de "machin" pour le "jour"</p>
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <form method="post" class="mb-3">
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-danger mt-3">Refuser la proposition</button>
+                </form>
+            <a class='btn btn-info mb-3' href="{% url 'carpooling:proposition_refused'  proposition.id %}" > Faire une contre proposition</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

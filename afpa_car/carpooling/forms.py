@@ -199,8 +199,19 @@ class PropositionForm(forms.ModelForm):
 
     class Meta:
         model = Proposition
-        fields =  ('message',)
+        fields = ('message',)
 
         widgets = {
             'message': Textarea(attrs={'class': 'form-control', 'placeholder': 'Par exemple : Je vous propose de nous retrouver à ...'}),
         }
+
+class PropositionUpdateForm(forms.ModelForm):
+    class Meta: 
+        model = Proposition
+        fields = ('validated_proposal',)
+        widgets = {
+            'validated_proposal': CheckboxInput(attrs={'class': 'btn btn-success' ,'type': 'submit'})
+        }
+        
+
+    

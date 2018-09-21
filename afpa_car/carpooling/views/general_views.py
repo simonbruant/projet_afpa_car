@@ -23,10 +23,9 @@ class DashboardView(UpdateView):
         context['cars'] = user.cars.all()
         context['addresses'] = user.addresses.all()
         context['trips'] = user.default_trips.all()
+        context['proposition'] = user.second_user.all()
         context['user_first_connection'] = user.first_connection
-        temp = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_FIRST_CONNECTION_FILE)
-        print( temp, "/////////////////////" )
-        context['first_connection_url'] = temp
+        context['first_connection_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_FIRST_CONNECTION_FILE)
         return context
 
     def get_object(self, queryset=None):

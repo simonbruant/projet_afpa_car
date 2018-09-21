@@ -148,7 +148,6 @@
 
     <div class="col-md-4">
 
-
         {% if not addresses or user.user_profile.car_owner and not cars %}
 
         <div class="card mt-3 mb-3">
@@ -211,16 +210,23 @@
             Bonjour {{ user.username }}
         </h3>
 
+        <div class="row">
+            {% if proposition %}
+            <h4 class="col-md-8"><img id="icons_proposition_car" src="{% static 'img/icons/car.svg' %}"> <b>Propositions de covoiturages reçues ({{ proposition.count }})</b></h4>
+            <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 100%; border: none;">
+            {% for proposition in proposition %}
+
+            <a href="{% url 'carpooling:proposition_detail' proposition.id %}" class='col-md-12'> {{ proposition.first_user.first_name }} vous a envoyé une prosition de covoiturage</a>
+
+            {% endfor %}
+            {% endif %}
 
 
-        <br>
-        <br>
-        <h4 class="sousParties"><span class="fas fa-car"></span><b> Propositions de covoiturages reçues (2)</b></h4>
-        <br>
-        <hr style="height: 2px; color: lightgray; background-color: lightgray; border: none;">
-        <p>Jojo vous propose un point de rencontre à l'arret de tram Saint Eloi</p>
-        <hr style="height: 2px; color: lightgray; background-color: lightgray; width: 40%; border: none;">
-        <p>Jojo vous propose un point de rencontre à l'arret de tram Saint Eloi</p>
+
+
+        </div>
+
+    
 
         <br>
         <h4 class="sousParties"><span class="far fa-envelope"></span><b> Nouveaux messages (1)</b></h4>

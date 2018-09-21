@@ -7,7 +7,8 @@ from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, Defau
                     CarCreateView, CarUpdateView, CarDeleteView,
                     ProfilImageUpdateView, PreferencesUpdateView,
                     AddressCreateView, AddressUpdateView, AddressDeleteView, 
-                    TripView, TripDetailView, PropositionView, PropositionSendView, ContactView, AddressPOC)
+                    TripView, TripDetailView, PropositionView, PropositionSendView, PropositionRefusedView ,
+                    ContactView, AddressPOC, PropositionUpdateView)
 from users.views import LoginView, ChangePassword
 app_name = 'carpooling'
 
@@ -35,8 +36,11 @@ urlpatterns = [
     
     path('trip/', TripView.as_view(), name="trip"),
     path('trip/<int:pk>/', TripDetailView.as_view(), name='trip_detail'),
+
     path('proposition/<int:pk>/', PropositionView.as_view(), name="proposition"),
     path('proposition_send/', PropositionSendView.as_view(), name="proposition_send"),
+    path('proposition_detail/<int:pk>/', PropositionUpdateView.as_view(), name="proposition_detail"),
+    path('proposition_refused/<int:pk>/', PropositionRefusedView.as_view(), name="proposition_refused"),
 
     path('addr_poc/', AddressPOC.as_view(), name="addr_poc"),
 

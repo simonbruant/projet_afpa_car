@@ -1,11 +1,12 @@
 from django.conf import settings
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import DetailView, FormView, TemplateView
+from django.views.generic import DetailView, FormView, TemplateView, UpdateView, DeleteView
 
-from carpooling.forms import DefaultTripFormSet, PropositionForm
-from carpooling.models import DefaultTrip, Trip
+from carpooling.forms import DefaultTripFormSet, PropositionForm, PropositionUpdateForm
+from carpooling.models import DefaultTrip, Trip, Proposition, Register
 
 settings.app_static_url = 'carpooling/app'
 
@@ -92,7 +93,7 @@ class TripDetailView(DetailView):
         return render(request, 'carpooling/trip_detail.html', context)
 
 class PropositionView(FormView):
-    template_name = 'carpooling/proposition.html'
+    template_name = 'carpooling/proposition/proposition.html'
     form_class = PropositionForm
     success_url = reverse_lazy('carpooling:proposition_send')
 
@@ -103,17 +104,47 @@ class PropositionView(FormView):
         return context
 
     def form_valid(self, form, **kwargs):
-        passenger = self.request.user
+        first_user = self.request.user
         proposition = form.save(commit=False)
-        proposition.passenger = passenger
+        proposition.first_user = first_user
         trip = get_object_or_404(DefaultTrip, pk=self.kwargs['pk'])
-
-        driver = trip.user
+        second_user = trip.user
         proposition.default_trip = trip
-        proposition.driver = driver
+        proposition.second_user = second_user
         proposition.save()
         return super().form_valid(form)
 
 class PropositionSendView(TemplateView):
-    template_name = 'carpooling/proposition_send.html'
- 
+    template_name = 'carpooling/proposition/proposition_send.html'
+
+class PropositionUpdateView(UpdateView):
+    model = Proposition
+    template_name = 'carpooling/proposition/proposition_detail.html'
+    form_class =  PropositionUpdateForm
+    success_url = reverse_lazy('carpooling:dashboard')
+
+    def form_valid(self, form, **kwargs):
+        proposition = form.save(commit=False)
+        user = proposition.first_user
+        trip = proposition.default_trip
+        register = Register()
+        register.trip = trip
+        register.user = user
+
+        register.save()
+        proposition.delete()
+        return HttpResponseRedirect(self.get_success_url())
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     trip = get_object_or_404(DefaultTrip, pk=self.kwargs['pk'])
+    #     context ['trip'] = trip
+    #     return context
+        
+class PropositionRefusedView(DeleteView):
+    # pas sur pour la delete
+    model = Proposition
+    template_name = 'carpooling/proposition/proposition_refused.html'
+    success_url = reverse_lazy('carpooling:dashboard')
+
+
