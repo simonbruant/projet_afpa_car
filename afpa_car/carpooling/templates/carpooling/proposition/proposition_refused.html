@@ -6,7 +6,7 @@
 {% block section %}
 <div class="container">
     <div class="row">
-        <p class='col-md-12 mt-3' > Etes vous sur de vouloir supprimer la proposition de "machin" pour le "jour"</p>
+        <p class='col-md-12 mt-3' > Etes vous sur de vouloir supprimer la proposition de {{proposition.first_user.first_name}} pour le {{proposition.default_trip.day}}</p>
         <div class="col-md-3"></div>
         <div class="col-md-6">
             <form method="post" class="mb-3">
@@ -14,7 +14,7 @@
 
                     <button type="submit" class="btn btn-danger mt-3">Refuser la proposition</button>
                 </form>
-            <a class='btn btn-info mb-3' href="{% url 'carpooling:proposition_refused'  proposition.id %}" > Faire une contre proposition</a>
+            <a class='btn btn-info mb-3' href="{% url 'carpooling:proposition_counter'  proposition.id %}" > Faire une contre proposition </a>
         </div>
     </div>
 </div>

@@ -38,7 +38,6 @@ html {
 [class*="col-"] {
 	text-align: center;
 	/* border : 1px solid indigo; */
-
 }
 
 .password_error {

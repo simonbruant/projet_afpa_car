@@ -210,8 +210,7 @@ class PropositionUpdateForm(forms.ModelForm):
         model = Proposition
         fields = ('validated_proposal',)
         widgets = {
-            'validated_proposal': CheckboxInput(attrs={'class': 'btn btn-success' ,'type': 'submit'})
+            'validated_proposal': CheckboxInput(attrs={'class': 'btn btn-success' ,'type': 'submit', 'value': 'Valider la proposition' })
         }
-        
 
-    
+

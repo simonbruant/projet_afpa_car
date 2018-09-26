@@ -7,7 +7,7 @@ from .views import ( DashboardView, PrivateDataUpdateView, UserUpdateView, Defau
                     CarCreateView, CarUpdateView, CarDeleteView,
                     ProfilImageUpdateView, PreferencesUpdateView,
                     AddressCreateView, AddressUpdateView, AddressDeleteView, 
-                    TripView, TripDetailView, PropositionView, PropositionSendView, PropositionRefusedView ,
+                    TripView, TripDetailView, PropositionView, PropositionRefusedView ,CounterPropositionView,
                     ContactView, AddressPOC, PropositionUpdateView)
 from users.views import LoginView, ChangePassword
 app_name = 'carpooling'
@@ -32,15 +32,15 @@ urlpatterns = [
     path('profil/adresse/<int:pk>', AddressUpdateView.as_view(), name='address_update'),
     path('profil/adresse/<int:pk>/delete', AddressDeleteView.as_view(), name='address_delete'),
 
-    path('calendar/', DefaultTripView.as_view(), name='calendar'),
+    path('semaine-type/', DefaultTripView.as_view(), name='calendar'),
     
     path('trip/', TripView.as_view(), name="trip"),
     path('trip/<int:pk>/', TripDetailView.as_view(), name='trip_detail'),
 
     path('proposition/<int:pk>/', PropositionView.as_view(), name="proposition"),
-    path('proposition_send/', PropositionSendView.as_view(), name="proposition_send"),
     path('proposition_detail/<int:pk>/', PropositionUpdateView.as_view(), name="proposition_detail"),
     path('proposition_refused/<int:pk>/', PropositionRefusedView.as_view(), name="proposition_refused"),
+    path('proposition_counter/<int:pk>/', CounterPropositionView.as_view(), name="proposition_counter"),
 
     path('addr_poc/', AddressPOC.as_view(), name="addr_poc"),
 

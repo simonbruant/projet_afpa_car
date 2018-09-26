@@ -8,16 +8,19 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <div class="mt-3 mb-3">{{proposition.passenger.first_name}}</div>
-            <div class="mt-3 mb-3">{{proposition.message}}</div>
-            <div class="mt-3 mb-3">{{proposition.default_trip.day}}</div>
+            <h5 class="mt-3 mb-3">{{proposition.first_user.first_name}} souhaite covoiturer avec vous</h5>
+            <h5 class="mt-3 mb-5">pour le {{proposition.default_trip.day}}</h5>
+            <div class="mt-3 mb-5 card">
+                <div class="card-header"> Il vous propose :</div>
+                <div class="card-content"> {{proposition.message}}</div>
+            </div>
 
             <form method="post" class="mb-3">
                 {% csrf_token %}
                 {{ form.validated_proposal }}
             </form>
             <a class='btn btn-danger mb-3' href="{% url 'carpooling:proposition_refused'  proposition.id %}" > Refuser la proposition </a>
-            <a class='btn btn-warning mb-3' href="{% url 'carpooling:proposition'  proposition.id %}" > Faire une contre proposition </a>
+            <a class='btn btn-info mb-3' href="{% url 'carpooling:proposition_counter'  proposition.id %}" > Faire une contre proposition </a>
         </div>
     </div>
 </div>
