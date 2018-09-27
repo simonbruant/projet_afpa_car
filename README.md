@@ -1,6 +1,12 @@
 # :notebook_with_decorative_cover: Projet Afpa Car
 Site de covoiturage pour l'AFPA
 
+
+Si parcel n'est pas installé sur la machine faire la commande "npm i -g parcel-bundler" <br>
+Se mettre dans le dossier FrontEnd (la ou se trouve package.json)<br>
+faire la commande "npm install"<br>
+puis faire la commande "npm run start" ou "yarn start"<br>
+
 Pour Linux il faut utiliser le fichier 'linux_requirements.txt'
 <br>
 Pour windows il faut utiliser le fichier 'requirements.txt'
