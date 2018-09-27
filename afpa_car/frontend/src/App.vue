@@ -1,14 +1,25 @@
 <template>
-  <div id="app" class="font-sans text-black min-h-screen bg-grey p-8">
-    <div class="max-w-sm mx-auto bg-white rounded shadow-lg p-8">
+  <div id="app">
+    <div class="max-w-sm mx-auto bg-white rounded">
       <Autocomplete v-model="selectedCityZip" :options="cityZipCodeList" :search="searchCityZip" 
-      :holder="placeHolderCityZip" id="id_city_zip_code" @search="newSearchCityZip => searchCityZip = newSearchCityZip"/>
+      holder="Entre votre ville ou code postal..." id="id_city_zip_code" type="city" :data="cityZip"
+      @search="newSearchCityZip => searchCityZip = newSearchCityZip"
+      @data="newCityZip => cityZip = newCityZip"/>
     </div>
     <br>
-    <div class="max-w-sm mx-auto bg-white rounded shadow-lg p-8">
+    <div class="max-w-sm mx-auto bg-white">
       <Autocomplete v-model="selectedAddress" :options="addressList" :search="searchAddress" 
-      :holder="placeHolderAddress" id="id_address" @search="newSearchAddress => searchAddress = newSearchAddress"/>
+      holder="Entrez votre adresse..." id="id_address" type="addr" :data="addressJSON"
+      @search="newSearchAddress => searchAddress = newSearchAddress"
+      @data="newJson => addressJSON = newJson"/>
     </div>
+    <br>
+     <div class="max-w-sm mx-auto">
+       <input v-model="addressJSON" placeholder="Json" id="id_json_hidden" name="json_hidden" required type="text" class="block mb-2 w-full px-3 py-2 border rounded" style="outline: 0;">
+     </div>
+     <div>
+     <button @click="postAddress" class="btn btn-success">Envoyer</button>
+     </div>
   </div>
 </template>
 
@@ -30,8 +41,9 @@ export default {
       searchAddress: "",
       cityZipCodeList: [],
       addressList: [],
-      placeHolderCityZip: "Entre votre ville ou code postal...",
-      placeHolderAddress: "Entrez votre adresse..."
+      addressJSON: "",
+      cityZip: "",
+      cityZipFilter: ""
     };
   },
   watch: {
@@ -46,19 +58,19 @@ export default {
 },
     methods: {
     lookupcityZipCode: _.debounce(function() {
-        console.log("search", this.searchCityZip)
+        // console.log("search", this.searchCityZip)
     if (!isNaN(this.searchCityZip)) {
         axios.get('https://geo.api.gouv.fr/communes?codePostal=' + this.searchCityZip)
             .then((response) => {
-                console.log(response.data)
+                // console.log(response.data)
             if (response.data)  {
                 for (let key in response.data) {
-                    console.log(key)
-                    console.log(response.data[key].nom)
+                    // console.log(key)
+                    // console.log(response.data[key].nom)
                     let city = response.data[key].nom
                     let zipCode = this.searchCityZip
-                    this.cityZipCodeList.push(city + " ("+ zipCode + ")")
-                }
+                    this.cityZipCodeList.push([city, zipCode]) 
+                }                               
             }
         })} else {
         axios.get("https://geo.api.gouv.fr/communes?nom=" + this.searchCityZip)
@@ -67,27 +79,40 @@ export default {
                 for (let i in response.data) {
                     let city = response.data[i]
                     for (let j in city.codesPostaux) {
-                        let zip = city.codesPostaux[j]
-                    this.cityZipCodeList.push(city.nom + " (" + zip + ")")
+                        let zipCode = city.codesPostaux[j]
+                    this.cityZipCodeList.push([city.nom, zipCode])
                     }
                 }
             }
           })}
     }, 500),
     lookupAddress: _.debounce(function () {
+        // console.log("cizip", this.cityZip)
           let address = _.replace(this.searchAddress,/ /g, '+')
-          axios.get('https://api-adresse.data.gouv.fr/search/?q=' + this.searchAddress) // + '&postcode=' //+ this.zipCode + '&city=' + this.city)
+          if (this.cityZip) {
+            this.cityZipFilter = '&postcode=' + this.cityZip[1] + '&city=' + this.cityZip[0]
+          }
+          axios.get('https://api-adresse.data.gouv.fr/search/?q=' + address + this.cityZipFilter)
             .then((response) => {
               if (response.data.features) {
                 for ( let i in response.data.features ){
                   let addr = response.data.features[i]
                   if (addr.properties.score > 0.5){
-                    this.addressList.push(addr.properties.label)
+                    this.addressList.push(addr)
                 }
               }
             }
           })
-        },),
+        }),
+      postAddress (event) {
+        event.preventDefault()
+        console.log(this.addressJSON)
+        axios.post('http://127.0.0.1:8000/profil/adresse/' + this.addressJSON)
+        .then(response => {console.log(reponse.data)})
+        .catch(error => console.log(error)
+        )
+        
+      }
     
   }
 };

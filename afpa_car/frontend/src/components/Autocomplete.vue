@@ -1,5 +1,6 @@
 <template>
   <div class="relative" v-on-clickaway="() => { isOpen ? cancel() : null }">
+  <div>{{ data }}</div>
     <div ref="input" class="block w-full border px-3 py-2 bg-white rounded focus:outline-0 focus:shadow-focus" :class="{ 'shadow-focus': isOpen }" @click="open" tabindex="0" @keydown.up.prevent="open" @keydown.down.prevent="open" @keydown.space.prevent="open">
       <span v-if="value !== null">{{ value }}</span>
       <span v-else class="text-grey-dark">{{ holder }}</span>
@@ -7,7 +8,17 @@
     <div v-show="isOpen" class="mt-1 absolute pin-x bg-grey-darkest p-2 rounded shadow z-50">
       <input :value="search" @input="e => { $emit('search', e.target.value) }" ref="search" type="text" class="block mb-2 w-full px-3 py-2 bg-grey-darker text-white rounded" style="outline: 0;" @keydown.up="highlightPrev" @keydown.down="highlightNext" @keydown.enter.prevent="commitSelection" @keydown.esc="cancel" @keydown.tab.prevent>
       <ul ref="options" v-show="options.length > 0" class="list-reset relative overflow-y-auto scrolling-touch" style="max-height: 200px;">
-        <li ref="option" v-for="(option, i) in options" :key="option" class="px-3 py-2 text-white cursor-pointer rounded" :class="[i === highlightedIndex ? 'bg-blue' : 'hover:bg-grey-darker']" @click="select(i)">{{ option }}</li>
+        <li ref="option" v-for="(option, i) in options" :key="option" 
+            class="px-3 py-2 text-white cursor-pointer rounded" 
+            :class="[i === highlightedIndex ? 'bg-blue' : 'hover:bg-grey-darker']" 
+            @click="select(i)">
+            <span v-if="type == 'city'">
+              {{ option[0] }} ({{ option[1]}})
+            </span>
+            <span v-else-if="type == 'addr'">
+            {{ option.properties.label }}
+            </span>
+        </li>
       </ul>
       <div v-if="!search & (options.length === 0)" class="px-3 py-2 text-grey">Entrez une ville ou un code postal</div>
       <div v-else-if="(options.length === 0)" class="px-3 py-2 text-grey">...</div>
@@ -20,7 +31,7 @@ import { mixin as clickaway } from "vue-clickaway";
 
 export default {
   mixins: [clickaway],
-  props: ["value", "search", "options", "holder", "id"],
+  props: ["value", "search", "options", "holder", "id", "type", "data"],
   data() {
     return {
       isOpen: false,
@@ -51,7 +62,15 @@ export default {
       this.close();
     },
     commitSelection() {
-      this.$emit("input", this.options[this.highlightedIndex]);
+      console.log(this.type)
+      if (this.type == "addr") {
+      this.$emit("input", this.options[this.highlightedIndex].properties.label);
+        this.$emit("data", JSON.stringify(this.options[this.highlightedIndex]))
+        }
+      else {
+        this.$emit("input", this.options[this.highlightedIndex][0] + " (" + this.options[this.highlightedIndex][1] + ")");
+      this.$emit("data", this.options[this.highlightedIndex])
+      }
       this.$emit("search", "");
       this.close();
     },

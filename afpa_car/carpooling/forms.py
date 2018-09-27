@@ -124,28 +124,17 @@ class PreferencesForm(forms.ModelForm):
             'music': RadioSelect(),
         }
 
-class AddressForm(forms.ModelForm):
-
-    class Meta: 
-        model = Address
-        fields = ('address_label',)
-
+class AddressForm(forms.Form):
     address_label = forms.CharField(widget=TextInput(attrs={'class': 'form-control require-input'}), label="Libellé de l'Adresse",
                                     required=True)
-    city_zip_code = forms.CharField(widget=TextInput(attrs={'class': 'form-control require-input', 
-                                                            'v-model': 'cityZipCode', 'autocomplete': 'off'}),
-                                    label="Ville ou Code Postal", required=True)
+    json_hidden = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control require-input',}))
 
-    address = forms.CharField(widget=TextInput(attrs={'class': 'form-control require-input', 
-                                                            'v-model': 'address', 'autocomplete': 'off'}),
-                            label="Adresse", required=True)
-    json_hidden = forms.CharField(widget=forms.HiddenInput(attrs={'v-model': 'addressJSON'}))
-
-    def clean(self):
-        json = self.cleaned_data.get('json_hidden')
-        if not json:
-            raise forms.ValidationError("Veuillez sélectionner une adresse")
-        return self.cleaned_data
+    # def clean(self):
+    #     json = self.cleaned_data.get('json_hidden')
+    #     if not json:
+    #         print(json)
+    #         # raise forms.ValidationError("Veuillez sélectionner une adresse")
+    #     return self.cleaned_data
 
 class DefaultTripForm(forms.ModelForm):
 

@@ -81,6 +81,7 @@ class AddressCreateView(AddressMixin, FormView):
         context['addresses'] = self.request.user.addresses.all()
         context['addresses_count'] = len(self.request.user.addresses.all())
         context['profil_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_PROFIL_FILE)
+        context['address_poc_url'] = '{}/{}'.format(settings.app_static_url, settings.CARPOOLING_ADDR_POC_FILE)
         return context
 
 class AddressUpdateView(AddressMixin, UpdateView):
